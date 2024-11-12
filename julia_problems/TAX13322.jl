@@ -19,7 +19,7 @@ function TAX13322(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    "If ever there was an example that exhibited the stupidity of SIF,
 #     this is it. NIMG"
 # 
-#    classification = "C-OOR2-MN-72-1261"
+#    classification = "C-COOR2-MN-72-1261"
 # 
 #    parameters
 # 
@@ -27,7 +27,7 @@ function TAX13322(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NA                  1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TAX13322"
@@ -211,7 +211,6 @@ function TAX13322(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NA"])
             for P = Int64(v_["1"]):Int64(v_["NBD"])
                 for Q = Int64(v_["1"]):Int64(v_["NCE"])
@@ -11080,7 +11079,7 @@ function TAX13322(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-MN-72-1261"
+        pb.pbclass = "C-COOR2-MN-72-1261"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

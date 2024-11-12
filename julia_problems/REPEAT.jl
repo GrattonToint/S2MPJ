@@ -1,4 +1,4 @@
-function REPEAT(action,args...)
+function REPEAT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -13,31 +13,37 @@ function REPEAT(action,args...)
 # 
 #    SIF input: Nick Gould, December 2020.
 # 
-#    classification = "NLR2-AN-V-V"
+#    classification = "C-CNLR2-AN-V-V"
 # 
 #    N is the number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 9 XI 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "REPEAT"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "REPEAT"
+        pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["N"] = 10;  #  SIF file default value
+            v_["N"] = Int64(100);  #  SIF file default value
         else
-            v_["N"] = args[1];
+            v_["N"] = Int64(args[1]);
         end
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER     original value
+# IE N                   1000000        $-PARAMETER
         v_["N-1"] = -1+v_["N"]
         v_["1"] = 1
         v_["2"] = 2
@@ -45,52 +51,52 @@ function REPEAT(action,args...)
         v_["N/2"] = trunc(Int,(v_["N"]/v_["2"]))
         v_["N/100"] = trunc(Int,(v_["N"]/v_["100"]))
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(I))
             iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += 1.0
+            pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += 1.0
+            pbm.A[ig,iv] += Float64(1.0)
         end
-        ig,ig_,_ = s2x_ii("C"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C"*string(Int64(v_["N"])))
         iv = ix_["X"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += 1.0
+        pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("R"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
             iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += 1.0
+            pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += 1.0
+            pbm.A[ig,iv] += Float64(1.0)
         end
-        ig,ig_,_ = s2x_ii("R"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"R"*string(Int64(v_["N"])))
         iv = ix_["X"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += 1.0
+        pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N/100"]):Int64(v_["N"])
-            v_["RI"] =Float64(I)
-            ig,ig_,_ = s2x_ii("E",ig_)
+            v_["RI"] = Float64(I)
+            ig,ig_,_ = s2mpj_ii("E",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E")
             iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += v_["RI"]
+            pbm.A[ig,iv] += Float64(v_["RI"])
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -102,19 +108,19 @@ function REPEAT(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
-            pbm.gconst[ig_["C"*string(I)]] = 2.0
+            pbm.gconst[ig_["C"*string(I)]] = Float64(2.0)
         end
-        pbm.gconst[ig_["C"*string(Int64(v_["N"]))]] = 1.0
+        pbm.gconst[ig_["C"*string(Int64(v_["N"]))]] = Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
-            pbm.gconst[ig_["R"*string(I)]] = 4.0
+            pbm.gconst[ig_["R"*string(I)]] = Float64(4.0)
         end
-        pbm.gconst[ig_["R"*string(Int64(v_["N"]))]] = 3.0
+        pbm.gconst[ig_["R"*string(Int64(v_["N"]))]] = Float64(3.0)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -125,7 +131,7 @@ function REPEAT(action,args...)
         pb.xlower[ix_["X"*string(Int64(v_["N-1"]))]] = 3.0
         pb.xupper[ix_["X"*string(Int64(v_["N"]))]] = 0.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = fill(0.0,pb.n,)
+        pb.x0 = fill(Float64(0.0),pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -137,24 +143,31 @@ function REPEAT(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "NLR2-AN-V-V"
+        pb.pbclass = "C-CNLR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

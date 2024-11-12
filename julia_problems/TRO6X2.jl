@@ -18,13 +18,13 @@ function TRO6X2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Nick Gould, Nov 2009.
 # 
-#    classification = "C-LOR2-RN-45-21"
+#    classification = "C-CLOR2-RN-45-21"
 # 
 #    number of bars
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRO6X2"
@@ -4122,7 +4122,7 @@ function TRO6X2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-RN-45-21"
+        pb.pbclass = "C-CLOR2-RN-45-21"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

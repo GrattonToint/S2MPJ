@@ -1191,10 +1191,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          end         
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
          if ( redprec )
-            printmline( 'if(isfield(pbm,''ndigs''))',                                         2,      bindent, pbs.fidma );
-            printmline( 'rmfield(pbm,''ndigs'');',                                            3,      bindent, pbs.fidma );
-            printmline( 'end',                                                                2,      bindent, pbs.fidma );
             printmline( 'if(strcmp(action,''setup_redprec''))',                               2,      bindent, pbs.fidma );
+            printmline( 'if(isfield(pbm,''ndigs''))',                                         3,      bindent, pbs.fidma );
+            printmline( 'rmfield(pbm,''ndigs'');',                                            4,      bindent, pbs.fidma );
+            printmline( 'end',                                                                3,      bindent, pbs.fidma );
             printmline( 'pbm.ndigs = max(1,min(15,varargin{end}));',                          3     , bindent, pbs.fidma );
             printmline( 'nargs     = nargin-2;',                                              3,      bindent, pbs.fidma );
             printmline( 'else',                                                               2,      bindent, pbs.fidma );

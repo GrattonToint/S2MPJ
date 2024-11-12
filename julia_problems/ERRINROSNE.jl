@@ -1,4 +1,4 @@
-function ERRINROSNE(action,args...)
+function ERRINROSNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -15,21 +15,22 @@ function ERRINROSNE(action,args...)
 #    SIF input: Ph. Toint, Sept 1990.
 #               Nick Gould (nonlinear equation version), Jan 2019
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    Number of variables (at most 50)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 9 XI 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ERRINROSNE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ERRINROSNE"
+        pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -40,6 +41,9 @@ function ERRINROSNE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+#       Alternative values for the SIF file parameters:
+# IE N                   25             $-PARAMETER
+# IE N                   50             $-PARAMETER
         v_["ALPH1"] = 1.25
         v_["ALPH2"] = 1.40
         v_["ALPH3"] = 2.40
@@ -93,23 +97,23 @@ function ERRINROSNE(action,args...)
         v_["1"] = 1
         v_["2"] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["2"]):Int64(v_["N"])
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("SQ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("SQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SQ"*string(I))
             iv = ix_["X"*string(Int64(v_["I-1"]))]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("B"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"B"*string(I))
             iv = ix_["X"*string(I)]
@@ -125,13 +129,13 @@ function ERRINROSNE(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         for I = Int64(v_["2"]):Int64(v_["N"])
-            pbm.gconst[ig_["B"*string(I)]] = 1.0
+            pbm.gconst[ig_["B"*string(I)]] = Float64(1.0)
         end
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
@@ -149,20 +153,20 @@ function ERRINROSNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eETYPE", iet_)
+        it,iet_,_ = s2mpj_ii( "eETYPE", iet_)
         loaset(elftv,it,1,"V1")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["2"]):Int64(v_["N"])
             ename = "ELA"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eETYPE")
                 arrset(ielftype,ie,iet_["eETYPE"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -182,6 +186,10 @@ function ERRINROSNE(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(10)            6.69463214
+# LO SOLTN(25)            18.4609060
+# LO SOLTN(50)            39.9041540
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -192,9 +200,18 @@ function ERRINROSNE(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-AN-V-V"
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.pbclass = "C-CNOR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -224,19 +241,21 @@ function ERRINROSNE(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SIM2BQP(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -11,20 +11,17 @@ class  SIM2BQP(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, March 1992
 # 
-#    classification = "QBR2-AN-2-0"
+#    classification = "C-CQBR2-AN-2-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SIM2BQP'
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pb.sifpbname = 'SIM2BQP'
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -32,82 +29,88 @@ class  SIM2BQP(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        xscale    = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
+        self.xnames=arrset(self.xnames,iv,'X1')
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
+        self.xnames=arrset(self.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('G1',ig_)
+        [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
-        pbm.A[ig,iv] = 1.0+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G2',ig_)
-        gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X1']
-        pbm.A[ig,iv] = -1.0+pbm.A[ig,iv]
-        iv = ix_['X2']
-        pbm.A[ig,iv] = 1.0+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G3',ig_)
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
-        pbm.A[ig,iv] = 2.0+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = 1.0+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        [ig,ig_,_] = s2mpj_ii('G3',ig_)
+        gtype = arrset(gtype,ig,'<>')
+        iv = ix_['X1']
+        self.A[ig,iv] = float(2.0)+self.A[ig,iv]
+        iv = ix_['X2']
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),10.0)
-        pb.xupper = np.full((pb.n,1),10.0)
-        pb.xlower[ix_['X2']] = 0.0
-        pb.xupper[ix_['X2']] = 0.5
+        self.xlower = np.full((self.n,1),0.0)
+        self.xupper = np.full((self.n,1),0.0)
+        self.xlower[ix_['X2']] = 0.0
+        self.xupper[ix_['X2']] = 0.5
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['X1']] = 10.0
-        pb.x0[ix_['X2']] = 1.0
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['X1']] = float(10.0)
+        self.x0[ix_['X2']] = float(1.0)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('L2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         ig = ig_['G2']
-        pbm.grftype = arrset(pbm.grftype,ig,'L2')
+        self.grftype = arrset(self.grftype,ig,'gL2')
         ig = ig_['G3']
-        pbm.grftype = arrset(pbm.grftype,ig,'L2')
+        self.grftype = arrset(self.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "QBR2-AN-2-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "C-CQBR2-AN-2-0"
+        self.objderlvl = 2
+
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def L2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

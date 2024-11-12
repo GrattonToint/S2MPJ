@@ -14,13 +14,13 @@ class  BAmL1SPLS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 2016
 # 
-#    classification = "C-SUR2-MN-57-0"
+#    classification = "C-CSUR2-MN-57-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BAmL1SPLS'
@@ -385,7 +385,6 @@ class  BAmL1SPLS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -15417,7 +15416,7 @@ class  BAmL1SPLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-57-0"
+        self.pbclass = "C-CSUR2-MN-57-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

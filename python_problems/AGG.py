@@ -14,11 +14,11 @@ class  AGG(CUTEst_problem):
 # 
 #    SIF input: (already in MPS format)
 # 
-#    classification = "C-LLR2-AN-163-488"
+#    classification = "C-CLLR2-AN-163-488"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AGG'
@@ -9731,7 +9731,7 @@ class  AGG(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-LLR2-AN-163-488"
+        self.pbclass = "C-CLLR2-AN-163-488"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

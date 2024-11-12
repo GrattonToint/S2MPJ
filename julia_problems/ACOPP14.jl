@@ -114,13 +114,13 @@ function ACOPP14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "C-QOR2-AY-38-68"
+#    classification = "C-CQOR2-AY-38-68"
 # 
 #    number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ACOPP14"
@@ -7595,7 +7595,7 @@ function ACOPP14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AY-38-68"
+        pb.pbclass = "C-CQOR2-AY-38-68"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

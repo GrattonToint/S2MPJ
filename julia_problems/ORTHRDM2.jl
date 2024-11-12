@@ -1,4 +1,4 @@
-function ORTHRDM2(action,args...)
+function ORTHRDM2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -28,34 +28,37 @@ function ORTHRDM2(action,args...)
 #    SIF input: Ph. Toint, Mar 1991,
 #               modified by T. Plantagena, May 1994.
 # 
-#    classification = "QOR2-AY-V-V"
+#    classification = "C-CQOR2-AY-V-V"
 # 
 #    Number of data points
 #    (number of variables = 2 NPTS + 3 )
 # 
-# IE NPTS                100            $-PARAMETER n = 203
-# IE NPTS                2000           $-PARAMETER n = 4003     original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHRDM2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ORTHRDM2"
+        pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["NPTS"] = 4000;  #  SIF file default value
+            v_["NPTS"] = Int64(50);  #  SIF file default value
         else
-            v_["NPTS"] = args[1];
+            v_["NPTS"] = Int64(args[1]);
         end
+#       Alternative values for the SIF file parameters:
+# IE NPTS                100            $-PARAMETER n = 203
+# IE NPTS                2000           $-PARAMETER n = 4003     original value
+# IE NPTS                4000           $-PARAMETER n = 8003
         v_["TZ3"] = 1.7
         v_["PSEED"] = 237.1531
         v_["PSIZE"] = 0.1
@@ -85,33 +88,33 @@ function ORTHRDM2(action,args...)
             v_["YD"*string(I)] = v_["R2"]*v_["PERT"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("Z1",ix_)
+        iv,ix_,_ = s2mpj_ii("Z1",ix_)
         arrset(pb.xnames,iv,"Z1")
-        iv,ix_,_ = s2x_ii("Z2",ix_)
+        iv,ix_,_ = s2mpj_ii("Z2",ix_)
         arrset(pb.xnames,iv,"Z2")
-        iv,ix_,_ = s2x_ii("Z3",ix_)
+        iv,ix_,_ = s2mpj_ii("Z3",ix_)
         arrset(pb.xnames,iv,"Z3")
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
-            ig,ig_,_ = s2x_ii("OX"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OX"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += 1.0
-            ig,ig_,_ = s2x_ii("OY"*string(I),ig_)
+            pbm.A[ig,iv] += Float64(1.0)
+            ig,ig_,_ = s2mpj_ii("OY"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["Y"*string(I)]
-            pbm.A[ig,iv] += 1.0
-            ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+            pbm.A[ig,iv] += Float64(1.0)
+            ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E"*string(I))
         end
@@ -125,14 +128,14 @@ function ORTHRDM2(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
-            pbm.gconst[ig_["OX"*string(I)]] = v_["XD"*string(I)]
-            pbm.gconst[ig_["OY"*string(I)]] = v_["YD"*string(I)]
+            pbm.gconst[ig_["OX"*string(I)]] = Float64(v_["XD"*string(I)])
+            pbm.gconst[ig_["OY"*string(I)]] = Float64(v_["YD"*string(I)])
         end
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
@@ -141,41 +144,43 @@ function ORTHRDM2(action,args...)
         pb.x0 = zeros(Float64,pb.n)
         pb.y0 = zeros(Float64,pb.m)
         if haskey(ix_,"Z1")
-            pb.x0[ix_["Z1"]] = 1.0
+            pb.x0[ix_["Z1"]] = Float64(1.0)
         else
-            pb.y0[findfirst(x->x==ig_["Z1"],pbm.congrps)]pb.y0[findfirst(x->x==ig_[1.0],pbm.congrps)]
+            pb.y0[findfirst(x->x==ig_["Z1"],pbm.congrps)] = Float64(1.0)
         end
         if haskey(ix_,"Z2")
-            pb.x0[ix_["Z2"]] = 0.0
+            pb.x0[ix_["Z2"]] = Float64(0.0)
         else
-            pb.y0[findfirst(x->x==ig_["Z2"],pbm.congrps)]pb.y0[findfirst(x->x==ig_[0.0],pbm.congrps)]
+            pb.y0[findfirst(x->x==ig_["Z2"],pbm.congrps)] = Float64(0.0)
         end
         if haskey(ix_,"Z3")
-            pb.x0[ix_["Z3"]] = 1.0
+            pb.x0[ix_["Z3"]] = Float64(1.0)
         else
-            pb.y0[findfirst(x->x==ig_["Z3"],pbm.congrps)]pb.y0[findfirst(x->x==ig_[1.0],pbm.congrps)]
+            pb.y0[findfirst(x->x==ig_["Z3"],pbm.congrps)] = Float64(1.0)
         end
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
             if haskey(ix_,"X"*string(I))
-                pb.x0[ix_["X"*string(I)]] = v_["XD"*string(I)]
+                pb.x0[ix_["X"*string(I)]] = Float64(v_["XD"*string(I)])
             else
-                pb.y0[findfirst(x->x==ig_["X"*string(I)],pbm.congrps)]pb.y0[findfirst(x->x==ig_[v_["XD"*string(I)]],pbm.congrps)]
+                pb.y0[findfirst(x->x==ig_["X"*string(I)],pbm.congrps)]  = (
+                      Float64(v_["XD"*string(I)]))
             end
             if haskey(ix_,"Y"*string(I))
-                pb.x0[ix_["Y"*string(I)]] = v_["YD"*string(I)]
+                pb.x0[ix_["Y"*string(I)]] = Float64(v_["YD"*string(I)])
             else
-                pb.y0[findfirst(x->x==ig_["Y"*string(I)],pbm.congrps)]pb.y0[findfirst(x->x==ig_[v_["YD"*string(I)]],pbm.congrps)]
+                pb.y0[findfirst(x->x==ig_["Y"*string(I)],pbm.congrps)]  = (
+                      Float64(v_["YD"*string(I)]))
             end
         end
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eTA", iet_)
+        it,iet_,_ = s2mpj_ii( "eTA", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         loaset(elftv,it,3,"ZA")
         loaset(elftv,it,4,"ZB")
-        it,iet_,_ = s2x_ii( "eTB", iet_)
+        it,iet_,_ = s2mpj_ii( "eTB", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         loaset(elftv,it,3,"ZA")
@@ -186,53 +191,53 @@ function ORTHRDM2(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
             ename = "EA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eTA")
-            arrset(ielftype, ie, iet_["eTA"])
+            arrset(ielftype,ie,iet_["eTA"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ZA",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ZB",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EB"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eTB")
-            arrset(ielftype, ie, iet_["eTB"])
+            arrset(ielftype,ie,iet_["eTB"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ZA",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ZB",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ZC",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -254,6 +259,9 @@ function ORTHRDM2(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(100)          7.77572
+# LO SOLTN(2000)         155.533
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -264,9 +272,18 @@ function ORTHRDM2(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QOR2-AY-V-V"
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.pbclass = "C-CQOR2-AY-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -383,19 +400,21 @@ function ORTHRDM2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

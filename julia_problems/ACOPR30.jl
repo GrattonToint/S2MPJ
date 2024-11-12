@@ -103,13 +103,13 @@ function ACOPR30(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "C-QOR2-AN-72-172"
+#    classification = "C-CQOR2-AN-72-172"
 # 
 #    number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ACOPR30"
@@ -31624,7 +31624,7 @@ function ACOPR30(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AN-72-172"
+        pb.pbclass = "C-CQOR2-AN-72-172"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -30,11 +30,11 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    SIF input : E. Loute and Ph. L. Toint, April 1993
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-LQR2-RN-905-1081"
+#    classification = "C-CLQR2-RN-905-1081"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ROTDISC"
@@ -286,7 +286,6 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["sigr"*string(Int64(v_["0"]))]] = v_["sigmari"]
         pb.xupper[ix_["sigr"*string(Int64(v_["0"]))]] = v_["sigmari"]
         pb.xupper[ix_["sigt"*string(Int64(v_["0"]))]] = v_["sigmati"]
@@ -4935,7 +4934,7 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-RN-905-1081"
+        pb.pbclass = "C-CLQR2-RN-905-1081"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -16,7 +16,7 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Optimization and Search Heuristics",
 #    Delft University, January 1998.
 # 
-#    classification = "C-LOI2-RN-1247-544"
+#    classification = "C-CLOI2-RN-1247-544"
 # 
 #    SIF input: Arie Quist, Delft, 1998.
 #               correction by S. Gratton & Ph. Toint, May 2024
@@ -25,7 +25,7 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TWIRIMD1"
@@ -7662,7 +7662,7 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOI2-RN-1247-544"
+        pb.pbclass = "C-CLOI2-RN-1247-544"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

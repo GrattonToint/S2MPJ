@@ -18,3 +18,7 @@ Release notes for S2MPJ
              corrections to problem's classifications
              improved selection tool
              updating of the documentation to reflect these modifications.
+
+11 XI 2024 : cleanup of the matlab_problems directory
+             improvement in error handling in SPARCO problems
+             

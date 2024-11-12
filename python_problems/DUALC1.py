@@ -13,11 +13,11 @@ class  DUALC1(CUTEst_problem):
 # 
 #    SIF input: Irv Lustig and Nick Gould, June 1996.
 # 
-#    classification = "C-QLR2-MN-9-215"
+#    classification = "C-CQLR2-MN-9-215"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DUALC1'
@@ -6786,7 +6786,7 @@ class  DUALC1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-MN-9-215"
+        self.pbclass = "C-CQLR2-MN-9-215"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

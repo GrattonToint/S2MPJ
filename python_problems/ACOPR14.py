@@ -104,13 +104,13 @@ class  ACOPR14(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "C-QOR2-AN-38-82"
+#    classification = "C-CQOR2-AN-38-82"
 # 
 #    number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ACOPR14'
@@ -15587,7 +15587,7 @@ class  ACOPR14(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-AN-38-82"
+        self.pbclass = "C-CQOR2-AN-38-82"
         self.objderlvl = 2
         self.conderlvl = [2]
         self.H = self.H.tocsr()

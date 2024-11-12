@@ -1,4 +1,4 @@
-function CORE2(action,args...)
+function CORE2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -24,19 +24,20 @@ function CORE2(action,args...)
 # 
 #    SDIF input: E. Loute and D. De Wolf, September 1992.
 # 
-#    classification = "LQI2-RN-157-134"
+#    classification = "C-CLQI2-RN-157-134"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CORE2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CORE2"
+        pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -44,1549 +45,1549 @@ function CORE2(action,args...)
         ig_ = Dict{String,Int}();
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("COST",ig_)
+        ig,ig_,_ = s2mpj_ii("COST",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("NODE0001",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0001",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0001")
-        ig,ig_,_ = s2x_ii("NODE0002",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0002",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0002")
-        ig,ig_,_ = s2x_ii("NODE0003",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0003",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0003")
-        ig,ig_,_ = s2x_ii("NODE0004",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0004",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0004")
-        ig,ig_,_ = s2x_ii("NODE0005",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0005",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0005")
-        ig,ig_,_ = s2x_ii("NODE0006",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0006",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0006")
-        ig,ig_,_ = s2x_ii("NODE0007",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0007",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0007")
-        ig,ig_,_ = s2x_ii("NODE0008",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0008",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0008")
-        ig,ig_,_ = s2x_ii("NODE0009",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0009",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0009")
-        ig,ig_,_ = s2x_ii("NODE0010",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0010",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0010")
-        ig,ig_,_ = s2x_ii("NODE0011",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0011",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0011")
-        ig,ig_,_ = s2x_ii("NODE0012",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0012",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0012")
-        ig,ig_,_ = s2x_ii("NODE0013",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0013",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0013")
-        ig,ig_,_ = s2x_ii("NODE0014",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0014",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0014")
-        ig,ig_,_ = s2x_ii("NODE0015",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0015",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0015")
-        ig,ig_,_ = s2x_ii("NODE0016",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0016",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0016")
-        ig,ig_,_ = s2x_ii("NODE0017",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0017",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0017")
-        ig,ig_,_ = s2x_ii("NODE0018",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0018",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0018")
-        ig,ig_,_ = s2x_ii("NODE0019",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0019",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0019")
-        ig,ig_,_ = s2x_ii("NODE0020",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0020",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0020")
-        ig,ig_,_ = s2x_ii("NODE0021",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0021",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0021")
-        ig,ig_,_ = s2x_ii("NODE0022",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0022",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0022")
-        ig,ig_,_ = s2x_ii("NODE0023",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0023",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0023")
-        ig,ig_,_ = s2x_ii("NODE0024",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0024",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0024")
-        ig,ig_,_ = s2x_ii("NODE0025",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0025",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0025")
-        ig,ig_,_ = s2x_ii("NODE0026",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0026",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0026")
-        ig,ig_,_ = s2x_ii("NODE0027",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0027",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0027")
-        ig,ig_,_ = s2x_ii("NODE0028",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0028",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0028")
-        ig,ig_,_ = s2x_ii("NODE0029",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0029",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0029")
-        ig,ig_,_ = s2x_ii("NODE0030",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0030",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0030")
-        ig,ig_,_ = s2x_ii("NODE0031",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0031",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0031")
-        ig,ig_,_ = s2x_ii("NODE0032",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0032",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0032")
-        ig,ig_,_ = s2x_ii("NODE0033",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0033",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0033")
-        ig,ig_,_ = s2x_ii("NODE0034",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0034",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0034")
-        ig,ig_,_ = s2x_ii("NODE0035",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0035",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0035")
-        ig,ig_,_ = s2x_ii("NODE0036",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0036",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0036")
-        ig,ig_,_ = s2x_ii("NODE0037",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0037",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0037")
-        ig,ig_,_ = s2x_ii("NODE0038",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0038",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0038")
-        ig,ig_,_ = s2x_ii("NODE0039",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0039",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0039")
-        ig,ig_,_ = s2x_ii("NODE0040",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0040",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0040")
-        ig,ig_,_ = s2x_ii("NODE0041",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0041",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0041")
-        ig,ig_,_ = s2x_ii("NODE0042",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0042",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0042")
-        ig,ig_,_ = s2x_ii("NODE0043",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0043",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0043")
-        ig,ig_,_ = s2x_ii("NODE0044",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0044",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0044")
-        ig,ig_,_ = s2x_ii("NODE0045",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0045",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0045")
-        ig,ig_,_ = s2x_ii("NODE0046",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0046",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0046")
-        ig,ig_,_ = s2x_ii("NODE0047",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0047",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0047")
-        ig,ig_,_ = s2x_ii("NODE0048",ig_)
+        ig,ig_,_ = s2mpj_ii("NODE0048",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NODE0048")
-        ig,ig_,_ = s2x_ii("ARC00001",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00001",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00001")
-        ig,ig_,_ = s2x_ii("ARC00002",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00002",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00002")
-        ig,ig_,_ = s2x_ii("ARC00003",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00003",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00003")
-        ig,ig_,_ = s2x_ii("ARC00004",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00004",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00004")
-        ig,ig_,_ = s2x_ii("ARC00005",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00005",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00005")
-        ig,ig_,_ = s2x_ii("ARC00006",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00006",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00006")
-        ig,ig_,_ = s2x_ii("ARC00007",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00007",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00007")
-        ig,ig_,_ = s2x_ii("ARC00008",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00008",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00008")
-        ig,ig_,_ = s2x_ii("ARC00009",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00009",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00009")
-        ig,ig_,_ = s2x_ii("ARC00010",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00010",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00010")
-        ig,ig_,_ = s2x_ii("ARC00011",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00011",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00011")
-        ig,ig_,_ = s2x_ii("ARC00012",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00012",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00012")
-        ig,ig_,_ = s2x_ii("ARC00013",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00013",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00013")
-        ig,ig_,_ = s2x_ii("ARC00014",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00014",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00014")
-        ig,ig_,_ = s2x_ii("ARC00015",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00015",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00015")
-        ig,ig_,_ = s2x_ii("ARC00016",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00016",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00016")
-        ig,ig_,_ = s2x_ii("ARC00017",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00017",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00017")
-        ig,ig_,_ = s2x_ii("ARC00018",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00018",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00018")
-        ig,ig_,_ = s2x_ii("ARC00019",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00019",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00019")
-        ig,ig_,_ = s2x_ii("ARC00020",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00020",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00020")
-        ig,ig_,_ = s2x_ii("ARC00021",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00021",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00021")
-        ig,ig_,_ = s2x_ii("ARC00022",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00022",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00022")
-        ig,ig_,_ = s2x_ii("ARC00023",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00023",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00023")
-        ig,ig_,_ = s2x_ii("ARC00024",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00024",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00024")
-        ig,ig_,_ = s2x_ii("ARC00025",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00025",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00025")
-        ig,ig_,_ = s2x_ii("ARC00026",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00026",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00026")
-        ig,ig_,_ = s2x_ii("ARC00027",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00027",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00027")
-        ig,ig_,_ = s2x_ii("ARC00028",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00028",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00028")
-        ig,ig_,_ = s2x_ii("ARC00029",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00029",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00029")
-        ig,ig_,_ = s2x_ii("ARC00030",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00030",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00030")
-        ig,ig_,_ = s2x_ii("ARC00031",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00031",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00031")
-        ig,ig_,_ = s2x_ii("ARC00032",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00032",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00032")
-        ig,ig_,_ = s2x_ii("ARC00033",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00033",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00033")
-        ig,ig_,_ = s2x_ii("ARC00034",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00034",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00034")
-        ig,ig_,_ = s2x_ii("ARC00035",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00035",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00035")
-        ig,ig_,_ = s2x_ii("ARC00036",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00036",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00036")
-        ig,ig_,_ = s2x_ii("ARC00037",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00037",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00037")
-        ig,ig_,_ = s2x_ii("ARC00038",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00038",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00038")
-        ig,ig_,_ = s2x_ii("ARC00039",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00039",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00039")
-        ig,ig_,_ = s2x_ii("ARC00040",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00040",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00040")
-        ig,ig_,_ = s2x_ii("ARC00041",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00041",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00041")
-        ig,ig_,_ = s2x_ii("ARC00042",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00042",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00042")
-        ig,ig_,_ = s2x_ii("ARC00043",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00043",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00043")
-        ig,ig_,_ = s2x_ii("ARC00044",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00044",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00044")
-        ig,ig_,_ = s2x_ii("ARC00045",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00045",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00045")
-        ig,ig_,_ = s2x_ii("ARC00046",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00046",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00046")
-        ig,ig_,_ = s2x_ii("ARC00047",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00047",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00047")
-        ig,ig_,_ = s2x_ii("ARC00048",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00048",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00048")
-        ig,ig_,_ = s2x_ii("ARC00049",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00049",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00049")
-        ig,ig_,_ = s2x_ii("ARC00050",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00050",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00050")
-        ig,ig_,_ = s2x_ii("ARC00051",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00051",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00051")
-        ig,ig_,_ = s2x_ii("ARC00052",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00052",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00052")
-        ig,ig_,_ = s2x_ii("ARC00053",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00053",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00053")
-        ig,ig_,_ = s2x_ii("ARC00054",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00054",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00054")
-        ig,ig_,_ = s2x_ii("ARC00055",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00055",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00055")
-        ig,ig_,_ = s2x_ii("ARC00056",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00056",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00056")
-        ig,ig_,_ = s2x_ii("ARC00057",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00057",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00057")
-        ig,ig_,_ = s2x_ii("ARC00058",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00058",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00058")
-        ig,ig_,_ = s2x_ii("ARC00059",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00059",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00059")
-        ig,ig_,_ = s2x_ii("ARC00060",ig_)
+        ig,ig_,_ = s2mpj_ii("ARC00060",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ARC00060")
-        ig,ig_,_ = s2x_ii("REGIO001",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO001",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO001")
-        ig,ig_,_ = s2x_ii("REGIO002",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO002",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO002")
-        ig,ig_,_ = s2x_ii("REGIO003",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO003",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO003")
-        ig,ig_,_ = s2x_ii("REGIO004",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO004",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO004")
-        ig,ig_,_ = s2x_ii("REGIO005",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO005",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO005")
-        ig,ig_,_ = s2x_ii("REGIO006",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO006",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO006")
-        ig,ig_,_ = s2x_ii("REGIO007",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO007",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO007")
-        ig,ig_,_ = s2x_ii("REGIO008",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO008",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO008")
-        ig,ig_,_ = s2x_ii("REGIO009",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO009",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO009")
-        ig,ig_,_ = s2x_ii("REGIO010",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO010",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO010")
-        ig,ig_,_ = s2x_ii("REGIO011",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO011",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO011")
-        ig,ig_,_ = s2x_ii("REGIO012",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO012",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO012")
-        ig,ig_,_ = s2x_ii("REGIO013",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO013",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO013")
-        ig,ig_,_ = s2x_ii("REGIO014",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO014",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO014")
-        ig,ig_,_ = s2x_ii("REGIO015",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO015",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO015")
-        ig,ig_,_ = s2x_ii("REGIO016",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO016",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO016")
-        ig,ig_,_ = s2x_ii("REGIO017",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO017",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO017")
-        ig,ig_,_ = s2x_ii("REGIO018",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO018",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO018")
-        ig,ig_,_ = s2x_ii("REGIO019",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO019",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO019")
-        ig,ig_,_ = s2x_ii("REGIO020",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO020",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO020")
-        ig,ig_,_ = s2x_ii("REGIO021",ig_)
+        ig,ig_,_ = s2mpj_ii("REGIO021",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"REGIO021")
-        ig,ig_,_ = s2x_ii("PROD0001",ig_)
+        ig,ig_,_ = s2mpj_ii("PROD0001",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"PROD0001")
-        ig,ig_,_ = s2x_ii("PROD0002",ig_)
+        ig,ig_,_ = s2mpj_ii("PROD0002",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"PROD0002")
-        ig,ig_,_ = s2x_ii("PROD0003",ig_)
+        ig,ig_,_ = s2mpj_ii("PROD0003",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"PROD0003")
-        ig,ig_,_ = s2x_ii("PROD0004",ig_)
+        ig,ig_,_ = s2mpj_ii("PROD0004",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"PROD0004")
-        ig,ig_,_ = s2x_ii("PROD0005",ig_)
+        ig,ig_,_ = s2mpj_ii("PROD0005",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"PROD0005")
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         ngrp   = length(ig_)
-        iv,ix_,_ = s2x_ii("FLOW0001",ix_)
+        iv,ix_,_ = s2mpj_ii("FLOW0001",ix_)
         arrset(pb.xnames,iv,"FLOW0001")
         ig = ig_["NODE0001"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0002"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0002",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0002",ix_)
         arrset(pb.xnames,iv,"FLOW0002")
         ig = ig_["NODE0003"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0003",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0003",ix_)
         arrset(pb.xnames,iv,"FLOW0003")
         ig = ig_["NODE0005"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0006"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0004",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0004",ix_)
         arrset(pb.xnames,iv,"FLOW0004")
         ig = ig_["NODE0006"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0007"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0005",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0005",ix_)
         arrset(pb.xnames,iv,"FLOW0005")
         ig = ig_["NODE0008"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0009"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0006",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0006",ix_)
         arrset(pb.xnames,iv,"FLOW0006")
         ig = ig_["NODE0009"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0010"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0007",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0007",ix_)
         arrset(pb.xnames,iv,"FLOW0007")
         ig = ig_["NODE0010"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0011"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0008",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0008",ix_)
         arrset(pb.xnames,iv,"FLOW0008")
         ig = ig_["NODE0012"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0010"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0009",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0009",ix_)
         arrset(pb.xnames,iv,"FLOW0009")
         ig = ig_["NODE0008"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0013"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0010",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0010",ix_)
         arrset(pb.xnames,iv,"FLOW0010")
         ig = ig_["NODE0013"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0012"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0011",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0011",ix_)
         arrset(pb.xnames,iv,"FLOW0011")
         ig = ig_["NODE0012"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0014"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0012",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0012",ix_)
         arrset(pb.xnames,iv,"FLOW0012")
         ig = ig_["NODE0014"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0015"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0013",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0013",ix_)
         arrset(pb.xnames,iv,"FLOW0013")
         ig = ig_["NODE0016"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0017"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0014",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0014",ix_)
         arrset(pb.xnames,iv,"FLOW0014")
         ig = ig_["NODE0017"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0018"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0015",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0015",ix_)
         arrset(pb.xnames,iv,"FLOW0015")
         ig = ig_["NODE0018"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0015"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0016",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0016",ix_)
         arrset(pb.xnames,iv,"FLOW0016")
         ig = ig_["NODE0015"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0001"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0017",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0017",ix_)
         arrset(pb.xnames,iv,"FLOW0017")
         ig = ig_["NODE0019"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0020"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0018",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0018",ix_)
         arrset(pb.xnames,iv,"FLOW0018")
         ig = ig_["NODE0020"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0021"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0019",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0019",ix_)
         arrset(pb.xnames,iv,"FLOW0019")
         ig = ig_["NODE0021"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0022"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0020",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0020",ix_)
         arrset(pb.xnames,iv,"FLOW0020")
         ig = ig_["NODE0023"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0024"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0021",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0021",ix_)
         arrset(pb.xnames,iv,"FLOW0021")
         ig = ig_["NODE0024"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0025"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0022",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0022",ix_)
         arrset(pb.xnames,iv,"FLOW0022")
         ig = ig_["NODE0025"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0026"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0023",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0023",ix_)
         arrset(pb.xnames,iv,"FLOW0023")
         ig = ig_["NODE0026"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0027"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0024",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0024",ix_)
         arrset(pb.xnames,iv,"FLOW0024")
         ig = ig_["NODE0028"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0027"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0025",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0025",ix_)
         arrset(pb.xnames,iv,"FLOW0025")
         ig = ig_["NODE0029"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0028"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0026",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0026",ix_)
         arrset(pb.xnames,iv,"FLOW0026")
         ig = ig_["NODE0028"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0027",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0027",ix_)
         arrset(pb.xnames,iv,"FLOW0027")
         ig = ig_["NODE0019"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0031"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0028",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0028",ix_)
         arrset(pb.xnames,iv,"FLOW0028")
         ig = ig_["NODE0031"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0032"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0029",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0029",ix_)
         arrset(pb.xnames,iv,"FLOW0029")
         ig = ig_["NODE0032"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0033"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0030",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0030",ix_)
         arrset(pb.xnames,iv,"FLOW0030")
         ig = ig_["NODE0033"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0031",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0031",ix_)
         arrset(pb.xnames,iv,"FLOW0031")
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0034"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0032",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0032",ix_)
         arrset(pb.xnames,iv,"FLOW0032")
         ig = ig_["NODE0034"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0035"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0033",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0033",ix_)
         arrset(pb.xnames,iv,"FLOW0033")
         ig = ig_["NODE0035"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0024"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0034",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0034",ix_)
         arrset(pb.xnames,iv,"FLOW0034")
         ig = ig_["NODE0027"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0034"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0035",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0035",ix_)
         arrset(pb.xnames,iv,"FLOW0035")
         ig = ig_["NODE0036"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0007"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0036",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0036",ix_)
         arrset(pb.xnames,iv,"FLOW0036")
         ig = ig_["NODE0007"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0016"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0037",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0037",ix_)
         arrset(pb.xnames,iv,"FLOW0037")
         ig = ig_["NODE0037"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0038"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0038",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0038",ix_)
         arrset(pb.xnames,iv,"FLOW0038")
         ig = ig_["NODE0038"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0036"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0039",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0039",ix_)
         arrset(pb.xnames,iv,"FLOW0039")
         ig = ig_["NODE0028"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0040",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0040",ix_)
         arrset(pb.xnames,iv,"FLOW0040")
         ig = ig_["NODE0019"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0031"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0041",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0041",ix_)
         arrset(pb.xnames,iv,"FLOW0041")
         ig = ig_["NODE0031"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0032"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0042",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0042",ix_)
         arrset(pb.xnames,iv,"FLOW0042")
         ig = ig_["NODE0032"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0033"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0043",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0043",ix_)
         arrset(pb.xnames,iv,"FLOW0043")
         ig = ig_["NODE0033"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0044",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0044",ix_)
         arrset(pb.xnames,iv,"FLOW0044")
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0034"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0045",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0045",ix_)
         arrset(pb.xnames,iv,"FLOW0045")
         ig = ig_["NODE0034"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0035"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0046",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0046",ix_)
         arrset(pb.xnames,iv,"FLOW0046")
         ig = ig_["NODE0035"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0024"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0047",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0047",ix_)
         arrset(pb.xnames,iv,"FLOW0047")
         ig = ig_["NODE0036"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0007"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0048",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0048",ix_)
         arrset(pb.xnames,iv,"FLOW0048")
         ig = ig_["NODE0007"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0016"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0049",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0049",ix_)
         arrset(pb.xnames,iv,"FLOW0049")
         ig = ig_["NODE0037"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0039"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0050",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0050",ix_)
         arrset(pb.xnames,iv,"FLOW0050")
         ig = ig_["NODE0039"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0040"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0051",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0051",ix_)
         arrset(pb.xnames,iv,"FLOW0051")
         ig = ig_["NODE0041"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0040"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0052",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0052",ix_)
         arrset(pb.xnames,iv,"FLOW0052")
         ig = ig_["NODE0040"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0029"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0053",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0053",ix_)
         arrset(pb.xnames,iv,"FLOW0053")
         ig = ig_["NODE0029"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0042"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0054",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0054",ix_)
         arrset(pb.xnames,iv,"FLOW0054")
         ig = ig_["NODE0042"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0016"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0055",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0055",ix_)
         arrset(pb.xnames,iv,"FLOW0055")
         ig = ig_["NODE0003"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0043"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0056",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0056",ix_)
         arrset(pb.xnames,iv,"FLOW0056")
         ig = ig_["NODE0043"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0001"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0057",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0057",ix_)
         arrset(pb.xnames,iv,"FLOW0057")
         ig = ig_["NODE0044"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0045"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0058",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0058",ix_)
         arrset(pb.xnames,iv,"FLOW0058")
         ig = ig_["NODE0045"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0046"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0059",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0059",ix_)
         arrset(pb.xnames,iv,"FLOW0059")
         ig = ig_["NODE0044"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0047"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("FLOW0060",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("FLOW0060",ix_)
         arrset(pb.xnames,iv,"FLOW0060")
         ig = ig_["NODE0047"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0048"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00001",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00001",ix_)
         arrset(pb.xnames,iv,"DEM00001")
         ig = ig_["NODE0044"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO001"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00002",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00002",ix_)
         arrset(pb.xnames,iv,"DEM00002")
         ig = ig_["NODE0038"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO002"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00003",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00003",ix_)
         arrset(pb.xnames,iv,"DEM00003")
         ig = ig_["NODE0045"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO002"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00004",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00004",ix_)
         arrset(pb.xnames,iv,"DEM00004")
         ig = ig_["NODE0046"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO002"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00005",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00005",ix_)
         arrset(pb.xnames,iv,"DEM00005")
         ig = ig_["NODE0004"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO003"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00006",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00006",ix_)
         arrset(pb.xnames,iv,"DEM00006")
         ig = ig_["NODE0005"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO003"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00007",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00007",ix_)
         arrset(pb.xnames,iv,"DEM00007")
         ig = ig_["NODE0002"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00008",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00008",ix_)
         arrset(pb.xnames,iv,"DEM00008")
         ig = ig_["NODE0006"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00009",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00009",ix_)
         arrset(pb.xnames,iv,"DEM00009")
         ig = ig_["NODE0011"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00010",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00010",ix_)
         arrset(pb.xnames,iv,"DEM00010")
         ig = ig_["NODE0016"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00011",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00011",ix_)
         arrset(pb.xnames,iv,"DEM00011")
         ig = ig_["NODE0036"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00012",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00012",ix_)
         arrset(pb.xnames,iv,"DEM00012")
         ig = ig_["NODE0042"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO005"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00013",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00013",ix_)
         arrset(pb.xnames,iv,"DEM00013")
         ig = ig_["NODE0047"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO005"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00014",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00014",ix_)
         arrset(pb.xnames,iv,"DEM00014")
         ig = ig_["NODE0039"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO006"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00015",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00015",ix_)
         arrset(pb.xnames,iv,"DEM00015")
         ig = ig_["NODE0040"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO006"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00016",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00016",ix_)
         arrset(pb.xnames,iv,"DEM00016")
         ig = ig_["NODE0048"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO006"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00017",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00017",ix_)
         arrset(pb.xnames,iv,"DEM00017")
         ig = ig_["NODE0041"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO007"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00018",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00018",ix_)
         arrset(pb.xnames,iv,"DEM00018")
         ig = ig_["NODE0030"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO008"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00019",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00019",ix_)
         arrset(pb.xnames,iv,"DEM00019")
         ig = ig_["NODE0028"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO009"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00020",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00020",ix_)
         arrset(pb.xnames,iv,"DEM00020")
         ig = ig_["NODE0043"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO010"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00021",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00021",ix_)
         arrset(pb.xnames,iv,"DEM00021")
         ig = ig_["NODE0008"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO011"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00022",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00022",ix_)
         arrset(pb.xnames,iv,"DEM00022")
         ig = ig_["NODE0009"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO012"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00023",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00023",ix_)
         arrset(pb.xnames,iv,"DEM00023")
         ig = ig_["NODE0013"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO012"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00024",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00024",ix_)
         arrset(pb.xnames,iv,"DEM00024")
         ig = ig_["NODE0014"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO013"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00025",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00025",ix_)
         arrset(pb.xnames,iv,"DEM00025")
         ig = ig_["NODE0017"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO013"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00026",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00026",ix_)
         arrset(pb.xnames,iv,"DEM00026")
         ig = ig_["NODE0018"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO013"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00027",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00027",ix_)
         arrset(pb.xnames,iv,"DEM00027")
         ig = ig_["NODE0020"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO014"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00028",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00028",ix_)
         arrset(pb.xnames,iv,"DEM00028")
         ig = ig_["NODE0021"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO014"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00029",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00029",ix_)
         arrset(pb.xnames,iv,"DEM00029")
         ig = ig_["NODE0031"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO015"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00030",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00030",ix_)
         arrset(pb.xnames,iv,"DEM00030")
         ig = ig_["NODE0022"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO016"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00031",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00031",ix_)
         arrset(pb.xnames,iv,"DEM00031")
         ig = ig_["NODE0022"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO017"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00032",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00032",ix_)
         arrset(pb.xnames,iv,"DEM00032")
         ig = ig_["NODE0033"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO018"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00033",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00033",ix_)
         arrset(pb.xnames,iv,"DEM00033")
         ig = ig_["NODE0025"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO019"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00034",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00034",ix_)
         arrset(pb.xnames,iv,"DEM00034")
         ig = ig_["NODE0026"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO019"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00035",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00035",ix_)
         arrset(pb.xnames,iv,"DEM00035")
         ig = ig_["NODE0035"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO019"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00036",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00036",ix_)
         arrset(pb.xnames,iv,"DEM00036")
         ig = ig_["NODE0023"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO020"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("DEM00037",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("DEM00037",ix_)
         arrset(pb.xnames,iv,"DEM00037")
         ig = ig_["NODE0023"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["REGIO021"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0001",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0001",ix_)
         arrset(pb.xnames,iv,"SUPP0001")
         ig = ig_["PROD0001"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0021"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0002",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0002",ix_)
         arrset(pb.xnames,iv,"SUPP0002")
         ig = ig_["PROD0002"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0044"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0003",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0003",ix_)
         arrset(pb.xnames,iv,"SUPP0003")
         ig = ig_["PROD0003"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0041"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0004",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0004",ix_)
         arrset(pb.xnames,iv,"SUPP0004")
         ig = ig_["PROD0004"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0003"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0005",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0005",ix_)
         arrset(pb.xnames,iv,"SUPP0005")
         ig = ig_["PROD0004"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0008"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0006",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0006",ix_)
         arrset(pb.xnames,iv,"SUPP0006")
         ig = ig_["PROD0004"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0023"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("SUPP0007",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("SUPP0007",ix_)
         arrset(pb.xnames,iv,"SUPP0007")
         ig = ig_["PROD0005"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["NODE0037"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PROD0001",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PROD0001",ix_)
         arrset(pb.xnames,iv,"PROD0001")
         ig = ig_["COST"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["PROD0001"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PROD0002",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PROD0002",ix_)
         arrset(pb.xnames,iv,"PROD0002")
         ig = ig_["COST"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["PROD0002"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PROD0003",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PROD0003",ix_)
         arrset(pb.xnames,iv,"PROD0003")
         ig = ig_["COST"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["PROD0003"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PROD0004",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PROD0004",ix_)
         arrset(pb.xnames,iv,"PROD0004")
         ig = ig_["COST"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["PROD0004"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PROD0005",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PROD0005",ix_)
         arrset(pb.xnames,iv,"PROD0005")
         ig = ig_["COST"]
-        pbm.A[ig,iv] += 1.00000E+00
+        pbm.A[ig,iv] += Float64(1.00000E+00)
         ig = ig_["PROD0005"]
-        pbm.A[ig,iv] += -1.00000E+00
-        iv,ix_,_ = s2x_ii("PI000001",ix_)
+        pbm.A[ig,iv] += Float64(-1.00000E+00)
+        iv,ix_,_ = s2mpj_ii("PI000001",ix_)
         arrset(pb.xnames,iv,"PI000001")
         ig = ig_["ARC00001"]
-        pbm.A[ig,iv] += -6.97133E-01
-        iv,ix_,_ = s2x_ii("PI000001",ix_)
+        pbm.A[ig,iv] += Float64(-6.97133E-01)
+        iv,ix_,_ = s2mpj_ii("PI000001",ix_)
         arrset(pb.xnames,iv,"PI000001")
         ig = ig_["ARC00016"]
-        pbm.A[ig,iv] += 1.81479E-02
-        iv,ix_,_ = s2x_ii("PI000001",ix_)
+        pbm.A[ig,iv] += Float64(1.81479E-02)
+        iv,ix_,_ = s2mpj_ii("PI000001",ix_)
         arrset(pb.xnames,iv,"PI000001")
         ig = ig_["ARC00056"]
-        pbm.A[ig,iv] += 2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000002",ix_)
+        pbm.A[ig,iv] += Float64(2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000002",ix_)
         arrset(pb.xnames,iv,"PI000002")
         ig = ig_["ARC00001"]
-        pbm.A[ig,iv] += 6.97133E-01
-        iv,ix_,_ = s2x_ii("PI000003",ix_)
+        pbm.A[ig,iv] += Float64(6.97133E-01)
+        iv,ix_,_ = s2mpj_ii("PI000003",ix_)
         arrset(pb.xnames,iv,"PI000003")
         ig = ig_["ARC00002"]
-        pbm.A[ig,iv] += -2.65927E-03
-        iv,ix_,_ = s2x_ii("PI000003",ix_)
+        pbm.A[ig,iv] += Float64(-2.65927E-03)
+        iv,ix_,_ = s2mpj_ii("PI000003",ix_)
         arrset(pb.xnames,iv,"PI000003")
         ig = ig_["ARC00055"]
-        pbm.A[ig,iv] += -3.99253E-02
-        iv,ix_,_ = s2x_ii("PI000004",ix_)
+        pbm.A[ig,iv] += Float64(-3.99253E-02)
+        iv,ix_,_ = s2mpj_ii("PI000004",ix_)
         arrset(pb.xnames,iv,"PI000004")
         ig = ig_["ARC00002"]
-        pbm.A[ig,iv] += 2.65927E-03
-        iv,ix_,_ = s2x_ii("PI000005",ix_)
+        pbm.A[ig,iv] += Float64(2.65927E-03)
+        iv,ix_,_ = s2mpj_ii("PI000005",ix_)
         arrset(pb.xnames,iv,"PI000005")
         ig = ig_["ARC00003"]
-        pbm.A[ig,iv] += -1.72371E-01
-        iv,ix_,_ = s2x_ii("PI000006",ix_)
+        pbm.A[ig,iv] += Float64(-1.72371E-01)
+        iv,ix_,_ = s2mpj_ii("PI000006",ix_)
         arrset(pb.xnames,iv,"PI000006")
         ig = ig_["ARC00003"]
-        pbm.A[ig,iv] += 1.72371E-01
-        iv,ix_,_ = s2x_ii("PI000006",ix_)
+        pbm.A[ig,iv] += Float64(1.72371E-01)
+        iv,ix_,_ = s2mpj_ii("PI000006",ix_)
         arrset(pb.xnames,iv,"PI000006")
         ig = ig_["ARC00004"]
-        pbm.A[ig,iv] += -2.58556E-01
-        iv,ix_,_ = s2x_ii("PI000007",ix_)
+        pbm.A[ig,iv] += Float64(-2.58556E-01)
+        iv,ix_,_ = s2mpj_ii("PI000007",ix_)
         arrset(pb.xnames,iv,"PI000007")
         ig = ig_["ARC00004"]
-        pbm.A[ig,iv] += 2.58556E-01
-        iv,ix_,_ = s2x_ii("PI000007",ix_)
+        pbm.A[ig,iv] += Float64(2.58556E-01)
+        iv,ix_,_ = s2mpj_ii("PI000007",ix_)
         arrset(pb.xnames,iv,"PI000007")
         ig = ig_["ARC00035"]
-        pbm.A[ig,iv] += 9.98133E-02
-        iv,ix_,_ = s2x_ii("PI000007",ix_)
+        pbm.A[ig,iv] += Float64(9.98133E-02)
+        iv,ix_,_ = s2mpj_ii("PI000007",ix_)
         arrset(pb.xnames,iv,"PI000007")
         ig = ig_["ARC00036"]
-        pbm.A[ig,iv] += -4.99067E-02
-        iv,ix_,_ = s2x_ii("PI000007",ix_)
+        pbm.A[ig,iv] += Float64(-4.99067E-02)
+        iv,ix_,_ = s2mpj_ii("PI000007",ix_)
         arrset(pb.xnames,iv,"PI000007")
         ig = ig_["ARC00047"]
-        pbm.A[ig,iv] += 2.09022E+00
-        iv,ix_,_ = s2x_ii("PI000007",ix_)
+        pbm.A[ig,iv] += Float64(2.09022E+00)
+        iv,ix_,_ = s2mpj_ii("PI000007",ix_)
         arrset(pb.xnames,iv,"PI000007")
         ig = ig_["ARC00048"]
-        pbm.A[ig,iv] += -6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000008",ix_)
+        pbm.A[ig,iv] += Float64(-6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000008",ix_)
         arrset(pb.xnames,iv,"PI000008")
         ig = ig_["ARC00005"]
-        pbm.A[ig,iv] += -1.90020E-01
-        iv,ix_,_ = s2x_ii("PI000008",ix_)
+        pbm.A[ig,iv] += Float64(-1.90020E-01)
+        iv,ix_,_ = s2mpj_ii("PI000008",ix_)
         arrset(pb.xnames,iv,"PI000008")
         ig = ig_["ARC00009"]
-        pbm.A[ig,iv] += -6.11442E-03
-        iv,ix_,_ = s2x_ii("PI000009",ix_)
+        pbm.A[ig,iv] += Float64(-6.11442E-03)
+        iv,ix_,_ = s2mpj_ii("PI000009",ix_)
         arrset(pb.xnames,iv,"PI000009")
         ig = ig_["ARC00005"]
-        pbm.A[ig,iv] += 1.90020E-01
-        iv,ix_,_ = s2x_ii("PI000009",ix_)
+        pbm.A[ig,iv] += Float64(1.90020E-01)
+        iv,ix_,_ = s2mpj_ii("PI000009",ix_)
         arrset(pb.xnames,iv,"PI000009")
         ig = ig_["ARC00006"]
-        pbm.A[ig,iv] += -4.18044E+00
-        iv,ix_,_ = s2x_ii("PI000010",ix_)
+        pbm.A[ig,iv] += Float64(-4.18044E+00)
+        iv,ix_,_ = s2mpj_ii("PI000010",ix_)
         arrset(pb.xnames,iv,"PI000010")
         ig = ig_["ARC00006"]
-        pbm.A[ig,iv] += 4.18044E+00
-        iv,ix_,_ = s2x_ii("PI000010",ix_)
+        pbm.A[ig,iv] += Float64(4.18044E+00)
+        iv,ix_,_ = s2mpj_ii("PI000010",ix_)
         arrset(pb.xnames,iv,"PI000010")
         ig = ig_["ARC00007"]
-        pbm.A[ig,iv] += -3.21572E-01
-        iv,ix_,_ = s2x_ii("PI000010",ix_)
+        pbm.A[ig,iv] += Float64(-3.21572E-01)
+        iv,ix_,_ = s2mpj_ii("PI000010",ix_)
         arrset(pb.xnames,iv,"PI000010")
         ig = ig_["ARC00008"]
-        pbm.A[ig,iv] += 4.32263E-02
-        iv,ix_,_ = s2x_ii("PI000011",ix_)
+        pbm.A[ig,iv] += Float64(4.32263E-02)
+        iv,ix_,_ = s2mpj_ii("PI000011",ix_)
         arrset(pb.xnames,iv,"PI000011")
         ig = ig_["ARC00007"]
-        pbm.A[ig,iv] += 3.21572E-01
-        iv,ix_,_ = s2x_ii("PI000012",ix_)
+        pbm.A[ig,iv] += Float64(3.21572E-01)
+        iv,ix_,_ = s2mpj_ii("PI000012",ix_)
         arrset(pb.xnames,iv,"PI000012")
         ig = ig_["ARC00008"]
-        pbm.A[ig,iv] += -4.32263E-02
-        iv,ix_,_ = s2x_ii("PI000012",ix_)
+        pbm.A[ig,iv] += Float64(-4.32263E-02)
+        iv,ix_,_ = s2mpj_ii("PI000012",ix_)
         arrset(pb.xnames,iv,"PI000012")
         ig = ig_["ARC00010"]
-        pbm.A[ig,iv] += 1.16174E-02
-        iv,ix_,_ = s2x_ii("PI000012",ix_)
+        pbm.A[ig,iv] += Float64(1.16174E-02)
+        iv,ix_,_ = s2mpj_ii("PI000012",ix_)
         arrset(pb.xnames,iv,"PI000012")
         ig = ig_["ARC00011"]
-        pbm.A[ig,iv] += -2.59358E-01
-        iv,ix_,_ = s2x_ii("PI000013",ix_)
+        pbm.A[ig,iv] += Float64(-2.59358E-01)
+        iv,ix_,_ = s2mpj_ii("PI000013",ix_)
         arrset(pb.xnames,iv,"PI000013")
         ig = ig_["ARC00009"]
-        pbm.A[ig,iv] += 6.11442E-03
-        iv,ix_,_ = s2x_ii("PI000013",ix_)
+        pbm.A[ig,iv] += Float64(6.11442E-03)
+        iv,ix_,_ = s2mpj_ii("PI000013",ix_)
         arrset(pb.xnames,iv,"PI000013")
         ig = ig_["ARC00010"]
-        pbm.A[ig,iv] += -1.16174E-02
-        iv,ix_,_ = s2x_ii("PI000014",ix_)
+        pbm.A[ig,iv] += Float64(-1.16174E-02)
+        iv,ix_,_ = s2mpj_ii("PI000014",ix_)
         arrset(pb.xnames,iv,"PI000014")
         ig = ig_["ARC00011"]
-        pbm.A[ig,iv] += 2.59358E-01
-        iv,ix_,_ = s2x_ii("PI000014",ix_)
+        pbm.A[ig,iv] += Float64(2.59358E-01)
+        iv,ix_,_ = s2mpj_ii("PI000014",ix_)
         arrset(pb.xnames,iv,"PI000014")
         ig = ig_["ARC00012"]
-        pbm.A[ig,iv] += -2.59358E-01
-        iv,ix_,_ = s2x_ii("PI000015",ix_)
+        pbm.A[ig,iv] += Float64(-2.59358E-01)
+        iv,ix_,_ = s2mpj_ii("PI000015",ix_)
         arrset(pb.xnames,iv,"PI000015")
         ig = ig_["ARC00012"]
-        pbm.A[ig,iv] += 2.59358E-01
-        iv,ix_,_ = s2x_ii("PI000015",ix_)
+        pbm.A[ig,iv] += Float64(2.59358E-01)
+        iv,ix_,_ = s2mpj_ii("PI000015",ix_)
         arrset(pb.xnames,iv,"PI000015")
         ig = ig_["ARC00015"]
-        pbm.A[ig,iv] += 2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000015",ix_)
+        pbm.A[ig,iv] += Float64(2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000015",ix_)
         arrset(pb.xnames,iv,"PI000015")
         ig = ig_["ARC00016"]
-        pbm.A[ig,iv] += -1.81479E-02
-        iv,ix_,_ = s2x_ii("PI000016",ix_)
+        pbm.A[ig,iv] += Float64(-1.81479E-02)
+        iv,ix_,_ = s2mpj_ii("PI000016",ix_)
         arrset(pb.xnames,iv,"PI000016")
         ig = ig_["ARC00013"]
-        pbm.A[ig,iv] += -2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000016",ix_)
+        pbm.A[ig,iv] += Float64(-2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000016",ix_)
         arrset(pb.xnames,iv,"PI000016")
         ig = ig_["ARC00036"]
-        pbm.A[ig,iv] += 4.99067E-02
-        iv,ix_,_ = s2x_ii("PI000016",ix_)
+        pbm.A[ig,iv] += Float64(4.99067E-02)
+        iv,ix_,_ = s2mpj_ii("PI000016",ix_)
         arrset(pb.xnames,iv,"PI000016")
         ig = ig_["ARC00048"]
-        pbm.A[ig,iv] += 6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000016",ix_)
+        pbm.A[ig,iv] += Float64(6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000016",ix_)
         arrset(pb.xnames,iv,"PI000016")
         ig = ig_["ARC00054"]
-        pbm.A[ig,iv] += 1.36747E-01
-        iv,ix_,_ = s2x_ii("PI000017",ix_)
+        pbm.A[ig,iv] += Float64(1.36747E-01)
+        iv,ix_,_ = s2mpj_ii("PI000017",ix_)
         arrset(pb.xnames,iv,"PI000017")
         ig = ig_["ARC00013"]
-        pbm.A[ig,iv] += 2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000017",ix_)
+        pbm.A[ig,iv] += Float64(2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000017",ix_)
         arrset(pb.xnames,iv,"PI000017")
         ig = ig_["ARC00014"]
-        pbm.A[ig,iv] += -3.99253E-02
-        iv,ix_,_ = s2x_ii("PI000018",ix_)
+        pbm.A[ig,iv] += Float64(-3.99253E-02)
+        iv,ix_,_ = s2mpj_ii("PI000018",ix_)
         arrset(pb.xnames,iv,"PI000018")
         ig = ig_["ARC00014"]
-        pbm.A[ig,iv] += 3.99253E-02
-        iv,ix_,_ = s2x_ii("PI000018",ix_)
+        pbm.A[ig,iv] += Float64(3.99253E-02)
+        iv,ix_,_ = s2mpj_ii("PI000018",ix_)
         arrset(pb.xnames,iv,"PI000018")
         ig = ig_["ARC00015"]
-        pbm.A[ig,iv] += -2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000019",ix_)
+        pbm.A[ig,iv] += Float64(-2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000019",ix_)
         arrset(pb.xnames,iv,"PI000019")
         ig = ig_["ARC00017"]
-        pbm.A[ig,iv] += -8.64525E-02
-        iv,ix_,_ = s2x_ii("PI000019",ix_)
+        pbm.A[ig,iv] += Float64(-8.64525E-02)
+        iv,ix_,_ = s2mpj_ii("PI000019",ix_)
         arrset(pb.xnames,iv,"PI000019")
         ig = ig_["ARC00027"]
-        pbm.A[ig,iv] += -3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000019",ix_)
+        pbm.A[ig,iv] += Float64(-3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000019",ix_)
         arrset(pb.xnames,iv,"PI000019")
         ig = ig_["ARC00040"]
-        pbm.A[ig,iv] += -1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000020",ix_)
+        pbm.A[ig,iv] += Float64(-1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000020",ix_)
         arrset(pb.xnames,iv,"PI000020")
         ig = ig_["ARC00017"]
-        pbm.A[ig,iv] += 8.64525E-02
-        iv,ix_,_ = s2x_ii("PI000020",ix_)
+        pbm.A[ig,iv] += Float64(8.64525E-02)
+        iv,ix_,_ = s2mpj_ii("PI000020",ix_)
         arrset(pb.xnames,iv,"PI000020")
         ig = ig_["ARC00018"]
-        pbm.A[ig,iv] += -7.41022E-02
-        iv,ix_,_ = s2x_ii("PI000021",ix_)
+        pbm.A[ig,iv] += Float64(-7.41022E-02)
+        iv,ix_,_ = s2mpj_ii("PI000021",ix_)
         arrset(pb.xnames,iv,"PI000021")
         ig = ig_["ARC00018"]
-        pbm.A[ig,iv] += 7.41022E-02
-        iv,ix_,_ = s2x_ii("PI000021",ix_)
+        pbm.A[ig,iv] += Float64(7.41022E-02)
+        iv,ix_,_ = s2mpj_ii("PI000021",ix_)
         arrset(pb.xnames,iv,"PI000021")
         ig = ig_["ARC00019"]
-        pbm.A[ig,iv] += -1.90020E-01
-        iv,ix_,_ = s2x_ii("PI000022",ix_)
+        pbm.A[ig,iv] += Float64(-1.90020E-01)
+        iv,ix_,_ = s2mpj_ii("PI000022",ix_)
         arrset(pb.xnames,iv,"PI000022")
         ig = ig_["ARC00019"]
-        pbm.A[ig,iv] += 1.90020E-01
-        iv,ix_,_ = s2x_ii("PI000023",ix_)
+        pbm.A[ig,iv] += Float64(1.90020E-01)
+        iv,ix_,_ = s2mpj_ii("PI000023",ix_)
         arrset(pb.xnames,iv,"PI000023")
         ig = ig_["ARC00020"]
-        pbm.A[ig,iv] += -2.35780E-02
-        iv,ix_,_ = s2x_ii("PI000024",ix_)
+        pbm.A[ig,iv] += Float64(-2.35780E-02)
+        iv,ix_,_ = s2mpj_ii("PI000024",ix_)
         arrset(pb.xnames,iv,"PI000024")
         ig = ig_["ARC00020"]
-        pbm.A[ig,iv] += 2.35780E-02
-        iv,ix_,_ = s2x_ii("PI000024",ix_)
+        pbm.A[ig,iv] += Float64(2.35780E-02)
+        iv,ix_,_ = s2mpj_ii("PI000024",ix_)
         arrset(pb.xnames,iv,"PI000024")
         ig = ig_["ARC00021"]
-        pbm.A[ig,iv] += -4.18044E+00
-        iv,ix_,_ = s2x_ii("PI000024",ix_)
+        pbm.A[ig,iv] += Float64(-4.18044E+00)
+        iv,ix_,_ = s2mpj_ii("PI000024",ix_)
         arrset(pb.xnames,iv,"PI000024")
         ig = ig_["ARC00033"]
-        pbm.A[ig,iv] += 6.07700E-03
-        iv,ix_,_ = s2x_ii("PI000024",ix_)
+        pbm.A[ig,iv] += Float64(6.07700E-03)
+        iv,ix_,_ = s2mpj_ii("PI000024",ix_)
         arrset(pb.xnames,iv,"PI000024")
         ig = ig_["ARC00046"]
-        pbm.A[ig,iv] += 6.07700E-03
-        iv,ix_,_ = s2x_ii("PI000025",ix_)
+        pbm.A[ig,iv] += Float64(6.07700E-03)
+        iv,ix_,_ = s2mpj_ii("PI000025",ix_)
         arrset(pb.xnames,iv,"PI000025")
         ig = ig_["ARC00021"]
-        pbm.A[ig,iv] += 4.18044E+00
-        iv,ix_,_ = s2x_ii("PI000025",ix_)
+        pbm.A[ig,iv] += Float64(4.18044E+00)
+        iv,ix_,_ = s2mpj_ii("PI000025",ix_)
         arrset(pb.xnames,iv,"PI000025")
         ig = ig_["ARC00022"]
-        pbm.A[ig,iv] += -5.22555E-01
-        iv,ix_,_ = s2x_ii("PI000026",ix_)
+        pbm.A[ig,iv] += Float64(-5.22555E-01)
+        iv,ix_,_ = s2mpj_ii("PI000026",ix_)
         arrset(pb.xnames,iv,"PI000026")
         ig = ig_["ARC00022"]
-        pbm.A[ig,iv] += 5.22555E-01
-        iv,ix_,_ = s2x_ii("PI000026",ix_)
+        pbm.A[ig,iv] += Float64(5.22555E-01)
+        iv,ix_,_ = s2mpj_ii("PI000026",ix_)
         arrset(pb.xnames,iv,"PI000026")
         ig = ig_["ARC00023"]
-        pbm.A[ig,iv] += -1.39348E+00
-        iv,ix_,_ = s2x_ii("PI000027",ix_)
+        pbm.A[ig,iv] += Float64(-1.39348E+00)
+        iv,ix_,_ = s2mpj_ii("PI000027",ix_)
         arrset(pb.xnames,iv,"PI000027")
         ig = ig_["ARC00023"]
-        pbm.A[ig,iv] += 1.39348E+00
-        iv,ix_,_ = s2x_ii("PI000027",ix_)
+        pbm.A[ig,iv] += Float64(1.39348E+00)
+        iv,ix_,_ = s2mpj_ii("PI000027",ix_)
         arrset(pb.xnames,iv,"PI000027")
         ig = ig_["ARC00024"]
-        pbm.A[ig,iv] += 6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000027",ix_)
+        pbm.A[ig,iv] += Float64(6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000027",ix_)
         arrset(pb.xnames,iv,"PI000027")
         ig = ig_["ARC00034"]
-        pbm.A[ig,iv] += -4.10240E-01
-        iv,ix_,_ = s2x_ii("PI000028",ix_)
+        pbm.A[ig,iv] += Float64(-4.10240E-01)
+        iv,ix_,_ = s2mpj_ii("PI000028",ix_)
         arrset(pb.xnames,iv,"PI000028")
         ig = ig_["ARC00024"]
-        pbm.A[ig,iv] += -6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000028",ix_)
+        pbm.A[ig,iv] += Float64(-6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000028",ix_)
         arrset(pb.xnames,iv,"PI000028")
         ig = ig_["ARC00025"]
-        pbm.A[ig,iv] += 4.18044E-01
-        iv,ix_,_ = s2x_ii("PI000028",ix_)
+        pbm.A[ig,iv] += Float64(4.18044E-01)
+        iv,ix_,_ = s2mpj_ii("PI000028",ix_)
         arrset(pb.xnames,iv,"PI000028")
         ig = ig_["ARC00026"]
-        pbm.A[ig,iv] += -6.33373E-04
-        iv,ix_,_ = s2x_ii("PI000028",ix_)
+        pbm.A[ig,iv] += Float64(-6.33373E-04)
+        iv,ix_,_ = s2mpj_ii("PI000028",ix_)
         arrset(pb.xnames,iv,"PI000028")
         ig = ig_["ARC00039"]
-        pbm.A[ig,iv] += -1.99627E-02
-        iv,ix_,_ = s2x_ii("PI000029",ix_)
+        pbm.A[ig,iv] += Float64(-1.99627E-02)
+        iv,ix_,_ = s2mpj_ii("PI000029",ix_)
         arrset(pb.xnames,iv,"PI000029")
         ig = ig_["ARC00025"]
-        pbm.A[ig,iv] += -4.18044E-01
-        iv,ix_,_ = s2x_ii("PI000029",ix_)
+        pbm.A[ig,iv] += Float64(-4.18044E-01)
+        iv,ix_,_ = s2mpj_ii("PI000029",ix_)
         arrset(pb.xnames,iv,"PI000029")
         ig = ig_["ARC00052"]
-        pbm.A[ig,iv] += 3.21572E-01
-        iv,ix_,_ = s2x_ii("PI000029",ix_)
+        pbm.A[ig,iv] += Float64(3.21572E-01)
+        iv,ix_,_ = s2mpj_ii("PI000029",ix_)
         arrset(pb.xnames,iv,"PI000029")
         ig = ig_["ARC00053"]
-        pbm.A[ig,iv] += -1.64096E-01
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(-1.64096E-01)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00026"]
-        pbm.A[ig,iv] += 6.33373E-04
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(6.33373E-04)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00030"]
-        pbm.A[ig,iv] += 3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00031"]
-        pbm.A[ig,iv] += -9.54957E-03
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(-9.54957E-03)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00039"]
-        pbm.A[ig,iv] += 1.99627E-02
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(1.99627E-02)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00043"]
-        pbm.A[ig,iv] += 1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000030",ix_)
+        pbm.A[ig,iv] += Float64(1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000030",ix_)
         arrset(pb.xnames,iv,"PI000030")
         ig = ig_["ARC00044"]
-        pbm.A[ig,iv] += -9.54957E-03
-        iv,ix_,_ = s2x_ii("PI000031",ix_)
+        pbm.A[ig,iv] += Float64(-9.54957E-03)
+        iv,ix_,_ = s2mpj_ii("PI000031",ix_)
         arrset(pb.xnames,iv,"PI000031")
         ig = ig_["ARC00027"]
-        pbm.A[ig,iv] += 3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000031",ix_)
+        pbm.A[ig,iv] += Float64(3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000031",ix_)
         arrset(pb.xnames,iv,"PI000031")
         ig = ig_["ARC00028"]
-        pbm.A[ig,iv] += -9.98133E-02
-        iv,ix_,_ = s2x_ii("PI000031",ix_)
+        pbm.A[ig,iv] += Float64(-9.98133E-02)
+        iv,ix_,_ = s2mpj_ii("PI000031",ix_)
         arrset(pb.xnames,iv,"PI000031")
         ig = ig_["ARC00040"]
-        pbm.A[ig,iv] += 1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000031",ix_)
+        pbm.A[ig,iv] += Float64(1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000031",ix_)
         arrset(pb.xnames,iv,"PI000031")
         ig = ig_["ARC00041"]
-        pbm.A[ig,iv] += -5.80870E-02
-        iv,ix_,_ = s2x_ii("PI000032",ix_)
+        pbm.A[ig,iv] += Float64(-5.80870E-02)
+        iv,ix_,_ = s2mpj_ii("PI000032",ix_)
         arrset(pb.xnames,iv,"PI000032")
         ig = ig_["ARC00028"]
-        pbm.A[ig,iv] += 9.98133E-02
-        iv,ix_,_ = s2x_ii("PI000032",ix_)
+        pbm.A[ig,iv] += Float64(9.98133E-02)
+        iv,ix_,_ = s2mpj_ii("PI000032",ix_)
         arrset(pb.xnames,iv,"PI000032")
         ig = ig_["ARC00029"]
-        pbm.A[ig,iv] += -3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000032",ix_)
+        pbm.A[ig,iv] += Float64(-3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000032",ix_)
         arrset(pb.xnames,iv,"PI000032")
         ig = ig_["ARC00041"]
-        pbm.A[ig,iv] += 5.80870E-02
-        iv,ix_,_ = s2x_ii("PI000032",ix_)
+        pbm.A[ig,iv] += Float64(5.80870E-02)
+        iv,ix_,_ = s2mpj_ii("PI000032",ix_)
         arrset(pb.xnames,iv,"PI000032")
         ig = ig_["ARC00042"]
-        pbm.A[ig,iv] += -1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000033",ix_)
+        pbm.A[ig,iv] += Float64(-1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000033",ix_)
         arrset(pb.xnames,iv,"PI000033")
         ig = ig_["ARC00029"]
-        pbm.A[ig,iv] += 3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000033",ix_)
+        pbm.A[ig,iv] += Float64(3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000033",ix_)
         arrset(pb.xnames,iv,"PI000033")
         ig = ig_["ARC00030"]
-        pbm.A[ig,iv] += -3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000033",ix_)
+        pbm.A[ig,iv] += Float64(-3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000033",ix_)
         arrset(pb.xnames,iv,"PI000033")
         ig = ig_["ARC00042"]
-        pbm.A[ig,iv] += 1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000033",ix_)
+        pbm.A[ig,iv] += Float64(1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000033",ix_)
         arrset(pb.xnames,iv,"PI000033")
         ig = ig_["ARC00043"]
-        pbm.A[ig,iv] += -1.93623E-02
-        iv,ix_,_ = s2x_ii("PI000034",ix_)
+        pbm.A[ig,iv] += Float64(-1.93623E-02)
+        iv,ix_,_ = s2mpj_ii("PI000034",ix_)
         arrset(pb.xnames,iv,"PI000034")
         ig = ig_["ARC00031"]
-        pbm.A[ig,iv] += 9.54957E-03
-        iv,ix_,_ = s2x_ii("PI000034",ix_)
+        pbm.A[ig,iv] += Float64(9.54957E-03)
+        iv,ix_,_ = s2mpj_ii("PI000034",ix_)
         arrset(pb.xnames,iv,"PI000034")
         ig = ig_["ARC00032"]
-        pbm.A[ig,iv] += -6.68470E-02
-        iv,ix_,_ = s2x_ii("PI000034",ix_)
+        pbm.A[ig,iv] += Float64(-6.68470E-02)
+        iv,ix_,_ = s2mpj_ii("PI000034",ix_)
         arrset(pb.xnames,iv,"PI000034")
         ig = ig_["ARC00034"]
-        pbm.A[ig,iv] += 4.10240E-01
-        iv,ix_,_ = s2x_ii("PI000034",ix_)
+        pbm.A[ig,iv] += Float64(4.10240E-01)
+        iv,ix_,_ = s2mpj_ii("PI000034",ix_)
         arrset(pb.xnames,iv,"PI000034")
         ig = ig_["ARC00044"]
-        pbm.A[ig,iv] += 9.54957E-03
-        iv,ix_,_ = s2x_ii("PI000034",ix_)
+        pbm.A[ig,iv] += Float64(9.54957E-03)
+        iv,ix_,_ = s2mpj_ii("PI000034",ix_)
         arrset(pb.xnames,iv,"PI000034")
         ig = ig_["ARC00045"]
-        pbm.A[ig,iv] += -6.68470E-02
-        iv,ix_,_ = s2x_ii("PI000035",ix_)
+        pbm.A[ig,iv] += Float64(-6.68470E-02)
+        iv,ix_,_ = s2mpj_ii("PI000035",ix_)
         arrset(pb.xnames,iv,"PI000035")
         ig = ig_["ARC00032"]
-        pbm.A[ig,iv] += 6.68470E-02
-        iv,ix_,_ = s2x_ii("PI000035",ix_)
+        pbm.A[ig,iv] += Float64(6.68470E-02)
+        iv,ix_,_ = s2mpj_ii("PI000035",ix_)
         arrset(pb.xnames,iv,"PI000035")
         ig = ig_["ARC00033"]
-        pbm.A[ig,iv] += -6.07700E-03
-        iv,ix_,_ = s2x_ii("PI000035",ix_)
+        pbm.A[ig,iv] += Float64(-6.07700E-03)
+        iv,ix_,_ = s2mpj_ii("PI000035",ix_)
         arrset(pb.xnames,iv,"PI000035")
         ig = ig_["ARC00045"]
-        pbm.A[ig,iv] += 6.68470E-02
-        iv,ix_,_ = s2x_ii("PI000035",ix_)
+        pbm.A[ig,iv] += Float64(6.68470E-02)
+        iv,ix_,_ = s2mpj_ii("PI000035",ix_)
         arrset(pb.xnames,iv,"PI000035")
         ig = ig_["ARC00046"]
-        pbm.A[ig,iv] += -6.07700E-03
-        iv,ix_,_ = s2x_ii("PI000036",ix_)
+        pbm.A[ig,iv] += Float64(-6.07700E-03)
+        iv,ix_,_ = s2mpj_ii("PI000036",ix_)
         arrset(pb.xnames,iv,"PI000036")
         ig = ig_["ARC00035"]
-        pbm.A[ig,iv] += -9.98133E-02
-        iv,ix_,_ = s2x_ii("PI000036",ix_)
+        pbm.A[ig,iv] += Float64(-9.98133E-02)
+        iv,ix_,_ = s2mpj_ii("PI000036",ix_)
         arrset(pb.xnames,iv,"PI000036")
         ig = ig_["ARC00038"]
-        pbm.A[ig,iv] += 6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000036",ix_)
+        pbm.A[ig,iv] += Float64(6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000036",ix_)
         arrset(pb.xnames,iv,"PI000036")
         ig = ig_["ARC00047"]
-        pbm.A[ig,iv] += -2.09022E+00
-        iv,ix_,_ = s2x_ii("PI000037",ix_)
+        pbm.A[ig,iv] += Float64(-2.09022E+00)
+        iv,ix_,_ = s2mpj_ii("PI000037",ix_)
         arrset(pb.xnames,iv,"PI000037")
         ig = ig_["ARC00037"]
-        pbm.A[ig,iv] += -3.48370E-01
-        iv,ix_,_ = s2x_ii("PI000037",ix_)
+        pbm.A[ig,iv] += Float64(-3.48370E-01)
+        iv,ix_,_ = s2mpj_ii("PI000037",ix_)
         arrset(pb.xnames,iv,"PI000037")
         ig = ig_["ARC00049"]
-        pbm.A[ig,iv] += -1.43027E-02
-        iv,ix_,_ = s2x_ii("PI000038",ix_)
+        pbm.A[ig,iv] += Float64(-1.43027E-02)
+        iv,ix_,_ = s2mpj_ii("PI000038",ix_)
         arrset(pb.xnames,iv,"PI000038")
         ig = ig_["ARC00037"]
-        pbm.A[ig,iv] += 3.48370E-01
-        iv,ix_,_ = s2x_ii("PI000038",ix_)
+        pbm.A[ig,iv] += Float64(3.48370E-01)
+        iv,ix_,_ = s2mpj_ii("PI000038",ix_)
         arrset(pb.xnames,iv,"PI000038")
         ig = ig_["ARC00038"]
-        pbm.A[ig,iv] += -6.96739E-01
-        iv,ix_,_ = s2x_ii("PI000039",ix_)
+        pbm.A[ig,iv] += Float64(-6.96739E-01)
+        iv,ix_,_ = s2mpj_ii("PI000039",ix_)
         arrset(pb.xnames,iv,"PI000039")
         ig = ig_["ARC00049"]
-        pbm.A[ig,iv] += 1.43027E-02
-        iv,ix_,_ = s2x_ii("PI000039",ix_)
+        pbm.A[ig,iv] += Float64(1.43027E-02)
+        iv,ix_,_ = s2mpj_ii("PI000039",ix_)
         arrset(pb.xnames,iv,"PI000039")
         ig = ig_["ARC00050"]
-        pbm.A[ig,iv] += -1.09654E-01
-        iv,ix_,_ = s2x_ii("PI000040",ix_)
+        pbm.A[ig,iv] += Float64(-1.09654E-01)
+        iv,ix_,_ = s2mpj_ii("PI000040",ix_)
         arrset(pb.xnames,iv,"PI000040")
         ig = ig_["ARC00050"]
-        pbm.A[ig,iv] += 1.09654E-01
-        iv,ix_,_ = s2x_ii("PI000040",ix_)
+        pbm.A[ig,iv] += Float64(1.09654E-01)
+        iv,ix_,_ = s2mpj_ii("PI000040",ix_)
         arrset(pb.xnames,iv,"PI000040")
         ig = ig_["ARC00051"]
-        pbm.A[ig,iv] += 5.22555E-01
-        iv,ix_,_ = s2x_ii("PI000040",ix_)
+        pbm.A[ig,iv] += Float64(5.22555E-01)
+        iv,ix_,_ = s2mpj_ii("PI000040",ix_)
         arrset(pb.xnames,iv,"PI000040")
         ig = ig_["ARC00052"]
-        pbm.A[ig,iv] += -3.21572E-01
-        iv,ix_,_ = s2x_ii("PI000041",ix_)
+        pbm.A[ig,iv] += Float64(-3.21572E-01)
+        iv,ix_,_ = s2mpj_ii("PI000041",ix_)
         arrset(pb.xnames,iv,"PI000041")
         ig = ig_["ARC00051"]
-        pbm.A[ig,iv] += -5.22555E-01
-        iv,ix_,_ = s2x_ii("PI000042",ix_)
+        pbm.A[ig,iv] += Float64(-5.22555E-01)
+        iv,ix_,_ = s2mpj_ii("PI000042",ix_)
         arrset(pb.xnames,iv,"PI000042")
         ig = ig_["ARC00053"]
-        pbm.A[ig,iv] += 1.64096E-01
-        iv,ix_,_ = s2x_ii("PI000042",ix_)
+        pbm.A[ig,iv] += Float64(1.64096E-01)
+        iv,ix_,_ = s2mpj_ii("PI000042",ix_)
         arrset(pb.xnames,iv,"PI000042")
         ig = ig_["ARC00054"]
-        pbm.A[ig,iv] += -1.36747E-01
-        iv,ix_,_ = s2x_ii("PI000043",ix_)
+        pbm.A[ig,iv] += Float64(-1.36747E-01)
+        iv,ix_,_ = s2mpj_ii("PI000043",ix_)
         arrset(pb.xnames,iv,"PI000043")
         ig = ig_["ARC00055"]
-        pbm.A[ig,iv] += 3.99253E-02
-        iv,ix_,_ = s2x_ii("PI000043",ix_)
+        pbm.A[ig,iv] += Float64(3.99253E-02)
+        iv,ix_,_ = s2mpj_ii("PI000043",ix_)
         arrset(pb.xnames,iv,"PI000043")
         ig = ig_["ARC00056"]
-        pbm.A[ig,iv] += -2.85181E-02
-        iv,ix_,_ = s2x_ii("PI000044",ix_)
+        pbm.A[ig,iv] += Float64(-2.85181E-02)
+        iv,ix_,_ = s2mpj_ii("PI000044",ix_)
         arrset(pb.xnames,iv,"PI000044")
         ig = ig_["ARC00057"]
-        pbm.A[ig,iv] += -1.82329E-01
-        iv,ix_,_ = s2x_ii("PI000044",ix_)
+        pbm.A[ig,iv] += Float64(-1.82329E-01)
+        iv,ix_,_ = s2mpj_ii("PI000044",ix_)
         arrset(pb.xnames,iv,"PI000044")
         ig = ig_["ARC00059"]
-        pbm.A[ig,iv] += -3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000045",ix_)
+        pbm.A[ig,iv] += Float64(-3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000045",ix_)
         arrset(pb.xnames,iv,"PI000045")
         ig = ig_["ARC00057"]
-        pbm.A[ig,iv] += 1.82329E-01
-        iv,ix_,_ = s2x_ii("PI000045",ix_)
+        pbm.A[ig,iv] += Float64(1.82329E-01)
+        iv,ix_,_ = s2mpj_ii("PI000045",ix_)
         arrset(pb.xnames,iv,"PI000045")
         ig = ig_["ARC00058"]
-        pbm.A[ig,iv] += -1.82329E-01
-        iv,ix_,_ = s2x_ii("PI000046",ix_)
+        pbm.A[ig,iv] += Float64(-1.82329E-01)
+        iv,ix_,_ = s2mpj_ii("PI000046",ix_)
         arrset(pb.xnames,iv,"PI000046")
         ig = ig_["ARC00058"]
-        pbm.A[ig,iv] += 1.82329E-01
-        iv,ix_,_ = s2x_ii("PI000047",ix_)
+        pbm.A[ig,iv] += Float64(1.82329E-01)
+        iv,ix_,_ = s2mpj_ii("PI000047",ix_)
         arrset(pb.xnames,iv,"PI000047")
         ig = ig_["ARC00059"]
-        pbm.A[ig,iv] += 3.32711E-02
-        iv,ix_,_ = s2x_ii("PI000047",ix_)
+        pbm.A[ig,iv] += Float64(3.32711E-02)
+        iv,ix_,_ = s2mpj_ii("PI000047",ix_)
         arrset(pb.xnames,iv,"PI000047")
         ig = ig_["ARC00060"]
-        pbm.A[ig,iv] += -9.98133E-03
-        iv,ix_,_ = s2x_ii("PI000048",ix_)
+        pbm.A[ig,iv] += Float64(-9.98133E-03)
+        iv,ix_,_ = s2mpj_ii("PI000048",ix_)
         arrset(pb.xnames,iv,"PI000048")
         ig = ig_["ARC00060"]
-        pbm.A[ig,iv] += 9.98133E-03
+        pbm.A[ig,iv] += Float64(9.98133E-03)
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         legrps = findall(x->x=="<=",gtype)
@@ -1596,34 +1597,34 @@ function CORE2(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
-        pbm.gconst[ig_["REGIO001"]] = -8.90000E+00
-        pbm.gconst[ig_["REGIO002"]] = -3.30000E+00
-        pbm.gconst[ig_["REGIO003"]] = -5.40000E+00
-        pbm.gconst[ig_["REGIO004"]] = -1.45000E+01
-        pbm.gconst[ig_["REGIO005"]] = -2.20000E+00
-        pbm.gconst[ig_["REGIO006"]] = -5.80000E+00
-        pbm.gconst[ig_["REGIO007"]] = -3.50000E+00
-        pbm.gconst[ig_["REGIO008"]] = -1.70000E+00
-        pbm.gconst[ig_["REGIO009"]] = -1.50000E+00
-        pbm.gconst[ig_["REGIO010"]] = -8.00000E-01
-        pbm.gconst[ig_["REGIO011"]] = -1.30000E+00
-        pbm.gconst[ig_["REGIO012"]] = -2.30000E+00
-        pbm.gconst[ig_["REGIO013"]] = -2.20000E+00
-        pbm.gconst[ig_["REGIO014"]] = -1.10000E+00
-        pbm.gconst[ig_["REGIO015"]] = -7.00000E-01
-        pbm.gconst[ig_["REGIO016"]] = -1.50000E+00
-        pbm.gconst[ig_["REGIO017"]] = -4.30000E+00
-        pbm.gconst[ig_["REGIO018"]] = -1.50000E+00
-        pbm.gconst[ig_["REGIO019"]] = -4.30000E+00
-        pbm.gconst[ig_["REGIO020"]] = -1.10000E+00
-        pbm.gconst[ig_["REGIO021"]] = -5.00000E+00
+        pbm.gconst[ig_["REGIO001"]] = Float64(-8.90000E+00)
+        pbm.gconst[ig_["REGIO002"]] = Float64(-3.30000E+00)
+        pbm.gconst[ig_["REGIO003"]] = Float64(-5.40000E+00)
+        pbm.gconst[ig_["REGIO004"]] = Float64(-1.45000E+01)
+        pbm.gconst[ig_["REGIO005"]] = Float64(-2.20000E+00)
+        pbm.gconst[ig_["REGIO006"]] = Float64(-5.80000E+00)
+        pbm.gconst[ig_["REGIO007"]] = Float64(-3.50000E+00)
+        pbm.gconst[ig_["REGIO008"]] = Float64(-1.70000E+00)
+        pbm.gconst[ig_["REGIO009"]] = Float64(-1.50000E+00)
+        pbm.gconst[ig_["REGIO010"]] = Float64(-8.00000E-01)
+        pbm.gconst[ig_["REGIO011"]] = Float64(-1.30000E+00)
+        pbm.gconst[ig_["REGIO012"]] = Float64(-2.30000E+00)
+        pbm.gconst[ig_["REGIO013"]] = Float64(-2.20000E+00)
+        pbm.gconst[ig_["REGIO014"]] = Float64(-1.10000E+00)
+        pbm.gconst[ig_["REGIO015"]] = Float64(-7.00000E-01)
+        pbm.gconst[ig_["REGIO016"]] = Float64(-1.50000E+00)
+        pbm.gconst[ig_["REGIO017"]] = Float64(-4.30000E+00)
+        pbm.gconst[ig_["REGIO018"]] = Float64(-1.50000E+00)
+        pbm.gconst[ig_["REGIO019"]] = Float64(-4.30000E+00)
+        pbm.gconst[ig_["REGIO020"]] = Float64(-1.10000E+00)
+        pbm.gconst[ig_["REGIO021"]] = Float64(-5.00000E+00)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["FLOW0001"]] = -3.61167E+02
         pb.xupper[ix_["FLOW0001"]] = 3.61167E+02
@@ -1861,552 +1862,552 @@ function CORE2(action,args...)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.y0 = zeros(Float64,pb.m)
-        pb.x0[ix_["FLOW0001"]] = 2.28416E+00
-        pb.x0[ix_["FLOW0002"]] = 1.28924E+00
-        pb.x0[ix_["FLOW0003"]] = -4.11076E+00
-        pb.x0[ix_["FLOW0004"]] = -4.11076E+00
-        pb.x0[ix_["FLOW0005"]] = 8.34083E+00
-        pb.x0[ix_["FLOW0006"]] = 6.67356E+00
-        pb.x0[ix_["FLOW0007"]] = 5.15250E+00
-        pb.x0[ix_["FLOW0008"]] = -1.52106E+00
-        pb.x0[ix_["FLOW0009"]] = 1.49619E+00
-        pb.x0[ix_["FLOW0010"]] = 8.63464E-01
-        pb.x0[ix_["FLOW0011"]] = 2.38452E+00
-        pb.x0[ix_["FLOW0012"]] = 1.84522E-01
-        pb.x0[ix_["FLOW0013"]] = -2.80167E-01
-        pb.x0[ix_["FLOW0014"]] = -2.80167E-01
-        pb.x0[ix_["FLOW0015"]] = -2.80167E-01
-        pb.x0[ix_["FLOW0016"]] = -9.56457E-02
-        pb.x0[ix_["FLOW0017"]] = 4.83333E-01
-        pb.x0[ix_["FLOW0018"]] = 0.00000E+00
-        pb.x0[ix_["FLOW0019"]] = 5.80000E+00
-        pb.x0[ix_["FLOW0020"]] = 3.62164E+00
-        pb.x0[ix_["FLOW0021"]] = 3.15920E+00
-        pb.x0[ix_["FLOW0022"]] = 0.00000E+00
-        pb.x0[ix_["FLOW0023"]] = -1.14080E+00
-        pb.x0[ix_["FLOW0024"]] = 2.96863E+00
-        pb.x0[ix_["FLOW0025"]] = 6.56169E+00
-        pb.x0[ix_["FLOW0026"]] = 3.16455E-01
-        pb.x0[ix_["FLOW0027"]] = -2.74176E-01
-        pb.x0[ix_["FLOW0028"]] = -6.71257E-01
-        pb.x0[ix_["FLOW0029"]] = -6.71257E-01
-        pb.x0[ix_["FLOW0030"]] = -1.52215E+00
-        pb.x0[ix_["FLOW0031"]] = -1.14514E+00
-        pb.x0[ix_["FLOW0032"]] = -2.31222E-01
-        pb.x0[ix_["FLOW0033"]] = -2.31221E-01
-        pb.x0[ix_["FLOW0034"]] = 1.82783E+00
-        pb.x0[ix_["FLOW0035"]] = 4.80828E-01
-        pb.x0[ix_["FLOW0036"]] = -3.01828E-01
-        pb.x0[ix_["FLOW0037"]] = 1.06084E+01
-        pb.x0[ix_["FLOW0038"]] = 9.74452E+00
-        pb.x0[ix_["FLOW0039"]] = 1.77661E+00
-        pb.x0[ix_["FLOW0040"]] = -2.09158E-01
-        pb.x0[ix_["FLOW0041"]] = -5.12076E-01
-        pb.x0[ix_["FLOW0042"]] = -5.12076E-01
-        pb.x0[ix_["FLOW0043"]] = -1.16119E+00
-        pb.x0[ix_["FLOW0044"]] = -1.14514E+00
-        pb.x0[ix_["FLOW0045"]] = -2.31221E-01
-        pb.x0[ix_["FLOW0046"]] = -2.31221E-01
-        pb.x0[ix_["FLOW0047"]] = 2.20035E+00
-        pb.x0[ix_["FLOW0048"]] = -1.12775E+00
-        pb.x0[ix_["FLOW0049"]] = 1.91798E+00
-        pb.x0[ix_["FLOW0050"]] = 0.00000E+00
-        pb.x0[ix_["FLOW0051"]] = 1.15931E+01
-        pb.x0[ix_["FLOW0052"]] = 7.71110E+00
-        pb.x0[ix_["FLOW0053"]] = 1.14942E+00
-        pb.x0[ix_["FLOW0054"]] = 1.14942E+00
-        pb.x0[ix_["FLOW0055"]] = 3.17981E+00
-        pb.x0[ix_["FLOW0056"]] = 2.37981E+00
-        pb.x0[ix_["FLOW0057"]] = 2.43611E+00
-        pb.x0[ix_["FLOW0058"]] = 0.00000E+00
-        pb.x0[ix_["FLOW0059"]] = 2.20000E+00
-        pb.x0[ix_["FLOW0060"]] = 0.00000E+00
+        pb.x0[ix_["FLOW0001"]] = Float64(2.28416E+00)
+        pb.x0[ix_["FLOW0002"]] = Float64(1.28924E+00)
+        pb.x0[ix_["FLOW0003"]] = Float64(-4.11076E+00)
+        pb.x0[ix_["FLOW0004"]] = Float64(-4.11076E+00)
+        pb.x0[ix_["FLOW0005"]] = Float64(8.34083E+00)
+        pb.x0[ix_["FLOW0006"]] = Float64(6.67356E+00)
+        pb.x0[ix_["FLOW0007"]] = Float64(5.15250E+00)
+        pb.x0[ix_["FLOW0008"]] = Float64(-1.52106E+00)
+        pb.x0[ix_["FLOW0009"]] = Float64(1.49619E+00)
+        pb.x0[ix_["FLOW0010"]] = Float64(8.63464E-01)
+        pb.x0[ix_["FLOW0011"]] = Float64(2.38452E+00)
+        pb.x0[ix_["FLOW0012"]] = Float64(1.84522E-01)
+        pb.x0[ix_["FLOW0013"]] = Float64(-2.80167E-01)
+        pb.x0[ix_["FLOW0014"]] = Float64(-2.80167E-01)
+        pb.x0[ix_["FLOW0015"]] = Float64(-2.80167E-01)
+        pb.x0[ix_["FLOW0016"]] = Float64(-9.56457E-02)
+        pb.x0[ix_["FLOW0017"]] = Float64(4.83333E-01)
+        pb.x0[ix_["FLOW0018"]] = Float64(0.00000E+00)
+        pb.x0[ix_["FLOW0019"]] = Float64(5.80000E+00)
+        pb.x0[ix_["FLOW0020"]] = Float64(3.62164E+00)
+        pb.x0[ix_["FLOW0021"]] = Float64(3.15920E+00)
+        pb.x0[ix_["FLOW0022"]] = Float64(0.00000E+00)
+        pb.x0[ix_["FLOW0023"]] = Float64(-1.14080E+00)
+        pb.x0[ix_["FLOW0024"]] = Float64(2.96863E+00)
+        pb.x0[ix_["FLOW0025"]] = Float64(6.56169E+00)
+        pb.x0[ix_["FLOW0026"]] = Float64(3.16455E-01)
+        pb.x0[ix_["FLOW0027"]] = Float64(-2.74176E-01)
+        pb.x0[ix_["FLOW0028"]] = Float64(-6.71257E-01)
+        pb.x0[ix_["FLOW0029"]] = Float64(-6.71257E-01)
+        pb.x0[ix_["FLOW0030"]] = Float64(-1.52215E+00)
+        pb.x0[ix_["FLOW0031"]] = Float64(-1.14514E+00)
+        pb.x0[ix_["FLOW0032"]] = Float64(-2.31222E-01)
+        pb.x0[ix_["FLOW0033"]] = Float64(-2.31221E-01)
+        pb.x0[ix_["FLOW0034"]] = Float64(1.82783E+00)
+        pb.x0[ix_["FLOW0035"]] = Float64(4.80828E-01)
+        pb.x0[ix_["FLOW0036"]] = Float64(-3.01828E-01)
+        pb.x0[ix_["FLOW0037"]] = Float64(1.06084E+01)
+        pb.x0[ix_["FLOW0038"]] = Float64(9.74452E+00)
+        pb.x0[ix_["FLOW0039"]] = Float64(1.77661E+00)
+        pb.x0[ix_["FLOW0040"]] = Float64(-2.09158E-01)
+        pb.x0[ix_["FLOW0041"]] = Float64(-5.12076E-01)
+        pb.x0[ix_["FLOW0042"]] = Float64(-5.12076E-01)
+        pb.x0[ix_["FLOW0043"]] = Float64(-1.16119E+00)
+        pb.x0[ix_["FLOW0044"]] = Float64(-1.14514E+00)
+        pb.x0[ix_["FLOW0045"]] = Float64(-2.31221E-01)
+        pb.x0[ix_["FLOW0046"]] = Float64(-2.31221E-01)
+        pb.x0[ix_["FLOW0047"]] = Float64(2.20035E+00)
+        pb.x0[ix_["FLOW0048"]] = Float64(-1.12775E+00)
+        pb.x0[ix_["FLOW0049"]] = Float64(1.91798E+00)
+        pb.x0[ix_["FLOW0050"]] = Float64(0.00000E+00)
+        pb.x0[ix_["FLOW0051"]] = Float64(1.15931E+01)
+        pb.x0[ix_["FLOW0052"]] = Float64(7.71110E+00)
+        pb.x0[ix_["FLOW0053"]] = Float64(1.14942E+00)
+        pb.x0[ix_["FLOW0054"]] = Float64(1.14942E+00)
+        pb.x0[ix_["FLOW0055"]] = Float64(3.17981E+00)
+        pb.x0[ix_["FLOW0056"]] = Float64(2.37981E+00)
+        pb.x0[ix_["FLOW0057"]] = Float64(2.43611E+00)
+        pb.x0[ix_["FLOW0058"]] = Float64(0.00000E+00)
+        pb.x0[ix_["FLOW0059"]] = Float64(2.20000E+00)
+        pb.x0[ix_["FLOW0060"]] = Float64(0.00000E+00)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "SQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "F00001SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0001"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00002SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0002"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00003SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0003"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00004SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0004"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00005SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0005"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00006SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0006"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00007SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0007"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00008SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0008"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00009SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0009"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00010SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0010"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00011SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0011"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00012SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0012"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00013SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0013"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00014SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0014"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00015SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0015"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00016SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0016"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00017SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0017"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00018SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0018"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00019SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0019"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00020SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0020"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00021SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0021"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00022SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0022"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00023SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0023"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00024SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0024"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00025SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0025"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00026SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0026"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00027SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0027"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00028SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0028"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00029SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0029"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00030SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0030"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00031SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0031"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00032SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0032"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00033SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0033"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00034SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0034"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00035SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0035"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00036SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0036"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00037SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0037"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00038SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0038"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00039SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0039"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00040SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0040"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00041SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0041"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00042SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0042"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00043SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0043"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00044SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0044"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00045SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0045"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00046SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0046"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00047SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0047"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00048SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0048"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00049SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0049"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00050SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0050"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00051SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0051"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00052SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0052"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00053SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0053"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00054SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0054"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00055SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0055"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00056SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0056"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00057SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0057"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00058SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0058"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00059SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0059"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F00060SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
-        arrset(pbm.elftype,ie,"SQR")
-        arrset(ielftype, ie, iet_["SQR"])
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
+        arrset(pbm.elftype,ie,"eSQR")
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0060"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -2724,14 +2725,19 @@ function CORE2(action,args...)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
-        #%%%%% RETURN VALUES FROM THE SETUP ACTIONS %%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LQI2-RN-157-134"
+        #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.pbclass = "C-CLQI2-RN-157-134"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
-    elseif action == "SQR"
+    elseif action == "eSQR"
 
         EV_     = args[1]
         iel_    = args[2]
@@ -2770,19 +2776,21 @@ function CORE2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

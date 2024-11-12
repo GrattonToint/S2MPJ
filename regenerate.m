@@ -27,7 +27,7 @@ function regenerate( varargin )
 %                            ./problist file for matlab and python
 %
 %   Programming: Ph. Toint
-%   This version 25 VI 2024
+%   This version 11 XI 2024
 %
 
 addpath ./sif   % the directory containing the problem's SIF files
@@ -41,7 +41,7 @@ backup = 1;     % true if a backup problems directories should be created
 
 %  Process the list of arguments, if any.
 
-problist = './problist';
+problist = './fullproblist';
 versions = {};
 problems = {};
 

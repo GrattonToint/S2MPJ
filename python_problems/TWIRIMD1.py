@@ -17,7 +17,7 @@ class  TWIRIMD1(CUTEst_problem):
 #    Optimization and Search Heuristics",
 #    Delft University, January 1998.
 # 
-#    classification = "C-LOI2-RN-1247-544"
+#    classification = "C-CLOI2-RN-1247-544"
 # 
 #    SIF input: Arie Quist, Delft, 1998.
 #               correction by S. Gratton & Ph. Toint, May 2024
@@ -26,7 +26,7 @@ class  TWIRIMD1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWIRIMD1'
@@ -7627,7 +7627,7 @@ class  TWIRIMD1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOI2-RN-1247-544"
+        self.pbclass = "C-CLOI2-RN-1247-544"
         self.objderlvl = 2
         self.conderlvl = [2]
 

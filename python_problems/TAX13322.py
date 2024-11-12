@@ -20,7 +20,7 @@ class  TAX13322(CUTEst_problem):
 #    "If ever there was an example that exhibited the stupidity of SIF,
 #     this is it. NIMG"
 # 
-#    classification = "C-OOR2-MN-72-1261"
+#    classification = "C-COOR2-MN-72-1261"
 # 
 #    parameters
 # 
@@ -28,7 +28,7 @@ class  TAX13322(CUTEst_problem):
 # IE NA                  1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TAX13322'
@@ -201,7 +201,6 @@ class  TAX13322(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for I in range(int(v_['1']),int(v_['NA'])+1):
             for P in range(int(v_['1']),int(v_['NBD'])+1):
                 for Q in range(int(v_['1']),int(v_['NCE'])+1):
@@ -12961,7 +12960,7 @@ class  TAX13322(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-72-1261"
+        self.pbclass = "C-COOR2-MN-72-1261"
         self.objderlvl = 2
         self.conderlvl = [2]
 

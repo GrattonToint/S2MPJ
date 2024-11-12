@@ -13,13 +13,13 @@ function BAmL1SPLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 #    SIF input: Nick Gould, Nov 2016
 # 
-#    classification = "C-SUR2-MN-57-0"
+#    classification = "C-CSUR2-MN-57-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BAmL1SPLS"
@@ -381,7 +381,6 @@ function BAmL1SPLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
@@ -15409,7 +15408,7 @@ function BAmL1SPLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-57-0"
+        pb.pbclass = "C-CSUR2-MN-57-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

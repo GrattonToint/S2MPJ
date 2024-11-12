@@ -23,13 +23,13 @@ class  LEAKNET(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, 25th June 1990.
 # 
-#    classification = "C-LOR2-RN-156-153"
+#    classification = "C-CLOR2-RN-156-153"
 # 
 #    network data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEAKNET'
@@ -4994,7 +4994,7 @@ class  LEAKNET(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-RN-156-153"
+        self.pbclass = "C-CLOR2-RN-156-153"
         self.objderlvl = 2
         self.conderlvl = [2]
 

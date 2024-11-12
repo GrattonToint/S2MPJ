@@ -31,11 +31,11 @@ class  ROTDISC(CUTEst_problem):
 #    SIF input : E. Loute and Ph. L. Toint, April 1993
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-LQR2-RN-905-1081"
+#    classification = "C-CLQR2-RN-905-1081"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ROTDISC'
@@ -286,7 +286,6 @@ class  ROTDISC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         self.xlower[ix_['sigr'+str(int(v_['0']))]] = v_['sigmari']
         self.xupper[ix_['sigr'+str(int(v_['0']))]] = v_['sigmari']
         self.xupper[ix_['sigt'+str(int(v_['0']))]] = v_['sigmati']
@@ -4935,7 +4934,7 @@ class  ROTDISC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-RN-905-1081"
+        self.pbclass = "C-CLQR2-RN-905-1081"
         self.objderlvl = 2
         self.conderlvl = [2]
 

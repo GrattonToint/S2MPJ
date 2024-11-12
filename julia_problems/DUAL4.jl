@@ -12,11 +12,11 @@ function DUAL4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: Irv Lustig and Nick Gould, June 1996.
 # 
-#    classification = "C-QLR2-MN-75-1"
+#    classification = "C-CQLR2-MN-75-1"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DUAL4"
@@ -11765,7 +11765,7 @@ function DUAL4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QLR2-MN-75-1"
+        pb.pbclass = "C-CQLR2-MN-75-1"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

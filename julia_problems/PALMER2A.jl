@@ -1,4 +1,4 @@
-function PALMER2A(action,args...)
+function PALMER2A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -18,21 +18,22 @@ function PALMER2A(action,args...)
 # 
 #    SIF input: Nick Gould, 1990.
 # 
-#    classification = "SBR2-RN-6-0"
+#    classification = "C-CSBR2-RN-6-0"
 # 
 #    Number of data points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 9 XI 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER2A"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PALMER2A"
+        pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -87,20 +88,20 @@ function PALMER2A(action,args...)
         v_["Y22"] = 40.149455
         v_["Y23"] = 72.676767
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("A0",ix_)
+        iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
-        iv,ix_,_ = s2x_ii("A2",ix_)
+        iv,ix_,_ = s2mpj_ii("A2",ix_)
         arrset(pb.xnames,iv,"A2")
-        iv,ix_,_ = s2x_ii("A4",ix_)
+        iv,ix_,_ = s2mpj_ii("A4",ix_)
         arrset(pb.xnames,iv,"A4")
-        iv,ix_,_ = s2x_ii("A6",ix_)
+        iv,ix_,_ = s2mpj_ii("A6",ix_)
         arrset(pb.xnames,iv,"A6")
-        iv,ix_,_ = s2x_ii("B",ix_)
+        iv,ix_,_ = s2mpj_ii("B",ix_)
         arrset(pb.xnames,iv,"B")
-        iv,ix_,_ = s2x_ii("C",ix_)
+        iv,ix_,_ = s2mpj_ii("C",ix_)
         arrset(pb.xnames,iv,"C")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
@@ -108,16 +109,16 @@ function PALMER2A(action,args...)
             v_["XSQR"] = v_["X"*string(I)]*v_["X"*string(I)]
             v_["XQUART"] = v_["XSQR"]*v_["XSQR"]
             v_["XSEXT"] = v_["XQUART"]*v_["XSQR"]
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["A0"]
-            pbm.A[ig,iv] += 1.0
+            pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["A2"]
-            pbm.A[ig,iv] += v_["XSQR"]
+            pbm.A[ig,iv] += Float64(v_["XSQR"])
             iv = ix_["A4"]
-            pbm.A[ig,iv] += v_["XQUART"]
+            pbm.A[ig,iv] += Float64(v_["XQUART"])
             iv = ix_["A6"]
-            pbm.A[ig,iv] += v_["XSEXT"]
+            pbm.A[ig,iv] += Float64(v_["XSEXT"])
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -127,10 +128,10 @@ function PALMER2A(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         for I = Int64(v_["1"]):Int64(v_["M"])
-            pbm.gconst[ig_["O"*string(I)]] = v_["Y"*string(I)]
+            pbm.gconst[ig_["O"*string(I)]] = Float64(v_["Y"*string(I)])
         end
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["A0"]] = -Inf
         pb.xupper[ix_["A0"]] = +Inf
@@ -143,11 +144,11 @@ function PALMER2A(action,args...)
         pb.xlower[ix_["B"]] = 0.00001
         pb.xlower[ix_["C"]] = 0.00001
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = fill(1.0,pb.n,)
+        pb.x0 = fill(Float64(1.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "QUOT", iet_)
+        it,iet_,_ = s2mpj_ii( "eQUOT", iet_)
         loaset(elftv,it,1,"B")
         loaset(elftv,it,2,"C")
         elftp = Vector{Vector{String}}()
@@ -158,23 +159,23 @@ function PALMER2A(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["XSQR"] = v_["X"*string(I)]*v_["X"*string(I)]
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
-            arrset(pbm.elftype,ie,"QUOT")
-            arrset(ielftype, ie, iet_["QUOT"])
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
+            arrset(pbm.elftype,ie,"eQUOT")
+            arrset(ielftype,ie,iet_["eQUOT"])
             vname = "B"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
             posev = findfirst(x->x=="B",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "C"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
             posev = findfirst(x->x=="C",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="XSQR",elftp[ielftype[ie]])
-            loaset(pbm.elpar,ie,posep,v_["XSQR"])
+            loaset(pbm.elpar,ie,posep,Float64(v_["XSQR"]))
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("L2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -182,24 +183,34 @@ function PALMER2A(action,args...)
         nlc = Int64[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             ig = ig_["O"*string(I)]
-            arrset(pbm.grftype,ig,"L2")
+            arrset(pbm.grftype,ig,"gL2")
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(I)])
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               1.7109717D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
-        #%%%%% RETURN VALUES FROM THE SETUP ACTIONS %%%%%%%
-        pb.pbclass = "SBR2-RN-6-0"
+        #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
+        pb.pbclass = "C-CSBR2-RN-6-0"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
-    elseif action == "QUOT"
+    elseif action == "eQUOT"
 
         EV_     = args[1]
         iel_    = args[2]
@@ -229,7 +240,7 @@ function PALMER2A(action,args...)
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
-    elseif action == "L2"
+    elseif action == "gL2"
 
         GVAR_   = args[1]
         igr_    = args[2]
@@ -253,19 +264,21 @@ function PALMER2A(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 
