@@ -1,0 +1,578 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS67
+
+*   Problem :
+*   *********
+
+*   Source: problem 67 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   Original Source: problem 8 in
+*   A.R. Colville
+*   "A comparative study on nonlinear programming"
+*   IBM Scientific Center Report 320-2949, New York, 1968.
+
+*   SIF input: A.R. Conn & Nick Gould, April 1991.
+
+*   classification OOI2-AN-3-14
+
+*   Set useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+
+ AE A(1)                0.0
+ AE A(2)                0.0
+ AE A(3)                85.0
+ AE A(4)                90.0
+ AE A(5)                3.0
+ AE A(6)                0.01
+ AE A(7)                145.0
+ AE A(8)                5000.0
+ AE A(9)                2000.0
+ AE A(10)               93.0
+ AE A(11)               95.0
+ AE A(12)               12.0
+ AE A(13)               4.0
+ AE A(14)               162.0
+
+VARIABLES
+
+ DO I         1                        3
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ XN OBJ       X(1)      5.04           X(2)      0.035
+ XN OBJ       X(3)      10.0
+
+*   Constraint functions
+
+ DO I         1                        7
+ XG AG(I)
+ XL AL(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        7
+ IA I+7       I         7
+ Z  HS67      AG(I)                    A(I)
+ Z  HS67      AL(I)                    A(I+7)
+ ND
+
+BOUNDS
+
+*   All variables are in greater than 0.00001
+
+ LO HS67      'DEFAULT' 0.00001
+
+ XU HS67      X(1)      2000.0
+ XU HS67      X(2)      16000.0
+ XU HS67      X(3)      120.0
+
+START POINT
+
+ XV HS67      X(1)      1745.0
+ XV HS67      X(2)      12000.0
+ XV HS67      X(3)      110.0
+
+ELEMENT TYPE
+
+ EV Y2Y5      U1                       U2
+ EV Y2Y5      U3
+
+ EV Y2        U1                       U2
+ EV Y2        U3
+
+ EV Y3        U1                       U2
+ EV Y3        U3
+
+ EV Y4        U1                       U2
+ EV Y4        U3
+
+ EV Y5        U1                       U2
+ EV Y5        U3
+
+ EV Y6        U1                       U2
+ EV Y6        U3
+
+ EV Y7        U1                       U2
+ EV Y7        U3
+
+ EV Y8        U1                       U2
+ EV Y8        U3
+
+ELEMENT USES
+
+ T  E25       Y2Y5
+
+ V  E25       U1                       X1
+ V  E25       U2                       X2
+ V  E25       U3                       X3
+
+ T  E2        Y2
+
+ V  E2        U1                       X1
+ V  E2        U2                       X2
+ V  E2        U3                       X3
+
+ T  E3        Y3
+
+ V  E3        U1                       X1
+ V  E3        U2                       X2
+ V  E3        U3                       X3
+
+ T  E4        Y4
+
+ V  E4        U1                       X1
+ V  E4        U2                       X2
+ V  E4        U3                       X3
+
+ T  E5        Y5
+
+ V  E5        U1                       X1
+ V  E5        U2                       X2
+ V  E5        U3                       X3
+
+ T  E6        Y6
+
+ V  E6        U1                       X1
+ V  E6        U2                       X2
+ V  E6        U3                       X3
+
+ T  E7        Y7
+
+ V  E7        U1                       X1
+ V  E7        U2                       X2
+ V  E7        U3                       X3
+
+ T  E8        Y8
+
+ V  E8        U1                       X1
+ V  E8        U2                       X2
+ V  E8        U3                       X3
+
+GROUP USES
+
+
+ E  OBJ       E25       -0.063         E3        3.36
+
+ XE AG(1)     E2
+ XE AL(1)     E2
+
+ XE AG(2)     E3
+ XE AL(2)     E3
+
+ XE AG(3)     E4
+ XE AL(3)     E4
+
+ XE AG(4)     E5
+ XE AL(4)     E5
+
+ XE AG(5)     E6
+ XE AL(5)     E6
+
+ XE AG(6)     E7
+ XE AL(6)     E7
+
+ XE AG(7)     E8
+ XE AL(7)     E8
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS67
+
+TEMPORARIES
+
+ R  DUMMY
+ R  HS67
+ R  Y(8)
+ R  G(8,3)
+ R  H(8,6)
+ L  EVAL
+ F  HS67
+
+GLOBALS
+
+ A  EVAL                .FALSE.
+
+INDIVIDUALS
+
+ T  Y2Y5
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 2 ) * Y( 5 )
+ G  U1                  Y( 2 ) * G( 5, 1 ) +
+ G+                     Y( 5 ) * G( 2, 1 )
+ G  U2                  Y( 2 ) * G( 5, 2 ) +
+ G+                     Y( 5 ) * G( 2, 2 )
+ G  U3                  Y( 2 ) * G( 5, 3 ) +
+ G+                     Y( 5 ) * G( 2, 3 )
+ H  U1        U1        Y( 2 ) * H( 5, 1 ) +
+ H+                     2.0 * G( 5, 1 ) * G( 2, 1 ) +
+ H+                     Y( 5 ) * H( 2, 1 )
+ H  U1        U2        Y( 2 ) * H( 5, 2 ) +
+ H+                     G( 5, 1 ) * G( 2, 2 ) +
+ H+                     G( 5, 2 ) * G( 2, 1 ) +
+ H+                     Y( 5 ) * H( 2, 2 )
+ H  U1        U3        Y( 2 ) * H( 5, 3 ) +
+ H+                     G( 5, 1 ) * G( 2, 3 ) +
+ H+                     G( 5, 3 ) * G( 2, 1 ) +
+ H+                     Y( 5 ) * H( 2, 3 )
+ H  U2        U2        Y( 2 ) * H( 5, 4 ) +
+ H+                     2.0 * G( 5, 2 ) * G( 2, 2 ) +
+ H+                     Y( 5 ) * H( 2, 4 )
+ H  U2        U3        Y( 2 ) * H( 5, 5 ) +
+ H+                     G( 5, 2 ) * G( 2, 3 ) +
+ H+                     G( 5, 3 ) * G( 2, 2 ) +
+ H+                     Y( 5 ) * H( 2, 5 )
+ H  U3        U3        Y( 2 ) * H( 5, 6 ) +
+ H+                     2.0 * G( 5, 3 ) * G( 2, 3 ) +
+ H+                     Y( 5 ) * H( 2, 6 )
+
+ T  Y2
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 2 )
+ G  U1                  G( 2, 1 )
+ G  U2                  G( 2, 2 )
+ H  U1        U1        H( 2, 1 )
+ H  U2        U1        H( 2, 2 )
+ H  U2        U2        H( 2, 4 )
+
+ T  Y3
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 3 )
+ G  U1                  G( 3, 1 )
+ G  U2                  G( 3, 2 )
+ H  U1        U1        H( 3, 1 )
+ H  U2        U1        H( 3, 2 )
+ H  U2        U2        H( 3, 4 )
+
+ T  Y4
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 4 )
+ G  U1                  G( 4, 1 )
+ G  U2                  G( 4, 2 )
+ G  U3                  G( 4, 3 )
+ H  U1        U1        H( 4, 1 )
+ H  U2        U1        H( 4, 2 )
+ H  U3        U1        H( 4, 3 )
+ H  U2        U2        H( 4, 4 )
+ H  U3        U2        H( 4, 5 )
+ H  U3        U3        H( 4, 6 )
+
+ T  Y5
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 5 )
+ G  U1                  G( 5, 1 )
+ G  U2                  G( 5, 2 )
+ G  U3                  G( 5, 3 )
+ H  U1        U1        H( 5, 1 )
+ H  U2        U1        H( 5, 2 )
+ H  U3        U1        H( 5, 3 )
+ H  U2        U2        H( 5, 4 )
+ H  U3        U2        H( 5, 5 )
+ H  U3        U3        H( 5, 6 )
+
+ T  Y6
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 6 )
+ G  U1                  G( 6, 1 )
+ G  U2                  G( 6, 2 )
+ H  U1        U1        H( 6, 1 )
+ H  U2        U1        H( 6, 2 )
+ H  U2        U2        H( 6, 4 )
+
+ T  Y7
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+ A  EVAL                .TRUE.
+
+ F                      Y( 7 )
+ G  U1                  G( 7, 1 )
+ G  U2                  G( 7, 2 )
+ G  U3                  G( 7, 3 )
+ H  U1        U1        H( 7, 1 )
+ H  U2        U1        H( 7, 2 )
+ H  U3        U1        H( 7, 3 )
+ H  U2        U2        H( 7, 4 )
+ H  U3        U2        H( 7, 5 )
+ H  U3        U3        H( 7, 6 )
+
+ T  Y8
+
+ E  EVAL      DUMMY     HS67( U1, U2, U3, Y, G, H )
+
+ F                      Y( 8 )
+ G  U1                  G( 8, 1 )
+ G  U2                  G( 8, 2 )
+ G  U3                  G( 8, 3 )
+ H  U1        U1        H( 8, 1 )
+ H  U2        U1        H( 8, 2 )
+ H  U3        U1        H( 8, 3 )
+ H  U2        U2        H( 8, 4 )
+ H  U3        U2        H( 8, 5 )
+ H  U3        U3        H( 8, 6 )
+
+ENDATA
+
+C  EXTERNAL PROCEDURE
+
+      DOUBLE PRECISION FUNCTION HS67( X1, X2, X3, Y, G, H )
+      DOUBLE PRECISION X1, X2, X3, Y( 8 ), G( 8, 3 ), H( 8, 6 )
+C
+C    PAGE 129 Hock and Schittkowski.
+C
+      DOUBLE PRECISION Y2C, Y4C, Y2Y7X3
+      INTRINSIC ABS
+      HS67   = 0.0
+C
+C  FIRST APPROXIMATION TO Y2.
+C
+      Y( 2 )    = 1.6 * X1
+      G( 2, 1 ) = 1.6
+      G( 2, 2 ) = 0.0
+      G( 2, 3 ) = 0.0
+      H( 2, 1 ) = 0.0
+      H( 2, 2 ) = 0.0
+      H( 2, 3 ) = 0.0
+      H( 2, 4 ) = 0.0
+      H( 2, 5 ) = 0.0
+      H( 2, 6 ) = 0.0
+C
+C  LOOP UNTIL Y2 CONVERGES.
+C
+   10 CONTINUE
+C
+C  Y3.
+C
+      Y( 3 )    = 1.22 * Y( 2 ) - X1
+      G( 3, 1 ) = 1.22 * G( 2, 1 ) - 1.0
+      G( 3, 2 ) = 1.22 * G( 2, 2 )
+      G( 3, 3 ) = 1.22 * G( 2, 3 )
+      H( 3, 1 ) = 1.22 * H( 2, 1)
+      H( 3, 2 ) = 1.22 * H( 2, 2)
+      H( 3, 3 ) = 1.22 * H( 2, 3)
+      H( 3, 4 ) = 1.22 * H( 2, 4)
+      H( 3, 5 ) = 1.22 * H( 2, 5)
+      H( 3, 6 ) = 1.22 * H( 2, 6)
+C
+C  Y6.
+C
+      Y( 6 )    = ( X2 + Y( 3 ) ) / X1
+      G( 6, 1 ) = - Y( 6 ) / X1 + G( 3, 1 ) / X1
+      G( 6, 2 ) =   1.0 / X1 + G( 3, 2 ) / X1
+      G( 6, 3 ) =  G( 3, 3 ) / X1
+      H( 6, 1 ) = - G( 6, 1) / X1 + Y( 6 )/ X1 ** 2 - G( 3, 1 ) /
+     +            X1 **2 + H( 3, 1) / X1
+      H( 6, 2 ) = - G( 6, 2 ) / X1 + H( 3, 2 ) / X1
+      H( 6, 3 ) = - G( 6, 3 ) / X1 + H( 3, 3 ) / X1
+      H( 6, 4 ) = H( 3, 4 ) / X1
+      H( 6, 5 ) = H( 3, 5 ) / X1
+      H( 6, 6 ) = H( 3, 6 ) / X1
+      Y2C       = 0.01 * X1 * ( 112.0 + 13.167 * Y( 6 ) - 0.6667 *
+     +            Y( 6 ) ** 2 )
+      IF ( ABS( Y2C - Y( 2 ) ) .GT. 0.001 ) THEN
+C
+C  Y2.
+C
+         Y( 2 )    = Y2C
+         G( 2, 1)  = 0.01 * ( 112.0 + 13.167 * Y( 6 ) - 0.6667 *
+     +               Y( 6 ) ** 2 ) +  X1 * 0.13167 * G( 6, 1 ) -
+     +               X1 * 0.013334 * Y( 6) * G( 6, 1 )
+         G( 2, 2)  = X1 * ( 0.13167 * G( 6, 2 ) - 0.013334 * Y( 6) *
+     +               G( 6, 2) )
+         G( 2, 3)  = X1 * ( 0.13167 * G( 6, 3 ) - 0.013334 * Y( 6) *
+     +               G( 6, 3) )
+         H( 2, 1 ) = 0.13167 * G( 6, 1 ) - 0.013334 * Y( 6) *
+     +               G( 6, 1 ) + 0.13167 * G( 6, 1 ) -  0.013334 *
+     +               Y( 6) * G( 6, 1 ) + X1 * 0.13167 * H( 6, 1 ) -
+     +               X1 * 0.013334 * G( 6, 1 ) ** 2 - X1 * 0.013334 *
+     +               Y( 6 ) * H( 6, 1 )
+         H( 2, 2 ) = 0.13167 * G( 6, 2 ) - 0.013334 * Y( 6) *
+     +               G( 6, 2 ) + X1 * 0.13167 * H( 6, 2 ) -
+     +               X1 * 0.013334 * G( 6, 2 ) * G( 6, 1 ) - X1 *
+     +               0.013334 * Y( 6 ) * H( 6, 2 )
+         H( 2, 3 ) = 0.13167 * G( 6, 3 ) - 0.013334 * Y( 6) *
+     +               G( 6, 3 ) + X1 * 0.13167 * H( 6, 3 ) -
+     +               X1 * 0.013334 * G( 6, 3 ) * G( 6, 1 ) - X1 *
+     +               0.013334 * Y( 6 ) * H( 6, 3 )
+         H( 2, 4 ) = X1 * ( 0.13167 * H( 6, 4 ) - 0.013334 * G( 6, 2 )
+     +               ** 2 - 0.013334 * Y( 6) * H( 6, 4 ))
+         H( 2, 5 ) = X1 * ( 0.13167 * H( 6, 5 ) - 0.013334 * G( 6, 3 )
+     +               * G( 6, 2 ) - 0.013334 * Y( 6) * H( 6, 5 ))
+         H( 2, 6 ) = X1 * ( 0.13167 * H( 6, 6 ) - 0.013334 * G( 6, 3 )
+     +               ** 2 - 0.013334 * Y( 6) * H( 6, 6 ))
+
+
+         GO TO 10
+      END IF
+C
+C  FIRST APPROXIMATION TO Y4.
+C
+      Y( 4 )    = 93.0
+      G( 4, 1 ) = 0.0
+      G( 4, 2 ) = 0.0
+      G( 4, 3 ) = 0.0
+      H( 4, 1 ) = 0.0
+      H( 4, 2 ) = 0.0
+      H( 4, 3 ) = 0.0
+      H( 4, 4 ) = 0.0
+      H( 4, 5 ) = 0.0
+      H( 4, 6 ) = 0.0
+C
+C  LOOP UNTIL Y4 CONVERGES.
+C
+   40 CONTINUE
+C
+C  Y5.
+C
+      Y( 5 )    = 86.35 + 1.098 * Y( 6 ) - 0.038 * Y( 6) ** 2 +
+     +            0.325 * ( Y( 4 ) - 89.0 )
+      G( 5, 1 ) = 1.098 * G( 6, 1 ) - 0.076 * Y( 6 ) * G( 6, 1) +
+     +            0.325 * G( 4, 1 )
+      G( 5, 2 ) = 1.098 * G( 6, 2 ) - 0.076 * Y( 6 ) * G( 6, 2) +
+     +            0.325 * G( 4, 2 )
+      G( 5, 3 ) = 1.098 * G( 6, 3 ) - 0.076 * Y( 6 ) * G( 6, 3) +
+     +            0.325 * G( 4, 3 )
+      H( 5, 1 ) = 1.098 * H( 6, 1 ) - 0.076 * G( 6, 1 ) * G( 6, 1 )
+     *            - 0.076 * Y( 6 ) * H( 6, 1 ) + 0.325 * H( 4, 1 )
+      H( 5, 2 ) = 1.098 * H( 6, 2 ) - 0.076 * G( 6, 1 ) * G( 6, 2 )
+     *            - 0.076 * Y( 6 ) * H( 6, 2 ) + 0.325 * H( 4, 2 )
+      H( 5, 3 ) = 1.098 * H( 6, 3 ) - 0.076 * G( 6, 1 ) * G( 6, 3 )
+     *            - 0.076 * Y( 6 ) * H( 6, 3 ) + 0.325 * H( 4, 3 )
+      H( 5, 4 ) = 1.098 * H( 6, 4 ) - 0.076 * G( 6, 2 ) * G( 6, 2 )
+     *            - 0.076 * Y( 6 ) * H( 6, 4 ) + 0.325 * H( 4, 4 )
+      H( 5, 5 ) = 1.098 * H( 6, 5 ) - 0.076 * G( 6, 2 ) * G( 6, 3 )
+     *            - 0.076 * Y( 6 ) * H( 6, 5 ) + 0.325 * H( 4, 5 )
+      H( 5, 6 ) = 1.098 * H( 6, 6 ) - 0.076 * G( 6, 3 ) * G( 6, 3 )
+     *            - 0.076 * Y( 6 ) * H( 6, 6 ) + 0.325 * H( 4, 6 )
+C
+C  Y8.
+C
+      Y( 8 )    = 3.0 * Y( 5 ) - 133.0
+      G( 8, 1 ) = 3.0 * G( 5, 1 )
+      G( 8, 2 ) = 3.0 * G( 5, 2 )
+      G( 8, 3 ) = 3.0 * G( 5, 3 )
+      H( 8, 1 ) = 3.0 * H( 5, 1 )
+      H( 8, 2 ) = 3.0 * H( 5, 2 )
+      H( 8, 3 ) = 3.0 * H( 5, 3 )
+      H( 8, 4 ) = 3.0 * H( 5, 4 )
+      H( 8, 5 ) = 3.0 * H( 5, 5 )
+      H( 8, 6 ) = 3.0 * H( 5, 6 )
+C
+C  Y3.
+C
+      Y( 7 )    = 35.82 - 0.222 * Y( 8 )
+      G( 7, 1 ) = - 0.222 * G( 8, 1 )
+      G( 7, 2 ) = - 0.222 * G( 8, 2 )
+      G( 7, 3 ) = - 0.222 * G( 8, 3 )
+      H( 7, 1 ) = - 0.222 * H( 8, 1 )
+      H( 7, 2 ) = - 0.222 * H( 8, 2 )
+      H( 7, 3 ) = - 0.222 * H( 8, 3 )
+      H( 7, 4 ) = - 0.222 * H( 8, 4 )
+      H( 7, 5 ) = - 0.222 * H( 8, 5 )
+      H( 7, 6 ) = - 0.222 * H( 8, 6 )
+      Y2Y7X3    = Y( 2 ) * Y( 7 ) + 1000.0 * X3
+      Y4C       = 98000.0 * X3 / Y2Y7X3
+      IF ( ABS( Y4C - Y( 4 ) ) .GT. 0.001 ) THEN
+C
+C  Y4.
+C
+         Y( 4 )    = Y4C
+         G( 4, 1 ) = - 98000.0 * X3 * ( G( 2, 1 ) * Y( 7 ) + Y( 2 ) *
+     +               G( 7, 1) ) / Y2Y7X3 ** 2
+         G( 4, 2 ) = - 98000.0 * X3 * ( G( 2, 2 ) * Y( 7 ) + Y( 2 ) *
+     +               G( 7, 2) ) / Y2Y7X3 ** 2
+         G( 4, 3 ) = 98000.0 / Y2Y7X3
+     +               - 98000.0 * X3 * ( G( 2, 3 ) * Y( 7 ) + Y( 2 ) *
+     +               G( 7, 3) + 1000.0 ) / Y2Y7X3 ** 2
+         H( 4, 1 ) = - 98000.0 * X3 * ( H( 2, 1 ) * Y( 7 ) +
+     +               2.0 * G( 2, 1 ) * G( 7, 1 ) + Y( 2 ) *
+     +               H( 7, 1 ) ) / Y2Y7X3 ** 2
+     +               + 196000.0 * X3 * ( G( 2, 1 ) * Y( 7 )
+     +               + Y( 2 ) * G( 7, 1) ) ** 2 / Y2Y7X3 ** 3
+         H( 4, 2 ) = - 98000.0 * X3 * ( H( 2, 2 ) * Y( 7 ) + G( 2, 2 )
+     +               * G( 7, 1 ) + G( 2, 1 ) * G( 7, 2 ) + Y( 2 ) *
+     +               H( 7, 2) ) / Y2Y7X3 ** 2
+     +               + 196000.0 * X3 * ( G( 2, 2 ) * Y( 7 )
+     +               + Y( 2 ) * G( 7, 2) ) * ( G( 2, 1 ) * Y( 7 )
+     +               + Y( 2 ) * G( 7, 1 ) ) / Y2Y7X3 ** 3
+         H( 4, 3 ) = - 98000.0 * ( Y( 2 ) * G( 7, 1 ) + Y( 7 ) *
+     +               G( 2, 1 ) ) / Y2Y7X3 ** 2
+     +               - 98000.0 * X3 * ( G( 2, 3 ) * G( 7, 1 ) +
+     +               Y( 2 ) * H( 7, 3 ) + G( 2, 1 ) * G( 7, 3 ) +
+     +               H( 2, 3 ) * Y( 7 ) ) / Y2Y7X3 ** 2 +
+     +               196000.0 * X3 * ( Y( 2 ) * G( 7, 1 ) + Y( 7 ) *
+     +               G( 2, 1 ) ) * ( G( 2, 3 ) * Y( 7 ) + Y( 2 ) *
+     +               G( 7, 3 ) + 1000.0 ) / Y2Y7X3 ** 3
+         H( 4, 4 ) = - 98000.0 * X3 * ( H( 2, 4 ) * Y( 7 ) +
+     +               2.0 * G( 2, 2 ) * G( 7, 2 ) + Y( 2 ) *
+     +               H( 7, 4) ) / Y2Y7X3 ** 2
+     +               + 196000.0 * X3 * ( G( 2, 2 ) * Y( 7 )
+     +               + Y( 2 ) * G( 7, 2) ) ** 2 / Y2Y7X3 ** 3
+         H( 4, 5 ) = - 98000.0 * ( Y( 2 ) * G( 7, 2 ) + Y( 7 ) *
+     +               G( 2, 2 ) ) / Y2Y7X3 ** 2
+     +               - 98000.0 * X3 * ( G( 2, 3 ) * G( 7, 2 ) +
+     +               Y( 2 ) * H( 7, 5 ) + G( 2, 2 ) * G( 7, 3 ) +
+     +               H( 2, 5 ) * Y( 7 ) ) / Y2Y7X3 ** 2 +
+     +               196000.0 * X3 * ( Y( 2 ) * G( 7, 2 ) + Y( 7 ) *
+     +               G( 2, 2 ) ) * ( G( 2, 3 ) * Y( 7 ) + Y( 2 ) *
+     +               G( 7, 3 ) + 1000.0 ) / Y2Y7X3 ** 3
+         H( 4, 6 ) = - 196000.0 * ( Y( 2 ) * G( 7, 3 ) + Y( 7 ) *
+     +               G( 2, 3 ) + 1000.0 ) / Y2Y7X3 ** 2
+     +               - 98000.0 * X3 *
+     +               ( H( 2, 6 ) * Y( 7 ) + 2.0 * G( 2, 3 ) *
+     +               G( 7, 3 ) + Y( 2 ) * H( 7, 6 ) ) / Y2Y7X3 ** 2
+     +               + 196000.0 * X3 * ( G( 2, 3 ) * Y( 7 ) + Y( 2 )
+     +               * G( 7, 3 ) + 1000.0 ) ** 2 / Y2Y7X3 ** 3
+         GO TO 40
+      END IF
+      RETURN
+      END
+
+

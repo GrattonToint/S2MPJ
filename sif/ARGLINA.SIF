@@ -1,0 +1,106 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ARGLINA
+
+*   Problem :
+*   *********
+*   Variable dimension full rank linear problem
+
+*   Source: Problem 32 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#80 (with different N and M)
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-V-0
+
+*   This problem is a linear least squares
+
+*   N is the number of free variables
+*   M is the number of equations ( M.ge.N)
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER 
+*IE N                   100            $-PARAMETER
+ IE N                   200            $-PARAMETER
+
+*IE M                   20             $-PARAMETER .ge. N
+*IE M                   100            $-PARAMETER .ge. N
+*IE M                   200            $-PARAMETER .ge. N
+ IE M                   400            $-PARAMETER .ge. N
+
+*   Define useful parameters
+
+ IE 1                   1
+ RE -2.0                -2.0
+
+ IA N+1       N         1
+ RI RM        M
+ R/ -2/M      -2.0                     RM
+ RA 1-2/M     -2/M      1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ IA I-1       I         -1
+ IA I+1       I         1
+ DO J         1                        I-1
+ ZN G(I)      X(J)                     -2/M
+ OD J
+ ZN G(I)      X(I)                     1-2/M
+ DO J         I+1                      N
+ ZN G(I)      X(J)                     -2/M
+ ND
+
+ DO I         N+1                      M
+ DO J         1                        N
+ ZN G(I)      X(J)                     -2/M
+ ND
+
+CONSTANTS
+
+ X  ARGLINA   'DEFAULT' 1.0
+
+BOUNDS
+
+ FR ARGLINA   'DEFAULT'
+
+START POINT
+
+ XV ARGLINA   'DEFAULT' 1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ARGLINA
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

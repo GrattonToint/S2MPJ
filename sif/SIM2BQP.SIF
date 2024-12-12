@@ -1,0 +1,75 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIM2BQP
+
+*   Problem :
+*   *********
+
+*   Source: another very simple box-constrained quadratic
+
+*   SIF input: Nick Gould, March 1992
+
+*   classification QBR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X2        1.0
+
+ N  G2        X1        -1.0           X2        1.0
+ N  G3        X1        2.0            X2        1.0
+
+BOUNDS
+
+ FX SIM2BQP   'DEFAULT' 0.0
+ LO SIM2BQP   X2        0.0
+ UP SIM2BQP   X2        0.5
+
+START POINT
+
+    SIM2BQP   X1        10.0
+    SIM2BQP   X2        1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  G2        L2
+ T  G3        L2
+
+OBJECT BOUND
+
+ LO SIM2BQP             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SIM2BQP
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

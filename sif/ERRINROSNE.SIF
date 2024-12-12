@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ERRINROSNE
+
+*   Problem :
+*   --------
+
+*   A nonlinear function similar to the chained Rosenbrock
+*   problem CHNROSNB.
+*   This is a nonlinear equation variant of ERRINROS
+
+*   Source:
+*   An error in specifying problem CHNROSNB.
+*   SIF input: Ph. Toint, Sept 1990.
+*              Nick Gould (nonlinear equation version), Jan 2019
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables (at most 50)
+
+ IE N                   10             $-PARAMETER
+*IE N                   25             $-PARAMETER
+*IE N                   50             $-PARAMETER
+
+*   Problem data
+
+ RE ALPH1               1.25
+ RE ALPH2               1.40
+ RE ALPH3               2.40
+ RE ALPH4               1.40
+ RE ALPH5               1.75
+ RE ALPH6               1.20
+ RE ALPH7               2.25
+ RE ALPH8               1.20
+ RE ALPH9               1.00
+ RE ALPH10              1.10
+ RE ALPH11              1.50
+ RE ALPH12              1.60
+ RE ALPH13              1.25
+ RE ALPH14              1.25
+ RE ALPH15              1.20
+ RE ALPH16              1.20
+ RE ALPH17              1.40
+ RE ALPH18              0.50
+ RE ALPH19              0.50
+ RE ALPH20              1.25
+ RE ALPH21              1.80
+ RE ALPH22              0.75
+ RE ALPH23              1.25
+ RE ALPH24              1.40
+ RE ALPH25              1.60
+ RE ALPH26              2.00
+ RE ALPH27              1.00
+ RE ALPH28              1.60
+ RE ALPH29              1.25
+ RE ALPH30              2.75
+ RE ALPH31              1.25
+ RE ALPH32              1.25
+ RE ALPH33              1.25
+ RE ALPH34              3.00
+ RE ALPH35              1.50
+ RE ALPH36              2.00
+ RE ALPH37              1.25
+ RE ALPH38              1.40
+ RE ALPH39              1.80
+ RE ALPH40              1.50
+ RE ALPH41              2.20
+ RE ALPH42              1.40
+ RE ALPH43              1.50
+ RE ALPH44              1.25
+ RE ALPH45              2.00
+ RE ALPH46              1.50
+ RE ALPH47              1.25
+ RE ALPH48              1.40
+ RE ALPH49              0.60
+ RE ALPH50              1.50
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         2                        N
+ IA I-1       I         -1
+ XE SQ(I)     X(I-1)    1.0
+ XE B(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         2                        N
+ X  ERRINROS  B(I)      1.0
+ ND
+
+BOUNDS
+
+ FR ERRINROS  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ X  ERRINROS  X(I)      -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' ETYPE
+
+ DO I         2                        N
+ ZV ELA(I)    V1                       X(I)
+ ND
+
+GROUP USES
+
+ DO I         2                        N
+ A* AI2       ALPH(I)                  ALPH(I)
+ RM AI        AI2        16.0
+ ZE SQ(I)     ELA(I)                   AI
+ ND
+
+OBJECT BOUND
+
+
+ LO ERRINROS             0.0
+
+*   Solution
+
+*LO SOLTN(10)            6.69463214
+*LO SOLTN(25)            18.4609060
+*LO SOLTN(50)            39.9041540
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ERRINROSNE
+
+INDIVIDUALS
+
+ T  ETYPE
+ F                      - V1 ** 2
+ G  V1                  - 2.0 * V1
+ H  V1        V1        - 2.0
+
+ENDATA

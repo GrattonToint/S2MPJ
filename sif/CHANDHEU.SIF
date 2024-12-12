@@ -1,0 +1,137 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHANDHEU
+
+*   Problem :
+*   *********
+*   Chandrasekhar Radiative Transfer H equation, as stated by T. Kelley.
+
+*   This is an unconstrained version of problem CHANDHEQ.
+
+*   Source: problem 4 in
+*   J.J. More',
+*   "A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NOR2-RN-V-V
+
+*   N is the number of discretization points
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+ IE N                   500            $-PARAMETER
+
+*   The value of the problem parameter C should be in [0,1] for a
+*   physically realistic problem, but other values can be used for
+*   testing purposes.
+*   Unique solution for C=0 and C=1, two for other values.
+*   More difficult for C close to 1.
+
+ RE C                   1.0            $-PARAMETER  in [0,1]
+
+*   Define useful parameters
+
+ IE 1                   1
+ RE 1.0                 1.0
+ RI RN        N
+ R/ 1/N       1.0                      RN
+ RM HALFC     C         0.5
+
+*   Discretization points (X(I)) and weights (W(I)) for the considered
+*   quadrature rule on [0,1]
+
+ DO I         1                        N
+ RI RI        I
+ A* X(I)      RI                       1/N
+ AA W(I)      1/N       0.0
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  H(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XE G(I)      H(I)      1.0
+ ND
+
+CONSTANTS
+
+ X  CHANDHEU  'DEFAULT' 1.0
+
+BOUNDS
+
+ FR CHANDHEU  'DEFAULT'
+
+START POINT
+
+ V  CHANDHEU  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV 2PR       HI                       HJ
+
+ELEMENT USES
+
+ T  'DEFAULT' 2PR
+
+ DO I         1                        N
+ DO J         1                        N
+ ZV A(I,J)    HI                       H(I)
+ ZV A(I,J)    HJ                       H(J)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+
+ A* T1        HALFC                    X(I)
+
+ DO J         1                        N
+
+ A* T3        T1                       W(J)
+ A+ XIPXJ     X(I)                     X(J)
+ R/ VAL       T3                       XIPXJ
+ RM COEFF     VAL       -1.0
+
+ ZE G(I)      A(I,J)                   COEFF
+
+ ND
+
+OBJECT BOUND
+
+ LO CHANDHEU            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHANDHEU 
+
+INDIVIDUALS
+
+ T  2PR
+
+ F                      HI * HJ
+ G  HI                  HJ
+ G  HJ                  HI
+ H  HI        HJ        1.0
+
+ENDATA

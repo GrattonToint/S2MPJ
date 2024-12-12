@@ -1,0 +1,505 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GASOIL 
+
+*   Problem :
+*   *********
+
+*   Determine the reaction coefficients for the catalytic cracking of gas oil
+*   and other byproducts. The nonlinear model that describes the process is
+
+*     y_1' = - (theta_1 + theta_3 ) y_1^2
+*     y_2' = theta_1 y_1^2 + theta_2 y_2
+
+*   with given initial conditions. The problem is to minimize
+
+*    sum{i=1,20} || y(tau_i,theta) - z_i||^2
+
+*   where the z_i are concentration measurements for y at times tau_i (i=1,20)
+
+*   This is problem 12 in the COPS (Version 2) collection of 
+*   E. Dolan and J. More'
+*   see "Benchmarking Optimization Software with COPS"
+*   Argonne National Labs Technical Report ANL/MCS-246 (2000)
+
+*   SIF input: Nick Gould, November 2000
+
+*   classification OOR2-AN-V-V
+
+* The number of differential equations
+
+ IE NE                  2
+
+*   The number of subintervals
+
+ IE NH                  10             $-PARAMETER
+*IE NH                  50             $-PARAMETER
+*IE NH                  100            $-PARAMETER
+*IE NH                  200            $-PARAMETER
+*IE NH                  400            $-PARAMETER
+
+* The number of ODE parameters
+
+ IE NP                  3
+
+* The number of measurements
+
+ IE NM                  21
+
+*  The number of collocation points 
+
+*IE NC                  1
+*IE NC                  2
+*IE NC                  3
+ IE NC                  4
+
+* roots of NC-th degree Legendre polynomial
+
+*RE RHO1                0.5            $ NC = 1 
+
+*RE RHO1                0.7886751346   $ NC = 2 
+*RE RHO2                0.2113248654
+
+*RE RHO1                0.5            $ NC = 3 
+*RE RHO2                0.8872983346
+*RE RHO3                0.1127016654
+
+ RE RHO1                0.0694318442   $ NC = 4
+ RE RHO2                0.3300094782
+ RE RHO3                0.6699905218
+ RE RHO4                0.9305681558
+
+* times at which observations made
+
+ RE TAU1                0.0
+ RE TAU2                0.025
+ RE TAU3                0.05
+ RE TAU4                0.075
+ RE TAU5                0.10
+ RE TAU6                0.125
+ RE TAU7                0.150
+ RE TAU8                0.175
+ RE TAU9                0.20
+ RE TAU10               0.225
+ RE TAU11               0.250
+ RE TAU12               0.30
+ RE TAU13               0.35
+ RE TAU14               0.40
+ RE TAU15               0.45
+ RE TAU16               0.50
+ RE TAU17               0.55
+ RE TAU18               0.65
+ RE TAU19               0.75
+ RE TAU20               0.85
+ RE TAU21               0.95
+
+*  The ODE is defined in [0,TF]
+
+ A= TF        TAU(NM)
+
+*   The uniform interval length
+
+ RI RNH       NH
+ R/ H         TF                       RNH
+
+*  Concentrations
+
+ RE Z1,1                1.0000
+ RE Z1,2                0.0000
+ RE Z2,1                0.8105
+ RE Z2,2                0.2000
+ RE Z3,1                0.6208
+ RE Z3,2                0.2886
+ RE Z4,1                0.5258
+ RE Z4,2                0.3010
+ RE Z5,1                0.4345
+ RE Z5,2                0.3215
+ RE Z6,1                0.3903
+ RE Z6,2                0.3123
+ RE Z7,1                0.3342
+ RE Z7,2                0.2716
+ RE Z8,1                0.3034
+ RE Z8,2                0.2551
+ RE Z9,1                0.2735
+ RE Z9,2                0.2258
+ RE Z10,1               0.2405
+ RE Z10,2               0.1959
+ RE Z11,1               0.2283
+ RE Z11,2               0.1789
+ RE Z12,1               0.2071
+ RE Z12,2               0.1457
+ RE Z13,1               0.1669
+ RE Z13,2               0.1198
+ RE Z14,1               0.1530
+ RE Z14,2               0.0909
+ RE Z15,1               0.1339
+ RE Z15,2               0.0719
+ RE Z16,1               0.1265
+ RE Z16,2               0.0561
+ RE Z17,1               0.1200
+ RE Z17,2               0.0460
+ RE Z18,1               0.0990
+ RE Z18,2               0.0280
+ RE Z19,1               0.0870
+ RE Z19,2               0.0190
+ RE Z20,1               0.0770
+ RE Z20,2               0.0140
+ RE Z21,1               0.0690
+ RE Z21,2               0.0100
+
+*  ODE initial conditions
+
+ RE BC1                 1.0   
+ RE BC2                 0.0   
+
+*  Other useful values
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IA NH-1      NH        -1                
+ 
+*  Factorials
+
+ RE FACT0               1.0
+ DO I         1                        NC
+ RI RI        I
+ IA I-1       I         -1
+ A* FACT(I)   FACT(I-1)                RI
+ ND
+
+* itau[i] is the largest integer k with t[k] <= tau[i]
+* itau {i in 1..nm} := min(nh,floor(tau[i]/h)+1);    
+
+ DO I         1                        NM
+ A/ TAU/H     TAU(I)                   H
+ IR IT/H      TAU/H
+ IA IT/H+1    IT/H      1
+ I= A         IT/H+1
+ I= B         NH
+
+*  this is how we find min(a,b) !!
+
+*  first set a <- - a and b <- - b
+ IM A         A         -1
+ IM B         B         -1
+*  now add |a| + |b| to both
+ RI A         A  
+ R( ABSA      ABS                      A
+ IR ABSA      ABSA
+ RI B         B
+ R( ABSB      ABS                      B
+ IR ABSB      ABSB
+ I+ ABSA+B    ABSA                     ABSB
+ I+ A         A                        ABSA+B
+ I+ B         B                        ABSA+B
+* only one of [a/b] and [b/a] is nonzero (unless a=b)
+ I/ A/B       A                        B
+ I/ B/A       B                        A
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ I+ SUM       A/B                      B/A
+ I* A         A                        A/B
+ I* B         B                        B/A
+ I+ MAXA,B    A                        B
+ I/ MAXA,B    MAXA,B                   SUM
+* subtract |a| + |b| and negate to find the required minimum
+ I- MINA,B    ABSA+B                   MAXA,B
+
+ AI ITAU(I)   MINA,B
+ ND
+
+VARIABLES
+
+ DO I         1                        NP
+ X  THETA(I)  $ ODE parameters
+ ND
+
+*  The collocation approximation u is defined by the parameters V and W
+
+ DO I         1                        NH
+ DO J         1                        NE
+ X  V(I,J)
+ OD J
+
+ DO K         1                        NC
+ DO S         1                        NE
+ X  W(I,K,S)
+ OD S
+ OD K
+
+ DO J         1                        NC
+ DO S         1                        NE
+
+* U[i,j,s] is u evaluated  at the collocation points
+
+ X  U(I,J,S)
+
+* DU[i,j,s] is u' evaluated  at the collocation points
+
+ X  DU(I,J,S)
+ ND
+
+GROUPS
+
+* param t {i in 1..nh+1} := (i-1)*h
+*  obj(j,s) =  v[itau[j],s] - z[j,s] + (
+*     sum {k in 1..nc} w[itau[j],k,s]*(tau[j]-t[itau[j]])^k/(fact[k]*h^(k-1)))
+
+ DO J         1                        NM
+ A= RITAU     ITAU(J)
+ IR I         RITAU
+ RA T         RITAU     -1.0
+ R* T         T                        H
+ A- DIFF      TAU(J)                   T
+
+ DO S         1                        NE
+ R= RATIO     DIFF
+ XN OBJ(J,S)  V(I,S)    1.0
+
+ DO K         1                        NC
+ A/ COEF      RATIO                    FACT(K)
+ ZN OBJ(J,S)  W(I,K,S)                 COEF
+ R* RATIO     RATIO                    DIFF
+ R/ RATIO     RATIO                    H
+ ND
+
+* - u {i in 1..nh, j in 1..nc, s in 1..ne} + 
+*  v[i,s] + h*sum {k in 1..nc} w[i,k,s]*(rho[j]^k/fact[k]) = 0
+
+ DO I         1                        NH
+ DO J         1                        NC
+ A= RH        RHO(J)
+
+ XE U(I,J,1)  U(I,J,1)  -1.0           V(I,1)    1.0      
+ XE U(I,J,2)  U(I,J,2)  -1.0           V(I,2)    1.0      
+
+ R* PROD      RH                       H
+ DO K         1                        NC
+ A/ COEF      PROD                     FACT(K)
+ ZE U(I,J,1)  W(I,K,1)                 COEF
+ ZE U(I,J,2)  W(I,K,2)                 COEF
+ R* PROD      PROD                     RH
+ OD K
+
+* - du {i in 1..nh, j in 1..nc, s in 1..ne} +
+*   sum {k in 1..nc} w[i,k,s]*(rho[j]^(k-1)/fact[k-1]) = 0
+ 
+ XE DU(I,J,1) DU(I,J,1) -1.0
+ XE DU(I,J,2) DU(I,J,2) -1.0
+
+ RE PROD                1.0
+ DO K         1                        NC
+ IA K-1       K         -1
+ A/ COEF      PROD                     FACT(K-1)
+ ZE DU(I,J,1) W(I,K,1)                 COEF
+ ZE DU(I,J,2) W(I,K,2)                 COEF
+ R* PROD      PROD                     RH
+
+ ND
+
+*  continuity {i in 1..nh-1, s in 1..ne}:  
+*   v[i,s] - v[i+1,s] + (sum {j in 1..nc} w[i,j,s]*h/fact[j]) = 0
+
+ DO I         1                        NH-1
+ IA I+1       I         1
+ DO S         1                        NE
+ XE C(I,S)    V(I,S)    1.0            V(I+1,S)  -1.0
+ DO J         1                        NC
+ A/ COEF      H                        FACT(J)
+ ZE C(I,S)    W(I,J,S)                 COEF
+ ND
+
+* collocation eqns (linear parts)
+
+ DO I         1                        NH
+ DO J         1                        NC
+ DO S         1                        NE
+ XE CO(I,J,S) DU(I,J,S) 1.0
+ ND
+
+CONSTANTS
+
+ DO J         1                        NM
+ DO S         1                        NE
+ Z  GASOIL    OBJ(J,S)                 Z(J,S)
+ ND
+
+BOUNDS
+
+ XR GASOIL    'DEFAULT'
+
+ DO I         1                        NP
+ XL GASOIL    THETA(I)  0.0
+ ND
+
+ DO S         1                        NE
+ ZX GASOIL    V(1,S)                   BC(S)
+ ND
+
+START POINT
+
+ DO I         1                        NP
+ X  GASOIL    THETA(I)  0.0
+ ND
+
+ DO I         1                        NH
+ DO J         1                        NE
+ X  GASOIL    V(I,J)    0.0
+ OD J
+ ND
+
+ IE I1                  1
+ A= RITAU     ITAU(1)
+ IR I2        RITAU
+
+ DO I         I1                       I2
+ DO S         1                        NE
+ Z  GASOIL    V(I,S)                   BC(S)
+ DO J         1                        NC
+ X  GASOIL    W(I,J,S)  0.0
+ Z  GASOIL    U(I,J,S)                 BC(S)
+ X  GASOIL    DU(I,J,S) 0.0
+ ND
+
+ DO K         2                        NM
+ IA I1        I2        1
+ A= RITAU     ITAU(K)
+ IR I2        RITAU
+ DO I         I1                       I2
+ IE S                   1
+ Z  GASOIL    V(I,S)                   Z(K,S)
+ DO J         1                        NC
+ X  GASOIL    W(I,J,S)  0.0
+ Z  GASOIL    U(I,J,S)                 Z(K,S)
+ X  GASOIL    DU(I,J,S) 0.0
+ OD J
+ IE S                   2
+ Z  GASOIL    V(I,S)                   Z(K,S)
+ DO J         1                        NC
+ X  GASOIL    W(I,J,S)  0.0
+ Z  GASOIL    U(I,J,S)                 Z(K,S)
+ X  GASOIL    DU(I,J,S) 0.0
+ OD J
+ ND
+
+ IA I1        I2        1
+ I= I2        NH
+ DO I         I1                       I2
+ DO S         1                        NE
+ Z  GASOIL    V(I,S)                   Z(NM,S)
+ DO J         1                        NC
+ X  GASOIL    W(I,J,S)  0.0
+ Z  GASOIL    U(I,J,S)                 Z(NM,S)
+ X  GASOIL    DU(I,J,S) 0.0
+ ND
+
+ELEMENT TYPE
+
+ EV PROD1     THETA1                   THETA3
+ EV PROD1     U
+ IV PROD1     THETA                    U
+ EV PROD2     THETA                    U
+ EV PROD3     THETA                    U
+
+ELEMENT USES
+
+ DO I         1                        NH
+ DO J         1                        NC
+ XT P1(I,J)   PROD1
+ ZV P1(I,J)   THETA1                   THETA(1)
+ ZV P1(I,J)   THETA3                   THETA(3)
+ ZV P1(I,J)   U                        U(I,J,1)
+ XT P2(I,J)   PROD2
+ ZV P2(I,J)   THETA                    THETA(1)
+ ZV P2(I,J)   U                        U(I,J,1)
+ XT P3(I,J)   PROD3
+ ZV P3(I,J)   THETA                    THETA(2)
+ ZV P3(I,J)   U                        U(I,J,2)
+ ND
+
+GROUP TYPE
+
+ GV L2        X
+
+GROUP USES
+
+*  collocation for equation 1 {i in 1..nh, j in 1..nc}:
+*   du[i,j,1] + (theta[1]+theta[3])*u[i,j,1]^2 = 0
+
+*  collocation for equation 2{i in 1..nh, j in 1..nc}:
+*   du[i,j,2] - theta[1]*u[i,j,1]^2 + theta[2]*u[i,j,2] = 0
+
+ DO I         1                        NH
+ DO J         1                        NC
+ XE CO(I,J,1) P1(I,J)   
+ XE CO(I,J,2) P2(I,J)                  P3(I,J)
+ ND
+
+*  objective function sum {j in 1..nm} obj(j)^2
+
+ DO J         1                        NM
+ DO S         1                        NE
+ XT OBJ(J,S)  L2
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION             5.23664D-03   $ (NH=50)
+*LO SOLUTION             5.23659D-03   $ (NH=100)
+*LO SOLUTION             5.23659D-03   $ (NH=200)
+*LO SOLUTION             5.23659D-03   $ (NH=400)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GASOIL 
+
+INDIVIDUALS
+
+ T  PROD1
+ R  THETA     THETA1    1.0            THETA3    1.0
+ R  U         U         1.0
+ F                      THETA * U ** 2
+ G  THETA               U ** 2
+ G  U                   2.0 * THETA * U
+ H  THETA     U         2.0 * U
+ H  U         U         2.0 * THETA
+
+ T  PROD2
+ F                      - THETA * U ** 2
+ G  THETA               - U ** 2
+ G  U                   - 2.0 * THETA * U
+ H  THETA     U         - 2.0 * U
+ H  U         U         - 2.0 * THETA
+
+ T  PROD3
+ F                      THETA * U
+ G  THETA               U
+ G  U                   THETA
+ H  THETA     U         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        GASOIL 
+
+INDIVIDUALS
+
+ T  L2
+ F                      X * X
+ G                      X + X 
+ H                      2.0
+
+ENDATA

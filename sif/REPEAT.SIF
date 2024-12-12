@@ -1,0 +1,92 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          REPEAT
+
+*   Problem :
+*   *********
+
+*   This problem is to find the nearest feasible point to 2n+1 inconsistent
+*   linear equations subject to bounds
+
+*   Source: blue-cheese delerium
+
+*   SIF input: Nick Gould, December 2020.
+
+*   classification NLR2-AN-V-V
+
+*   N is the number of variables
+
+*IE N                   10             $-PARAMETER
+ IE N                   100            $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER     original value
+*IE N                   1000000        $-PARAMETER
+
+*   Define useful parameters
+
+ IA N-1       N         -1
+ IE 1                   1
+ IE 2                   2
+ IE 100                 100
+ I/ N/2       N                        2
+ I/ N/100     N                        100
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XE C(I)      X(I)      1.0            X(I+1)    1.0
+ ND
+ XE C(N)      X(N)      1.0
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XE R(I)      X(I)      1.0            X(I+1)    1.0
+ ND
+ XE R(N)      X(N)      1.0
+
+ DO I         1                        N
+ DI I         N/100
+ RI RI        I
+ ZE E         X(I)                     RI
+ ND
+
+CONSTANTS
+
+ DO I         1                        N-1
+ X  REPEAT    C(I)      2.0
+ ND
+ X  REPEAT    C(N)      1.0
+
+ DO I         1                        N-1
+ X  REPEAT    R(I)      4.0
+ ND
+ X  REPEAT    R(N)      3.0
+
+BOUNDS
+
+ XR REPEAT    'DEFAULT'
+ XL REPEAT    'DEFAULT' -1.0
+ XU REPEAT    X(1)      0.0
+ XL REPEAT    X(2)      3.0
+ XU REPEAT    X(N/2)    0.0
+ XL REPEAT    X(N-1)    3.0
+ XU REPEAT    X(N)      0.0
+
+START POINT
+
+ XV REPEAT    'DEFAULT' 0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA

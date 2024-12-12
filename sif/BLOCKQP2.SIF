@@ -1,0 +1,164 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BLOCKQP2 
+
+*   Problem :
+*   *********
+
+*   A non-convex quadratic program with some structure.
+
+*   The objective function is of the form
+*
+*      sum (i=1,n) x_i y_i + sum(j=1,b) z_j^2
+*
+*   There are n equality constraints of the form
+*
+*        x_i - y_i + sum (j=1,b) z_j = b   
+*
+*   There is an inequality constraint of the form
+*
+*      sum(i=1,n) x_i + y_i + sum(j=1,b) z_j >= b + 1
+*
+*   Finally, there are simple bounds
+*
+*         1 <= x_i, y_i <= 1    (i=1,n)
+*         0 <= z_j <= 2         (j=1,b)
+
+*   SIF input: Nick Gould, June 1994
+
+*   classification QLR2-AN-V-V
+
+*   The number of equality constraints
+
+ IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+
+*   The number of block-variables 
+
+ IE B                   5              $-PARAMETER     original value
+*IE B                   10             $-PARAMETER
+*IE B                   50             $-PARAMETER
+
+*  Other useful values.
+
+ IE 1                   1
+ RI RB        B
+ RA RB+1      RB        1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ X  Y(I)
+ ND
+
+ DO J         1                        B
+ X  Z(J)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        N
+ XG II        X(I)      1.0            Y(I)      1.0           
+ XE E(I)      X(I)      1.0            Y(I)      -1.0           
+ ND
+
+ DO J         1                        B
+ XG II        Z(J)      1.0
+ DO I         1                        N
+ XE E(I)      Z(J)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ ZE BLOCKQP2  E(I)                     RB
+ ND
+
+ ZE BLOCKQP2  II                       RB+1
+
+BOUNDS
+
+ DO I         1                        N
+ XL BLOCKQP2  X(I)      -1.0
+ XU BLOCKQP2  X(I)      1.0
+ XL BLOCKQP2  Y(I)      -1.0
+ XU BLOCKQP2  Y(I)      1.0
+ ND
+
+ DO J         1                        B
+ XL BLOCKQP2  Z(J)      0.0
+ XU BLOCKQP2  Z(J)      2.0
+ ND
+
+START POINT
+
+ XV BLOCKQP2  'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV SQ        Z
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT P(I)      PROD
+ ZV P(I)      X                        X(I)
+ ZV P(I)      Y                        Y(I)
+ ND
+
+ DO I         1                        B
+ XT S(I)      SQ
+ ZV S(I)      Z                        Z(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ       P(I)
+ ND
+
+ DO J         1                        B
+ XE OBJ       S(J)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -6.2017D+0     $ (n=10,b=5)
+*LO SOLTN               -9.6111D+1     $ (n=100,b=5)
+*LO SOLTN               -9.9610D+2     $ (n=1000,b=5)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BLOCKQP2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      0.5 * Z * Z
+ G  Z                   Z
+ H  Z         Z         1.0
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
