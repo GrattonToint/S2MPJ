@@ -24,13 +24,14 @@ class  SISSER(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SISSER'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -42,17 +43,19 @@ class  SISSER(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
         self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
         self.xnames=arrset(self.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'<>')
         self.gscale = arrset(self.gscale,ig,float(0.3333333))
@@ -147,9 +150,8 @@ class  SISSER(CUTEst_problem):
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-COUR2-AN-2-0"
+        self.pbclass   = "C-COUR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

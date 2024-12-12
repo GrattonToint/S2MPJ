@@ -25,7 +25,7 @@ function WEEDS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "WEEDS"
@@ -58,6 +58,9 @@ function WEEDS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("B1",ix_)
         arrset(pb.xnames,iv,"B1")
         iv,ix_,_ = s2mpj_ii("B2",ix_)
@@ -65,7 +68,7 @@ function WEEDS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         iv,ix_,_ = s2mpj_ii("B3",ix_)
         arrset(pb.xnames,iv,"B3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
@@ -140,8 +143,6 @@ function WEEDS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #    Solution
 # LO SOLTN                  2.587
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-RN-3-0"
         pbm.objderlvl = 2

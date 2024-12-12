@@ -26,7 +26,7 @@ function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-CQOR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -41,7 +41,7 @@ function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RDW2D52U"
@@ -112,6 +112,9 @@ function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["0"]):Int64(v_["N"])
                 iv,ix_,_ = s2mpj_ii("F"*string(I)*","*string(J),ix_)
@@ -125,7 +128,7 @@ function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N-1"])
@@ -702,11 +705,9 @@ function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-CQOR2-AN-V-V"
+        pb.pbclass = "C-CQLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

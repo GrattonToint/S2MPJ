@@ -15,7 +15,7 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FEEDLOC"
@@ -47,6 +47,9 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             iv,ix_,_ = s2mpj_ii("S"*string(I),ix_)
             arrset(pb.xnames,iv,"S"*string(I))
@@ -76,172 +79,205 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("P2",ix_)
         arrset(pb.xnames,iv,"P2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["R"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["R"])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             ig,ig_,_ = s2mpj_ii("FENTR",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"FENTR")
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("NTRAY",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"NTRAY")
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("NDEF1",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"NDEF1")
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(1.0))
             v_["RI"] = Float64(I)
             ig,ig_,_ = s2mpj_ii("NDEF2",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"NDEF2")
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["RI"])
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(v_["RI"]))
         end
         ig,ig_,_ = s2mpj_ii("NDEF1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NDEF1")
-        iv = ix_["N"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["N"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("NDEF2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"NDEF2")
-        iv = ix_["N"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["N"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["NMAX-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("NIL"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"NIL"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Z"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             v_["RI"] = Float64(I)
             ig,ig_,_ = s2mpj_ii("ENTX",ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"ENTX")
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["RI"])
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(v_["RI"]))
             v_["RI"] = -1.0*v_["RI"]
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["RI"])
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(v_["RI"]))
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             ig,ig_,_ = s2mpj_ii("LASTX"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"LASTX"*string(I))
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             ig,ig_,_ = s2mpj_ii("ZNOT"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"ZNOT"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(1.0))
             for K = Int64(I):Int64(v_["NMAX"])
                 ig,ig_,_ = s2mpj_ii("ZNOT"*string(I),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"ZNOT"*string(I))
-                iv = ix_["S"*string(K)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["S"*string(K)])
+                push!(valA,Float64(-1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             ig,ig_,_ = s2mpj_ii("FEEDX"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"FEEDX"*string(I))
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["2"]):Int64(v_["NMAX"])
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("WNES1u"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"WNES1u"*string(I))
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("WNES2u"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"WNES2u"*string(I))
-            iv = ix_["W"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             for J = Int64(v_["1"]):Int64(v_["M"])
                 ig,ig_,_ = s2mpj_ii("PE1"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"PE1"*string(I))
-                iv = ix_["Y"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
                 ig,ig_,_ = s2mpj_ii("PE2"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"PE2"*string(I))
-                iv = ix_["Y"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
                 ig,ig_,_ = s2mpj_ii("PE3"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"PE3"*string(I))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
                 ig,ig_,_ = s2mpj_ii("PE4"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"PE4"*string(I))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
             end
             ig,ig_,_ = s2mpj_ii("PE1"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"PE1"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("PE2"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"PE2"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("PE3"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"PE3"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("PE4"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"PE4"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(-1.0))
             for J = Int64(v_["1"]):Int64(v_["M"])
                 ig,ig_,_ = s2mpj_ii("XNOT"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"XNOT"*string(I)*","*string(J))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Z"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Z"*string(I)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("YNOT"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"YNOT"*string(I)*","*string(J))
-                iv = ix_["Y"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Z"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Z"*string(I)])
+                push!(valA,Float64(-1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
@@ -249,21 +285,24 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("PHEE"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PHEE"*string(I))
-            iv = ix_["X"*string(I)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(v_["TEMP"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(v_["TEMP"]))
         end
         ig,ig_,_ = s2mpj_ii("DEFL",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"DEFL")
-        iv = ix_["L"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["L"])
+        push!(valA,Float64(1.0))
         for J = Int64(v_["1"]):Int64(v_["M"])
             v_["TEMP"] = -1.0*v_["F"]
             ig,ig_,_ = s2mpj_ii("CMB1u"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CMB1u"*string(J))
-            iv = ix_["X"*string(Int64(v_["2"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["TEMP"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2"]))*","*string(J)])
+            push!(valA,Float64(v_["TEMP"]))
         end
         for I = Int64(v_["2"]):Int64(v_["NMAX"])
             for J = Int64(v_["1"]):Int64(v_["M"])
@@ -271,13 +310,15 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("CMBN1"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"CMBN1"*string(I)*","*string(J))
-                iv = ix_["S"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["BIGM"])
+                push!(irA,ig)
+                push!(icA,ix_["S"*string(I)])
+                push!(valA,Float64(v_["BIGM"]))
                 ig,ig_,_ = s2mpj_ii("CMBN2"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CMBN2"*string(I)*","*string(J))
-                iv = ix_["S"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["TEMP"])
+                push!(irA,ig)
+                push!(icA,ix_["S"*string(I)])
+                push!(valA,Float64(v_["TEMP"]))
             end
         end
         for I = Int64(v_["2"]):Int64(v_["NMAX-1"])
@@ -286,28 +327,35 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CMB1"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"CMB1"*string(I))
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["TEMP"])
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["BIGM"])
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["TEMP1"])
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(v_["TEMP"]))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(v_["BIGM"]))
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(v_["TEMP1"]))
             ig,ig_,_ = s2mpj_ii("CMB2"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CMB2"*string(I))
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["BIGM"])
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["TEMP"])
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["TEMP1"])
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(v_["BIGM"]))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(v_["TEMP"]))
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(v_["TEMP1"]))
         end
         for I = Int64(v_["3"]):Int64(v_["NMAX"])
             ig,ig_,_ = s2mpj_ii("RECR"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"RECR"*string(I))
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["BIGM"])
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(v_["BIGM"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -885,6 +933,8 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(nlc,length(nlc)+1,ig)
             loaset(pbm.grelw,ig,posel,1.)
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -895,9 +945,6 @@ function FEEDLOC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = grange[gegrps]
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-AN-90-259"

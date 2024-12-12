@@ -27,7 +27,7 @@ function BLOCKQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BLOCKQP3"
@@ -67,6 +67,9 @@ function BLOCKQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -78,37 +81,43 @@ function BLOCKQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"Z"*string(J))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("II",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"II")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Y"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Y"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(I)])
+            push!(valA,Float64(1.0))
         end
         for J = Int64(v_["1"]):Int64(v_["B"])
             ig,ig_,_ = s2mpj_ii("II",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"II")
-            iv = ix_["Z"*string(J)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(J)])
+            push!(valA,Float64(1.0))
             for I = Int64(v_["1"]):Int64(v_["N"])
                 ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"E"*string(I))
-                iv = ix_["Z"*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Z"*string(J)])
+                push!(valA,Float64(1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -206,6 +215,8 @@ function BLOCKQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN               -2.4987D-1     $ (n=10,b=5)
 # LO SOLTN               -4.75D+1       $ (n=100,b=5)
 # LO SOLTN               -4.975D+2      $ (n=1000,b=5)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -214,9 +225,6 @@ function BLOCKQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-AN-V-V"

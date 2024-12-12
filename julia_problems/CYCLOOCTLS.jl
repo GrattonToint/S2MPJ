@@ -41,7 +41,7 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CYCLOOCTLS"
@@ -78,6 +78,9 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["P"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -87,7 +90,7 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             arrset(pb.xnames,iv,"Z"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["P"])
             ig,ig_,_ = s2mpj_ii("A"*string(I),ig_)
             arrset(gtype,ig,"<>")
@@ -394,8 +397,6 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION             0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-MN-V-0"
         pbm.objderlvl = 2

@@ -34,13 +34,14 @@ class  UBH5(CUTEst_problem):
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'UBH5'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -72,6 +73,9 @@ class  UBH5(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['7'])+1):
             for T in range(int(v_['0']),int(v_['N'])+1):
                 [iv,ix_,_] = s2mpj_ii('Y'+str(I)+','+str(T),ix_)
@@ -81,16 +85,16 @@ class  UBH5(CUTEst_problem):
                 [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(T),ix_)
                 self.xnames=arrset(self.xnames,iv,'U'+str(I)+','+str(T))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Y'+str(int(v_['7']))+','+str(int(v_['N']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y'+str(int(v_['7']))+','+str(int(v_['N']))]])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['3'])+1):
             v_['I+3'] = 3+I
             for T in range(int(v_['1']),int(v_['N'])+1):
@@ -98,14 +102,18 @@ class  UBH5(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('S'+str(I)+','+str(T),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'S'+str(I)+','+str(T))
-                iv = ix_['Y'+str(I)+','+str(T)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)+','+str(int(v_['T-1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+3']))+','+str(int(v_['T-1']))]
-                self.A[ig,iv] = float(v_['-K/2'])+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+3']))+','+str(T)]
-                self.A[ig,iv] = float(v_['-K/2'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(T)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(int(v_['T-1']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+3']))+','+str(int(v_['T-1']))]])
+                valA = np.append(valA,float(v_['-K/2']))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+3']))+','+str(T)]])
+                valA = np.append(valA,float(v_['-K/2']))
         for I in range(int(v_['1']),int(v_['3'])+1):
             v_['I+3'] = 3+I
             for T in range(int(v_['1']),int(v_['N'])+1):
@@ -113,29 +121,35 @@ class  UBH5(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('S'+str(int(v_['I+3']))+','+str(T),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'S'+str(int(v_['I+3']))+','+str(T))
-                iv = ix_['Y'+str(int(v_['I+3']))+','+str(T)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+3']))+','+str(int(v_['T-1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+3']))+','+str(T)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+3']))+','+str(int(v_['T-1']))]])
+                valA = np.append(valA,float(-1.0))
                 [ig,ig_,_] = s2mpj_ii('S'+str(int(v_['I+3']))+','+str(T),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'S'+str(int(v_['I+3']))+','+str(T))
-                iv = ix_['U'+str(I)+','+str(int(v_['T-1']))]
-                self.A[ig,iv] = float(v_['-K/2'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['U'+str(I)+','+str(int(v_['T-1']))]])
+                valA = np.append(valA,float(v_['-K/2']))
                 [ig,ig_,_] = s2mpj_ii('S'+str(int(v_['I+3']))+','+str(T),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'S'+str(int(v_['I+3']))+','+str(T))
-                iv = ix_['U'+str(I)+','+str(T)]
-                self.A[ig,iv] = float(v_['-K/2'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['U'+str(I)+','+str(T)]])
+                valA = np.append(valA,float(v_['-K/2']))
         for T in range(int(v_['1']),int(v_['N'])+1):
             v_['T-1'] = -1+T
             [ig,ig_,_] = s2mpj_ii('S'+str(int(v_['7']))+','+str(T),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(int(v_['7']))+','+str(T))
-            iv = ix_['Y'+str(int(v_['7']))+','+str(T)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['Y'+str(int(v_['7']))+','+str(int(v_['T-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Y'+str(int(v_['7']))+','+str(T)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Y'+str(int(v_['7']))+','+str(int(v_['T-1']))]])
+            valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -147,7 +161,7 @@ class  UBH5(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -224,21 +238,18 @@ class  UBH5(CUTEst_problem):
 # LO SOLTN(100)          1.11631518169
 # LO SOLTN(1000)         1.11598643493
 # LO SOLTN(2000)         1.11587382445
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLQR2-MN-V-V"
+        self.pbclass   = "C-CLQR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

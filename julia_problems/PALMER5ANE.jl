@@ -27,7 +27,7 @@ function PALMER5ANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER5ANE"
@@ -78,6 +78,9 @@ function PALMER5ANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
         iv,ix_,_ = s2mpj_ii("A2",ix_)
@@ -95,7 +98,7 @@ function PALMER5ANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         iv,ix_,_ = s2mpj_ii("C",ix_)
         arrset(pb.xnames,iv,"C")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["12"]):Int64(v_["M"])
             v_["T0"] = 1.0e+0
             v_["Y"] = 2.0e+0*v_["X"*string(I)]
@@ -113,18 +116,24 @@ function PALMER5ANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"O"*string(I))
-            iv = ix_["A0"]
-            pbm.A[ig,iv] += Float64(v_["T0"])
-            iv = ix_["A2"]
-            pbm.A[ig,iv] += Float64(v_["T2"])
-            iv = ix_["A4"]
-            pbm.A[ig,iv] += Float64(v_["T4"])
-            iv = ix_["A6"]
-            pbm.A[ig,iv] += Float64(v_["T6"])
-            iv = ix_["A8"]
-            pbm.A[ig,iv] += Float64(v_["T8"])
-            iv = ix_["A10"]
-            pbm.A[ig,iv] += Float64(v_["T10"])
+            push!(irA,ig)
+            push!(icA,ix_["A0"])
+            push!(valA,Float64(v_["T0"]))
+            push!(irA,ig)
+            push!(icA,ix_["A2"])
+            push!(valA,Float64(v_["T2"]))
+            push!(irA,ig)
+            push!(icA,ix_["A4"])
+            push!(valA,Float64(v_["T4"]))
+            push!(irA,ig)
+            push!(icA,ix_["A6"])
+            push!(valA,Float64(v_["T6"]))
+            push!(irA,ig)
+            push!(icA,ix_["A8"])
+            push!(valA,Float64(v_["T8"]))
+            push!(irA,ig)
+            push!(icA,ix_["A10"])
+            push!(valA,Float64(v_["T10"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -207,15 +216,14 @@ function PALMER5ANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # LO PALMER5A               0.0
 #    Solution
 # LO SOLTN               4.0606141D-02
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-RN-8-12"

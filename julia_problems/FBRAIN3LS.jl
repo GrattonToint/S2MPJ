@@ -25,7 +25,7 @@ function FBRAIN3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FBRAIN3LS"
@@ -8892,6 +8892,9 @@ function FBRAIN3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("ALPHA1",ix_)
         arrset(pb.xnames,iv,"ALPHA1")
         iv,ix_,_ = s2mpj_ii("C01",ix_)
@@ -8905,7 +8908,7 @@ function FBRAIN3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         iv,ix_,_ = s2mpj_ii("C03",ix_)
         arrset(pb.xnames,iv,"C03")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["0"]):Int64(v_["M"])
                 ig,ig_,_ = s2mpj_ii("R"*string(I)*","*string(J),ig_)
@@ -11304,8 +11307,6 @@ function FBRAIN3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    Solution
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-6-0"
         pbm.objderlvl = 2

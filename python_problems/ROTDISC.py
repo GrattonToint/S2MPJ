@@ -35,13 +35,14 @@ class  ROTDISC(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ROTDISC'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -102,6 +103,9 @@ class  ROTDISC(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for k in range(int(v_['0']),int(v_['K'])+1):
             [iv,ix_,_] = s2mpj_ii('w'+str(k),ix_)
             self.xnames=arrset(self.xnames,iv,'w'+str(k))
@@ -114,12 +118,11 @@ class  ROTDISC(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('y'+str(k),ix_)
             self.xnames=arrset(self.xnames,iv,'y'+str(k))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         v_['rk'] = v_['ri']
         v_['-dr/2'] = -1.0*v_['dr/2']
         v_['rk2'] = v_['rk']*v_['rk']
@@ -133,10 +136,12 @@ class  ROTDISC(CUTEst_problem):
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SR'+str(k))
             self.gscale = arrset(self.gscale,ig,float(v_['ech1']))
-            iv = ix_['w'+str(k)]
-            self.A[ig,iv] = float(v_['coef1'])+self.A[ig,iv]
-            iv = ix_['w'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(v_['coef2'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(k)]])
+            valA = np.append(valA,float(v_['coef1']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(v_['coef2']))
             v_['tmp1'] = v_['(1+3nu)/2']*v_['rk']
             v_['tmp2'] = v_['(1+nu)/2']*v_['rk+1']
             v_['tmp3'] = v_['tmp1']-v_['tmp2']
@@ -144,44 +149,54 @@ class  ROTDISC(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('ST'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ST'+str(k))
-            iv = ix_['sigr'+str(k)]
-            self.A[ig,iv] = float(v_['coef3'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['sigr'+str(k)]])
+            valA = np.append(valA,float(v_['coef3']))
             v_['tmp4'] = v_['(3+nu)/2']*v_['rk']
             v_['tmp5'] = v_['(1+nu)/2']*v_['rk+1']
             v_['tmp6'] = v_['tmp5']-v_['tmp4']
             v_['coef4'] = v_['tmp6']/v_['rk']
-            iv = ix_['sigt'+str(k)]
-            self.A[ig,iv] = float(v_['coef4'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['sigt'+str(k)]])
+            valA = np.append(valA,float(v_['coef4']))
             v_['tmp7'] = v_['(1+3nu)/2']*v_['rk+1']
             v_['tmp8'] = v_['(1+nu)/2']*v_['rk']
             v_['tmp9'] = v_['tmp8']-v_['tmp7']
             v_['coef5'] = v_['tmp9']/v_['rk+1']
-            iv = ix_['sigr'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(v_['coef5'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['sigr'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(v_['coef5']))
             v_['tmp10'] = v_['(3+nu)/2']*v_['rk+1']
             v_['tmp11'] = v_['(1+nu)/2']*v_['rk']
             v_['tmp12'] = v_['tmp10']-v_['tmp11']
             v_['coef6'] = v_['tmp12']/v_['rk+1']
-            iv = ix_['sigt'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(v_['coef6'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['sigt'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(v_['coef6']))
             [ig,ig_,_] = s2mpj_ii('STAy'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'STAy'+str(k))
-            iv = ix_['y'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['y'+str(k)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['y'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['y'+str(k)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('STAx'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'STAx'+str(k))
-            iv = ix_['x'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['x'+str(k)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['w'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(v_['-dr/2'])+self.A[ig,iv]
-            iv = ix_['w'+str(k)]
-            self.A[ig,iv] = float(v_['-dr/2'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['x'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['x'+str(k)]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(v_['-dr/2']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(k)]])
+            valA = np.append(valA,float(v_['-dr/2']))
             v_['rk'] = v_['rk+1']
             v_['rk2'] = v_['rk+1sq']
         v_['rk-1'] = v_['ri']
@@ -194,8 +209,9 @@ class  ROTDISC(CUTEst_problem):
         v_['-coef1'] = -1.0*v_['coef1']
         [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['w'+str(int(v_['0']))]
-        self.A[ig,iv] = float(v_['-coef1'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['w'+str(int(v_['0']))]])
+        valA = np.append(valA,float(v_['-coef1']))
         for k in range(int(v_['1']),int(v_['K-1'])+1):
             v_['k-1'] = -1+k
             v_['rk+1'] = v_['rk']+v_['dr']
@@ -207,8 +223,9 @@ class  ROTDISC(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'WEIGHT')
-            iv = ix_['w'+str(k)]
-            self.A[ig,iv] = float(v_['-coef1'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(k)]])
+            valA = np.append(valA,float(v_['-coef1']))
             v_['rk-1sq'] = v_['rk2']
             v_['rk'] = v_['rk+1']
             v_['rk2'] = v_['rk+1sq']
@@ -218,32 +235,39 @@ class  ROTDISC(CUTEst_problem):
         v_['-coef1'] = -1.0*v_['coef1']
         [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['w'+str(int(v_['K']))]
-        self.A[ig,iv] = float(v_['-coef1'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['w'+str(int(v_['K']))]])
+        valA = np.append(valA,float(v_['-coef1']))
         for k in range(int(v_['0']),int(v_['K-1'])+1):
             v_['k+1'] = 1+k
             [ig,ig_,_] = s2mpj_ii('SLOP'+str(k),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SLOP'+str(k))
-            iv = ix_['w'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['w'+str(k)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(k)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('SLOM'+str(k),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SLOM'+str(k))
-            iv = ix_['w'+str(int(v_['k+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['w'+str(k)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(int(v_['k+1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['w'+str(k)]])
+            valA = np.append(valA,float(1.0))
         v_['-sigmatA'] = -1.0*v_['sigmatA']
         [ig,ig_,_] = s2mpj_ii('AVsigt',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'AVsigt')
-        iv = ix_['y'+str(int(v_['K']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['x'+str(int(v_['K']))]
-        self.A[ig,iv] = float(v_['-sigmatA'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['y'+str(int(v_['K']))]])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['x'+str(int(v_['K']))]])
+        valA = np.append(valA,float(v_['-sigmatA']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -255,7 +279,7 @@ class  ROTDISC(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -4919,6 +4943,8 @@ class  ROTDISC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         self.objlower = 5.0
 # LO SOLUTION            7.872067544
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -4926,15 +4952,10 @@ class  ROTDISC(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLQR2-RN-905-1081"
+        self.pbclass   = "C-CLQR2-RN-905-1081"
         self.objderlvl = 2
         self.conderlvl = [2]
 

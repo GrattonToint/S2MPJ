@@ -44,7 +44,7 @@ function HEART6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HEART6LS"
@@ -71,6 +71,9 @@ function HEART6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("a",ix_)
         arrset(pb.xnames,iv,"a")
         iv,ix_,_ = s2mpj_ii("c",ix_)
@@ -84,7 +87,7 @@ function HEART6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("w",ix_)
         arrset(pb.xnames,iv,"w")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("G2",ig_)
@@ -627,8 +630,6 @@ function HEART6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-MN-6-0"
         pbm.objderlvl = 2

@@ -19,13 +19,14 @@ class  FERRISDC(CUTEst_problem):
 # IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FERRISDC'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -295,6 +296,9 @@ class  FERRISDC(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
                 [iv,ix_,_] = s2mpj_ii('A'+str(i)+','+str(j),ix_)
@@ -303,39 +307,43 @@ class  FERRISDC(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('W'+str(i),ix_)
             self.xnames=arrset(self.xnames,iv,'W'+str(i))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for j in range(int(v_['1']),int(v_['n'])+1):
             for i in range(int(v_['1']),int(v_['k'])+1):
                 [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['A'+str(i)+','+str(j)]
-                self.A[ig,iv] = float(v_['Y'+str(i)+','+str(j)])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['A'+str(i)+','+str(j)]])
+                valA = np.append(valA,float(v_['Y'+str(i)+','+str(j)]))
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
                 [ig,ig_,_] = s2mpj_ii('C'+str(i),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(i))
-                iv = ix_['A'+str(i)+','+str(j)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['W'+str(j)]
-                self.A[ig,iv] = float(v_['-1/k'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['A'+str(i)+','+str(j)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['W'+str(j)]])
+                valA = np.append(valA,float(v_['-1/k']))
         for j in range(int(v_['1']),int(v_['n'])+1):
             [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'A'+str(j))
-            iv = ix_['W'+str(j)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['W'+str(j)]])
+            valA = np.append(valA,float(-1.0))
             for i in range(int(v_['1']),int(v_['k'])+1):
                 [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'A'+str(j))
-                iv = ix_['A'+str(i)+','+str(j)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['A'+str(i)+','+str(j)]])
+                valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -347,7 +355,7 @@ class  FERRISDC(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -372,43 +380,46 @@ class  FERRISDC(CUTEst_problem):
                     self.xlower[ix_['A'+str(i)+','+str(j)]] = 0.0
                     self.xupper[ix_['A'+str(i)+','+str(j)]] = 0.0
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        self.H = lil_matrix((self.n, self.n))
+        irH  = np.array([],dtype=int)
+        icH  = np.array([],dtype=int)
+        valH = np.array([],dtype=float)
         for i in range(int(v_['1']),int(v_['k'])+1):
             for l in range(int(v_['1']),int(v_['n'])+1):
                 for j in range(int(v_['1']),int(l)+1):
-                    ix1 = ix_['A'+str(i)+','+str(j)]
-                    ix2 = ix_['A'+str(i)+','+str(l)]
-                    self.H[ix1,ix2] = float(v_['K'+str(j)+','+str(l)])+self.H[ix1,ix2]
-                    self.H[ix2,ix1] = self.H[ix1,ix2]
+                    irH  = np.append(irH,[ix_['A'+str(i)+','+str(j)]])
+                    icH  = np.append(icH,[ix_['A'+str(i)+','+str(l)]])
+                    valH = np.append(valH,float(v_['K'+str(j)+','+str(l)]))
+                    irH  = np.append(irH,[ix_['A'+str(i)+','+str(l)]])
+                    icH  = np.append(icH,[ix_['A'+str(i)+','+str(j)]])
+                    valH = np.append(valH,float(v_['K'+str(j)+','+str(l)]))
         for l in range(int(v_['1']),int(v_['n'])+1):
             for j in range(int(v_['1']),int(l)+1):
                 v_['coef'] = v_['-1/k']*v_['K'+str(j)+','+str(l)]
-                ix1 = ix_['W'+str(j)]
-                ix2 = ix_['W'+str(l)]
-                self.H[ix1,ix2] = float(v_['coef'])+self.H[ix1,ix2]
-                self.H[ix2,ix1] = self.H[ix1,ix2]
+                irH  = np.append(irH,[ix_['W'+str(j)]])
+                icH  = np.append(icH,[ix_['W'+str(l)]])
+                valH = np.append(valH,float(v_['coef']))
+                irH  = np.append(irH,[ix_['W'+str(l)]])
+                icH  = np.append(icH,[ix_['W'+str(j)]])
+                valH = np.append(valH,float(v_['coef']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
 # XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
+        self.H = csr_matrix((valH,(irH,icH)),shape=(self.n,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-CQLR2-AN-V-V"
+        self.pbclass   = "C-CQLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]
-        self.H = self.H.tocsr()
 
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -109,7 +109,7 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ACOPR14"
@@ -132,6 +132,9 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["NODES"])
             iv,ix_,_ = s2mpj_ii("R"*string(I),ix_)
             arrset(pb.xnames,iv,"R"*string(I))
@@ -145,19 +148,24 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"Q"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["P1"]
-        pbm.A[ig,iv] += Float64(2000.0)
-        iv = ix_["P2"]
-        pbm.A[ig,iv] += Float64(2000.0)
-        iv = ix_["P3"]
-        pbm.A[ig,iv] += Float64(4000.0)
-        iv = ix_["P4"]
-        pbm.A[ig,iv] += Float64(4000.0)
-        iv = ix_["P5"]
-        pbm.A[ig,iv] += Float64(4000.0)
+        push!(irA,ig)
+        push!(icA,ix_["P1"])
+        push!(valA,Float64(2000.0))
+        push!(irA,ig)
+        push!(icA,ix_["P2"])
+        push!(valA,Float64(2000.0))
+        push!(irA,ig)
+        push!(icA,ix_["P3"])
+        push!(valA,Float64(4000.0))
+        push!(irA,ig)
+        push!(icA,ix_["P4"])
+        push!(valA,Float64(4000.0))
+        push!(irA,ig)
+        push!(icA,ix_["P5"])
+        push!(valA,Float64(4000.0))
         for I = Int64(v_["1"]):Int64(v_["NODES"])
             ig,ig_,_ = s2mpj_ii("RP"*string(I),ig_)
             arrset(gtype,ig,"==")
@@ -171,53 +179,63 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         ig,ig_,_ = s2mpj_ii("RP1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"RP1")
-        iv = ix_["P1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P1"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("IP1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"IP1")
-        iv = ix_["Q1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q1"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("RP2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"RP2")
-        iv = ix_["P2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("IP2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"IP2")
-        iv = ix_["Q2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("RP3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"RP3")
-        iv = ix_["P3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P3"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("IP3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"IP3")
-        iv = ix_["Q3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q3"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("RP6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"RP6")
-        iv = ix_["P4"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P4"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("IP6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"IP6")
-        iv = ix_["Q4"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q4"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("RP8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"RP8")
-        iv = ix_["P5"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P5"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("IP8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"IP8")
-        iv = ix_["Q5"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q5"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["LINES"])
             ig,ig_,_ = s2mpj_ii("FN"*string(I),ig_)
             arrset(gtype,ig,"<=")
@@ -388,26 +406,24 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.x0[ix_["Q4"]] = Float64(0.122)
         pb.x0[ix_["Q5"]] = Float64(0.174)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        ix1 = ix_["P1"]
-        ix2 = ix_["P1"]
-        pbm.H[ix1,ix2] = Float64(860.586)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-        ix1 = ix_["P2"]
-        ix2 = ix_["P2"]
-        pbm.H[ix1,ix2] = Float64(5000.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-        ix1 = ix_["P3"]
-        ix2 = ix_["P3"]
-        pbm.H[ix1,ix2] = Float64(200.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-        ix1 = ix_["P4"]
-        ix2 = ix_["P4"]
-        pbm.H[ix1,ix2] = Float64(200.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-        ix1 = ix_["P5"]
-        ix2 = ix_["P5"]
-        pbm.H[ix1,ix2] = Float64(200.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+        irH  = Int64[]
+        icH  = Int64[]
+        valH = Float64[]
+        push!(irH,ix_["P1"])
+        push!(icH,ix_["P1"])
+        push!(valH,Float64(860.586))
+        push!(irH,ix_["P2"])
+        push!(icH,ix_["P2"])
+        push!(valH,Float64(5000.0))
+        push!(irH,ix_["P3"])
+        push!(icH,ix_["P3"])
+        push!(valH,Float64(200.0))
+        push!(irH,ix_["P4"])
+        push!(icH,ix_["P4"])
+        push!(valH,Float64(200.0))
+        push!(irH,ix_["P5"])
+        push!(icH,ix_["P5"])
+        push!(valH,Float64(200.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
@@ -15564,6 +15580,9 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["I14"])
         loaset(pbm.grelw,ig,posel, 1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
+        pbm.H = sparse(irH,icH,valH,pb.n,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -15574,10 +15593,6 @@ function ACOPR14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = grange[gegrps]
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
-        pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQOR2-AN-38-82"

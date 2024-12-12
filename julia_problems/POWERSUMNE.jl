@@ -26,7 +26,7 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE N                   4              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "POWERSUMNE"
@@ -71,12 +71,15 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"==")
@@ -163,8 +166,6 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-MN-V-V"

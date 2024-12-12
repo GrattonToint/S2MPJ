@@ -31,7 +31,7 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SBRYBND"
@@ -71,6 +71,9 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I-1"] = -1+I
             v_["RI-1"] = Float64(v_["I-1"])
@@ -81,7 +84,7 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["LB"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
@@ -90,20 +93,23 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
             ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["KAP"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["KAP"]))
             for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
         end
         for I = Int64(v_["LB+1"]):Int64(v_["N-UB-1"])
@@ -115,20 +121,23 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
             ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["KAP"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["KAP"]))
             for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
         end
         for I = Int64(v_["N-UB"]):Int64(v_["N"])
@@ -139,20 +148,23 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
             ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["KAP"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["KAP"]))
             for J = Int64(v_["I+1"]):Int64(v_["N"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
                 ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KAP"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(v_["KAP"]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -282,10 +294,9 @@ function SBRYBND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2

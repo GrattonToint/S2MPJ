@@ -21,13 +21,14 @@ class  OPTPRLOC(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OPTPRLOC'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -371,6 +372,9 @@ class  OPTPRLOC(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['K'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
@@ -378,131 +382,179 @@ class  OPTPRLOC(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('PROFIT',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Y1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y2']
-        self.A[ig,iv] = float(-0.2)+self.A[ig,iv]
-        iv = ix_['Y3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y4']
-        self.A[ig,iv] = float(-0.2)+self.A[ig,iv]
-        iv = ix_['Y5']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['Y6']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['Y7']
-        self.A[ig,iv] = float(-0.1)+self.A[ig,iv]
-        iv = ix_['Y8']
-        self.A[ig,iv] = float(-0.8)+self.A[ig,iv]
-        iv = ix_['Y9']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y10']
-        self.A[ig,iv] = float(-0.4)+self.A[ig,iv]
-        iv = ix_['Y11']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y12']
-        self.A[ig,iv] = float(-0.3)+self.A[ig,iv]
-        iv = ix_['Y13']
-        self.A[ig,iv] = float(-0.1)+self.A[ig,iv]
-        iv = ix_['Y14']
-        self.A[ig,iv] = float(-0.3)+self.A[ig,iv]
-        iv = ix_['Y15']
-        self.A[ig,iv] = float(-0.5)+self.A[ig,iv]
-        iv = ix_['Y16']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['Y17']
-        self.A[ig,iv] = float(-0.8)+self.A[ig,iv]
-        iv = ix_['Y18']
-        self.A[ig,iv] = float(-0.1)+self.A[ig,iv]
-        iv = ix_['Y19']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['Y20']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y21']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y22']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Y23']
-        self.A[ig,iv] = float(-0.2)+self.A[ig,iv]
-        iv = ix_['Y24']
-        self.A[ig,iv] = float(-0.7)+self.A[ig,iv]
-        iv = ix_['Y25']
-        self.A[ig,iv] = float(-0.7)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(-0.5)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y1']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y2']])
+        valA = np.append(valA,float(-0.2))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y3']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y4']])
+        valA = np.append(valA,float(-0.2))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y5']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y6']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y7']])
+        valA = np.append(valA,float(-0.1))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y8']])
+        valA = np.append(valA,float(-0.8))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y9']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y10']])
+        valA = np.append(valA,float(-0.4))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y11']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y12']])
+        valA = np.append(valA,float(-0.3))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y13']])
+        valA = np.append(valA,float(-0.1))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y14']])
+        valA = np.append(valA,float(-0.3))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y15']])
+        valA = np.append(valA,float(-0.5))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y16']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y17']])
+        valA = np.append(valA,float(-0.8))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y18']])
+        valA = np.append(valA,float(-0.1))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y19']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y20']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y21']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y22']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y23']])
+        valA = np.append(valA,float(-0.2))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y24']])
+        valA = np.append(valA,float(-0.7))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Y25']])
+        valA = np.append(valA,float(-0.7))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(-0.5))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('ELLI'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'ELLI'+str(I))
-            iv = ix_['Y'+str(I)]
-            self.A[ig,iv] = float(v_['H'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Y'+str(I)]])
+            valA = np.append(valA,float(v_['H']))
         [ig,ig_,_] = s2mpj_ii('LIN1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN1')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X4']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('LIN2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN2')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(0.6)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(-0.9)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(-0.5)+self.A[ig,iv]
-        iv = ix_['X4']
-        self.A[ig,iv] = float(0.1)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(0.6))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(-0.9))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(-0.5))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(0.1))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('LIN3',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'LIN3')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('LIN4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN4')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(0.157)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(0.05)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(0.157))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(0.05))
         [ig,ig_,_] = s2mpj_ii('LIN5',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'LIN5')
-        iv = ix_['X2']
-        self.A[ig,iv] = float(0.25)+self.A[ig,iv]
-        iv = ix_['X4']
-        self.A[ig,iv] = float(1.05)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(-0.3)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(0.25))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(1.05))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(-0.3))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -514,7 +566,7 @@ class  OPTPRLOC(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -609,21 +661,18 @@ class  OPTPRLOC(CUTEst_problem):
                 self.grelw = loaset(self.grelw,ig,posel,float(v_['W'+str(I)+','+str(L)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQQR2-AN-30-30"
+        self.pbclass   = "C-CQQR2-AN-30-30"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

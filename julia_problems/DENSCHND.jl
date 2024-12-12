@@ -18,7 +18,7 @@ function DENSCHND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DENSCHND"
@@ -37,6 +37,9 @@ function DENSCHND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -44,7 +47,7 @@ function DENSCHND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("A",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("B",ig_)
@@ -205,8 +208,6 @@ function DENSCHND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Solution
 # LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-3-0"
         pbm.objderlvl = 2

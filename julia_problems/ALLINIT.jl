@@ -18,7 +18,7 @@ function ALLINIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ALLINIT"
@@ -37,6 +37,9 @@ function ALLINIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -46,37 +49,41 @@ function ALLINIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("FT1",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FT2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("FT3",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FT4",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FT5",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("FT6",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FNT1",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FNT2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("FNT3",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FNT4",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("FNT5",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("FNT6",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -284,10 +291,9 @@ function ALLINIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FNT56E1"])
         loaset(pbm.grelw,ig,posel,1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COBR2-AY-4-0"
         pb.x0          = zeros(Float64,pb.n)

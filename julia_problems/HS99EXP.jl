@@ -20,7 +20,7 @@ function HS99EXP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS99EXP"
@@ -66,6 +66,9 @@ function HS99EXP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["7"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -83,37 +86,45 @@ function HS99EXP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("S"*string(Int64(v_["8"])),ix_)
         arrset(pb.xnames,iv,"S"*string(Int64(v_["8"])))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["8"])
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["R"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("Q"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"Q"*string(I))
-            iv = ix_["Q"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["S"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["DT"*string(I)])
+            push!(irA,ig)
+            push!(icA,ix_["Q"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["DT"*string(I)]))
             ig,ig_,_ = s2mpj_ii("S"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"S"*string(I))
-            iv = ix_["S"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["S"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["R"*string(Int64(v_["8"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["8"]))])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -218,15 +229,14 @@ function HS99EXP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -831079892.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AN-31-21"

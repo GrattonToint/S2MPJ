@@ -37,7 +37,7 @@ function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE NI                  10             $-PARAMETER n=  34, m= 20 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRUGDIS"
@@ -98,6 +98,9 @@ function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("TF",ix_)
         arrset(pb.xnames,iv,"TF")
         arrset(pb.xscale,iv,200.0)
@@ -115,29 +118,34 @@ function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("TFINAL",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["TF"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["TF"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(100.0))
         for I = Int64(v_["0"]):Int64(v_["NI-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("EW"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EW"*string(I))
-            iv = ix_["W"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(-1.0))
             arrset(pbm.gscale,ig,Float64(0.02))
             ig,ig_,_ = s2mpj_ii("EP"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EP"*string(I))
-            iv = ix_["P"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["P"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["P"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["P"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -278,15 +286,14 @@ function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # LO SOLTN(500)
 # LO SOLTN(1000)
 # LO SOLTN(Maurer)       2.62637
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-MN-V-V"

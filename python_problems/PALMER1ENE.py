@@ -26,13 +26,14 @@ class  PALMER1ENE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PALMER1ENE'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -116,6 +117,9 @@ class  PALMER1ENE(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('A0',ix_)
         self.xnames=arrset(self.xnames,iv,'A0')
         [iv,ix_,_] = s2mpj_ii('A2',ix_)
@@ -133,12 +137,11 @@ class  PALMER1ENE(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('L',ix_)
         self.xnames=arrset(self.xnames,iv,'L')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
             v_['XQUART'] = v_['XSQR']*v_['XSQR']
@@ -150,18 +153,24 @@ class  PALMER1ENE(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'O'+str(I))
-            iv = ix_['A0']
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['A2']
-            self.A[ig,iv] = float(v_['XSQR'])+self.A[ig,iv]
-            iv = ix_['A4']
-            self.A[ig,iv] = float(v_['XQUART'])+self.A[ig,iv]
-            iv = ix_['A6']
-            self.A[ig,iv] = float(v_['X**6'])+self.A[ig,iv]
-            iv = ix_['A8']
-            self.A[ig,iv] = float(v_['X**8'])+self.A[ig,iv]
-            iv = ix_['A10']
-            self.A[ig,iv] = float(v_['X**10'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A0']])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A2']])
+            valA = np.append(valA,float(v_['XSQR']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A4']])
+            valA = np.append(valA,float(v_['XQUART']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A6']])
+            valA = np.append(valA,float(v_['X**6']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A8']])
+            valA = np.append(valA,float(v_['X**8']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['A10']])
+            valA = np.append(valA,float(v_['X**10']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -173,7 +182,7 @@ class  PALMER1ENE(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -247,21 +256,18 @@ class  PALMER1ENE(CUTEst_problem):
 # LO PALMER1E               0.0
 #    Solution
 # LO SOLTN               8.352321D-04
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CNOR2-RN-8-35"
+        self.pbclass   = "C-CNOR2-RN-8-35"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -18,7 +18,7 @@ function LOTSCHD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LOTSCHD"
@@ -62,6 +62,9 @@ function LOTSCHD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["6"])
             iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
@@ -69,92 +72,113 @@ function LOTSCHD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["6"])
             ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["X"*string(I)])
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(v_["X"*string(I)]))
             ig,ig_,_ = s2mpj_ii("CONS7",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS7")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("CONS"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS"*string(I))
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["A"*string(I)])
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(v_["A"*string(I)]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["2"]):Int64(v_["4"])
             ig,ig_,_ = s2mpj_ii("CONS"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS"*string(I))
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("CONS2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS2")
-        iv = ix_["T3"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["U3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T3"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["U3"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["2"])
             ig,ig_,_ = s2mpj_ii("CONS3",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS3")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["4"]):Int64(v_["6"])
             ig,ig_,_ = s2mpj_ii("CONS3",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS3")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("CONS4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS4")
-        iv = ix_["T1"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["U1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T1"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["U1"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["5"]):Int64(v_["6"])
             ig,ig_,_ = s2mpj_ii("CONS4",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS4")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("CONS5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS5")
-        iv = ix_["T1"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["U1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T1"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["U1"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["5"])
             ig,ig_,_ = s2mpj_ii("CONS6",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS6")
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -186,6 +210,8 @@ function LOTSCHD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig = ig_["OBJ"*string(I)]
             arrset(pbm.grftype,ig,"gSQUARE")
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -194,9 +220,6 @@ function LOTSCHD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-12-7"

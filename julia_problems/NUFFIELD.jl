@@ -69,7 +69,7 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # RE A                   5.0            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NUFFIELD"
@@ -132,6 +132,9 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["0"]):Int64(I)
                 iv,ix_,_ = s2mpj_ii("V"*string(I)*","*string(J),ix_)
@@ -139,105 +142,123 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["1"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["V"*string(Int64(v_["N"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["C1"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(J)])
+            push!(valA,Float64(v_["C1"]))
         end
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             v_["I-1"] = -1+I
             for J = Int64(v_["1"]):Int64(v_["I-1"])
                 ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["C2"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["C2"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["V"*string(I)*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["C3"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(I)])
+            push!(valA,Float64(v_["C3"]))
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["V"*string(I)*","*string(Int64(v_["0"]))]
-            pbm.A[ig,iv] += Float64(v_["C4"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(Int64(v_["0"]))])
+            push!(valA,Float64(v_["C4"]))
         end
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(v_["C5"])
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["C6"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["0"]))])
+        push!(valA,Float64(v_["C5"]))
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["C6"]))
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             for J = Int64(v_["0"]):Int64(I)
                 ig,ig_,_ = s2mpj_ii("VX"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VX"*string(I)*","*string(J))
-                iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-1/H"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-1/H"]))
                 ig,ig_,_ = s2mpj_ii("VV"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"VV"*string(I)*","*string(J))
-                iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-1/H"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-1/H"]))
             end
         end
         for J = Int64(v_["0"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("VX"*string(Int64(v_["N"]))*","*string(J),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"VX"*string(Int64(v_["N"]))*","*string(J))
-            iv = ix_["V"*string(Int64(v_["N"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(J)])
+            push!(valA,Float64(v_["1/H"]))
             ig,ig_,_ = s2mpj_ii("VX"*string(Int64(v_["N"]))*","*string(J),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"VX"*string(Int64(v_["N"]))*","*string(J))
-            iv = ix_["V"*string(Int64(v_["N-1"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["N-1"]))*","*string(J)])
+            push!(valA,Float64(v_["-1/H"]))
             ig,ig_,_ = s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(J),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(J))
-            iv = ix_["V"*string(Int64(v_["N"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(J)])
+            push!(valA,Float64(v_["1/H"]))
             ig,ig_,_ = s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(J),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(J))
-            iv = ix_["V"*string(Int64(v_["N-1"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["N-1"]))*","*string(J)])
+            push!(valA,Float64(v_["-1/H"]))
         end
         ig,ig_,_  = (
               s2mpj_ii("VX"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"VX"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VX"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"VX"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(v_["-1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(v_["-1/H"]))
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I-1"] = -1+I
             for J = Int64(v_["0"]):Int64(v_["I-1"])
@@ -245,17 +266,21 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("VY"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VY"*string(I)*","*string(J))
-                iv = ix_["V"*string(I)*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(v_["1/H"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-1/H"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(v_["1/H"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-1/H"]))
                 ig,ig_,_ = s2mpj_ii("VV"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"VV"*string(I)*","*string(J))
-                iv = ix_["V"*string(I)*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(v_["1/H"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-1/H"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(v_["1/H"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-1/H"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
@@ -263,42 +288,50 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("VY"*string(I)*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"VY"*string(I)*","*string(I))
-            iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["V"*string(I)*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(I)])
+            push!(valA,Float64(v_["-1/H"]))
             ig,ig_,_ = s2mpj_ii("VV"*string(I)*","*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"VV"*string(I)*","*string(I))
-            iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["V"*string(I)*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(I)])
+            push!(valA,Float64(v_["-1/H"]))
         end
         ig,ig_,_  = (
               s2mpj_ii("VY"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"VY"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VY"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"VY"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(v_["-1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["1/H"]))
         ig,ig_,_  = (
               s2mpj_ii("VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])),ig_))
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"VV"*string(Int64(v_["N"]))*","*string(Int64(v_["N"])))
-        iv = ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/H"])
+        push!(irA,ig)
+        push!(icA,ix_["V"*string(Int64(v_["N"]))*","*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(v_["-1/H"]))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
@@ -306,12 +339,15 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("VXX"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VXX"*string(I)*","*string(J))
-                iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H**2"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/H**2"])
-                iv = ix_["V"*string(Int64(v_["I-1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H**2"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H**2"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2/H**2"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(Int64(v_["I-1"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H**2"]))
             end
         end
         for I = Int64(v_["2"]):Int64(v_["N"])
@@ -322,12 +358,15 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("VYY"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VYY"*string(I)*","*string(J))
-                iv = ix_["V"*string(I)*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(v_["1/H**2"])
-                iv = ix_["V"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/H**2"])
-                iv = ix_["V"*string(I)*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(v_["1/H**2"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(v_["1/H**2"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2/H**2"]))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(I)*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(v_["1/H**2"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
@@ -336,21 +375,27 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("VXX"*string(I)*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"VXX"*string(I)*","*string(I))
-            iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H**2"])
-            iv = ix_["V"*string(I)*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-2/H**2"])
-            iv = ix_["V"*string(I)*","*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["1/H**2"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(I)])
+            push!(valA,Float64(v_["1/H**2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(I)])
+            push!(valA,Float64(v_["-2/H**2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["1/H**2"]))
             ig,ig_,_ = s2mpj_ii("VYY"*string(I)*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"VYY"*string(I)*","*string(I))
-            iv = ix_["V"*string(Int64(v_["I+1"]))*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H**2"])
-            iv = ix_["V"*string(I)*","*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-2/H**2"])
-            iv = ix_["V"*string(I)*","*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["1/H**2"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))*","*string(I)])
+            push!(valA,Float64(v_["1/H**2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(I)])
+            push!(valA,Float64(v_["-2/H**2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)*","*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["1/H**2"]))
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             for J = Int64(v_["1"]):Int64(I)
@@ -466,6 +511,8 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Solutions (may be local!)
 # LO SOLTN               -2.512312500   $ (n=10)
 # LO SOLTN               -2.512359371   $ (n=20)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -473,9 +520,6 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-AN-V-V"

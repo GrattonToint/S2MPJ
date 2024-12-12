@@ -36,7 +36,7 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRIDIA"
@@ -85,16 +85,20 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(v_["DELTA"])
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["1"]))])
+        push!(valA,Float64(v_["DELTA"]))
         ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["1/GAMMA"]))
@@ -104,10 +108,12 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["MBETA"])
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["ALPHA"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["MBETA"]))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["ALPHA"]))
             arrset(pbm.gscale,ig,Float64(v_["1/I"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -139,10 +145,9 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQUR2-AN-V-0"
         pbm.objderlvl = 2

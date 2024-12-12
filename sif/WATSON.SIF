@@ -25,7 +25,7 @@ NAME          WATSON
 *   classification SUR2-AN-V-0
 
 *   The number of variables can be varied, but should be smaller than
-*   31
+*   31 and larger than 12.
 
 *   Number of variables
 

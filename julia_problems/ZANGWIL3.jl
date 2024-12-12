@@ -20,7 +20,7 @@ function ZANGWIL3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ZANGWIL3"
@@ -39,6 +39,9 @@ function ZANGWIL3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -46,34 +49,43 @@ function ZANGWIL3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G2")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G3")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -108,15 +120,14 @@ function ZANGWIL3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         else
             pb.y0[findfirst(x->x==ig_["X3"],pbm.congrps)] = Float64(2.5)
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CNLR2-AN-3-3"

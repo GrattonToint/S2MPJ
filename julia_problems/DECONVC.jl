@@ -19,7 +19,7 @@ function DECONVC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DECONVC"
@@ -135,6 +135,9 @@ function DECONVC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for K = Int64(v_["-LGSG"]):Int64(v_["LGTR"])
             iv,ix_,_ = s2mpj_ii("C"*string(K),ix_)
             arrset(pb.xnames,iv,"C"*string(K))
@@ -144,7 +147,7 @@ function DECONVC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"SG"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for K = Int64(v_["1"]):Int64(v_["LGTR"])
             ig,ig_,_ = s2mpj_ii("R"*string(K),ig_)
             arrset(gtype,ig,"<>")
@@ -263,8 +266,6 @@ function DECONVC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CSQR2-MN-61-1"

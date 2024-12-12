@@ -22,13 +22,14 @@ class  DISC2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISC2'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -76,6 +77,9 @@ class  DISC2(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('EPSILON',ix_)
         self.xnames=arrset(self.xnames,iv,'EPSILON')
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
@@ -87,16 +91,16 @@ class  DISC2(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('ALPHA'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'ALPHA'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['EPSILON']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['EPSILON']])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['5'])+1):
             [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
@@ -108,87 +112,111 @@ class  DISC2(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('B162',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B162')
-        iv = ix_['U6']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U6']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C162',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C162')
-        iv = ix_['V6']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V6']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('B273',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B273')
-        iv = ix_['U7']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U7']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C273',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C273')
-        iv = ix_['V7']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V7']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('B384',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B384')
-        iv = ix_['U8']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U8']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C384',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C384')
-        iv = ix_['V8']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V8']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('B495',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B495')
-        iv = ix_['U9']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U9']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U4']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C495',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C495')
-        iv = ix_['V9']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V9']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V4']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('B5101',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B5101')
-        iv = ix_['U10']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U10']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U5']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C5101',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5101')
-        iv = ix_['V10']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V10']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V5']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('B5111',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B5111')
-        iv = ix_['U11']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U11']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U5']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C5111',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5111')
-        iv = ix_['V11']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['V5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V11']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['V5']])
+        valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -200,7 +228,7 @@ class  DISC2(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -532,6 +560,8 @@ class  DISC2(CUTEst_problem):
 # ZL DISC2                              RNODES
 #    Solution
 # LO SOLTN(12)           20.46122911
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -539,15 +569,10 @@ class  DISC2(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLQR2-MY-29-23"
+        self.pbclass   = "C-CLQR2-MY-29-23"
         self.objderlvl = 2
         self.conderlvl = [2]
 

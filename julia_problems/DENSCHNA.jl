@@ -18,7 +18,7 @@ function DENSCHNA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DENSCHNA"
@@ -37,22 +37,28 @@ function DENSCHNA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("A",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("B",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("C",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -106,10 +112,9 @@ function DENSCHNA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                   0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COUR2-AN-2-0"
         pbm.objderlvl = 2

@@ -22,13 +22,14 @@ class  PSPDOC(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PSPDOC'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -43,16 +44,18 @@ class  PSPDOC(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
@@ -130,9 +133,8 @@ class  PSPDOC(CUTEst_problem):
 #    Solution
 # LO SOLTN               2.414213562
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSBR2-AY-4-0"
+        self.pbclass   = "C-CSBR2-AY-4-0"
         self.objderlvl = 2
 
 # **********************

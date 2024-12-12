@@ -25,7 +25,7 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TWIRIMD1"
@@ -1072,6 +1072,9 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for i = Int64(v_["1"]):Int64(v_["Nnod"])
             for l = Int64(v_["1"]):Int64(v_["Nage"])
                 for m = Int64(v_["1"]):Int64(v_["Ntra"])
@@ -1095,27 +1098,31 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("epsilon",ix_)
         arrset(pb.xnames,iv,"epsilon")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         v_["t"] = 1*v_["Ntim"]
         ig,ig_,_ = s2mpj_ii("Object",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["keff"*string(Int64(v_["t"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["epsilon"]
-        pbm.A[ig,iv] += Float64(v_["w1"])
+        push!(irA,ig)
+        push!(icA,ix_["keff"*string(Int64(v_["t"]))])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["epsilon"])
+        push!(valA,Float64(v_["w1"]))
         for l = Int64(v_["1"]):Int64(v_["Nage"])
             for m = Int64(v_["1"]):Int64(v_["Ntra"])
                 for i = Int64(v_["1"]):Int64(v_["Nnod"])
                     ig,ig_,_ = s2mpj_ii("sumi"*string(l)*","*string(m),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"sumi"*string(l)*","*string(m))
-                    iv = ix_["x"*string(i)*","*string(l)*","*string(m)]
-                    pbm.A[ig,iv] += Float64(v_["V"*string(i)])
+                    push!(irA,ig)
+                    push!(icA,ix_["x"*string(i)*","*string(l)*","*string(m)])
+                    push!(valA,Float64(v_["V"*string(i)]))
                     ig,ig_,_ = s2mpj_ii("sumlm"*string(i),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"sumlm"*string(i))
-                    iv = ix_["x"*string(i)*","*string(l)*","*string(m)]
-                    pbm.A[ig,iv] += Float64(1.0)
+                    push!(irA,ig)
+                    push!(icA,ix_["x"*string(i)*","*string(l)*","*string(m)])
+                    push!(valA,Float64(1.0))
                 end
             end
         end
@@ -1132,8 +1139,9 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("Peak"*string(i)*","*string(t),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"Peak"*string(i)*","*string(t))
-                iv = ix_["epsilon"]
-                pbm.A[ig,iv] += Float64(v_["-FluNred"])
+                push!(irA,ig)
+                push!(icA,ix_["epsilon"])
+                push!(valA,Float64(v_["-FluNred"]))
             end
         end
         for i = Int64(v_["1"]):Int64(v_["Nnod"])
@@ -1142,24 +1150,28 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("Burn"*string(i)*","*string(t),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"Burn"*string(i)*","*string(t))
-                iv = ix_["k"*string(i)*","*string(Int64(v_["t+1"]))]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["k"*string(i)*","*string(t)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["k"*string(i)*","*string(Int64(v_["t+1"]))])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["k"*string(i)*","*string(t)])
+                push!(valA,Float64(-1.0))
             end
         end
         for i = Int64(v_["1"]):Int64(v_["Nnod"])
             ig,ig_,_ = s2mpj_ii("Plac"*string(i),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"Plac"*string(i))
-            iv = ix_["k"*string(i)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["k"*string(i)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
             for m = Int64(v_["1"]):Int64(v_["Ntra"])
                 ig,ig_,_ = s2mpj_ii("Plac"*string(i),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"Plac"*string(i))
-                iv = ix_["x"*string(i)*","*string(Int64(v_["1"]))*","*string(m)]
-                pbm.A[ig,iv] += Float64(v_["-Kfresh"])
+                push!(irA,ig)
+                push!(icA,ix_["x"*string(i)*","*string(Int64(v_["1"]))*","*string(m)])
+                push!(valA,Float64(v_["-Kfresh"]))
             end
         end
         for t = Int64(v_["1"]):Int64(v_["Ntim-1"])
@@ -1167,10 +1179,12 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("Kefford"*string(t),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"Kefford"*string(t))
-            iv = ix_["keff"*string(Int64(v_["t+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["keff"*string(t)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["keff"*string(Int64(v_["t+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["keff"*string(t)])
+            push!(valA,Float64(-1.0))
         end
         for d = Int64(v_["1"]):Int64(v_["Ndia"])
             v_["d1"] = 0+v_["D"*string(d)*","*string(Int64(v_["1"]))]
@@ -1182,10 +1196,12 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                     ig,ig_,_ = s2mpj_ii("Dia"*string(d)*","*string(l)*","*string(m),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"Dia"*string(d)*","*string(l)*","*string(m))
-                    iv = ix_["x"*string(Int64(v_["d1"]))*","*string(l)*","*string(m)]
-                    pbm.A[ig,iv] += Float64(1.0)
-                    iv = ix_["x"*string(Int64(v_["d2"]))*","*string(l)*","*string(m)]
-                    pbm.A[ig,iv] += Float64(-1.0)
+                    push!(irA,ig)
+                    push!(icA,ix_["x"*string(Int64(v_["d1"]))*","*string(l)*","*string(m)])
+                    push!(valA,Float64(1.0))
+                    push!(irA,ig)
+                    push!(icA,ix_["x"*string(Int64(v_["d2"]))*","*string(l)*","*string(m)])
+                    push!(valA,Float64(-1.0))
                 end
             end
         end
@@ -7650,6 +7666,8 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 end
             end
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -7657,9 +7675,6 @@ function TWIRIMD1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOI2-RN-1247-544"

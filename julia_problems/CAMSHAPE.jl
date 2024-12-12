@@ -27,7 +27,7 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CAMSHAPE"
@@ -83,17 +83,21 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("R"*string(I),ix_)
             arrset(pb.xnames,iv,"R"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("AREA",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-PIRV/N"])
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(v_["-PIRV/N"]))
         end
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("CO"*string(I),ig_)
@@ -103,48 +107,58 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         ig,ig_,_ = s2mpj_ii("E1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E1")
-        iv = ix_["R"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(v_["-RMIN"])
-        iv = ix_["R"*string(Int64(v_["2"]))]
-        pbm.A[ig,iv] += Float64(v_["RMIN2CD"])
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["1"]))])
+        push!(valA,Float64(v_["-RMIN"]))
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["2"]))])
+        push!(valA,Float64(v_["RMIN2CD"]))
         v_["R"] = v_["RMIN2CD"]-v_["RMIN"]
         ig,ig_,_ = s2mpj_ii("E2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E2")
-        iv = ix_["R"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(v_["R"])
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["1"]))])
+        push!(valA,Float64(v_["R"]))
         ig,ig_,_ = s2mpj_ii("E3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E3")
-        iv = ix_["R"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["-RMAX"])
-        iv = ix_["R"*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(v_["RMAX2CD"])
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["-RMAX"]))
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(v_["RMAX2CD"]))
         ig,ig_,_ = s2mpj_ii("E4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E4")
-        iv = ix_["R"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["-2RMAX"])
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["-2RMAX"]))
         ig,ig_,_ = s2mpj_ii("CU"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CU"*string(Int64(v_["0"])))
-        iv = ix_["R"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["1"]))])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("CU"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CU"*string(I))
-            iv = ix_["R"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("CU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CU"*string(Int64(v_["N"])))
-        iv = ix_["R"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["R"*string(Int64(v_["N"]))])
+        push!(valA,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -292,6 +306,8 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLUTION             -4.2785D+00   $ (NH=200)
 # LO SOLUTION             -4.2757D+00   $ (NH=400)
 # LO SOLUTION             -4.2743D+00   $ (NH=800)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -300,9 +316,6 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = grange[gegrps]
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-AN-V-V"

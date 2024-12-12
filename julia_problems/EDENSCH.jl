@@ -26,7 +26,7 @@ function EDENSCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EDENSCH"
@@ -52,31 +52,38 @@ function EDENSCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("A"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-2.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-2.0))
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("A"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(0.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N"]))])
+        push!(valA,Float64(0.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -147,10 +154,9 @@ function EDENSCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    Solution
 # LO SOLTN(36)           219.28
 # LO SOLTN(2000)         1.20032D+04
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COUR2-AN-V-0"
         pbm.objderlvl = 2

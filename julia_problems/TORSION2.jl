@@ -37,7 +37,7 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE Q                   37             $-PARAMETER n= 5476
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TORSION2"
@@ -78,6 +78,9 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -85,13 +88,14 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["P-1"])
             for J = Int64(v_["2"]):Int64(v_["P-1"])
                 ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["LC"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["LC"]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -269,10 +273,9 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(37)           ???
 # LO SOLTN(50)           ???
 # LO SOLTN(61)           ???
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-MY-V-0"
         pb.x0          = zeros(Float64,pb.n)

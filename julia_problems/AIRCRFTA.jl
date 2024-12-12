@@ -24,7 +24,7 @@ function AIRCRFTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "AIRCRFTA"
@@ -46,6 +46,9 @@ function AIRCRFTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("ROLLRATE",ix_)
         arrset(pb.xnames,iv,"ROLLRATE")
         iv,ix_,_ = s2mpj_ii("PITCHRAT",ix_)
@@ -63,62 +66,82 @@ function AIRCRFTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("RUDDERDF",ix_)
         arrset(pb.xnames,iv,"RUDDERDF")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
-        iv = ix_["ROLLRATE"]
-        pbm.A[ig,iv] += Float64(-3.933)
-        iv = ix_["PITCHRAT"]
-        pbm.A[ig,iv] += Float64(0.107)
-        iv = ix_["YAWRATE"]
-        pbm.A[ig,iv] += Float64(0.126)
-        iv = ix_["SSLIPANG"]
-        pbm.A[ig,iv] += Float64(-9.99)
-        iv = ix_["AILERON"]
-        pbm.A[ig,iv] += Float64(-45.83)
-        iv = ix_["RUDDERDF"]
-        pbm.A[ig,iv] += Float64(-7.64)
+        push!(irA,ig)
+        push!(icA,ix_["ROLLRATE"])
+        push!(valA,Float64(-3.933))
+        push!(irA,ig)
+        push!(icA,ix_["PITCHRAT"])
+        push!(valA,Float64(0.107))
+        push!(irA,ig)
+        push!(icA,ix_["YAWRATE"])
+        push!(valA,Float64(0.126))
+        push!(irA,ig)
+        push!(icA,ix_["SSLIPANG"])
+        push!(valA,Float64(-9.99))
+        push!(irA,ig)
+        push!(icA,ix_["AILERON"])
+        push!(valA,Float64(-45.83))
+        push!(irA,ig)
+        push!(icA,ix_["RUDDERDF"])
+        push!(valA,Float64(-7.64))
         ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G2")
-        iv = ix_["PITCHRAT"]
-        pbm.A[ig,iv] += Float64(-0.987)
-        iv = ix_["ATTCKANG"]
-        pbm.A[ig,iv] += Float64(-22.95)
-        iv = ix_["ELEVATOR"]
-        pbm.A[ig,iv] += Float64(-28.37)
+        push!(irA,ig)
+        push!(icA,ix_["PITCHRAT"])
+        push!(valA,Float64(-0.987))
+        push!(irA,ig)
+        push!(icA,ix_["ATTCKANG"])
+        push!(valA,Float64(-22.95))
+        push!(irA,ig)
+        push!(icA,ix_["ELEVATOR"])
+        push!(valA,Float64(-28.37))
         ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G3")
-        iv = ix_["ROLLRATE"]
-        pbm.A[ig,iv] += Float64(0.002)
-        iv = ix_["YAWRATE"]
-        pbm.A[ig,iv] += Float64(-0.235)
-        iv = ix_["SSLIPANG"]
-        pbm.A[ig,iv] += Float64(5.67)
-        iv = ix_["AILERON"]
-        pbm.A[ig,iv] += Float64(-0.921)
-        iv = ix_["RUDDERDF"]
-        pbm.A[ig,iv] += Float64(-6.51)
+        push!(irA,ig)
+        push!(icA,ix_["ROLLRATE"])
+        push!(valA,Float64(0.002))
+        push!(irA,ig)
+        push!(icA,ix_["YAWRATE"])
+        push!(valA,Float64(-0.235))
+        push!(irA,ig)
+        push!(icA,ix_["SSLIPANG"])
+        push!(valA,Float64(5.67))
+        push!(irA,ig)
+        push!(icA,ix_["AILERON"])
+        push!(valA,Float64(-0.921))
+        push!(irA,ig)
+        push!(icA,ix_["RUDDERDF"])
+        push!(valA,Float64(-6.51))
         ig,ig_,_ = s2mpj_ii("G4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G4")
-        iv = ix_["PITCHRAT"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["ATTCKANG"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["ELEVATOR"]
-        pbm.A[ig,iv] += Float64(-1.168)
+        push!(irA,ig)
+        push!(icA,ix_["PITCHRAT"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["ATTCKANG"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["ELEVATOR"])
+        push!(valA,Float64(-1.168))
         ig,ig_,_ = s2mpj_ii("G5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G5")
-        iv = ix_["YAWRATE"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["SSLIPANG"]
-        pbm.A[ig,iv] += Float64(-0.196)
-        iv = ix_["AILERON"]
-        pbm.A[ig,iv] += Float64(-0.0071)
+        push!(irA,ig)
+        push!(icA,ix_["YAWRATE"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SSLIPANG"])
+        push!(valA,Float64(-0.196))
+        push!(irA,ig)
+        push!(icA,ix_["AILERON"])
+        push!(valA,Float64(-0.0071))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -329,15 +352,14 @@ function AIRCRFTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         loaset(pbm.grelt,ig,posel,ie_["E3B"])
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-RN-8-5"

@@ -37,13 +37,14 @@ class  CHEBYQAD(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEBYQAD'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -67,16 +68,18 @@ class  CHEBYQAD(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for J in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(J),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
@@ -160,9 +163,8 @@ class  CHEBYQAD(CUTEst_problem):
 # LO SOLTN(20)           4.572955D-3
 # LO SOLTN(50)           5.386315D-3
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSBR2-AN-V-0"
+        self.pbclass   = "C-CSBR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

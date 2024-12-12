@@ -39,7 +39,7 @@ function OET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OET1"
@@ -65,6 +65,9 @@ function OET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
         iv,ix_,_ = s2mpj_ii("X1",ix_)
@@ -72,11 +75,12 @@ function OET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["U"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["0"]):Int64(v_["M"])
             v_["RI"] = Float64(I)
             v_["W"] = v_["RI"]*v_["H"]
@@ -87,21 +91,27 @@ function OET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             ig,ig_,_ = s2mpj_ii("LO"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"LO"*string(I))
-            iv = ix_["U"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X1"]
-            pbm.A[ig,iv] += Float64(v_["-W"])
-            iv = ix_["X2"]
-            pbm.A[ig,iv] += Float64(v_["-EXPW"])
+            push!(irA,ig)
+            push!(icA,ix_["U"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X1"])
+            push!(valA,Float64(v_["-W"]))
+            push!(irA,ig)
+            push!(icA,ix_["X2"])
+            push!(valA,Float64(v_["-EXPW"]))
             ig,ig_,_ = s2mpj_ii("UP"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"UP"*string(I))
-            iv = ix_["U"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X1"]
-            pbm.A[ig,iv] += Float64(v_["W"])
-            iv = ix_["X2"]
-            pbm.A[ig,iv] += Float64(v_["EXPW"])
+            push!(irA,ig)
+            push!(icA,ix_["U"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X1"])
+            push!(valA,Float64(v_["W"]))
+            push!(irA,ig)
+            push!(icA,ix_["X2"])
+            push!(valA,Float64(v_["EXPW"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -130,15 +140,14 @@ function OET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CLLR2-AN-3-V"

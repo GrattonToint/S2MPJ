@@ -20,7 +20,7 @@ function EXPFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXPFIT"
@@ -42,12 +42,15 @@ function EXPFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("ALPHA",ix_)
         arrset(pb.xnames,iv,"ALPHA")
         iv,ix_,_ = s2mpj_ii("BETA",ix_)
         arrset(pb.xnames,iv,"BETA")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for i = Int64(v_["1"]):Int64(v_["P"])
             ig,ig_,_ = s2mpj_ii("R"*string(i),ig_)
             arrset(gtype,ig,"<>")
@@ -113,8 +116,6 @@ function EXPFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-2-0"
         pb.x0          = zeros(Float64,pb.n)

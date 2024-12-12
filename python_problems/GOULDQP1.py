@@ -23,13 +23,14 @@ class  GOULDQP1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GOULDQP1'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -49,6 +50,9 @@ class  GOULDQP1(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['15'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
@@ -65,12 +69,11 @@ class  GOULDQP1(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('DS'+str(K),ix_)
             self.xnames=arrset(self.xnames,iv,'DS'+str(K))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for K in range(int(v_['0']),int(v_['4'])+1):
             v_['3K'] = 3*K
             v_['3K+1'] = 1+v_['3K']
@@ -78,12 +81,15 @@ class  GOULDQP1(CUTEst_problem):
             v_['3K+3'] = 3+v_['3K']
             [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(int(v_['3K+1']))]
-            self.A[ig,iv] = float(2.3)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['3K+2']))]
-            self.A[ig,iv] = float(1.7)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['3K+3']))]
-            self.A[ig,iv] = float(2.2)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+1']))]])
+            valA = np.append(valA,float(2.3))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+2']))]])
+            valA = np.append(valA,float(1.7))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+3']))]])
+            valA = np.append(valA,float(2.2))
         for K in range(int(v_['1']),int(v_['4'])+1):
             v_['3K'] = 3*K
             v_['3K+1'] = 1+v_['3K']
@@ -94,85 +100,114 @@ class  GOULDQP1(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('A'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'A'+str(K))
-            iv = ix_['X'+str(int(v_['3K+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['3K-2']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['AS'+str(K)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K-2']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['AS'+str(K)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('B'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'B'+str(K))
-            iv = ix_['X'+str(int(v_['3K+3']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['3K']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['BS'+str(K)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+3']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['BS'+str(K)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(K))
-            iv = ix_['X'+str(int(v_['3K+2']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['3K-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['CS'+str(K)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K+2']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['3K-1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['CS'+str(K)]])
+            valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('D1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'D1')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DS1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DS1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('D2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'D2')
-        iv = ix_['X4']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X5']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X6']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DS2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X5']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X6']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DS2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('D3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'D3')
-        iv = ix_['X7']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X8']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X9']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DS3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X7']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X8']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X9']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DS3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('D4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'D4')
-        iv = ix_['X10']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X11']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X12']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DS4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X10']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X11']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X12']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DS4']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('D5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'D5')
-        iv = ix_['X13']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X14']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X15']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DS5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X13']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X14']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X15']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DS5']])
+        valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -184,7 +219,7 @@ class  GOULDQP1(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -440,21 +475,18 @@ class  GOULDQP1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -3.485333E+3
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQLR2-AN-32-17"
+        self.pbclass   = "C-CQLR2-AN-32-17"
         self.objderlvl = 2
         self.conderlvl = [2]
 

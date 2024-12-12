@@ -122,13 +122,14 @@ class  MOSARQP1(CUTEst_problem):
 # IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MOSARQP1'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -236,33 +237,39 @@ class  MOSARQP1(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(v_['C'+str(I)])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(v_['C'+str(I)]))
         [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['1'])))
-        iv = ix_['X'+str(int(v_['1']))]
-        self.A[ig,iv] = float(4.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['1']))]])
+        valA = np.append(valA,float(4.0))
         [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['1'])))
-        iv = ix_['X'+str(int(v_['RTN+1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['2']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['RTN+1']))]])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['2']))]])
+        valA = np.append(valA,float(-1.0))
         for I in range(int(v_['2']),int(v_['RTN-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
@@ -270,26 +277,33 @@ class  MOSARQP1(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(I))
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I+RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(4.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+RTN']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['RTN'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['RTN'])))
-        iv = ix_['X'+str(int(v_['RTN']))]
-        self.A[ig,iv] = float(4.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['RTN']))]])
+        valA = np.append(valA,float(4.0))
         [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['RTN'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['RTN'])))
-        iv = ix_['X'+str(int(v_['RTN-1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['2RTN']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['RTN-1']))]])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['2RTN']))]])
+        valA = np.append(valA,float(-1.0))
         v_['JS'] = v_['RTN']
         for J in range(int(v_['RTN+1']),int(v_['M-RTN+1'])+1,int(v_['RTN'])):
             v_['J+1'] = 1+J
@@ -300,14 +314,18 @@ class  MOSARQP1(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('CS'+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(J))
-            iv = ix_['X'+str(J)]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['J+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['J-RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['J+RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(J)]])
+            valA = np.append(valA,float(4.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J-RTN']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+RTN']))]])
+            valA = np.append(valA,float(-1.0))
             for I in range(int(v_['J+1']),int(v_['JS-1'])+1):
                 v_['I+1'] = 1+I
                 v_['I-1'] = -1+I
@@ -316,32 +334,41 @@ class  MOSARQP1(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'CS'+str(I))
-                iv = ix_['X'+str(I)]
-                self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-                iv = ix_['X'+str(int(v_['I-1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['X'+str(int(v_['I+1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['X'+str(int(v_['I-RTN']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['X'+str(int(v_['I+RTN']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(I)]])
+                valA = np.append(valA,float(4.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(int(v_['I-1']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(int(v_['I+1']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(int(v_['I-RTN']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(int(v_['I+RTN']))]])
+                valA = np.append(valA,float(-1.0))
             v_['JS+RTN'] = v_['JS']+v_['RTN']
             v_['JS-RTN'] = v_['JS']-v_['RTN']
             [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['JS'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['JS'])))
-            iv = ix_['X'+str(int(v_['JS']))]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['JS-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['JS']))]])
+            valA = np.append(valA,float(4.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['JS-1']))]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['JS'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['JS'])))
-            iv = ix_['X'+str(int(v_['JS-RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['JS+RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['JS-RTN']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['JS+RTN']))]])
+            valA = np.append(valA,float(-1.0))
         v_['K'] = 1+v_['JS']
         for I in range(int(v_['K']),int(v_['M'])+1,int(v_['M'])):
             v_['K+1'] = 1+v_['K']
@@ -350,17 +377,21 @@ class  MOSARQP1(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['K'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['K'])))
-            iv = ix_['X'+str(int(v_['K']))]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K']))]])
+            valA = np.append(valA,float(4.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+1']))]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['K'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['K'])))
-            iv = ix_['X'+str(int(v_['K-RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K-RTN']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+RTN']))]])
+            valA = np.append(valA,float(-1.0))
         v_['K'] = 1+v_['K']
         for I in range(int(v_['K']),int(v_['M'])+1):
             v_['I+1'] = 1+I
@@ -370,16 +401,21 @@ class  MOSARQP1(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(I))
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I-RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I+RTN']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(4.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-RTN']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+RTN']))]])
+            valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -391,7 +427,7 @@ class  MOSARQP1(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -516,6 +552,8 @@ class  MOSARQP1(CUTEst_problem):
 # LO SOLTN( 900,600,2)   -529.6445809
 # LO SOLTN( 900,600,3)   -1145.403000
 # LO SOLTN(2500,700,1)   -952.8754378
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         self.xlower = np.zeros((self.n,1))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -523,15 +561,10 @@ class  MOSARQP1(CUTEst_problem):
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQLR2-AN-V-V"
+        self.pbclass   = "C-CQLR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

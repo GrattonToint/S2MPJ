@@ -28,7 +28,7 @@ function SCW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE K                   1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SCW1"
@@ -65,12 +65,15 @@ function SCW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["K+1"])
             iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("S",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("C",ig_)
@@ -80,10 +83,12 @@ function SCW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CON"*string(I))
-            iv = ix_["T"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -214,15 +219,14 @@ function SCW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SCW                 0.0
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CSLR2-MN-V-V"

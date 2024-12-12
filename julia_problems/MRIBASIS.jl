@@ -20,7 +20,7 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MRIBASIS"
@@ -124,6 +124,9 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for j = Int64(v_["1"]):Int64(v_["2"])
             for k = Int64(v_["1"]):Int64(v_["xm"])
                 iv,ix_,_ = s2mpj_ii("X"*string(j)*","*string(k),ix_)
@@ -139,30 +142,35 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("Object",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm"]))]
-        pbm.A[ig,iv] += Float64(1)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm"]))])
+        push!(valA,Float64(1))
         for j = Int64(v_["1"]):Int64(v_["2"])
             for k = Int64(v_["2"]):Int64(v_["xm-2"])
                 v_["k+"] = 1+k
                 ig,ig_,_ = s2mpj_ii("PS"*string(j)*","*string(k),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"PS"*string(j)*","*string(k))
-                iv = ix_["X"*string(j)*","*string(Int64(v_["k+"]))]
-                pbm.A[ig,iv] += Float64(1)
-                iv = ix_["X"*string(j)*","*string(k)]
-                pbm.A[ig,iv] += Float64(-1)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(j)*","*string(Int64(v_["k+"]))])
+                push!(valA,Float64(1))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(j)*","*string(k)])
+                push!(valA,Float64(-1))
             end
         end
         ig,ig_,_ = s2mpj_ii("PL",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"PL")
-        iv = ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm"]))]
-        pbm.A[ig,iv] += Float64(1)
-        iv = ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm-"]))]
-        pbm.A[ig,iv] += Float64(-1)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm"]))])
+        push!(valA,Float64(1))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm-"]))])
+        push!(valA,Float64(-1))
         for i = Int64(v_["1"]):Int64(v_["3"])
             for j = Int64(v_["1"]):Int64(v_["2"])
                 for k = Int64(v_["1"]):Int64(v_["Lm-"])
@@ -172,25 +180,33 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                     ig,ig_,_ = s2mpj_ii("SU"*string(i)*","*string(j)*","*string(k),ig_)
                     arrset(gtype,ig,"<=")
                     arrset(pb.cnames,ig,"SU"*string(i)*","*string(j)*","*string(k))
-                    iv = ix_["L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))]
-                    pbm.A[ig,iv] += Float64(1)
-                    iv = ix_["L"*string(i)*","*string(j)*","*string(k)]
-                    pbm.A[ig,iv] += Float64(-1)
-                    iv = ix_["X"*string(j)*","*string(Int64(v_["2k"]))]
-                    pbm.A[ig,iv] += Float64(v_["-k1"])
-                    iv = ix_["X"*string(j)*","*string(Int64(v_["2k-"]))]
-                    pbm.A[ig,iv] += Float64(v_["k1"])
+                    push!(irA,ig)
+                    push!(icA,ix_["L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))])
+                    push!(valA,Float64(1))
+                    push!(irA,ig)
+                    push!(icA,ix_["L"*string(i)*","*string(j)*","*string(k)])
+                    push!(valA,Float64(-1))
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(j)*","*string(Int64(v_["2k"]))])
+                    push!(valA,Float64(v_["-k1"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(j)*","*string(Int64(v_["2k-"]))])
+                    push!(valA,Float64(v_["k1"]))
                     ig,ig_,_ = s2mpj_ii("SL"*string(i)*","*string(j)*","*string(k),ig_)
                     arrset(gtype,ig,">=")
                     arrset(pb.cnames,ig,"SL"*string(i)*","*string(j)*","*string(k))
-                    iv = ix_["L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))]
-                    pbm.A[ig,iv] += Float64(1)
-                    iv = ix_["L"*string(i)*","*string(j)*","*string(k)]
-                    pbm.A[ig,iv] += Float64(-1)
-                    iv = ix_["X"*string(j)*","*string(Int64(v_["2k"]))]
-                    pbm.A[ig,iv] += Float64(v_["k1"])
-                    iv = ix_["X"*string(j)*","*string(Int64(v_["2k-"]))]
-                    pbm.A[ig,iv] += Float64(v_["-k1"])
+                    push!(irA,ig)
+                    push!(icA,ix_["L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))])
+                    push!(valA,Float64(1))
+                    push!(irA,ig)
+                    push!(icA,ix_["L"*string(i)*","*string(j)*","*string(k)])
+                    push!(valA,Float64(-1))
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(j)*","*string(Int64(v_["2k"]))])
+                    push!(valA,Float64(v_["k1"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(j)*","*string(Int64(v_["2k-"]))])
+                    push!(valA,Float64(v_["-k1"]))
                 end
             end
         end
@@ -199,17 +215,18 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("cc1",ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"cc1")
-                iv = ix_["L"*string(i)*","*string(Int64(v_["2"]))*","*string(k)]
-                pbm.A[ig,iv] += Float64(v_["S"*string(Int64(v_["3"]))*","*string(i)])
+                push!(irA,ig)
+                push!(icA,ix_["L"*string(i)*","*string(Int64(v_["2"]))*","*string(k)])
+                push!(valA,Float64(v_["S"*string(Int64(v_["3"]))*","*string(i)]))
             end
         end
         for i = Int64(v_["1"]):Int64(v_["3"])
             ig,ig_,_ = s2mpj_ii("c2const"*string(i),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"c2const"*string(i))
-            iv  = (
-                  ix_["L"*string(i)*","*string(Int64(v_["2"]))*","*string(Int64(v_["Lm"]))])
-            pbm.A[ig,iv] += Float64(v_["k10"])
+            push!(irA,ig)
+            push!(icA,ix_["L"*string(i)*","*string(Int64(v_["2"]))*","*string(Int64(v_["Lm"]))])
+            push!(valA,Float64(v_["k10"]))
         end
         ig,ig_,_ = s2mpj_ii("c3con1",ig_)
         arrset(gtype,ig,">=")
@@ -564,6 +581,8 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               18.2179000000
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -573,9 +592,6 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-MY-36-55"

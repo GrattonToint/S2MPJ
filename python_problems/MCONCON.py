@@ -13,13 +13,14 @@ class  MCONCON(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MCONCON'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -35,6 +36,9 @@ class  MCONCON(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['M'])+1):
             [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'P'+str(I))
@@ -46,17 +50,17 @@ class  MCONCON(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'P'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJECT',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['P'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['P'+str(I)]])
+            valA = np.append(valA,float(-1.0))
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('PAN'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
@@ -64,52 +68,66 @@ class  MCONCON(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('MBAL1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL1')
-        iv = ix_['Q1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['F3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL2')
-        iv = ix_['Q1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['F1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q1']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F1']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL3')
-        iv = ix_['Q2']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['F1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q2']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL4')
-        iv = ix_['Q2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Q3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q2']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q3']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL5')
-        iv = ix_['Q3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['F2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q3']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL6')
-        iv = ix_['Q4']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['F2']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q4']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F2']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('MBAL7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL7')
-        iv = ix_['Q4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['F4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q4']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F4']])
+        valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -121,7 +139,7 @@ class  MCONCON(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -237,21 +255,18 @@ class  MCONCON(CUTEst_problem):
         self.grelt = loaset(self.grelt,ig,posel,ie_['QTO4'])
         nlc = np.union1d(nlc,np.array([ig]))
         self.grelw = loaset(self.grelw,ig,posel,float(v_['K']))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLOI2-MN-15-11"
+        self.pbclass   = "C-CLOI2-MN-15-11"
         self.objderlvl = 2
         self.conderlvl = [2]
 

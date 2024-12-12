@@ -29,7 +29,7 @@ function BLOWEYB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BLOWEYB"
@@ -133,6 +133,9 @@ function BLOWEYB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
@@ -140,22 +143,25 @@ function BLOWEYB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"W"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             v_["VAL"] = v_["V"*string(I)]*v_["-1/N**2"]
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["VAL"])
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(v_["VAL"]))
             v_["VAL"] = v_["V"*string(I)]*v_["-2/N**2"]
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["VAL"])
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(v_["VAL"]))
         end
         v_["VAL"] = v_["V"*string(Int64(v_["1"]))]-v_["V"*string(Int64(v_["0"]))]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["U"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(v_["VAL"])
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["0"]))])
+        push!(valA,Float64(v_["VAL"]))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
@@ -164,68 +170,83 @@ function BLOWEYB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             v_["VAL"] = v_["VAL"]+v_["V"*string(Int64(v_["I+1"]))]
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["VAL"])
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(v_["VAL"]))
         end
         v_["VAL"] = v_["V"*string(Int64(v_["N-1"]))]-v_["V"*string(Int64(v_["N"]))]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["U"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["VAL"])
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["VAL"]))
         ig,ig_,_ = s2mpj_ii("INT",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"INT")
-        iv = ix_["U"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(0.5)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["0"]))])
+        push!(valA,Float64(0.5))
         ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["0"])))
-        iv = ix_["U"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["U"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["0"]))])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["0"])))
-        iv = ix_["W"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/N**2"])
+        push!(irA,ig)
+        push!(icA,ix_["W"*string(Int64(v_["0"]))])
+        push!(valA,Float64(v_["-1/N**2"]))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CON"*string(I))
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(2.0)
-            iv = ix_["U"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["U"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["W"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-1/N**2"])
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(2.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(I)])
+            push!(valA,Float64(v_["-1/N**2"]))
             ig,ig_,_ = s2mpj_ii("INT",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"INT")
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["N"])))
-        iv = ix_["U"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["U"*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["N"])))
-        iv = ix_["W"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(v_["-1/N**2"])
+        push!(irA,ig)
+        push!(icA,ix_["W"*string(Int64(v_["N"]))])
+        push!(valA,Float64(v_["-1/N**2"]))
         ig,ig_,_ = s2mpj_ii("INT",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"INT")
-        iv = ix_["U"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(0.5)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N"]))])
+        push!(valA,Float64(0.5))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -354,15 +375,14 @@ function BLOWEYB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # XL SOLUTION            -4.93517D+02   $ N = 10 
 # XL SOLUTION            -5.30009D+03   $ N = 100
 # XL SOLUTION            -5.33674D+04   $ N = 1000
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-MN-V-V"

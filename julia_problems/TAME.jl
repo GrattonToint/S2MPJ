@@ -18,7 +18,7 @@ function TAME(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TAME"
@@ -37,25 +37,32 @@ function TAME(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("x",ix_)
         arrset(pb.xnames,iv,"x")
         iv,ix_,_ = s2mpj_ii("y",ix_)
         arrset(pb.xnames,iv,"y")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("Object",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["x"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["y"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["x"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["y"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("Constr",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"Constr")
-        iv = ix_["x"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["y"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["x"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["y"])
+        push!(valA,Float64(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -82,6 +89,8 @@ function TAME(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         nlc = Int64[]
         ig = ig_["Object"]
         arrset(pbm.grftype,ig,"gSQUARE")
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -90,9 +99,6 @@ function TAME(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-2-1"

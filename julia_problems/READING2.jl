@@ -31,7 +31,7 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "READING2"
@@ -78,6 +78,9 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X1u"*string(I),ix_)
             arrset(pb.xnames,iv,"X1u"*string(I))
@@ -87,7 +90,7 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
             v_["TI"] = v_["RI"]*v_["H"]
@@ -102,39 +105,51 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             v_["-CCTI-1"] = v_["CTI-1"]*v_["-H/2"]
             ig,ig_,_ = s2mpj_ii("COST",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X1u"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-CCTI"])
-            iv = ix_["X1u"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-CCTI-1"])
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["H/8PI**2"])
-            iv = ix_["U"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["H/8PI**2"])
+            push!(irA,ig)
+            push!(icA,ix_["X1u"*string(I)])
+            push!(valA,Float64(v_["-CCTI"]))
+            push!(irA,ig)
+            push!(icA,ix_["X1u"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-CCTI-1"]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(v_["H/8PI**2"]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["H/8PI**2"]))
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("C1u"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C1u"*string(I))
-            iv = ix_["X1u"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["X1u"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
-            iv = ix_["X2u"*string(I)]
-            pbm.A[ig,iv] += Float64(-0.5)
-            iv = ix_["X2u"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(-0.5)
+            push!(irA,ig)
+            push!(icA,ix_["X1u"*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["X1u"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["X2u"*string(I)])
+            push!(valA,Float64(-0.5))
+            push!(irA,ig)
+            push!(icA,ix_["X2u"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(-0.5))
             ig,ig_,_ = s2mpj_ii("C2u"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C2u"*string(I))
-            iv = ix_["X2u"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["X2u"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(-0.5)
-            iv = ix_["U"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(-0.5)
+            push!(irA,ig)
+            push!(icA,ix_["X2u"*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["X2u"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(-0.5))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(-0.5))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -166,15 +181,14 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             pb.xlower[ix_["U"*string(I)]] = -1.0
             pb.xupper[ix_["U"*string(I)]] = 1.0
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CLLR2-MN-V-V"

@@ -52,7 +52,7 @@ function LMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   75             $-PARAMETER n = 5625
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LMINSURF"
@@ -96,6 +96,9 @@ function LMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -103,7 +106,7 @@ function LMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["P-1"])
             for J = Int64(v_["1"]):Int64(v_["P-1"])
                 ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(J),ig_)
@@ -227,8 +230,6 @@ function LMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Solution
 # LO SOLTN               9.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COXR2-MY-V-0"
         pbm.objderlvl = 2

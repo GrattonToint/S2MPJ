@@ -22,7 +22,7 @@ function VESUVIALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "VESUVIALS"
@@ -3120,22 +3120,27 @@ function VESUVIALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("B"*string(I),ix_)
             arrset(pb.xnames,iv,"B"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["E"] = v_["E"*string(I)]
             v_["EINV"] = v_["ONE"]/v_["E"]
             v_["XOVERE"] = v_["EINV"]*v_["X"*string(I)]
             ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["B1"]
-            pbm.A[ig,iv] += Float64(v_["EINV"])
-            iv = ix_["B2"]
-            pbm.A[ig,iv] += Float64(v_["XOVERE"])
+            push!(irA,ig)
+            push!(icA,ix_["B1"])
+            push!(valA,Float64(v_["EINV"]))
+            push!(irA,ig)
+            push!(icA,ix_["B2"])
+            push!(valA,Float64(v_["XOVERE"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -3240,10 +3245,9 @@ function VESUVIALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-MN-8-0"
         pbm.objderlvl = 2

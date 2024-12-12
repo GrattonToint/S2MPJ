@@ -33,7 +33,7 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CORKSCRW"
@@ -92,6 +92,9 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["T"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -115,70 +118,89 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"UZ"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["T"])
             ig,ig_,_ = s2mpj_ii("OX"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(v_["W/T"*string(I)]))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["T"])
             v_["I-1"] = -1+I
             ig,ig_,_ = s2mpj_ii("ACX"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACX"*string(I))
-            iv = ix_["VX"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["M/H"])
-            iv = ix_["VX"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-M/H"])
-            iv = ix_["UX"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["VX"*string(I)])
+            push!(valA,Float64(v_["M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VX"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["UX"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("ACY"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACY"*string(I))
-            iv = ix_["VY"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["M/H"])
-            iv = ix_["VY"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-M/H"])
-            iv = ix_["UY"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["VY"*string(I)])
+            push!(valA,Float64(v_["M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VY"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["UY"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("ACZ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACZ"*string(I))
-            iv = ix_["VZ"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["M/H"])
-            iv = ix_["VZ"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-M/H"])
-            iv = ix_["UZ"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["VZ"*string(I)])
+            push!(valA,Float64(v_["M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VZ"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-M/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["UZ"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("PSX"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSX"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["X"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
-            iv = ix_["VX"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VX"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("PSY"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSY"*string(I))
-            iv = ix_["Y"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["Y"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
-            iv = ix_["VY"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VY"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("PSZ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSZ"*string(I))
-            iv = ix_["Z"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["1/H"])
-            iv = ix_["Z"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-1/H"])
-            iv = ix_["VZ"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(I)])
+            push!(valA,Float64(v_["1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["Z"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-1/H"]))
+            push!(irA,ig)
+            push!(icA,ix_["VZ"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("SC"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SC"*string(I))
@@ -324,6 +346,8 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(100)          44.368110588
 # LO SOLTN(500)
 # LO SOLTN(1000)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -331,9 +355,6 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CSOR2-AN-V-V"

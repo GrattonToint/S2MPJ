@@ -32,7 +32,7 @@ function CRAGGLVY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   2499           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CRAGGLVY"
@@ -59,12 +59,15 @@ function CRAGGLVY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["2I"] = 2*I
             v_["2I-1"] = -1+v_["2I"]
@@ -72,29 +75,36 @@ function CRAGGLVY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             v_["2I+2"] = 2+v_["2I"]
             ig,ig_,_ = s2mpj_ii("A"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["2I"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(0.01))
-            iv = ix_["X"*string(Int64(v_["2I"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["2I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I+1"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["2I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["2I+2"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I+2"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("D"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["2I-1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I-1"]))])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["2I+2"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2I+2"]))])
+            push!(valA,Float64(1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -188,10 +198,9 @@ function CRAGGLVY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(249)          1.6745D+02
 # LO SOLTN(499)          3.3642D+02
 # LO SOLTN(2499)         1.6882D+03
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COUR2-AY-V-0"
         pbm.objderlvl = 2

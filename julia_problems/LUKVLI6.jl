@@ -27,7 +27,7 @@ function LUKVLI6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   9999           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUKVLI6"
@@ -62,19 +62,23 @@ function LUKVLI6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I+1"] = 1+I
             v_["I-5"] = -5+I
             ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(2.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(2.0))
             v_["A"] = v_["I-5"]
             v_["B"] = v_["1"]
             v_["A"] = Float64(v_["A"])
@@ -120,8 +124,9 @@ function LUKVLI6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             for J = Int64(v_["MAXI-5,1"]):Int64(v_["MINI+1,N"])
                 ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(1.0))
             end
         end
         for K = Int64(v_["1"]):Int64(v_["N/2"])
@@ -129,8 +134,9 @@ function LUKVLI6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(K))
-            iv = ix_["X"*string(Int64(v_["2K"]))]
-            pbm.A[ig,iv] += Float64(4.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["2K"]))])
+            push!(valA,Float64(4.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -293,15 +299,14 @@ function LUKVLI6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               6.26382E+04
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AY-V-V"

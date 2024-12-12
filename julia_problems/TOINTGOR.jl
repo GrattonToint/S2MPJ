@@ -24,7 +24,7 @@ function TOINTGOR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TOINTGOR"
@@ -162,286 +162,390 @@ function TOINTGOR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("GA"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
             v_["SCALE"] = 1.0/v_["ALPH"*string(I)]
             arrset(pbm.gscale,ig,Float64(v_["SCALE"]))
         end
         ig,ig_,_ = s2mpj_ii("GB1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X31"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X31"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB3",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X5"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X5"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB4",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X6"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X7"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X6"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X7"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB5",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X6"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X8"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X9"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X6"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X8"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X9"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB6",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X8"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X10"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X11"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X8"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X10"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X11"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB7",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X10"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X10"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB8",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X14"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X15"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X14"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X15"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB9",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X11"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X14"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X16"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X17"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X11"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X14"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X16"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X17"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB10",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X16"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X18"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X19"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X16"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X18"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X19"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB11",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X9"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X18"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X20"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X9"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X18"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X20"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB12",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X5"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X20"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X21"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X5"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X20"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X21"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GB13",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X19"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X22"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X23"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X24"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X19"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X22"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X23"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X24"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB14",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X23"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X25"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X26"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X23"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X25"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X26"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB15",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X7"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X25"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X27"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X28"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X7"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X25"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X27"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X28"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB16",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X28"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X29"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X30"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X28"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X29"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X30"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB17",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X29"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X31"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X32"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X29"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X31"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X32"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB18",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X32"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X33"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X34"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X32"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X33"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X34"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB19",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X33"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X35"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X33"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X35"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB20",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X35"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X21"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X36"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X35"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X21"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X36"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB21",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X36"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X37"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X38"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X36"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X37"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X38"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB22",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X30"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X37"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X39"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X30"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X37"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X39"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB23",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X38"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X39"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X40"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X38"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X39"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X40"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB24",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X40"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X41"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X42"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X40"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X41"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X42"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB25",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X41"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X43"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X44"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X50"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X41"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X43"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X44"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X50"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB26",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X44"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X45"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X46"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X47"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X44"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X45"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X46"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X47"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB27",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X46"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X48"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X46"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X48"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB28",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X42"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X45"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X48"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X50"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X49"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X42"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X45"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X48"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X50"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X49"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GB29",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X26"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X34"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X43"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X26"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X34"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X43"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GB30",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X15"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X17"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X24"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X47"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X15"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X17"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X24"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X47"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GB31",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X49"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X49"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GB32",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X22"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X22"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GB33",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X27"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X27"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["33"])
             v_["SCALE"] = 1.0/v_["BETA"*string(I)]
             ig,ig_,_ = s2mpj_ii("GB"*string(I),ig_)
@@ -481,10 +585,9 @@ function TOINTGOR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN             1373.90546067
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COUR2-MN-50-0"
         pb.x0          = zeros(Float64,pb.n)

@@ -23,7 +23,7 @@ function EXPFITC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXPFITC"
@@ -54,6 +54,9 @@ function EXPFITC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("P0",ix_)
         arrset(pb.xnames,iv,"P0")
         iv,ix_,_ = s2mpj_ii("P1",ix_)
@@ -65,7 +68,7 @@ function EXPFITC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("Q2",ix_)
         arrset(pb.xnames,iv,"Q2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["R"])
@@ -79,23 +82,30 @@ function EXPFITC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I))
-            iv = ix_["P0"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["P1"]
-            pbm.A[ig,iv] += Float64(v_["T"*string(I)])
-            iv = ix_["P2"]
-            pbm.A[ig,iv] += Float64(v_["2T"])
-            iv = ix_["Q1"]
-            pbm.A[ig,iv] += Float64(v_["-QC1"])
-            iv = ix_["Q2"]
-            pbm.A[ig,iv] += Float64(v_["-QC2"])
+            push!(irA,ig)
+            push!(icA,ix_["P0"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["P1"])
+            push!(valA,Float64(v_["T"*string(I)]))
+            push!(irA,ig)
+            push!(icA,ix_["P2"])
+            push!(valA,Float64(v_["2T"]))
+            push!(irA,ig)
+            push!(icA,ix_["Q1"])
+            push!(valA,Float64(v_["-QC1"]))
+            push!(irA,ig)
+            push!(icA,ix_["Q2"])
+            push!(valA,Float64(v_["-QC2"]))
             ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"B"*string(I))
-            iv = ix_["Q1"]
-            pbm.A[ig,iv] += Float64(v_["TM5"])
-            iv = ix_["Q2"]
-            pbm.A[ig,iv] += Float64(v_["TM5SQ"])
+            push!(irA,ig)
+            push!(icA,ix_["Q1"])
+            push!(valA,Float64(v_["TM5"]))
+            push!(irA,ig)
+            push!(icA,ix_["Q2"])
+            push!(valA,Float64(v_["TM5SQ"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -204,15 +214,14 @@ function EXPFITC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-AN-5-502"

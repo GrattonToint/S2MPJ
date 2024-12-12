@@ -27,7 +27,7 @@ function CHARDIS12(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHARDIS12"
@@ -68,6 +68,9 @@ function CHARDIS12(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["NP1"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -75,7 +78,7 @@ function CHARDIS12(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["NP1"])
             v_["I+"] = 1+I
             for J = Int64(v_["I+"]):Int64(v_["NP1"])
@@ -233,8 +236,6 @@ function CHARDIS12(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COQR2-AY-V-V"

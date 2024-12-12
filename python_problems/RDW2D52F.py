@@ -34,7 +34,7 @@ class  RDW2D52F(CUTEst_problem):
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-CQOR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -49,13 +49,14 @@ class  RDW2D52F(CUTEst_problem):
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RDW2D52F'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -116,6 +117,9 @@ class  RDW2D52F(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(v_['N'])+1):
                 [iv,ix_,_] = s2mpj_ii('F'+str(I)+','+str(J),ix_)
@@ -125,12 +129,11 @@ class  RDW2D52F(CUTEst_problem):
                 [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 self.xnames=arrset(self.xnames,iv,'U'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N-1'])+1):
@@ -149,7 +152,7 @@ class  RDW2D52F(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -739,11 +742,10 @@ class  RDW2D52F(CUTEst_problem):
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQOR2-AN-V-V"
+        self.pbclass   = "C-CQLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

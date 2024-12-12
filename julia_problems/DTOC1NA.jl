@@ -55,7 +55,7 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC1NA"
@@ -132,6 +132,9 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 iv,ix_,_ = s2mpj_ii("X"*string(T)*","*string(I),ix_)
@@ -145,21 +148,23 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 ig,ig_,_ = s2mpj_ii("OX"*string(T)*","*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(T)*","*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(T)*","*string(I)])
+                push!(valA,Float64(1.0))
             end
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["NY"])
                 ig,ig_,_ = s2mpj_ii("OY"*string(T)*","*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["Y"*string(T)*","*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(T)*","*string(I)])
+                push!(valA,Float64(1.0))
             end
         end
         for T = Int64(v_["1"]):Int64(v_["N-1"])
@@ -167,21 +172,25 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
-            iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
-            iv = ix_["Y"*string(T)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(0.5)
-            iv = ix_["Y"*string(T)*","*string(Int64(v_["2"]))]
-            pbm.A[ig,iv] += Float64(0.25)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(0.5))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["2"]))])
+            push!(valA,Float64(0.25))
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
-                iv = ix_["X"*string(T)*","*string(I)]
-                pbm.A[ig,iv] += Float64(v_["B"*string(Int64(v_["1"]))*","*string(I)])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(T)*","*string(I)])
+                push!(valA,Float64(v_["B"*string(Int64(v_["1"]))*","*string(I)]))
             end
             for J = Int64(v_["2"]):Int64(v_["NY-1"])
                 v_["J-1"] = -1+J
@@ -189,40 +198,49 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(J))
-                iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["Y"*string(T)*","*string(J)]
-                pbm.A[ig,iv] += Float64(0.5)
-                iv = ix_["Y"*string(T)*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(-0.25)
-                iv = ix_["Y"*string(T)*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(0.25)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["T+1"]))*","*string(J)])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(T)*","*string(J)])
+                push!(valA,Float64(0.5))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(-0.25))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(0.25))
                 for I = Int64(v_["1"]):Int64(v_["NX"])
                     ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(J),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"TT"*string(T)*","*string(J))
-                    iv = ix_["X"*string(T)*","*string(I)]
-                    pbm.A[ig,iv] += Float64(v_["B"*string(J)*","*string(I)])
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(T)*","*string(I)])
+                    push!(valA,Float64(v_["B"*string(J)*","*string(I)]))
                 end
             end
             ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
-            iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["NY"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["NY"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
-            iv = ix_["Y"*string(T)*","*string(Int64(v_["NY"]))]
-            pbm.A[ig,iv] += Float64(0.5)
-            iv = ix_["Y"*string(T)*","*string(Int64(v_["NY-1"]))]
-            pbm.A[ig,iv] += Float64(-0.25)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["NY"]))])
+            push!(valA,Float64(0.5))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)*","*string(Int64(v_["NY-1"]))])
+            push!(valA,Float64(-0.25))
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
-                iv = ix_["X"*string(T)*","*string(I)]
-                pbm.A[ig,iv] += Float64(v_["B"*string(Int64(v_["NY"]))*","*string(I)])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(T)*","*string(I)])
+                push!(valA,Float64(v_["B"*string(Int64(v_["NY"]))*","*string(I)]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -332,15 +350,14 @@ function DTOC1NA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # LO S(  10,5,10)        1.16782170926
 # LO S(  50,5,10)        6.29429519092
 # LO S( 100,5,10)        12.7020120922
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COQR2-AN-V-V"

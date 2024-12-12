@@ -22,7 +22,7 @@ function LUKSAN12LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUKSAN12LS"
@@ -46,12 +46,15 @@ function LUKSAN12LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         v_["I"] = 1
         v_["K"] = 1
         for J = Int64(v_["1"]):Int64(v_["S"])
@@ -64,12 +67,14 @@ function LUKSAN12LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             v_["I+2"] = 2+v_["I"]
             ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["K"])),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-10.0e0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-10.0e0))
             ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["K+1"])),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I+2"]))]
-            pbm.A[ig,iv] += Float64(1.0e0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+2"]))])
+            push!(valA,Float64(1.0e0))
             ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["K+2"])),ig_)
             arrset(gtype,ig,"<>")
             ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["K+3"])),ig_)
@@ -78,8 +83,9 @@ function LUKSAN12LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             arrset(gtype,ig,"<>")
             ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["K+5"])),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0e0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0e0))
             v_["I"] = 3+v_["I"]
             v_["K"] = 6+v_["K"]
         end
@@ -266,10 +272,9 @@ function LUKSAN12LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2

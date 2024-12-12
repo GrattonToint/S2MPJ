@@ -53,7 +53,7 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC2"
@@ -120,6 +120,9 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 iv,ix_,_ = s2mpj_ii("X"*string(T)*","*string(I),ix_)
@@ -133,7 +136,7 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for T = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("O"*string(T),ig_)
             arrset(gtype,ig,"<>")
@@ -144,8 +147,9 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
                 ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(J))
-                iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["T+1"]))*","*string(J)])
+                push!(valA,Float64(-1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -300,15 +304,14 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # LO SOLUTION( 100)      0.487532342563
 # LO SOLUTION( 500)      0.490996540460
 # LO SOLUTION(1000)      0.490200910983
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AN-V-V"

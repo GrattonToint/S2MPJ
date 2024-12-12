@@ -24,7 +24,7 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "COOLHANSLS"
@@ -74,6 +74,9 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -81,14 +84,15 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for K = Int64(v_["1"]):Int64(v_["N"])
             for L = Int64(v_["1"]):Int64(v_["N"])
                 for M = Int64(v_["1"]):Int64(v_["N"])
                     ig,ig_,_ = s2mpj_ii("G"*string(K)*","*string(L),ig_)
                     arrset(gtype,ig,"<>")
-                    iv = ix_["X"*string(M)*","*string(L)]
-                    pbm.A[ig,iv] += Float64(v_["B"*string(K)*","*string(M)])
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(M)*","*string(L)])
+                    push!(valA,Float64(v_["B"*string(K)*","*string(M)]))
                 end
             end
         end
@@ -180,10 +184,9 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-RN-9-0"
         pb.x0          = zeros(Float64,pb.n)

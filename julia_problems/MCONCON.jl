@@ -12,7 +12,7 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MCONCON"
@@ -35,6 +35,9 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
@@ -48,12 +51,13 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"P"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("OBJECT",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["P"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["P"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("PAN"*string(I),ig_)
@@ -63,52 +67,66 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         ig,ig_,_ = s2mpj_ii("MBAL1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL1")
-        iv = ix_["Q1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["F3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F3"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("MBAL2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL2")
-        iv = ix_["Q1"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["F1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q1"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F1"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("MBAL3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL3")
-        iv = ix_["Q2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["F1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F1"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("MBAL4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL4")
-        iv = ix_["Q2"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["Q3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q2"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("MBAL5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL5")
-        iv = ix_["Q3"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["F2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q3"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("MBAL6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL6")
-        iv = ix_["Q4"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["F2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q4"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F2"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("MBAL7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL7")
-        iv = ix_["Q4"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["F4"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q4"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F4"])
+        push!(valA,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -234,15 +252,14 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         loaset(pbm.grelt,ig,posel,ie_["QTO4"])
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(v_["K"]))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOI2-MN-15-11"

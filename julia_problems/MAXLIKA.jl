@@ -20,7 +20,7 @@ function MAXLIKA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MAXLIKA"
@@ -276,6 +276,9 @@ function MAXLIKA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -293,7 +296,7 @@ function MAXLIKA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("X8",ix_)
         arrset(pb.xnames,iv,"X8")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["235"])
             ig,ig_,_ = s2mpj_ii("L"*string(I),ig_)
             arrset(gtype,ig,"<>")
@@ -433,8 +436,6 @@ function MAXLIKA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COBR2-AY-8-0"
         pbm.objderlvl = 2

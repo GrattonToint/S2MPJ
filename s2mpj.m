@@ -648,12 +648,6 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %               repeated in the output file.
 %               (default: 0)
 %
-%        * varargin{1}.addinA is a binary flag which is true iff repeated entries in pbm.A must be summed, rather than
-%               overwritten.  Activating this options allows gracefully coping with the SIF error of specifying the same
-%               entry of pbm.A more than once (ie in the same manner as that used by the Fortran SIF decoder), albeit at
-%               the price of more verbose output files.
-%               (default:1)
-%
 %        * varargin{1}.disperrors is a binary flag which is true iff the error messages are to be displayed on the screen
 %               as soon as the error is detected
 %               (default: 1 )
@@ -729,12 +723,12 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %      pbm.elvar{ie}   : flat index of elemental variables for element ie                                   
 %      pbm.elpar{ie}   : values of parameters for element ie
 %                                             
-%   7) Because the SIF standard typically imposes the DEFAULT type of entities  such as constants, ranges, bounds or
+%   7) Because the SIF standard typically imposes the DEFAULT type of entities such as constants, ranges, bounds or
 %      starting point to be defined first and optionally, and because this default might not be zero (the value that
 %      Matlab uses to fill-in unaffected vector entries), one needs to state the default value before any other value is
 %      attached to an entity's component. This may then clash with an explicitly stated DEFAULT value, and a mechanism is
 %      used in S2MPJ to avoid stating the SIF default for as long as one is certain that no other default is stated to
-%      supersede it.  This is achieved by storing the code line defining the SIF default in memory (in pending{}) and
+%      supersede it. This is achieved by storing the code line defining the SIF default in memory (in pending{}) and
 %      only using it if the next line is not a DEFAULT line. A similar technique is also used for the DO loop statements
 %      (they may be modified by a subsequent DI line, or not) and for the decoding of the Fortran expressions of the
 %      nonlinear functions, because they may be continued using continuation lines (A+, I+, E+, F+, G+ and H+): the
@@ -750,7 +744,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '9 XI 2024';
+                 this_version = '25 XI 2024';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -773,7 +767,6 @@ writealtsets   = 0;  %  Do not write (as comments) active (i.e. not commented of
                      %  output file
 showsiflines   = 0;  %  Do not show the SIF data lines in the output file
 sifcomments    = 0;  %  Do not include SIF comments in the output file
-addinA         = 1;  %  Sum up repeated entries in pbm.A (instead of overwriting)
 dispwarning    = 1;  %  Display a warning when a problem is renamed for Matlab/Python/julia compatibility, that is when
                      %  probname differs from sifpbname
 pbs.disperrors = 1;  %  Display error messages asap
@@ -833,9 +826,6 @@ if ( nargin > 1 )
       end
       if ( isfield( options, 'sifcomments' ) )
          sifcomments = options.sifcomments;
-      end
-      if ( isfield( options, 'addinA' ) )
-         addinA = options.addinA;
       end
       if ( isfield( options, 'disperrors' ) )
          pbs.disperrors = options.disperrors;
@@ -1018,8 +1008,9 @@ has_ranges      = 0; % true if group ranges are explicitly specified
 has_start       = 0; % true if starting point(s) are explicitly specified
 has_elpar       = 0; % true if at least one element type has a parameter
 has_grpar       = 0; % true if at least one group type has a parameter
+has_A           = 0; % true if the matrix A of linear terms for groups is not empty
 has_H           = 0; % true if a quadratic term is defined (in the QUADRATICS section)
-has_ngrp         =0; % true if ngrp has been defined.  The idea is to define ngrp before
+has_ngrp        = 0; % true if ngrp has been defined.  The idea is to define ngrp just before
                      % it is actually used (for instance in defining defaults for constants or ranges) and at the latest
                      % in the GLOBAL DIMENSIONS section of the output file
 prevlineispass  = 0; % true if the previous line written in the Python output file is 'pass', which allows avoiding
@@ -1120,11 +1111,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
              switch ( pbs.lang )
              case 'matlab'
                 classification = [ '''C-C',   strtrim( line( posc+15:end ) ), '''' ];
-                printcmline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidma );
+                printcmline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidma );
              case { 'python', 'julia' }
                 classification = [ '"C-C',    strtrim( line( posc+15:end ) ), '"' ];
-                printcpline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidpy );
-                printcjline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidjl );
+                printcpline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidpy );
+                printcjline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidjl );
              end 
          elseif ( contains( line, 'Problem :' ) )
              printcmline( sprintf( '    Problem : %s', probname ),                                    bindent, pbs.fidma );
@@ -1238,6 +1229,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( 'def __init__(self, *args): ',                                           1,      bindent, pbs.fidpy );
          printpline( 'import numpy as np',                                                    2,      bindent, pbs.fidpy );
+         printpline( 'from scipy.sparse import csr_matrix',                                   2,      bindent, pbs.fidpy );
          if ( ~strcmp( sifpbname, probname ) )
             printpline( sprintf( 'self.sifpbname = ''%s''', sifpbname ),                      2,      bindent, pbs.fidpy );
          end
@@ -1369,7 +1361,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( 'self.congrps = np.concatenate((legrps,eqgrps,gegrps))',           indlvl, bindent, pbs.fidpy );
             end
             if ( getcnames )
-               printpline( 'self.cnames= cnames[self.congrps]',                               indlvl, bindent, pbs.fidpy );
+               printpline( 'self.cnames = cnames[self.congrps]',                               indlvl, bindent, pbs.fidpy );
             end
             printpline( 'self.nob = ngrp-self.m',                                             indlvl, bindent, pbs.fidpy );
             printpline( 'self.objgrps = np.where(gtype==''<>'')[0]',                          indlvl, bindent, pbs.fidpy );
@@ -1524,22 +1516,25 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%',                  indlvl, bindent, pbs.fidma );
-         printmline( 'pbm.A = sparse(0,0);',                                                  indlvl, bindent, pbs.fidma );  
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%',                  indlvl, bindent, pbs.fidpy );
-         printpline( 'self.A       = lil_matrix((1000000,1000000))',                          indlvl, bindent, pbs.fidpy );
          printpline( 'self.gscale  = np.array([])',                                           indlvl, bindent, pbs.fidpy );
-         printpline( 'self.grnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'cnames      = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'self.cnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'gtype       = np.array([])',                                            indlvl, bindent, pbs.fidpy );
+         printpline( 'self.grnames = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'cnames       = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'self.cnames  = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'gtype        = np.array([])',                                           indlvl, bindent, pbs.fidpy );
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%',                  indlvl, bindent, pbs.fidjl );
-         printjline( 'gtype    = String[]',                                                   indlvl, bindent, pbs.fidjl );
+         printjline( 'gtype = String[]',                                                      indlvl, bindent, pbs.fidjl );
       end
+
+      %  Initialize the vectors irA, icA and valA, if not already done.
+      
+      if ( ~varsdef )
+         initA( indlvl, bindent, pbs );
+      end   
       prevgname = '';
       
-      has_A    = 0;  % true if the matrix A of linear terms for groups is not empty
       consineq = {}; % the names of the inequality constraints (for which a range is meaningful)
       
    %  Variables
@@ -1586,7 +1581,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printjline( 'ngrp   = length(ig_)',                                                  indlvl, bindent, pbs.fidjl );
          has_ngrp = 1;
       end
+
+      %  Initialize the vectors irA, icA and valA, if not already done.
       
+      if ( ~grpsdef )
+         initA( indlvl, bindent, pbs );
+      end   
+       
    %  Group's constants
    
    elseif( ismember( strtrim( line ), EQCONSTANTS ) )
@@ -1685,12 +1686,19 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( 'pbm.H = sparse( pb.n, pb.n );',                                         indlvl, bindent, pbs.fidma );
+         printmline( 'irH  = [];',                                                            indlvl, bindent, pbs.fidma );
+         printmline( 'icH  = [];',                                                            indlvl, bindent, pbs.fidma );
+         printmline( 'valH = [];',                                                            indlvl, bindent, pbs.fidma );
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
-         printpline( 'self.H = lil_matrix((self.n, self.n))',                                 indlvl, bindent, pbs.fidpy );
+         printpline( 'irH  = np.array([],dtype=int)',                                         indlvl, bindent, pbs.fidpy );
+         printpline( 'icH  = np.array([],dtype=int)',                                         indlvl, bindent, pbs.fidpy );
+         printpline( 'valH = np.array([],dtype=float)',                                       indlvl, bindent, pbs.fidpy );
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
+         printjline( 'irH  = Int64[]',                                                        indlvl, bindent, pbs.fidjl );
+         printjline( 'icH  = Int64[]',                                                        indlvl, bindent, pbs.fidjl );
+         printjline( 'valH = Float64[]',                                                      indlvl, bindent, pbs.fidjl );
       end
       
    %  Nonlinear element types
@@ -1982,6 +1990,29 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       if ( indata )
          indata = 0;
 
+         if ( has_A || has_H)
+         
+            printmline( '%%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%',                indlvl, bindent, pbs.fidma );
+            printpline( '#%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%',                indlvl, bindent, pbs.fidpy );
+            printjline( '#%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%',                indlvl, bindent, pbs.fidjl );
+
+            %  Build A from the vectors irA, icA and valA.
+
+            if ( has_A )
+               printmline( 'pbm.A = sparse(irA,icA,valA,ngrp,pb.n);',                         indlvl, bindent, pbs.fidma );
+               printpline( 'self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))',       indlvl, bindent, pbs.fidpy );
+               printjline( 'pbm.A = sparse(irA,icA,valA,ngrp,pb.n)',                          indlvl, bindent, pbs.fidjl );
+            end
+
+            %  Build H from the vectors irH, icH and valH.
+
+            if ( has_H )
+               printmline( 'pbm.H = sparse(irH,icH,valH,pb.n,pb.n);',                         indlvl, bindent, pbs.fidma );
+               printpline( 'self.H = csr_matrix((valH,(irH,icH)),shape=(self.n,self.n))',     indlvl, bindent, pbs.fidpy );
+               printjline( 'pbm.H = sparse(irH,icH,valH,pb.n,pb.n)',                          indlvl, bindent, pbs.fidjl );
+            end
+         end
+
          %  The decoding of the SETUP section is (nearly) complete. Conclude it by writing the last missing bits in the
          %  output file.
          
@@ -2127,15 +2158,6 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          
          if ( has_A )
 
-            printpline( '#%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%',                indlvl, bindent, pbs.fidpy );
-            printpline( 'self.A.resize(ngrp,self.n)',                                         indlvl, bindent, pbs.fidpy );
-            printpline( 'self.A     = self.A.tocsr()',                                        indlvl, bindent, pbs.fidpy );
-            printpline( 'sA1,sA2    = self.A.shape',                                          indlvl, bindent, pbs.fidpy );
-            printpline( 'self.Ashape = [ sA1, sA2 ]',                                         indlvl, bindent, pbs.fidpy );
-            %
-            printjline( 'Asave = pbm.A[1:ngrp, 1:pb.n]',                                      indlvl, bindent, pbs.fidjl );
-            printjline( 'pbm.A = Asave',                                                      indlvl, bindent, pbs.fidjl );
-
             if ( has_xscale )
                if ( ~extxscale )
                   switch ( pbs.lang )
@@ -2174,23 +2196,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   end
                end
             end
-         else
-            printpline( 'delattr( self, "A" )',                                               indlvl, bindent, pbs.fidpy );
-            printjline( 'pbm.A = spzeros(Float64,0,0)',                                       indlvl, bindent, pbs.fidjl );
          end
 
-         %  Resize H in Julia
-
-         switch( pbs.lang )
-         case 'julia'
-            if ( has_H )
-               printjline( 'Hsave = pbm.H[ 1:pb.n, 1:pb.n ]',                                 indlvl, bindent, pbs.fidjl );
-               printjline( 'pbm.H = Hsave',                                                   indlvl, bindent, pbs.fidjl );
-            else
-               printjline( 'pbm.H = spzeros(Float64,0,0)',                                    indlvl, bindent, pbs.fidjl );
-            end
-         end
-         
          %  Finally assign the output values which have not been assigned yet.
 
          printmline( '%%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%',                   indlvl, bindent, pbs.fidma );
@@ -2217,7 +2224,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          %  2) Problem classification
 
          printmline( sprintf( 'pb.pbclass = %s;', classification ),                           indlvl, bindent, pbs.fidma );        
-         printpline( sprintf( 'self.pbclass = %s',  classification ),                         indlvl, bindent, pbs.fidpy );        
+         printpline( sprintf( 'self.pbclass   = %s',  classification ),                       indlvl, bindent, pbs.fidpy );        
          printjline( sprintf( 'pb.pbclass = %s',  classification ),                           indlvl, bindent, pbs.fidjl );
 
          if ( ~has_start )
@@ -2263,9 +2270,6 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( 'varargout{2} = pbm;',                                         indlvl,     bindent, pbs.fidma );
             end
          case 'python'
-            if ( has_H )
-               printpline( 'self.H = self.H.tocsr()',                                         indlvl, bindent, pbs.fidpy );
-            end
          case 'julia'
             printjline( 'return pb, pbm',                                                     indlvl, bindent, pbs.fidjl );
          end
@@ -2334,8 +2338,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                          index(2:end-1), s2mpjvalue('', f{3}, pbs ), s2mpjvalue( '', f{5}, pbs ) );
          end
          pendingkey    = 'loop';
-         prevename = '';
-         prevgname = '';
+         prevename     = '';
+         prevgname     = '';
          continue      %  get the next SIF data line
 
       %  Loop increment specification: if met, modify the pending loop statement and write it in the output file.
@@ -2761,12 +2765,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                %  If the groups have already been defined, check for the presence of linear variables in them.
                
                if ( grpsdef && nf > 3 )     %  Variable f{2} occurs linearly in group f{3}
-                  gname =  s2mpjname('',f{3},pbs);
-                  add2A( 'row', gname, getv1( f{1}, f, pbs ), indlvl, bindent, pbs, addinA )
                   has_A = 1;
+                  gname =  s2mpjname('',f{3},pbs);
+                  add2A( 'row', gname, getv1( f{1}, f, pbs ), indlvl, bindent, pbs )
                   if ( nf > 5 )            %   Also in group f{5}
                      gname = s2mpjname('',f{5},pbs);
-                     add2A( 'row', gname, getv2( f ), indlvl, bindent, pbs, addinA )
+                     add2A( 'row', gname, getv2( f ), indlvl, bindent, pbs )
                   end
                end
             end
@@ -2801,9 +2805,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( sprintf( '[ig,ig_,_] = s2mpj_ii(%s,ig_)'      , gname ),           indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'ig,ig_,_ = s2mpj_ii(%s,ig_)'        , gname ),           indlvl, bindent, pbs.fidjl );
                if ( getgnames )
-                  printmline( sprintf( 'pbm.grnames{ig} = %s;',                   gname ),    indlvl, bindent, pbs.fidma );
+                  printmline( sprintf( 'pbm.grnames{ig} = %s;',                     gname ),  indlvl, bindent, pbs.fidma );
                   printpline( sprintf( 'self.grnames = arrset(self.grnames,ig,%s)', gname ),  indlvl, bindent, pbs.fidpy );
-                  printjline( sprintf( 'arrset(pbm.grnames,ig,%s)',               gname ),    indlvl, bindent, pbs.fidjl );
+                  printjline( sprintf( 'arrset(pbm.grnames,ig,%s)',                 gname ),  indlvl, bindent, pbs.fidjl );
                end
                prevgname = f{2};
                ghastype  = 0;
@@ -2895,13 +2899,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                          end
                       end
                   otherwise             %  Variable f{3} occurs linearly in group f{2} of index ig
-                     vname = s2mpjname('',f{3},pbs);
-                     add2A( 'col', vname, getv1( f{1}, f, pbs ), indlvl, bindent, pbs, addinA )
                      has_A = 1;
+                     vname = s2mpjname('',f{3},pbs);
+                     add2A( 'col', vname, getv1( f{1}, f, pbs ), indlvl, bindent, pbs )
                   end
                   if ( nf > 5 )         %   Also variable f{5}
                      vname = s2mpjname('',f{5},pbs);
-                     add2A( 'col', vname, getv2( f ), indlvl, bindent, pbs, addinA )
+                     add2A( 'col', vname, getv2( f ), indlvl, bindent, pbs )
                   end
                end
             elseif ( nf > 2 && strcmp( f{3}, '''SCALE''' ) )
@@ -3430,64 +3434,17 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
       case 'QUADRATIC'
 
-          vname1 = s2mpjname('',f{2},pbs);
-          printmline( sprintf( 'ix1 = ix_(%s);',vname1),                                      indlvl, bindent, pbs.fidma );
-          printpline( sprintf( 'ix1 = ix_[%s]',vname1),                                       indlvl, bindent, pbs.fidpy );
-          printjline( sprintf( 'ix1 = ix_[%s]',vname1),                                       indlvl, bindent, pbs.fidjl );
-          vname2 = s2mpjname('',f{3},pbs);
-          printmline( sprintf( 'ix2 = ix_(%s);',vname2),                                      indlvl, bindent, pbs.fidma );
-          printpline( sprintf( 'ix2 = ix_[%s]', vname2),                                      indlvl, bindent, pbs.fidpy );
-          printjline( sprintf( 'ix2 = ix_[%s]', vname2),                                      indlvl, bindent, pbs.fidjl );
+          vname1 = s2mpjname( '', f{2}, pbs );
+          vname2 = s2mpjname( '', f{3}, pbs );
           switch( f{1} )
           case { '', 'X' }
-             switch( pbs.lang )
-             case 'matlab'
-                printmline( sprintf( 'pbm.H(ix1,ix2) = %s+pbm.H(ix1,ix2);', getv1(f{1},f,pbs) ), ...
-                                                                                              indlvl, bindent, pbs.fidma );
-                printmline('pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                                indlvl, bindent, pbs.fidma );
-             case 'python'
-                printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv1(f{1},f,pbs) ), ...
-                                                                                              indlvl, bindent, pbs.fidpy );
-                printpline('self.H[ix2,ix1] = self.H[ix1,ix2]',                               indlvl, bindent, pbs.fidpy );
-             case 'julia'
-                printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv1(f{1},f,pbs) ), ...
-                                                                                              indlvl, bindent, pbs.fidjl );
-                printjline('pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                                 indlvl, bindent, pbs.fidjl );
-             end
+             add2H( vname1, vname2, getv1( f{1}, f, pbs ), indlvl, bindent, pbs );
              if ( nf > 5 )
-                vname2 = s2mpjname('',f{5},pbs);
-                switch ( pbs.lang )
-                case 'matlab'
-                   printmline( sprintf( 'ix2 = ix_(%s);',vname2),                             indlvl, bindent, pbs.fidma );
-                   printmline( sprintf( 'pbm.H(ix1,ix2) = %s+pbm.H(ix1,ix2);', getv2(f) ),    indlvl, bindent, pbs.fidma );
-                   printmline( 'pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                            indlvl, bindent, pbs.fidma );
-                case 'python'
-                   printpline( sprintf( 'ix2 = ix_[%s]',vname2),                              indlvl, bindent, pbs.fidpy );
-                   printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv2(f) ), ...
-                                                                                              indlvl, bindent, pbs.fidpy );
-                   printpline( 'self.H[ix2,ix1] = self.H[ix1,ix2]',                           indlvl, bindent, pbs.fidpy );
-                case 'julia'
-                   printjline( sprintf( 'ix2 = ix_[%s]',vname2),                              indlvl, bindent, pbs.fidjl );
-                   printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv2(f) ),  ...
-                                                                                              indlvl, bindent, pbs.fidjl );
-                   printjline( 'pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                             indlvl, bindent, pbs.fidjl );
-                end
+                vname2 = s2mpjname( '', f{5}, pbs );
+                add2H( vname1, vname2, getv2( f ), indlvl, bindent, pbs );
              end
           case 'Z'
-             switch ( pbs.lang )
-             case 'matlab'
-                printmline( sprintf( 'pbm.H(ix1,ix2) = %s+pbm.H(ix1,ix2);', getv1( f{1}, f, pbs ) ), ...
-                                                                                              indlvl, bindent, pbs.fidma );
-                printmline( 'pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                               indlvl, bindent, pbs.fidma );
-             case 'python'
-                printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv1( f{1}, f, pbs ) ), ...
-                                                                                              indlvl, bindent, pbs.fidpy );
-                printpline( 'self.H[ix2,ix1] = self.H[ix1,ix2]',                              indlvl, bindent, pbs.fidpy );
-             case 'julia'
-                printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv1( f{1}, f, pbs ) ), ...
-                                                                                              indlvl, bindent, pbs.fidjl );
-                printjline( 'pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                                indlvl, bindent, pbs.fidjl );
-             end
+             add2H( vname1, vname2, getv1( f{1}, f, pbs ), indlvl, bindent, pbs );
           end
           has_H = 1;
           
@@ -3660,7 +3617,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')', tname ), indlvl, bindent, pbs.fidpy );
                printpline( sprintf( 'ielftype = arrset(ielftype,ie,iet_["%s"])', tname ),     indlvl, bindent, pbs.fidpy );
             case 'julia'
-               printjline( sprintf( 'arrset(pbm.elftype,ie,"%s")',      tname )  ,            indlvl, bindent, pbs.fidjl );
+               printjline( sprintf( 'arrset(pbm.elftype,ie,"%s")',    tname ),                indlvl, bindent, pbs.fidjl );
                printjline( sprintf( 'arrset(ielftype,ie,iet_["%s"])', tname ),                indlvl, bindent, pbs.fidjl );
             end
             ehas_eltyp = 1;                    %  The element type has now been defined
@@ -4151,7 +4108,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( sprintf( 'pb.objlower = v_[%s]',   s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidjl );
          case { 'UP', 'XU' }
             printmline( sprintf( 'pb.objupper = %s;',  d2e( f{4}) ),                          indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'self.objupper = %s', d2e( f{4}) ),                         indlvl, bindent, pbs.fidpy );
+            printpline( sprintf( 'self.objupper = %s', d2e( f{4}) ),                          indlvl, bindent, pbs.fidpy );
             printjline( sprintf( 'pb.objupper = %s',   d2e( f{4}) ),                          indlvl, bindent, pbs.fidjl );
          case 'ZU'
             printmline( sprintf( 'pb.objupper = v_(%s);',  s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidma );
@@ -4196,7 +4153,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             end
             errors = pbs.errors;
             exitc  = length( errors );
-            return
+%            return
          end
          
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EGLOBS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4318,7 +4275,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
               pending{1}     = sprintf( '%sself.efpar = arrset(self.efpar,%d,%s)     # this is %s',  ...
                                         bindent, i_eglobs-1, evalstr, f{3} );
             case 'julia'
-              printjline( sprintf( 'if !%s',  globdict( f{2} ) ),                          indlvl, bindent, pbs.fidjl );
+              printjline( sprintf( 'if !%s',  globdict( f{2} ) ),                             indlvl, bindent, pbs.fidjl );
               pending{1}     = sprintf( '%sarrset(pbm.efpar,%d,%s)    # this is %s',  bindent, i_eglobs, evalstr, f{3} );
               pending{2}     = 'end';
             end
@@ -4346,7 +4303,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             case 'python'
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( '@staticmethod',                                                   1,      bindent, pbs.fidpy );
-               printpline( sprintf( 'def %s(self, nargout,*args):', ename ),                    1,      bindent, pbs.fidpy );
+               printpline( sprintf( 'def %s(self, nargout,*args):', ename ),                  1,      bindent, pbs.fidpy );
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( 'import numpy as np',                                              2,      bindent, pbs.fidpy );
             case 'julia'
@@ -6596,47 +6553,112 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function add2A( rowcol, idx, val, indlvl, bindent, pbs, addinA )
+function initA( indlvl, bindent, pbs )
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  Write the code to add an entry of value val to the linear term, optionally summing with an existing entry if present.
+%  Initialize the three temporary vectors used to store the row and column indeces and values for A before
+%  its sonstruction as a sparse matrix.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+switch ( pbs.lang )
+case 'matlab'
+   printmline( 'irA  = [];',                                                                  indlvl, bindent, pbs.fidma );
+   printmline( 'icA  = [];',                                                                  indlvl, bindent, pbs.fidma );
+   printmline( 'valA = [];',                                                                  indlvl, bindent, pbs.fidma );
+case 'python'
+   printpline( 'irA          = np.array([],dtype=int)',                                       indlvl, bindent, pbs.fidpy );
+   printpline( 'icA          = np.array([],dtype=int)',                                       indlvl, bindent, pbs.fidpy );
+   printpline( 'valA         = np.array([],dtype=float)',                                     indlvl, bindent, pbs.fidpy );
+case 'julia'
+   printjline( 'irA   = Int64[]',                                                             indlvl, bindent, pbs.fidjl );
+   printjline( 'icA   = Int64[]',                                                             indlvl, bindent, pbs.fidjl );
+   printjline( 'valA  = Float64[]',                                                           indlvl, bindent, pbs.fidjl );
+end
+
+return
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function add2A( rowcol, idx, val, indlvl, bindent, pbs )
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Write the code to add an entry of value val to the linear term, summing with an existing entry if present.
 %  This can be done row or column-wise, depending on the value of rowcol. idx is the name of the considered
 %  column/variable (rowcol = 'col') or row/group (rowcol = 'row').
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if ( addinA )
-   switch( rowcol )
-   case 'row'
-      printmline( sprintf( 'ig = ig_(%s);', idx ),                                        indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'ig = ig_[%s]',  idx ),                                        indlvl,     bindent, pbs.fidpy );
-      printjline( sprintf( 'ig = ig_[%s]',  idx ),                                        indlvl,     bindent, pbs.fidjl );
-   case 'col'
-      printmline( sprintf( 'iv = ix_(%s);', idx ),                                        indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'iv = ix_[%s]',  idx ),                                        indlvl,     bindent, pbs.fidpy );
-      printjline( sprintf( 'iv = ix_[%s]',  idx ),                                        indlvl,     bindent, pbs.fidjl );
-   end
-   printmline( 'if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)',                                indlvl,     bindent, pbs.fidma );
-   printmline( sprintf( 'pbm.A(ig,iv) = %s+pbm.A(ig,iv);', val ),                         indlvl + 1, bindent, pbs.fidma );
-   printmline( 'else', indlvl, bindent, pbs.fidma );
-   printmline( sprintf( 'pbm.A(ig,iv) = %s;', val ),                                      indlvl + 1, bindent, pbs.fidma );
-   printmline( 'end', indlvl, bindent, pbs.fidma );
+switch( rowcol )
+case 'row'
+   printmline( 'icA(end+1) = iv;',                                                            indlvl, bindent, pbs.fidma );
+   printmline( sprintf( 'irA(end+1) = ig_(%s);', idx ),                                       indlvl, bindent, pbs.fidma );
+   printpline( 'icA  = np.append(icA,[iv])',                                                  indlvl, bindent, pbs.fidpy );
+   printpline( sprintf( 'irA  = np.append(irA,[ig_[%s]])', idx),                              indlvl, bindent, pbs.fidpy );
+   printjline( 'push!(icA,iv)',                                                               indlvl, bindent, pbs.fidjl );
+   printjline( sprintf( 'push!(irA,ig_[%s])', idx ),                                          indlvl, bindent, pbs.fidjl );
+case 'col'
+   
+   printmline( 'irA(end+1)  = ig;',                                                           indlvl, bindent, pbs.fidma );
+   printmline( sprintf( 'icA(end+1)  = ix_(%s);', idx ),                                      indlvl, bindent, pbs.fidma );
+   printpline( 'irA  = np.append(irA,[ig])',                                                  indlvl, bindent, pbs.fidpy );
+   printpline( sprintf( 'icA  = np.append(icA,[ix_[%s]])', idx),                              indlvl, bindent, pbs.fidpy );
+   printjline( 'push!(irA,ig)',                                                               indlvl, bindent, pbs.fidjl );
+   printjline( sprintf( 'push!(icA,ix_[%s])',  idx ),                                         indlvl, bindent, pbs.fidjl );
+end
+printmline( sprintf( 'valA(end+1) = %s;' ,val ),                                              indlvl, bindent, pbs.fidma );
+printpline( sprintf( 'valA = np.append(valA,float(%s))' ,val),                                indlvl, bindent, pbs.fidpy );
+printjline( sprintf( 'push!(valA,Float64(%s))', val ),                                        indlvl, bindent, pbs.fidjl );
 
-   printpline( sprintf( 'self.A[ig,iv] = float(%s)+self.A[ig,iv]', val ),                 indlvl,     bindent, pbs.fidpy );
-   printjline( sprintf( 'pbm.A[ig,iv] += Float64(%s)', val ),                             indlvl,     bindent, pbs.fidjl );
-else
-   switch( rowcol )
-   case 'row'
-      printmline( sprintf( 'pbm.A(ig_(%s),iv) = %s;', idx, val ),                         indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'self.A[ig_[%s],iv] = float(%s)', idx, val ),                  indlvl,     bindent, pbs.fidpy );
-      printjline( sprintf( 'pbm.A[ig_[%s],iv] = Float64(%s)', idx, val ),                 indlvl,     bindent, pbs.fidjl );
-   case 'col'
-      printmline( sprintf( 'pbm.A(ig,ix_(%s)) = %s;', idx, val ),                         indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'self.A[ig,ix_[%s]] = float(%s)', idx, val ),                  indlvl,     bindent, pbs.fidpy );
-      printjline( sprintf( 'pbm.A[ig,ix_[%s]] = Float64(%s)', idx, val ),                 indlvl,     bindent, pbs.fidjl );
+return
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function add2H( vname1, vname2, Hval, indlvl, bindent, pbs )
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Write the code to add an entry of value val to the Hessian term, summing with an existing entry if present.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+switch( pbs.lang )
+case 'matlab'
+   printmline( sprintf( 'irH(end+1)  =  ix_(%s);',vname1 ),                                   indlvl, bindent, pbs.fidma );
+   printmline( sprintf( 'icH(end+1)  =  ix_(%s);',vname2 ),                                   indlvl, bindent, pbs.fidma );
+   printmline( sprintf( 'valH(end+1) =  %s;', Hval ),                                         indlvl, bindent, pbs.fidma );
+   if ( ~strcmp( vname1, vname2 ) )
+      printmline( sprintf( 'irH(end+1)  =  ix_(%s);',vname2 ),                                indlvl, bindent, pbs.fidma );
+      printmline( sprintf( 'icH(end+1)  =  ix_(%s);',vname1 ),                                indlvl, bindent, pbs.fidma );
+      printmline( sprintf( 'valH(end+1) =  %s;', Hval ),                                      indlvl, bindent, pbs.fidma );
+   end
+case 'python'
+   printpline( sprintf( 'irH  = np.append(irH,[ix_[%s]])', vname1 ),                          indlvl, bindent, pbs.fidpy );
+   printpline( sprintf( 'icH  = np.append(icH,[ix_[%s]])', vname2 ),                          indlvl, bindent, pbs.fidpy );
+   printpline( sprintf( 'valH = np.append(valH,float(%s))', Hval ),                           indlvl, bindent, pbs.fidpy );
+   if ( ~strcmp( vname1, vname2 ) )
+      printpline( sprintf( 'irH  = np.append(irH,[ix_[%s]])', vname2 ),                       indlvl, bindent, pbs.fidpy );
+      printpline( sprintf( 'icH  = np.append(icH,[ix_[%s]])', vname1 ),                       indlvl, bindent, pbs.fidpy );
+      printpline( sprintf( 'valH = np.append(valH,float(%s))', Hval ),                        indlvl, bindent, pbs.fidpy );
+   end
+case 'julia'
+   printjline( sprintf( 'push!(irH,ix_[%s])', vname1 ),                                       indlvl, bindent, pbs.fidjl );
+   printjline( sprintf( 'push!(icH,ix_[%s])', vname2 ),                                       indlvl, bindent, pbs.fidjl );
+   printjline( sprintf( 'push!(valH,Float64(%s))', Hval ),                                    indlvl, bindent, pbs.fidjl );
+   if ( ~strcmp( vname1, vname2 ) )
+      printjline( sprintf( 'push!(irH,ix_[%s])', vname2 ),                                    indlvl, bindent, pbs.fidjl );
+      printjline( sprintf( 'push!(icH,ix_[%s])', vname1 ),                                    indlvl, bindent, pbs.fidjl );
+      printjline( sprintf( 'push!(valH,Float64(%s))', Hval ),                                 indlvl, bindent, pbs.fidjl );
    end
 end
+
+
 
 return
 

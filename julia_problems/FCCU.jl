@@ -140,7 +140,7 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # *************************************
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FCCU"
@@ -197,6 +197,9 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("Feed",ix_)
         arrset(pb.xnames,iv,"Feed")
         iv,ix_,_ = s2mpj_ii("Effluent",ix_)
@@ -236,181 +239,228 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         iv,ix_,_ = s2mpj_ii("MCN",ix_)
         arrset(pb.xnames,iv,"MCN")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("F1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F1")
-        iv = ix_["Feed"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Decurecy"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Effluent"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Feed"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Decurecy"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Effluent"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F2")
-        iv = ix_["Effluent"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["MFuohd"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["HCN"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["LCO"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["HCO"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["MFubtms"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Effluent"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MFuohd"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["HCN"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["LCO"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["HCO"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MFubtms"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F3")
-        iv = ix_["MFubtms"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Decant"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["Decurecy"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MFubtms"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Decant"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Decurecy"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F4")
-        iv = ix_["MFuohd"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Leanuoil"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Offugas"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["DC4ufeed"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MFuohd"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Leanuoil"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Offugas"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DC4ufeed"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F5")
-        iv = ix_["DC4ufeed"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DC3ufeed"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["DC4ubtms"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC4ufeed"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DC3ufeed"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DC4ubtms"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F6")
-        iv = ix_["DC4ubtms"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Leanuoil"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["C8splufd"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC4ubtms"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Leanuoil"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["C8splufd"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F7")
-        iv = ix_["DC3ufeed"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Propane"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["Butane"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC3ufeed"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Propane"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Butane"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("F8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F8")
-        iv = ix_["C8splufd"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["LCN"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["MCN"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["C8splufd"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["LCN"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MCN"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("Obj1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Feed"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Feed"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W1"]))
         ig,ig_,_ = s2mpj_ii("Obj2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Effluent"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Effluent"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W2"]))
         ig,ig_,_ = s2mpj_ii("Obj3",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["MFuohd"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MFuohd"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W3"]))
         ig,ig_,_ = s2mpj_ii("Obj4",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["HCN"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["HCN"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W4"]))
         ig,ig_,_ = s2mpj_ii("Obj5",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["LCO"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["LCO"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W5"]))
         ig,ig_,_ = s2mpj_ii("Obj6",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["HCO"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["HCO"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W6"]))
         ig,ig_,_ = s2mpj_ii("Obj7",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["MFubtms"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MFubtms"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W7"]))
         ig,ig_,_ = s2mpj_ii("Obj8",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Decant"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Decant"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W8"]))
         ig,ig_,_ = s2mpj_ii("Obj9",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Decurecy"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Decurecy"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W9"]))
         ig,ig_,_ = s2mpj_ii("Obj10",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Offugas"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Offugas"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W10"]))
         ig,ig_,_ = s2mpj_ii("Obj11",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["DC4ufeed"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC4ufeed"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W11"]))
         ig,ig_,_ = s2mpj_ii("Obj12",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["DC3ufeed"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC3ufeed"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W12"]))
         ig,ig_,_ = s2mpj_ii("Obj13",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["DC4ubtms"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["DC4ubtms"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W13"]))
         ig,ig_,_ = s2mpj_ii("Obj14",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Leanuoil"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Leanuoil"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W14"]))
         ig,ig_,_ = s2mpj_ii("Obj15",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Propane"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Propane"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W15"]))
         ig,ig_,_ = s2mpj_ii("Obj16",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Butane"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Butane"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W16"]))
         ig,ig_,_ = s2mpj_ii("Obj17",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["C8splufd"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["C8splufd"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W17"]))
         ig,ig_,_ = s2mpj_ii("Obj18",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["LCN"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["LCN"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W18"]))
         ig,ig_,_ = s2mpj_ii("Obj19",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["MCN"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MCN"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["W19"]))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -514,6 +564,8 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         arrset(pbm.grftype,ig,"gSQUARE")
         ig = ig_["Obj19"]
         arrset(pbm.grftype,ig,"gSQUARE")
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -522,9 +574,6 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CSLR2-MN-19-8"

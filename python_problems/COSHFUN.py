@@ -30,13 +30,14 @@ class  COSHFUN(CUTEst_problem):
 # IE M                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'COSHFUN'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -59,35 +60,41 @@ class  COSHFUN(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         [iv,ix_,_] = s2mpj_ii('F',ix_)
         self.xnames=arrset(self.xnames,iv,'F')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['F']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['F']])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(I))
-            iv = ix_['F']
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['F']])
+            valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'C1')
-        iv = ix_['X3']
-        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
-        iv = ix_['X6']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(-2.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X6']])
+        valA = np.append(valA,float(-1.0))
         for I in range(int(v_['6']),int(v_['N-3'])+1,int(v_['3'])):
             v_['I-5'] = -5+I
             v_['I+3'] = 3+I
@@ -95,22 +102,27 @@ class  COSHFUN(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['I/3'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['I/3'])))
-            iv = ix_['X'+str(int(v_['I-5']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-5']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(-2.0))
             [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['I/3'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['I/3'])))
-            iv = ix_['X'+str(int(v_['I+3']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+3']))]])
+            valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['M'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'C'+str(int(v_['M'])))
-        iv = ix_['X'+str(int(v_['N-5']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['N']))]
-        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N-5']))]])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N']))]])
+        valA = np.append(valA,float(-2.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -122,7 +134,7 @@ class  COSHFUN(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -204,20 +216,17 @@ class  COSHFUN(CUTEst_problem):
             self.grelt = loaset(self.grelt,ig,posel,ie_['PROD'+str(I)])
             nlc = np.union1d(nlc,np.array([ig]))
             self.grelw = loaset(self.grelw,ig,posel,1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLOR2-AN-V-V"
+        self.pbclass   = "C-CLOR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

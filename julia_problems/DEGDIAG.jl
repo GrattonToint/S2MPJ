@@ -24,7 +24,7 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DEGDIAG"
@@ -49,12 +49,15 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -73,18 +76,19 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(2.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
+        irH  = Int64[]
+        icH  = Int64[]
+        valH = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            ix1 = ix_["X"*string(I)]
-            ix2 = ix_["X"*string(I)]
-            pbm.H[ix1,ix2] = Float64(1.0)+pbm.H[ix1,ix2]
-            pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+            push!(irH,ix_["X"*string(I)])
+            push!(icH,ix_["X"*string(I)])
+            push!(valH,Float64(1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.H = sparse(irH,icH,valH,pb.n,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
-        pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-AN-V-0"
         pbm.objderlvl = 2

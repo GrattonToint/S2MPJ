@@ -39,7 +39,7 @@ function LINVERSE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LINVERSE"
@@ -92,6 +92,9 @@ function LINVERSE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             iv,ix_,_ = s2mpj_ii("A"*string(I),ix_)
             arrset(pb.xnames,iv,"A"*string(I))
@@ -101,7 +104,7 @@ function LINVERSE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("A"*string(Int64(v_["N"])),ix_)
         arrset(pb.xnames,iv,"A"*string(Int64(v_["N"])))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["1"]):Int64(v_["N-2"])
             v_["J+1"] = 1+J
             v_["J+2"] = 2+J
@@ -706,8 +709,6 @@ function LINVERSE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(500)          340.000000
 # LO SOLTN(1000)         ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-AN-V-0"
         pbm.objderlvl = 2

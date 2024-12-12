@@ -26,13 +26,14 @@ class  MESH(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MESH'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -57,6 +58,9 @@ class  MESH(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for i in range(int(v_['1']),int(v_['np'])+1):
             [iv,ix_,_] = s2mpj_ii('x'+str(i),ix_)
             self.xnames=arrset(self.xnames,iv,'x'+str(i))
@@ -83,23 +87,25 @@ class  MESH(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('fmax',ix_)
         self.xnames=arrset(self.xnames,iv,'fmax')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('obj1',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['deltamin']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['deltamin']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['omega1']))
         [ig,ig_,_] = s2mpj_ii('obj2',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['fmax']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['fmin']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['fmax']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['fmin']])
+        valA = np.append(valA,float(-1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['omega2']))
         [ig,ig_,_] = s2mpj_ii('obj3',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -119,62 +125,78 @@ class  MESH(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('doppf'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'doppf'+str(i))
-            iv = ix_['f'+str(i)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['f'+str(i)]])
+            valA = np.append(valA,float(-1.0))
         for i in range(int(v_['1']),int(v_['nd'])+1):
             [ig,ig_,_] = s2mpj_ii('wisum'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'wisum'+str(i))
-            iv = ix_['alpha'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['beta'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['gamma'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['alpha'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['beta'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['gamma'+str(i)]])
+            valA = np.append(valA,float(1.0))
         for i in range(int(v_['1']),int(v_['nd'])+1):
             [ig,ig_,_] = s2mpj_ii('alphd'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'alphd'+str(i))
-            iv = ix_['alpha'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['delta'+str(i)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['alpha'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['delta'+str(i)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('betad'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'betad'+str(i))
-            iv = ix_['beta'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['delta'+str(i)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['beta'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['delta'+str(i)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('gammd'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'gammd'+str(i))
-            iv = ix_['gamma'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['delta'+str(i)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['gamma'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['delta'+str(i)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('deltd'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'deltd'+str(i))
-            iv = ix_['delta'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['deltamin']
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['delta'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['deltamin']])
+            valA = np.append(valA,float(-1.0))
         for i in range(int(v_['1']),int(v_['nd'])+1):
             [ig,ig_,_] = s2mpj_ii('fmind'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'fmind'+str(i))
-            iv = ix_['f'+str(i)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['fmin']
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['f'+str(i)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['fmin']])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('fmaxd'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'fmaxd'+str(i))
-            iv = ix_['fmax']
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['f'+str(i)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['fmax']])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['f'+str(i)]])
+            valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -186,7 +208,7 @@ class  MESH(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -1029,6 +1051,8 @@ class  MESH(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN              5.9213448D-4
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -1036,15 +1060,10 @@ class  MESH(CUTEst_problem):
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-COOR2-AY-41-48"
+        self.pbclass   = "C-COOR2-AY-41-48"
         self.objderlvl = 2
         self.conderlvl = [2]
 

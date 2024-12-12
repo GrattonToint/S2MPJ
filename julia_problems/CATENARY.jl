@@ -34,7 +34,7 @@ function CATENARY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N+1                 1000           $-PARAMETER n = 3003
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CATENARY"
@@ -72,6 +72,9 @@ function CATENARY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N+1"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -81,21 +84,24 @@ function CATENARY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"Z"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Y"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(v_["MG/2"])
+        push!(irA,ig)
+        push!(icA,ix_["Y"*string(Int64(v_["0"]))])
+        push!(valA,Float64(v_["MG/2"]))
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["Y"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["MG"])
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(I)])
+            push!(valA,Float64(v_["MG"]))
         end
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Y"*string(Int64(v_["N+1"]))]
-        pbm.A[ig,iv] += Float64(v_["MG/2"])
+        push!(irA,ig)
+        push!(icA,ix_["Y"*string(Int64(v_["N+1"]))])
+        push!(valA,Float64(v_["MG/2"]))
         for I = Int64(v_["1"]):Int64(v_["N+1"])
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
@@ -211,15 +217,14 @@ function CATENARY(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOL(33)             -20837.3763330
 # LO SOL(99)             -67050.9978802
 # LO SOL(501)            -348403.164505
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-AY-V-V"

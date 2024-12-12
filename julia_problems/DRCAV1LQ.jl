@@ -37,7 +37,7 @@ function DRCAV1LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   63             $-PARAMETER  n =  3969
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRCAV1LQ"
@@ -78,6 +78,9 @@ function DRCAV1LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["-1"]):Int64(v_["M+2"])
             for J = Int64(v_["-1"]):Int64(v_["M+2"])
                 iv,ix_,_ = s2mpj_ii("Y"*string(I)*","*string(J),ix_)
@@ -85,7 +88,7 @@ function DRCAV1LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["I-2"] = -2+I
             v_["I-1"] = -1+I
@@ -98,32 +101,45 @@ function DRCAV1LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 v_["J+2"] = 2+J
                 ig,ig_,_ = s2mpj_ii("E"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["Y"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(20.0)
-                iv = ix_["Y"*string(Int64(v_["I-1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-8.0)
-                iv = ix_["Y"*string(Int64(v_["I+1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-8.0)
-                iv = ix_["Y"*string(I)*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(-8.0)
-                iv = ix_["Y"*string(I)*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(-8.0)
-                iv = ix_["Y"*string(Int64(v_["I-1"]))*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(2.0)
-                iv = ix_["Y"*string(Int64(v_["I+1"]))*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(2.0)
-                iv = ix_["Y"*string(Int64(v_["I-1"]))*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(2.0)
-                iv = ix_["Y"*string(Int64(v_["I+1"]))*","*string(Int64(v_["J+1"]))]
-                pbm.A[ig,iv] += Float64(2.0)
-                iv = ix_["Y"*string(Int64(v_["I-2"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(Int64(v_["I+2"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(I)*","*string(Int64(v_["J-2"]))]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(I)*","*string(Int64(v_["J+2"]))]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(J)])
+                push!(valA,Float64(20.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I-1"]))*","*string(J)])
+                push!(valA,Float64(-8.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+1"]))*","*string(J)])
+                push!(valA,Float64(-8.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(-8.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(-8.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I-1"]))*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(2.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+1"]))*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(2.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I-1"]))*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(2.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+1"]))*","*string(Int64(v_["J+1"]))])
+                push!(valA,Float64(2.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I-2"]))*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+2"]))*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(Int64(v_["J-2"]))])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(Int64(v_["J+2"]))])
+                push!(valA,Float64(1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -305,10 +321,9 @@ function DRCAV1LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COXR2-MY-V-V"
         pb.x0          = zeros(Float64,pb.n)

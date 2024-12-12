@@ -50,7 +50,7 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE PT                  100            $-PARAMETER  n=10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "JNLBRNG1"
@@ -110,6 +110,9 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["PT"])
             for J = Int64(v_["1"]):Int64(v_["PY"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -117,7 +120,7 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["PT-1"])
             v_["I-1"] = -1+I
             v_["RI-1"] = Float64(v_["I-1"])
@@ -127,8 +130,9 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             for J = Int64(v_["2"]):Int64(v_["PY-1"])
                 ig,ig_,_ = s2mpj_ii("G",ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["COEFF"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["COEFF"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["PT-1"])
@@ -320,10 +324,9 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(75)           -0.1805500
 # LO SOLTN(100)          -0.1805700
 # LO SOLTN(125)          -0.1805800
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-AY-V-0"
         pbm.objderlvl = 2

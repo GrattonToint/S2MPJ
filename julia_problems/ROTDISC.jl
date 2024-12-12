@@ -34,7 +34,7 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ROTDISC"
@@ -102,6 +102,9 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for k = Int64(v_["0"]):Int64(v_["K"])
             iv,ix_,_ = s2mpj_ii("w"*string(k),ix_)
             arrset(pb.xnames,iv,"w"*string(k))
@@ -115,7 +118,7 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"y"*string(k))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         v_["rk"] = v_["ri"]
         v_["-dr/2"] = -1.0*v_["dr/2"]
         v_["rk2"] = v_["rk"]*v_["rk"]
@@ -129,10 +132,12 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SR"*string(k))
             arrset(pbm.gscale,ig,Float64(v_["ech1"]))
-            iv = ix_["w"*string(k)]
-            pbm.A[ig,iv] += Float64(v_["coef1"])
-            iv = ix_["w"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(v_["coef2"])
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(k)])
+            push!(valA,Float64(v_["coef1"]))
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(v_["coef2"]))
             v_["tmp1"] = v_["(1+3nu)/2"]*v_["rk"]
             v_["tmp2"] = v_["(1+nu)/2"]*v_["rk+1"]
             v_["tmp3"] = v_["tmp1"]-v_["tmp2"]
@@ -140,44 +145,54 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("ST"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ST"*string(k))
-            iv = ix_["sigr"*string(k)]
-            pbm.A[ig,iv] += Float64(v_["coef3"])
+            push!(irA,ig)
+            push!(icA,ix_["sigr"*string(k)])
+            push!(valA,Float64(v_["coef3"]))
             v_["tmp4"] = v_["(3+nu)/2"]*v_["rk"]
             v_["tmp5"] = v_["(1+nu)/2"]*v_["rk+1"]
             v_["tmp6"] = v_["tmp5"]-v_["tmp4"]
             v_["coef4"] = v_["tmp6"]/v_["rk"]
-            iv = ix_["sigt"*string(k)]
-            pbm.A[ig,iv] += Float64(v_["coef4"])
+            push!(irA,ig)
+            push!(icA,ix_["sigt"*string(k)])
+            push!(valA,Float64(v_["coef4"]))
             v_["tmp7"] = v_["(1+3nu)/2"]*v_["rk+1"]
             v_["tmp8"] = v_["(1+nu)/2"]*v_["rk"]
             v_["tmp9"] = v_["tmp8"]-v_["tmp7"]
             v_["coef5"] = v_["tmp9"]/v_["rk+1"]
-            iv = ix_["sigr"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(v_["coef5"])
+            push!(irA,ig)
+            push!(icA,ix_["sigr"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(v_["coef5"]))
             v_["tmp10"] = v_["(3+nu)/2"]*v_["rk+1"]
             v_["tmp11"] = v_["(1+nu)/2"]*v_["rk"]
             v_["tmp12"] = v_["tmp10"]-v_["tmp11"]
             v_["coef6"] = v_["tmp12"]/v_["rk+1"]
-            iv = ix_["sigt"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(v_["coef6"])
+            push!(irA,ig)
+            push!(icA,ix_["sigt"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(v_["coef6"]))
             ig,ig_,_ = s2mpj_ii("STAy"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"STAy"*string(k))
-            iv = ix_["y"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["y"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["y"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["y"*string(k)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("STAx"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"STAx"*string(k))
-            iv = ix_["x"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["x"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["w"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(v_["-dr/2"])
-            iv = ix_["w"*string(k)]
-            pbm.A[ig,iv] += Float64(v_["-dr/2"])
+            push!(irA,ig)
+            push!(icA,ix_["x"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["x"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(v_["-dr/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(k)])
+            push!(valA,Float64(v_["-dr/2"]))
             v_["rk"] = v_["rk+1"]
             v_["rk2"] = v_["rk+1sq"]
         end
@@ -191,8 +206,9 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         v_["-coef1"] = -1.0*v_["coef1"]
         ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["w"*string(Int64(v_["0"]))]
-        pbm.A[ig,iv] += Float64(v_["-coef1"])
+        push!(irA,ig)
+        push!(icA,ix_["w"*string(Int64(v_["0"]))])
+        push!(valA,Float64(v_["-coef1"]))
         for k = Int64(v_["1"]):Int64(v_["K-1"])
             v_["k-1"] = -1+k
             v_["rk+1"] = v_["rk"]+v_["dr"]
@@ -204,8 +220,9 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"WEIGHT")
-            iv = ix_["w"*string(k)]
-            pbm.A[ig,iv] += Float64(v_["-coef1"])
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(k)])
+            push!(valA,Float64(v_["-coef1"]))
             v_["rk-1sq"] = v_["rk2"]
             v_["rk"] = v_["rk+1"]
             v_["rk2"] = v_["rk+1sq"]
@@ -216,33 +233,40 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         v_["-coef1"] = -1.0*v_["coef1"]
         ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["w"*string(Int64(v_["K"]))]
-        pbm.A[ig,iv] += Float64(v_["-coef1"])
+        push!(irA,ig)
+        push!(icA,ix_["w"*string(Int64(v_["K"]))])
+        push!(valA,Float64(v_["-coef1"]))
         for k = Int64(v_["0"]):Int64(v_["K-1"])
             v_["k+1"] = 1+k
             ig,ig_,_ = s2mpj_ii("SLOP"*string(k),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SLOP"*string(k))
-            iv = ix_["w"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["w"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(k)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("SLOM"*string(k),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SLOM"*string(k))
-            iv = ix_["w"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["w"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["w"*string(k)])
+            push!(valA,Float64(1.0))
         end
         v_["-sigmatA"] = -1.0*v_["sigmatA"]
         ig,ig_,_ = s2mpj_ii("AVsigt",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"AVsigt")
-        iv = ix_["y"*string(Int64(v_["K"]))]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["x"*string(Int64(v_["K"]))]
-        pbm.A[ig,iv] += Float64(v_["-sigmatA"])
+        push!(irA,ig)
+        push!(icA,ix_["y"*string(Int64(v_["K"]))])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["x"*string(Int64(v_["K"]))])
+        push!(valA,Float64(v_["-sigmatA"]))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -4922,6 +4946,8 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 5.0
 # LO SOLUTION            7.872067544
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -4929,9 +4955,6 @@ function ROTDISC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-RN-905-1081"

@@ -181,3 +181,10 @@ toolbox authors:
   Serge Gratton <serge.gratton@enseeiht.fr>
   Philippe Toint <philippe.toint@unamur.be>
 ```
+
+## Thanks
+
+Many thanks to
+```
+Nick Gould, Zaikun Zhang, Cunxin Huang, Filippo Marini, Greta Malaspina, Mihai Costin
+```

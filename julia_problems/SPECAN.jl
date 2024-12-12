@@ -22,7 +22,7 @@ function SPECAN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE K                   3              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SPECAN"
@@ -54,6 +54,9 @@ function SPECAN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for p = Int64(v_["1"]):Int64(v_["K"])
             for j = Int64(v_["1"]):Int64(v_["N"])
                 iv,ix_,_ = s2mpj_ii("X"*string(p)*","*string(j),ix_)
@@ -61,7 +64,7 @@ function SPECAN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for p = Int64(v_["1"]):Int64(v_["K"])
             for I = Int64(v_["1"]):Int64(v_["M"])
                 ig,ig_,_ = s2mpj_ii("OBJ"*string(p)*","*string(I),ig_)
@@ -219,8 +222,6 @@ function SPECAN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.objlower = 0.0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-AN-V-0"
         pbm.objderlvl = 2

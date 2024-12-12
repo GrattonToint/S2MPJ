@@ -19,13 +19,14 @@ class  YFIT(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YFIT'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -57,6 +58,9 @@ class  YFIT(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('alpha',ix_)
         self.xnames=arrset(self.xnames,iv,'alpha')
         [iv,ix_,_] = s2mpj_ii('beta',ix_)
@@ -64,12 +68,11 @@ class  YFIT(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('dist',ix_)
         self.xnames=arrset(self.xnames,iv,'dist')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for i in range(int(v_['zero']),int(v_['p'])+1):
             [ig,ig_,_] = s2mpj_ii('diff'+str(i),ig_)
             gtype = arrset(gtype,ig,'<>')
@@ -152,9 +155,8 @@ class  YFIT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSBR2-MN-3-0"
+        self.pbclass   = "C-CSBR2-MN-3-0"
         self.objderlvl = 2
 
 # **********************

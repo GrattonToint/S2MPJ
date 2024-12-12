@@ -14,7 +14,7 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "STREG"
@@ -33,6 +33,9 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -42,16 +45,18 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(0.01))
         ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -70,14 +75,15 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.x0[ix_["X3"]] = Float64(1.0e+10)
         pb.x0[ix_["X4"]] = Float64(1.0e+10)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        ix1 = ix_["X3"]
-        ix2 = ix_["X3"]
-        pbm.H[ix1,ix2] = Float64(1.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-        ix1 = ix_["X4"]
-        ix2 = ix_["X4"]
-        pbm.H[ix1,ix2] = Float64(1.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+        irH  = Int64[]
+        icH  = Int64[]
+        valH = Float64[]
+        push!(irH,ix_["X3"])
+        push!(icH,ix_["X3"])
+        push!(valH,Float64(1.0))
+        push!(irH,ix_["X4"])
+        push!(icH,ix_["X4"])
+        push!(valH,Float64(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
@@ -113,11 +119,10 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
+        pbm.H = sparse(irH,icH,valH,pb.n,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
-        pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-AN-4-0"
         pbm.objderlvl = 2

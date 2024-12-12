@@ -23,7 +23,7 @@ function PENTAGON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PENTAGON"
@@ -53,6 +53,9 @@ function PENTAGON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["3"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -60,7 +63,7 @@ function PENTAGON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["3"])
@@ -68,10 +71,12 @@ function PENTAGON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"C"*string(I)*","*string(J))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["C"*string(J)])
-                iv = ix_["Y"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["S"*string(J)])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(v_["C"*string(J)]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)])
+                push!(valA,Float64(v_["S"*string(J)]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -218,14 +223,13 @@ function PENTAGON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 #  LO SOLTN              1.36521631D-04
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-AY-6-15"

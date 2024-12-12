@@ -18,13 +18,14 @@ class  QPBAND(CUTEst_problem):
 # IE N                   50000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QPBAND'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -50,33 +51,38 @@ class  QPBAND(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
             v_['RI/RN'] = v_['RI']/v_['RN']
             v_['-RI/RN'] = -1.0*v_['RI/RN']
             [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(v_['-RI/RN'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(v_['-RI/RN']))
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['M+I'] = v_['M']+I
             [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I))
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['M+I']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['M+I']))]])
+            valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -88,7 +94,7 @@ class  QPBAND(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -99,37 +105,37 @@ class  QPBAND(CUTEst_problem):
         self.xlower = np.full((self.n,1),0.0)
         self.xupper = np.full((self.n,1),2.0)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        self.H = lil_matrix((self.n, self.n))
+        irH  = np.array([],dtype=int)
+        icH  = np.array([],dtype=int)
+        valH = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = I+v_['1']
-            ix1 = ix_['X'+str(I)]
-            ix2 = ix_['X'+str(I)]
-            self.H[ix1,ix2] = float(2.0)+self.H[ix1,ix2]
-            self.H[ix2,ix1] = self.H[ix1,ix2]
-            ix2 = ix_['X'+str(int(v_['I+1']))]
-            self.H[ix1,ix2] = float(-1.0)+self.H[ix1,ix2]
-            self.H[ix2,ix1] = self.H[ix1,ix2]
-        ix1 = ix_['X'+str(int(v_['N']))]
-        ix2 = ix_['X'+str(int(v_['N']))]
-        self.H[ix1,ix2] = float(2.0)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
+            irH  = np.append(irH,[ix_['X'+str(I)]])
+            icH  = np.append(icH,[ix_['X'+str(I)]])
+            valH = np.append(valH,float(2.0))
+            irH  = np.append(irH,[ix_['X'+str(I)]])
+            icH  = np.append(icH,[ix_['X'+str(int(v_['I+1']))]])
+            valH = np.append(valH,float(-1.0))
+            irH  = np.append(irH,[ix_['X'+str(int(v_['I+1']))]])
+            icH  = np.append(icH,[ix_['X'+str(I)]])
+            valH = np.append(valH,float(-1.0))
+        irH  = np.append(irH,[ix_['X'+str(int(v_['N']))]])
+        icH  = np.append(icH,[ix_['X'+str(int(v_['N']))]])
+        valH = np.append(valH,float(2.0))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
+        self.H = csr_matrix((valH,(irH,icH)),shape=(self.n,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-CQLR2-AN-V-V"
+        self.pbclass   = "C-CQLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]
-        self.H = self.H.tocsr()
 
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

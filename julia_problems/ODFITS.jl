@@ -38,7 +38,7 @@ function ODFITS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ODFITS"
@@ -111,6 +111,9 @@ function ODFITS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("T13",ix_)
         arrset(pb.xnames,iv,"T13")
         iv,ix_,_ = s2mpj_ii("T14",ix_)
@@ -124,48 +127,58 @@ function ODFITS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             arrset(pb.xnames,iv,"F"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("AP13",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["T13"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T13"])
+        push!(valA,Float64(-1.0))
         arrset(pbm.gscale,ig,Float64(v_["1/MU13"]))
         ig,ig_,_ = s2mpj_ii("AP14",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["T14"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T14"])
+        push!(valA,Float64(-1.0))
         arrset(pbm.gscale,ig,Float64(v_["1/MU14"]))
         ig,ig_,_ = s2mpj_ii("AP23",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["T23"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T23"])
+        push!(valA,Float64(-1.0))
         arrset(pbm.gscale,ig,Float64(v_["1/MU23"]))
         ig,ig_,_ = s2mpj_ii("AP24",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["T24"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T24"])
+        push!(valA,Float64(-1.0))
         arrset(pbm.gscale,ig,Float64(v_["1/ENTR"]))
         for I = Int64(v_["1"]):Int64(v_["ARCS"])
             ig,ig_,_ = s2mpj_ii("CP"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["F"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["F"*string(I)])
+            push!(valA,Float64(-1.0))
             arrset(pbm.gscale,ig,Float64(v_["G/QLT"*string(I)]))
         end
         for I = Int64(v_["1"]):Int64(v_["ARCS"])
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(I))
-            iv = ix_["F"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["T13"]
-            pbm.A[ig,iv] += Float64(v_["P13"*string(I)])
-            iv = ix_["T14"]
-            pbm.A[ig,iv] += Float64(v_["P14"*string(I)])
-            iv = ix_["T23"]
-            pbm.A[ig,iv] += Float64(v_["P23"*string(I)])
-            iv = ix_["T24"]
-            pbm.A[ig,iv] += Float64(v_["P24"*string(I)])
+            push!(irA,ig)
+            push!(icA,ix_["F"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["T13"])
+            push!(valA,Float64(v_["P13"*string(I)]))
+            push!(irA,ig)
+            push!(icA,ix_["T14"])
+            push!(valA,Float64(v_["P14"*string(I)]))
+            push!(irA,ig)
+            push!(icA,ix_["T23"])
+            push!(valA,Float64(v_["P23"*string(I)]))
+            push!(irA,ig)
+            push!(icA,ix_["T24"])
+            push!(valA,Float64(v_["P24"*string(I)]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -290,15 +303,14 @@ function ODFITS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO ODFITS             -2380.026775
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-MN-10-6"

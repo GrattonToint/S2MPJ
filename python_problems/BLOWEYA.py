@@ -30,13 +30,14 @@ class  BLOWEYA(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BLOWEYA'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -125,32 +126,37 @@ class  BLOWEYA(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['0']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'U'+str(I))
             [iv,ix_,_] = s2mpj_ii('W'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'W'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             v_['VAL'] = v_['V'+str(I)]*v_['-1/N**2']
             [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['U'+str(I)]
-            self.A[ig,iv] = float(v_['VAL'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(I)]])
+            valA = np.append(valA,float(v_['VAL']))
             v_['VAL'] = v_['V'+str(I)]*v_['-2/N**2']
-            iv = ix_['W'+str(I)]
-            self.A[ig,iv] = float(v_['VAL'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['W'+str(I)]])
+            valA = np.append(valA,float(v_['VAL']))
         v_['VAL'] = v_['V'+str(int(v_['1']))]-v_['V'+str(int(v_['0']))]
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['U'+str(int(v_['0']))]
-        self.A[ig,iv] = float(v_['VAL'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['0']))]])
+        valA = np.append(valA,float(v_['VAL']))
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
@@ -159,66 +165,81 @@ class  BLOWEYA(CUTEst_problem):
             v_['VAL'] = v_['VAL']+v_['V'+str(int(v_['I+1']))]
             [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['U'+str(I)]
-            self.A[ig,iv] = float(v_['VAL'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(I)]])
+            valA = np.append(valA,float(v_['VAL']))
         v_['VAL'] = v_['V'+str(int(v_['N-1']))]-v_['V'+str(int(v_['N']))]
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['U'+str(int(v_['N']))]
-        self.A[ig,iv] = float(v_['VAL'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N']))]])
+        valA = np.append(valA,float(v_['VAL']))
         [ig,ig_,_] = s2mpj_ii('INT',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'INT')
-        iv = ix_['U'+str(int(v_['0']))]
-        self.A[ig,iv] = float(0.5)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['0']))]])
+        valA = np.append(valA,float(0.5))
         [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['0'])))
-        iv = ix_['U'+str(int(v_['0']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U'+str(int(v_['1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['0']))]])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['0'])))
-        iv = ix_['W'+str(int(v_['0']))]
-        self.A[ig,iv] = float(v_['-1/N**2'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['W'+str(int(v_['0']))]])
+        valA = np.append(valA,float(v_['-1/N**2']))
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
             [ig,ig_,_] = s2mpj_ii('CON'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CON'+str(I))
-            iv = ix_['U'+str(I)]
-            self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-            iv = ix_['U'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['U'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['W'+str(I)]
-            self.A[ig,iv] = float(v_['-1/N**2'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(I)]])
+            valA = np.append(valA,float(2.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['W'+str(I)]])
+            valA = np.append(valA,float(v_['-1/N**2']))
             [ig,ig_,_] = s2mpj_ii('INT',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'INT')
-            iv = ix_['U'+str(I)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(I)]])
+            valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['N'])))
-        iv = ix_['U'+str(int(v_['N']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['U'+str(int(v_['N-1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N']))]])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N-1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['N'])))
-        iv = ix_['W'+str(int(v_['N']))]
-        self.A[ig,iv] = float(v_['-1/N**2'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['W'+str(int(v_['N']))]])
+        valA = np.append(valA,float(v_['-1/N**2']))
         [ig,ig_,_] = s2mpj_ii('INT',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'INT')
-        iv = ix_['U'+str(int(v_['N']))]
-        self.A[ig,iv] = float(0.5)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N']))]])
+        valA = np.append(valA,float(0.5))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -230,7 +251,7 @@ class  BLOWEYA(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -346,21 +367,18 @@ class  BLOWEYA(CUTEst_problem):
 # XL SOLUTION            -4.56932D+00   $ N = 10 
 # XL SOLUTION            -4.55694D-01   $ N = 100
 # XL SOLUTION            -4.55629D-02   $ N = 1000
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQLR2-MN-V-V"
+        self.pbclass   = "C-CQLR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

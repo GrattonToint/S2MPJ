@@ -35,7 +35,7 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRAINF"
@@ -98,6 +98,9 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -115,7 +118,7 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             arrset(pb.xnames,iv,"UB"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("ENERGY",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["N-1"])
@@ -123,29 +126,39 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             ig,ig_,_ = s2mpj_ii("XEQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"XEQ"*string(I))
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["V"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
-            iv = ix_["V"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["-H/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)])
+            push!(valA,Float64(v_["-H/2"]))
             ig,ig_,_ = s2mpj_ii("VEQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"VEQ"*string(I))
-            iv = ix_["V"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["1+BH/2"])
-            iv = ix_["V"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["BH/2-1"])
-            iv = ix_["UA"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
-            iv = ix_["UA"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
-            iv = ix_["UB"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
-            iv = ix_["UB"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-H/2"])
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["1+BH/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(I)])
+            push!(valA,Float64(v_["BH/2-1"]))
+            push!(irA,ig)
+            push!(icA,ix_["UA"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["-H/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["UA"*string(I)])
+            push!(valA,Float64(v_["-H/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["UB"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["-H/2"]))
+            push!(irA,ig)
+            push!(icA,ix_["UB"*string(I)])
+            push!(valA,Float64(v_["-H/2"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -276,15 +289,14 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 # LO SOLUTION            3.09751881012
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQQR2-MN-V-V"

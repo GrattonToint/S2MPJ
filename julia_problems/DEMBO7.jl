@@ -21,7 +21,7 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DEMBO7"
@@ -42,77 +42,98 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X14"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X15"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X16"]
-        pbm.A[ig,iv] += Float64(1.262626)
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X14"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X15"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X16"])
+        push!(valA,Float64(1.262626))
         ig,ig_,_ = s2mpj_ii("C0",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C0")
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X14"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X15"]
-        pbm.A[ig,iv] += Float64(1.262626)
-        iv = ix_["X16"]
-        pbm.A[ig,iv] += Float64(1.262626)
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X14"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X15"])
+        push!(valA,Float64(1.262626))
+        push!(irA,ig)
+        push!(icA,ix_["X16"])
+        push!(valA,Float64(1.262626))
         ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C1")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(0.975)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(0.975))
         ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C2")
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(0.975)
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(0.975))
         ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C3")
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(0.975)
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(0.975))
         ig,ig_,_ = s2mpj_ii("C4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C4")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(0.975)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(0.975))
         ig,ig_,_ = s2mpj_ii("C5",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C5")
-        iv = ix_["X5"]
-        pbm.A[ig,iv] += Float64(0.975)
+        push!(irA,ig)
+        push!(icA,ix_["X5"])
+        push!(valA,Float64(0.975))
         ig,ig_,_ = s2mpj_ii("C6",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C6")
         ig,ig_,_ = s2mpj_ii("C7",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C7")
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(-0.002)
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(-0.002))
         ig,ig_,_ = s2mpj_ii("C8",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C8")
-        iv = ix_["X8"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X9"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X8"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X9"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("C9",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C9")
@@ -122,15 +143,18 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         ig,ig_,_ = s2mpj_ii("C11",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C11")
-        iv = ix_["X16"]
-        pbm.A[ig,iv] += Float64(0.002)
+        push!(irA,ig)
+        push!(icA,ix_["X16"])
+        push!(valA,Float64(0.002))
         ig,ig_,_ = s2mpj_ii("C12",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C12")
-        iv = ix_["X11"]
-        pbm.A[ig,iv] += Float64(0.002)
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(-0.002)
+        push!(irA,ig)
+        push!(icA,ix_["X11"])
+        push!(valA,Float64(0.002))
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(-0.002))
         ig,ig_,_ = s2mpj_ii("C13",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C13")
@@ -1115,6 +1139,8 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               174.788807
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -1123,9 +1149,6 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = grange[gegrps]
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQOR2-MN-16-20"

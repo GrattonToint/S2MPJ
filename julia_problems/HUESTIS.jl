@@ -23,7 +23,7 @@ function HUESTIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE K                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HUESTIS"
@@ -59,12 +59,15 @@ function HUESTIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["K"])
             iv,ix_,_ = s2mpj_ii("M"*string(I),ix_)
             arrset(pb.xnames,iv,"M"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["K"])
@@ -84,13 +87,15 @@ function HUESTIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("E1",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E1")
-            iv = ix_["M"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["COEFF1"])
+            push!(irA,ig)
+            push!(icA,ix_["M"*string(I)])
+            push!(valA,Float64(v_["COEFF1"]))
             ig,ig_,_ = s2mpj_ii("E2",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E2")
-            iv = ix_["M"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["COEFF2"])
+            push!(irA,ig)
+            push!(icA,ix_["M"*string(I)])
+            push!(valA,Float64(v_["COEFF2"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -148,6 +153,8 @@ function HUESTIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -156,9 +163,6 @@ function HUESTIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-MN-V-V"

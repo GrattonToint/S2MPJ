@@ -121,7 +121,7 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MOSARQP1"
@@ -245,30 +245,37 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["C"*string(I)])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["C"*string(I)]))
         end
         ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["1"])))
-        iv = ix_["X"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(4.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["1"]))])
+        push!(valA,Float64(4.0))
         ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["1"])))
-        iv = ix_["X"*string(Int64(v_["RTN+1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X"*string(Int64(v_["2"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["RTN+1"]))])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2"]))])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["2"]):Int64(v_["RTN-1"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
@@ -276,27 +283,34 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(4.0)
-            iv = ix_["X"*string(Int64(v_["I+RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(4.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+RTN"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["RTN"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["RTN"])))
-        iv = ix_["X"*string(Int64(v_["RTN"]))]
-        pbm.A[ig,iv] += Float64(4.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["RTN"]))])
+        push!(valA,Float64(4.0))
         ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["RTN"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["RTN"])))
-        iv = ix_["X"*string(Int64(v_["RTN-1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["X"*string(Int64(v_["2RTN"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["RTN-1"]))])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2RTN"]))])
+        push!(valA,Float64(-1.0))
         v_["JS"] = v_["RTN"]
         for J = Int64(v_["RTN+1"]):Int64(v_["RTN"]):Int64(v_["M-RTN+1"])
             v_["J+1"] = 1+J
@@ -307,14 +321,18 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("CS"*string(J),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(J))
-            iv = ix_["X"*string(J)]
-            pbm.A[ig,iv] += Float64(4.0)
-            iv = ix_["X"*string(Int64(v_["J+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["J-RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["J+RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(J)])
+            push!(valA,Float64(4.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J+1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J-RTN"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J+RTN"]))])
+            push!(valA,Float64(-1.0))
             for I = Int64(v_["J+1"]):Int64(v_["JS-1"])
                 v_["I+1"] = 1+I
                 v_["I-1"] = -1+I
@@ -323,33 +341,42 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CS"*string(I))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(4.0)
-                iv = ix_["X"*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["X"*string(Int64(v_["I+1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["X"*string(Int64(v_["I-RTN"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["X"*string(Int64(v_["I+RTN"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(4.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I-RTN"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I+RTN"]))])
+                push!(valA,Float64(-1.0))
             end
             v_["JS+RTN"] = v_["JS"]+v_["RTN"]
             v_["JS-RTN"] = v_["JS"]-v_["RTN"]
             ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["JS"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["JS"])))
-            iv = ix_["X"*string(Int64(v_["JS"]))]
-            pbm.A[ig,iv] += Float64(4.0)
-            iv = ix_["X"*string(Int64(v_["JS-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["JS"]))])
+            push!(valA,Float64(4.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["JS-1"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["JS"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["JS"])))
-            iv = ix_["X"*string(Int64(v_["JS-RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["JS+RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["JS-RTN"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["JS+RTN"]))])
+            push!(valA,Float64(-1.0))
         end
         v_["K"] = 1+v_["JS"]
         for I = Int64(v_["K"]):Int64(v_["M"]):Int64(v_["M"])
@@ -359,17 +386,21 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["K"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["K"])))
-            iv = ix_["X"*string(Int64(v_["K"]))]
-            pbm.A[ig,iv] += Float64(4.0)
-            iv = ix_["X"*string(Int64(v_["K+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["K"]))])
+            push!(valA,Float64(4.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["K+1"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["K"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["K"])))
-            iv = ix_["X"*string(Int64(v_["K-RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["K+RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["K-RTN"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["K+RTN"]))])
+            push!(valA,Float64(-1.0))
         end
         v_["K"] = 1+v_["K"]
         for I = Int64(v_["K"]):Int64(v_["M"])
@@ -380,16 +411,21 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(4.0)
-            iv = ix_["X"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["I-RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X"*string(Int64(v_["I+RTN"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(4.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I-RTN"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+RTN"]))])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -531,6 +567,8 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN( 900,600,2)   -529.6445809
 # LO SOLTN( 900,600,3)   -1145.403000
 # LO SOLTN(2500,700,1)   -952.8754378
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -539,9 +577,6 @@ function MOSARQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-AN-V-V"

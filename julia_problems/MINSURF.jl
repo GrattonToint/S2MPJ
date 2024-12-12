@@ -16,7 +16,7 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    Discretization parameter
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINSURF"
@@ -40,6 +40,9 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for i = Int64(v_["1"]):Int64(v_["P+1"])
             for j = Int64(v_["1"]):Int64(v_["P+1"])
                 iv,ix_,_ = s2mpj_ii("X"*string(i)*","*string(j),ix_)
@@ -47,7 +50,7 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for i = Int64(v_["1"]):Int64(v_["P"])
             for j = Int64(v_["1"]):Int64(v_["P"])
                 ig,ig_,_ = s2mpj_ii("S"*string(i)*","*string(j),ig_)
@@ -148,8 +151,6 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             end
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COXR2-MY-64-0"
         pb.x0          = zeros(Float64,pb.n)

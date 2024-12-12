@@ -33,7 +33,7 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "UBH5"
@@ -73,6 +73,9 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["7"])
             for T = Int64(v_["0"]):Int64(v_["N"])
                 iv,ix_,_ = s2mpj_ii("Y"*string(I)*","*string(T),ix_)
@@ -86,11 +89,12 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Y"*string(Int64(v_["7"]))*","*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Y"*string(Int64(v_["7"]))*","*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["3"])
             v_["I+3"] = 3+I
             for T = Int64(v_["1"]):Int64(v_["N"])
@@ -98,14 +102,18 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
                 ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(I)*","*string(T))
-                iv = ix_["Y"*string(I)*","*string(T)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(I)*","*string(Int64(v_["T-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(Int64(v_["T-1"]))]
-                pbm.A[ig,iv] += Float64(v_["-K/2"])
-                iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(T)]
-                pbm.A[ig,iv] += Float64(v_["-K/2"])
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(T)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)*","*string(Int64(v_["T-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+3"]))*","*string(Int64(v_["T-1"]))])
+                push!(valA,Float64(v_["-K/2"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+3"]))*","*string(T)])
+                push!(valA,Float64(v_["-K/2"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["3"])
@@ -115,20 +123,24 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
                 ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
-                iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(T)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(Int64(v_["T-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+3"]))*","*string(T)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(Int64(v_["I+3"]))*","*string(Int64(v_["T-1"]))])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
-                iv = ix_["U"*string(I)*","*string(Int64(v_["T-1"]))]
-                pbm.A[ig,iv] += Float64(v_["-K/2"])
+                push!(irA,ig)
+                push!(icA,ix_["U"*string(I)*","*string(Int64(v_["T-1"]))])
+                push!(valA,Float64(v_["-K/2"]))
                 ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
-                iv = ix_["U"*string(I)*","*string(T)]
-                pbm.A[ig,iv] += Float64(v_["-K/2"])
+                push!(irA,ig)
+                push!(icA,ix_["U"*string(I)*","*string(T)])
+                push!(valA,Float64(v_["-K/2"]))
             end
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
@@ -136,10 +148,12 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["7"]))*","*string(T),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"S"*string(Int64(v_["7"]))*","*string(T))
-            iv = ix_["Y"*string(Int64(v_["7"]))*","*string(T)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["Y"*string(Int64(v_["7"]))*","*string(Int64(v_["T-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["7"]))*","*string(T)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["7"]))*","*string(Int64(v_["T-1"]))])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -240,15 +254,14 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # LO SOLTN(100)          1.11631518169
 # LO SOLTN(1000)         1.11598643493
 # LO SOLTN(2000)         1.11587382445
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-MN-V-V"

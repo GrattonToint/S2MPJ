@@ -18,7 +18,7 @@ function YFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YFIT"
@@ -57,6 +57,9 @@ function YFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("alpha",ix_)
         arrset(pb.xnames,iv,"alpha")
         iv,ix_,_ = s2mpj_ii("beta",ix_)
@@ -64,7 +67,7 @@ function YFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         iv,ix_,_ = s2mpj_ii("dist",ix_)
         arrset(pb.xnames,iv,"dist")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for i = Int64(v_["zero"]):Int64(v_["p"])
             ig,ig_,_ = s2mpj_ii("diff"*string(i),ig_)
             arrset(gtype,ig,"<>")
@@ -146,8 +149,6 @@ function YFIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-MN-3-0"
         pbm.objderlvl = 2

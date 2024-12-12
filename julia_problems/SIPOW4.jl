@@ -26,7 +26,7 @@ function SIPOW4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE M                   500 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SIPOW4"
@@ -71,6 +71,9 @@ function SIPOW4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -80,41 +83,49 @@ function SIPOW4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(1.0))
         for J = Int64(v_["1"]):Int64(v_["M/2"])
             ig,ig_,_ = s2mpj_ii("C"*string(J),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(J))
-            iv = ix_["X1"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X4"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X2"]
-            pbm.A[ig,iv] += Float64(v_["XI"*string(J)])
-            iv = ix_["X3"]
-            pbm.A[ig,iv] += Float64(v_["ETA"*string(J)])
+            push!(irA,ig)
+            push!(icA,ix_["X1"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X4"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X2"])
+            push!(valA,Float64(v_["XI"*string(J)]))
+            push!(irA,ig)
+            push!(icA,ix_["X3"])
+            push!(valA,Float64(v_["ETA"*string(J)]))
         end
         for J = Int64(v_["1"]):Int64(v_["M/2"])
             v_["J+"] = v_["M/2"]+J
             ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["J+"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["J+"])))
-            iv = ix_["X1"]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X1"])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["J+"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["J+"])))
-            iv = ix_["X2"]
-            pbm.A[ig,iv] += Float64(v_["XI"*string(J)])
+            push!(irA,ig)
+            push!(icA,ix_["X2"])
+            push!(valA,Float64(v_["XI"*string(J)]))
             ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["J+"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["J+"])))
-            iv = ix_["X3"]
-            pbm.A[ig,iv] += Float64(v_["ETA"*string(J)])
+            push!(irA,ig)
+            push!(icA,ix_["X3"])
+            push!(valA,Float64(v_["ETA"*string(J)]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -169,6 +180,8 @@ function SIPOW4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # LO SOLUTION            2.6110334D-1 ! m = 100
 # LO SOLUTION            2.7060094D-1 ! m = 500
 # LO SOLUTION            2.7236200D-1 ! m = 2000
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -176,9 +189,6 @@ function SIPOW4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CLLR2-AN-4-V"

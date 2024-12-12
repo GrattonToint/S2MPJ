@@ -19,13 +19,14 @@ class  SSEBNLN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SSEBNLN'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -218,6 +219,9 @@ class  SSEBNLN(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('V'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)
         self.xnames = (
              arrset(self.xnames,iv,'V'+str(int(v_['0']))+','+str(int(v_['HOURS']))))
@@ -243,103 +247,129 @@ class  SSEBNLN(CUTEst_problem):
                 [iv,ix_,_] = s2mpj_ii('R'+str(ID)+','+str(IH),ix_)
                 self.xnames=arrset(self.xnames,iv,'R'+str(ID)+','+str(IH))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
                 [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['P1'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1000.0)+self.A[ig,iv]
-                iv = ix_['P2'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1500.0)+self.A[ig,iv]
-                iv = ix_['QH'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1200.0)+self.A[ig,iv]
-                iv = ix_['S'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1200.0)+self.A[ig,iv]
-                iv = ix_['QG'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1200.0)+self.A[ig,iv]
-                iv = ix_['QP'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(-1200.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['P1'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1000.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['P2'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1500.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QH'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1200.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['S'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1200.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QG'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1200.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QP'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(-1200.0))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             v_['P'] = -1+ID
             [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'H'+str(ID)+','+str(int(v_['1'])))
-            iv = ix_['V'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['V'+str(int(v_['P']))+','+str(int(v_['HOURS']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['V'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['V'+str(int(v_['P']))+','+str(int(v_['HOURS']))]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'H'+str(ID)+','+str(int(v_['1'])))
-            iv = ix_['S'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['QH'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['S'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['QH'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['2']),int(v_['HOURS'])+1):
                 v_['IH-1'] = -1+IH
                 [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'H'+str(ID)+','+str(IH))
-                iv = ix_['V'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['V'+str(ID)+','+str(int(v_['IH-1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['S'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['QH'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['V'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['V'+str(ID)+','+str(int(v_['IH-1']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['S'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QH'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             v_['P'] = -1+ID
             [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(ID)+','+str(int(v_['1'])))
-            iv = ix_['R'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['R'+str(int(v_['P']))+','+str(int(v_['HOURS']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['R'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['R'+str(int(v_['P']))+','+str(int(v_['HOURS']))]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(ID)+','+str(int(v_['1'])))
-            iv = ix_['QG'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['QP'+str(ID)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['QG'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['QP'+str(ID)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(-1.0))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['2']),int(v_['HOURS'])+1):
                 v_['IH-1'] = -1+IH
                 [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'R'+str(ID)+','+str(IH))
-                iv = ix_['R'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['R'+str(ID)+','+str(int(v_['IH-1']))]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['QG'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['QP'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['R'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['R'+str(ID)+','+str(int(v_['IH-1']))]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QG'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QP'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(-1.0))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
                 [ig,ig_,_] = s2mpj_ii('D'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'D'+str(ID)+','+str(IH))
-                iv = ix_['P1'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['P2'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['QH'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['QG'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['QP'+str(ID)+','+str(IH)]
-                self.A[ig,iv] = float(-1.33)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['P1'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['P2'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QH'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QG'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['QP'+str(ID)+','+str(IH)]])
+                valA = np.append(valA,float(-1.33))
         for D in range(int(v_['1']),int(v_['DAYS'])+1):
             for H in range(int(v_['1']),int(v_['HOURS'])+1):
                 [ig,ig_,_] = s2mpj_ii('QG*QP'+str(D)+','+str(H),ig_)
@@ -356,7 +386,7 @@ class  SSEBNLN(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -487,6 +517,8 @@ class  SSEBNLN(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               1.617060D+07
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -494,15 +526,10 @@ class  SSEBNLN(CUTEst_problem):
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLQR2-RN-194-96"
+        self.pbclass   = "C-CLQR2-RN-194-96"
         self.objderlvl = 2
         self.conderlvl = [2]
 

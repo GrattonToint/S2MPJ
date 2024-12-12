@@ -24,7 +24,7 @@ function PALMER1C(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER1C"
@@ -115,6 +115,9 @@ function PALMER1C(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
         iv,ix_,_ = s2mpj_ii("A2",ix_)
@@ -132,7 +135,7 @@ function PALMER1C(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("A14",ix_)
         arrset(pb.xnames,iv,"A14")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["XSQR"] = v_["X"*string(I)]*v_["X"*string(I)]
             v_["XQUART"] = v_["XSQR"]*v_["XSQR"]
@@ -143,22 +146,30 @@ function PALMER1C(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             v_["X**14"] = v_["XSQR"]*v_["X**12"]
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["A0"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["A2"]
-            pbm.A[ig,iv] += Float64(v_["XSQR"])
-            iv = ix_["A4"]
-            pbm.A[ig,iv] += Float64(v_["XQUART"])
-            iv = ix_["A6"]
-            pbm.A[ig,iv] += Float64(v_["X**6"])
-            iv = ix_["A8"]
-            pbm.A[ig,iv] += Float64(v_["X**8"])
-            iv = ix_["A10"]
-            pbm.A[ig,iv] += Float64(v_["X**10"])
-            iv = ix_["A12"]
-            pbm.A[ig,iv] += Float64(v_["X**12"])
-            iv = ix_["A14"]
-            pbm.A[ig,iv] += Float64(v_["X**14"])
+            push!(irA,ig)
+            push!(icA,ix_["A0"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["A2"])
+            push!(valA,Float64(v_["XSQR"]))
+            push!(irA,ig)
+            push!(icA,ix_["A4"])
+            push!(valA,Float64(v_["XQUART"]))
+            push!(irA,ig)
+            push!(icA,ix_["A6"])
+            push!(valA,Float64(v_["X**6"]))
+            push!(irA,ig)
+            push!(icA,ix_["A8"])
+            push!(valA,Float64(v_["X**8"]))
+            push!(irA,ig)
+            push!(icA,ix_["A10"])
+            push!(valA,Float64(v_["X**10"]))
+            push!(irA,ig)
+            push!(icA,ix_["A12"])
+            push!(valA,Float64(v_["X**12"]))
+            push!(irA,ig)
+            push!(icA,ix_["A14"])
+            push!(valA,Float64(v_["X**14"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -208,10 +219,9 @@ function PALMER1C(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN             9.7605048D-02
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQUR2-RN-8-0"
         pbm.objderlvl = 2

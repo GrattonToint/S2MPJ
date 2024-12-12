@@ -21,7 +21,7 @@ function METHANL8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "METHANL8LS"
@@ -83,6 +83,9 @@ function METHANL8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
@@ -97,17 +100,19 @@ function METHANL8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
             arrset(pb.xnames,iv,"V"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["1"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("2.1-"*string(J),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["0"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["B"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["0"]))*","*string(J)])
+            push!(valA,Float64(v_["B"]))
             arrset(pbm.gscale,ig,Float64(1.0e+4))
             ig,ig_,_ = s2mpj_ii("2.3-"*string(J),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["N-1"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["N-1"]))*","*string(J)])
+            push!(valA,Float64(-1.0))
             for I = Int64(v_["1"]):Int64(v_["N-2"])
                 ig,ig_,_ = s2mpj_ii("2.2-"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
@@ -755,10 +760,9 @@ function METHANL8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-MN-31-0"
         pbm.objderlvl = 2

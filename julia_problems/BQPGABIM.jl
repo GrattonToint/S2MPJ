@@ -15,7 +15,7 @@ function BQPGABIM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BQPGABIM"
@@ -31,7 +31,10 @@ function BQPGABIM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         ig,ig_,_ = s2mpj_ii("LINGROUP",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
@@ -41,204 +44,254 @@ function BQPGABIM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         ngrp   = length(ig_)
         iv,ix_,_ = s2mpj_ii("1",ix_)
         arrset(pb.xnames,iv,"1")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(5.6987e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(5.6987e-02))
         iv,ix_,_ = s2mpj_ii("2",ix_)
         arrset(pb.xnames,iv,"2")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-6.1847e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-6.1847e-03))
         iv,ix_,_ = s2mpj_ii("3",ix_)
         arrset(pb.xnames,iv,"3")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(5.2516e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(5.2516e-03))
         iv,ix_,_ = s2mpj_ii("4",ix_)
         arrset(pb.xnames,iv,"4")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.1729e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.1729e-02))
         iv,ix_,_ = s2mpj_ii("5",ix_)
         arrset(pb.xnames,iv,"5")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(4.9596e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(4.9596e-03))
         iv,ix_,_ = s2mpj_ii("6",ix_)
         arrset(pb.xnames,iv,"6")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.9271e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.9271e-03))
         iv,ix_,_ = s2mpj_ii("7",ix_)
         arrset(pb.xnames,iv,"7")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.2185e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.2185e-02))
         iv,ix_,_ = s2mpj_ii("8",ix_)
         arrset(pb.xnames,iv,"8")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.3238e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.3238e-02))
         iv,ix_,_ = s2mpj_ii("9",ix_)
         arrset(pb.xnames,iv,"9")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.5134e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.5134e-02))
         iv,ix_,_ = s2mpj_ii("10",ix_)
         arrset(pb.xnames,iv,"10")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.2247e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.2247e-02))
         iv,ix_,_ = s2mpj_ii("11",ix_)
         arrset(pb.xnames,iv,"11")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(2.3741e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(2.3741e-02))
         iv,ix_,_ = s2mpj_ii("12",ix_)
         arrset(pb.xnames,iv,"12")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-9.7666e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-9.7666e-02))
         iv,ix_,_ = s2mpj_ii("13",ix_)
         arrset(pb.xnames,iv,"13")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(9.8702e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(9.8702e-02))
         iv,ix_,_ = s2mpj_ii("14",ix_)
         arrset(pb.xnames,iv,"14")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(7.8901e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(7.8901e-04))
         iv,ix_,_ = s2mpj_ii("15",ix_)
         arrset(pb.xnames,iv,"15")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(5.1663e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(5.1663e-04))
         iv,ix_,_ = s2mpj_ii("16",ix_)
         arrset(pb.xnames,iv,"16")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.7477e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.7477e-04))
         iv,ix_,_ = s2mpj_ii("17",ix_)
         arrset(pb.xnames,iv,"17")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.1795e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.1795e-03))
         iv,ix_,_ = s2mpj_ii("18",ix_)
         arrset(pb.xnames,iv,"18")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.7351e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.7351e-02))
         iv,ix_,_ = s2mpj_ii("19",ix_)
         arrset(pb.xnames,iv,"19")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.3439e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.3439e-03))
         iv,ix_,_ = s2mpj_ii("20",ix_)
         arrset(pb.xnames,iv,"20")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-5.6977e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-5.6977e-02))
         iv,ix_,_ = s2mpj_ii("21",ix_)
         arrset(pb.xnames,iv,"21")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.0040e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.0040e-02))
         iv,ix_,_ = s2mpj_ii("22",ix_)
         arrset(pb.xnames,iv,"22")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-8.3380e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-8.3380e-02))
         iv,ix_,_ = s2mpj_ii("23",ix_)
         arrset(pb.xnames,iv,"23")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-3.7526e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-3.7526e-03))
         iv,ix_,_ = s2mpj_ii("24",ix_)
         arrset(pb.xnames,iv,"24")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-9.4555e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-9.4555e-04))
         iv,ix_,_ = s2mpj_ii("25",ix_)
         arrset(pb.xnames,iv,"25")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.9258e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.9258e-03))
         iv,ix_,_ = s2mpj_ii("26",ix_)
         arrset(pb.xnames,iv,"26")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.3959e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.3959e-03))
         iv,ix_,_ = s2mpj_ii("27",ix_)
         arrset(pb.xnames,iv,"27")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.3749e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.3749e-03))
         iv,ix_,_ = s2mpj_ii("28",ix_)
         arrset(pb.xnames,iv,"28")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.3677e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.3677e-03))
         iv,ix_,_ = s2mpj_ii("29",ix_)
         arrset(pb.xnames,iv,"29")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-2.7985e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-2.7985e-02))
         iv,ix_,_ = s2mpj_ii("30",ix_)
         arrset(pb.xnames,iv,"30")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.8839e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.8839e-03))
         iv,ix_,_ = s2mpj_ii("31",ix_)
         arrset(pb.xnames,iv,"31")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.2340e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.2340e-03))
         iv,ix_,_ = s2mpj_ii("32",ix_)
         arrset(pb.xnames,iv,"32")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-6.8139e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-6.8139e-04))
         iv,ix_,_ = s2mpj_ii("33",ix_)
         arrset(pb.xnames,iv,"33")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-3.5838e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-3.5838e-02))
         iv,ix_,_ = s2mpj_ii("34",ix_)
         arrset(pb.xnames,iv,"34")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-3.4857e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-3.4857e-02))
         iv,ix_,_ = s2mpj_ii("35",ix_)
         arrset(pb.xnames,iv,"35")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(2.8724e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(2.8724e-03))
         iv,ix_,_ = s2mpj_ii("36",ix_)
         arrset(pb.xnames,iv,"36")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.6625e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.6625e-02))
         iv,ix_,_ = s2mpj_ii("37",ix_)
         arrset(pb.xnames,iv,"37")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(1.3571e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(1.3571e-02))
         iv,ix_,_ = s2mpj_ii("38",ix_)
         arrset(pb.xnames,iv,"38")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-7.2447e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-7.2447e-03))
         iv,ix_,_ = s2mpj_ii("39",ix_)
         arrset(pb.xnames,iv,"39")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.6034e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.6034e-04))
         iv,ix_,_ = s2mpj_ii("40",ix_)
         arrset(pb.xnames,iv,"40")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.6225e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.6225e-02))
         iv,ix_,_ = s2mpj_ii("41",ix_)
         arrset(pb.xnames,iv,"41")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(2.2034e-05)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(2.2034e-05))
         iv,ix_,_ = s2mpj_ii("42",ix_)
         arrset(pb.xnames,iv,"42")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(5.8844e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(5.8844e-02))
         iv,ix_,_ = s2mpj_ii("43",ix_)
         arrset(pb.xnames,iv,"43")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(3.0725e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(3.0725e-03))
         iv,ix_,_ = s2mpj_ii("44",ix_)
         arrset(pb.xnames,iv,"44")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(2.8227e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(2.8227e-03))
         iv,ix_,_ = s2mpj_ii("45",ix_)
         arrset(pb.xnames,iv,"45")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-2.0681e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-2.0681e-02))
         iv,ix_,_ = s2mpj_ii("46",ix_)
         arrset(pb.xnames,iv,"46")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-5.4952e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-5.4952e-03))
         iv,ix_,_ = s2mpj_ii("47",ix_)
         arrset(pb.xnames,iv,"47")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(6.2552e-04)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(6.2552e-04))
         iv,ix_,_ = s2mpj_ii("48",ix_)
         arrset(pb.xnames,iv,"48")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(3.3782e-02)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(3.3782e-02))
         iv,ix_,_ = s2mpj_ii("49",ix_)
         arrset(pb.xnames,iv,"49")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-4.8584e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-4.8584e-03))
         iv,ix_,_ = s2mpj_ii("50",ix_)
         arrset(pb.xnames,iv,"50")
-        ig = ig_["LINGROUP"]
-        pbm.A[ig,iv] += Float64(-1.4371e-03)
+        push!(icA,iv)
+        push!(irA,ig_["LINGROUP"])
+        push!(valA,Float64(-1.4371e-03))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         pbm.objgrps = collect(1:ngrp)
@@ -2972,10 +3025,9 @@ function BQPGABIM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO BQPGABIM             -3.790343D-5
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-AN-50-0"
         pb.x0          = zeros(Float64,pb.n)

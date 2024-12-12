@@ -34,7 +34,7 @@ function HANGING(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE NX                  40             $-PARAMETER n = 3600
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HANGING"
@@ -73,6 +73,9 @@ function HANGING(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -84,13 +87,14 @@ function HANGING(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
                 ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["Z"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Z"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NX"])
@@ -328,14 +332,13 @@ function HANGING(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # LO SOLTN(5,6)          -77.260229515
 # LO SOLTN(10,10)        -620.17603242
 # LO SOLTN(20,30)        -1025.4292887
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-AY-V-V"

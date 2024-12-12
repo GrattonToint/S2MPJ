@@ -42,7 +42,7 @@ function TENBARS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TENBARS2"
@@ -72,6 +72,9 @@ function TENBARS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["8"])
             iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
@@ -81,29 +84,39 @@ function TENBARS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(v_["C0SQ2"])
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(v_["C0SQ2"])
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
-        iv = ix_["X5"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
-        iv = ix_["X6"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
-        iv = ix_["X7"]
-        pbm.A[ig,iv] += Float64(v_["C0SQ2"])
-        iv = ix_["X8"]
-        pbm.A[ig,iv] += Float64(v_["C0SQ2"])
-        iv = ix_["X9"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
-        iv = ix_["X10"]
-        pbm.A[ig,iv] += Float64(v_["C0"])
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(v_["C0"]))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(v_["C0SQ2"]))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(v_["C0SQ2"]))
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(v_["C0"]))
+        push!(irA,ig)
+        push!(icA,ix_["X5"])
+        push!(valA,Float64(v_["C0"]))
+        push!(irA,ig)
+        push!(icA,ix_["X6"])
+        push!(valA,Float64(v_["C0"]))
+        push!(irA,ig)
+        push!(icA,ix_["X7"])
+        push!(valA,Float64(v_["C0SQ2"]))
+        push!(irA,ig)
+        push!(icA,ix_["X8"])
+        push!(valA,Float64(v_["C0SQ2"]))
+        push!(irA,ig)
+        push!(icA,ix_["X9"])
+        push!(valA,Float64(v_["C0"]))
+        push!(irA,ig)
+        push!(icA,ix_["X10"])
+        push!(valA,Float64(v_["C0"]))
         for I = Int64(v_["1"]):Int64(v_["8"])
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
@@ -441,15 +454,14 @@ function TENBARS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Solution
 # LO SOLTN-A             2302.55
 # LO SOLTN-B             2277.9458
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-MY-18-8"

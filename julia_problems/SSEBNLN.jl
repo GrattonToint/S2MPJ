@@ -18,7 +18,7 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SSEBNLN"
@@ -218,6 +218,9 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_  = (
               s2mpj_ii("V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])),ix_))
         arrset(pb.xnames,iv,"V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])))
@@ -245,23 +248,29 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["1"]):Int64(v_["HOURS"])
                 ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["P1"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1000.0)
-                iv = ix_["P2"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1500.0)
-                iv = ix_["QH"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1200.0)
-                iv = ix_["S"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1200.0)
-                iv = ix_["QG"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1200.0)
-                iv = ix_["QP"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(-1200.0)
+                push!(irA,ig)
+                push!(icA,ix_["P1"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1000.0))
+                push!(irA,ig)
+                push!(icA,ix_["P2"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1500.0))
+                push!(irA,ig)
+                push!(icA,ix_["QH"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1200.0))
+                push!(irA,ig)
+                push!(icA,ix_["S"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1200.0))
+                push!(irA,ig)
+                push!(icA,ix_["QG"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1200.0))
+                push!(irA,ig)
+                push!(icA,ix_["QP"*string(ID)*","*string(IH)])
+                push!(valA,Float64(-1200.0))
             end
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
@@ -269,17 +278,21 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"H"*string(ID)*","*string(Int64(v_["1"])))
-            iv = ix_["V"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["V"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"H"*string(ID)*","*string(Int64(v_["1"])))
-            iv = ix_["S"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["QH"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["S"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["QH"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["2"]):Int64(v_["HOURS"])
@@ -287,14 +300,18 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"H"*string(ID)*","*string(IH))
-                iv = ix_["V"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["V"*string(ID)*","*string(Int64(v_["IH-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["S"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["QH"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(ID)*","*string(Int64(v_["IH-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["S"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QH"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
             end
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
@@ -302,17 +319,21 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(ID)*","*string(Int64(v_["1"])))
-            iv = ix_["R"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["R"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(ID)*","*string(Int64(v_["1"])))
-            iv = ix_["QG"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["QP"*string(ID)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["QG"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["QP"*string(ID)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(-1.0))
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["2"]):Int64(v_["HOURS"])
@@ -320,14 +341,18 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"R"*string(ID)*","*string(IH))
-                iv = ix_["R"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["R"*string(ID)*","*string(Int64(v_["IH-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["QG"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["QP"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["R"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["R"*string(ID)*","*string(Int64(v_["IH-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QG"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QP"*string(ID)*","*string(IH)])
+                push!(valA,Float64(-1.0))
             end
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
@@ -335,16 +360,21 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("D"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"D"*string(ID)*","*string(IH))
-                iv = ix_["P1"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["P2"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["QH"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["QG"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["QP"*string(ID)*","*string(IH)]
-                pbm.A[ig,iv] += Float64(-1.33)
+                push!(irA,ig)
+                push!(icA,ix_["P1"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["P2"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QH"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QG"*string(ID)*","*string(IH)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["QP"*string(ID)*","*string(IH)])
+                push!(valA,Float64(-1.33))
             end
         end
         for D = Int64(v_["1"]):Int64(v_["DAYS"])
@@ -513,6 +543,8 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               1.617060D+07
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -521,9 +553,6 @@ function SSEBNLN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-RN-194-96"

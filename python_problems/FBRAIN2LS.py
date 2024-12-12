@@ -26,13 +26,14 @@ class  FBRAIN2LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FBRAIN2LS'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -8892,6 +8893,9 @@ class  FBRAIN2LS(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('ALPHA1',ix_)
         self.xnames=arrset(self.xnames,iv,'ALPHA1')
         [iv,ix_,_] = s2mpj_ii('C01',ix_)
@@ -8901,12 +8905,11 @@ class  FBRAIN2LS(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('C02',ix_)
         self.xnames=arrset(self.xnames,iv,'C02')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['0']),int(v_['M'])+1):
                 [ig,ig_,_] = s2mpj_ii('R'+str(I)+','+str(J),ig_)
@@ -11266,9 +11269,8 @@ class  FBRAIN2LS(CUTEst_problem):
 #    Solution
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSBR2-AN-4-0"
+        self.pbclass   = "C-CSBR2-AN-4-0"
         self.objderlvl = 2
 
 # **********************

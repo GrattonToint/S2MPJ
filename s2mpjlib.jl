@@ -96,9 +96,9 @@ mutable struct PBM
     PBM(name::String) = new( name,                             #name
                              Int64[],                          #objgrps
                              Int64[],                          #congrps
-                             spzeros(Float64, 100000, 100000), #A
+                             spzeros(Float64,0,0),             #A
                              Float64[],                        #gconst
-                             spzeros(Float64, 100000, 100000), #H
+                             spzeros(Float64,0,0),             #H
                              String[],                         #enames
                              String[],                         #elftype
                              Vector{Vector{Int64}}(),          #elvar
@@ -357,7 +357,7 @@ function evalgrsum( isobj::Bool, glist::Vector{Int}, x::Vector{Float64}, pbm::PB
    end
 
    # Check if pbm.A is not empty
-   
+
    if !isempty(pbm.A)
        sA1, sA2 = size(pbm.A)
        has_A = true
@@ -881,11 +881,9 @@ function evalHJv( mode::String, glist::Vector{Int}, x::Vector{Float64},
             ic += 1
             if derlvl >= 1
                 if (  egname == "TRIVIAL" )
-#                    sgin  = sparse(gin)
                     HJv  +=  gin * v[ic] / gsc
                 else
                     _, grada = pbm.call( egname, fin, ig, 2, pbm )
-#                    sgin  = sparse(gin)
                     HJv  += grada *  gin * v[ic] / gsc
                 end
             else

@@ -43,7 +43,7 @@ function FLOSP2TL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   15             $-PARAMETER n=2883
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FLOSP2TL"
@@ -146,6 +146,9 @@ function FLOSP2TL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["-M"]):Int64(v_["M"])
             for I = Int64(v_["-M"]):Int64(v_["M"])
                 iv,ix_,_ = s2mpj_ii("OM"*string(I)*","*string(J),ix_)
@@ -157,7 +160,7 @@ function FLOSP2TL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["-M+1"]):Int64(v_["M-1"])
             v_["J+"] = 1+J
             v_["J-"] = -1+J
@@ -167,161 +170,204 @@ function FLOSP2TL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(I)*","*string(J))
-                iv = ix_["OM"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/H2"])
-                iv = ix_["OM"*string(Int64(v_["I+"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["OM"*string(Int64(v_["I-"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["OM"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2AXX/H2"])
-                iv = ix_["OM"*string(I)*","*string(Int64(v_["J+"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
-                iv = ix_["OM"*string(I)*","*string(Int64(v_["J-"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
-                iv = ix_["PH"*string(Int64(v_["I+"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-PI1/2H"])
-                iv = ix_["PH"*string(Int64(v_["I-"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["PI1/2H"])
-                iv = ix_["PH"*string(I)*","*string(Int64(v_["J+"]))]
-                pbm.A[ig,iv] += Float64(v_["-PI2/2H"])
-                iv = ix_["PH"*string(I)*","*string(Int64(v_["J-"]))]
-                pbm.A[ig,iv] += Float64(v_["PI2/2H"])
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(Int64(v_["I+"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(Int64(v_["I-"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(I)*","*string(Int64(v_["J+"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(I)*","*string(Int64(v_["J-"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(Int64(v_["I+"]))*","*string(J)])
+                push!(valA,Float64(v_["-PI1/2H"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(Int64(v_["I-"]))*","*string(J)])
+                push!(valA,Float64(v_["PI1/2H"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(Int64(v_["J+"]))])
+                push!(valA,Float64(v_["-PI2/2H"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(Int64(v_["J-"]))])
+                push!(valA,Float64(v_["PI2/2H"]))
                 ig,ig_,_ = s2mpj_ii("V"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"V"*string(I)*","*string(J))
-                iv = ix_["PS"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/H2"])
-                iv = ix_["PS"*string(Int64(v_["I+"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["PS"*string(Int64(v_["I-"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["PS"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2AXX/H2"])
-                iv = ix_["PS"*string(I)*","*string(Int64(v_["J+"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
-                iv = ix_["PS"*string(I)*","*string(Int64(v_["J-"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
-                iv = ix_["OM"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["AXX/4"])
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(Int64(v_["I+"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(Int64(v_["I-"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(I)*","*string(Int64(v_["J+"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PS"*string(I)*","*string(Int64(v_["J-"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["OM"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["AXX/4"]))
                 ig,ig_,_ = s2mpj_ii("E"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"E"*string(I)*","*string(J))
-                iv = ix_["PH"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/H2"])
-                iv = ix_["PH"*string(Int64(v_["I+"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["PH"*string(Int64(v_["I-"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/H2"])
-                iv = ix_["PH"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2AXX/H2"])
-                iv = ix_["PH"*string(I)*","*string(Int64(v_["J+"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
-                iv = ix_["PH"*string(I)*","*string(Int64(v_["J-"]))]
-                pbm.A[ig,iv] += Float64(v_["AXX/H2"])
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(Int64(v_["I+"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(Int64(v_["I-"]))*","*string(J)])
+                push!(valA,Float64(v_["1/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["-2AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(Int64(v_["J+"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
+                push!(irA,ig)
+                push!(icA,ix_["PH"*string(I)*","*string(Int64(v_["J-"]))])
+                push!(valA,Float64(v_["AXX/H2"]))
             end
         end
         for K = Int64(v_["-M"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["M"]))]
-            pbm.A[ig,iv] += Float64(v_["2A1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["M"]))])
+            push!(valA,Float64(v_["2A1/H"]))
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["M-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-2A1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["M-1"]))])
+            push!(valA,Float64(v_["-2A1/H"]))
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["M"]))]
-            pbm.A[ig,iv] += Float64(v_["A2"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["M"]))])
+            push!(valA,Float64(v_["A2"]))
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["-M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["-M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["-M+1"]))]
-            pbm.A[ig,iv] += Float64(v_["2B1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["-M+1"]))])
+            push!(valA,Float64(v_["2B1/H"]))
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["-M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["-M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["-M"]))]
-            pbm.A[ig,iv] += Float64(v_["-2B1/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["-M"]))])
+            push!(valA,Float64(v_["-2B1/H"]))
             ig,ig_,_ = s2mpj_ii("T"*string(K)*","*string(Int64(v_["-M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(K)*","*string(Int64(v_["-M"])))
-            iv = ix_["PH"*string(K)*","*string(Int64(v_["-M"]))]
-            pbm.A[ig,iv] += Float64(v_["B2"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(K)*","*string(Int64(v_["-M"]))])
+            push!(valA,Float64(v_["B2"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["2F1/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["M"]))*","*string(K)])
+            push!(valA,Float64(v_["2F1/AXH"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["M-1"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["-2F1/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["M-1"]))*","*string(K)])
+            push!(valA,Float64(v_["-2F1/AXH"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["F2"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["M"]))*","*string(K)])
+            push!(valA,Float64(v_["F2"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["-M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["-M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["-M+1"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["2G1/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["-M+1"]))*","*string(K)])
+            push!(valA,Float64(v_["2G1/AXH"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["-M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["-M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["-M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["-2G1/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["-M"]))*","*string(K)])
+            push!(valA,Float64(v_["-2G1/AXH"]))
             ig,ig_,_ = s2mpj_ii("T"*string(Int64(v_["-M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"T"*string(Int64(v_["-M"]))*","*string(K))
-            iv = ix_["PH"*string(Int64(v_["-M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["G2"])
+            push!(irA,ig)
+            push!(icA,ix_["PH"*string(Int64(v_["-M"]))*","*string(K)])
+            push!(valA,Float64(v_["G2"]))
             ig,ig_,_ = s2mpj_ii("V"*string(K)*","*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(K)*","*string(Int64(v_["M"])))
-            iv = ix_["PS"*string(K)*","*string(Int64(v_["M"]))]
-            pbm.A[ig,iv] += Float64(v_["-2/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(K)*","*string(Int64(v_["M"]))])
+            push!(valA,Float64(v_["-2/H"]))
             ig,ig_,_ = s2mpj_ii("V"*string(K)*","*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(K)*","*string(Int64(v_["M"])))
-            iv = ix_["PS"*string(K)*","*string(Int64(v_["M-1"]))]
-            pbm.A[ig,iv] += Float64(v_["2/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(K)*","*string(Int64(v_["M-1"]))])
+            push!(valA,Float64(v_["2/H"]))
             ig,ig_,_ = s2mpj_ii("V"*string(K)*","*string(Int64(v_["-M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(K)*","*string(Int64(v_["-M"])))
-            iv = ix_["PS"*string(K)*","*string(Int64(v_["-M+1"]))]
-            pbm.A[ig,iv] += Float64(v_["2/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(K)*","*string(Int64(v_["-M+1"]))])
+            push!(valA,Float64(v_["2/H"]))
             ig,ig_,_ = s2mpj_ii("V"*string(K)*","*string(Int64(v_["-M"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(K)*","*string(Int64(v_["-M"])))
-            iv = ix_["PS"*string(K)*","*string(Int64(v_["-M"]))]
-            pbm.A[ig,iv] += Float64(v_["-2/H"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(K)*","*string(Int64(v_["-M"]))])
+            push!(valA,Float64(v_["-2/H"]))
             ig,ig_,_ = s2mpj_ii("V"*string(Int64(v_["M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(Int64(v_["M"]))*","*string(K))
-            iv = ix_["PS"*string(Int64(v_["M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["-2/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(Int64(v_["M"]))*","*string(K)])
+            push!(valA,Float64(v_["-2/AXH"]))
             ig,ig_,_ = s2mpj_ii("V"*string(Int64(v_["M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(Int64(v_["M"]))*","*string(K))
-            iv = ix_["PS"*string(Int64(v_["M-1"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["2/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(Int64(v_["M-1"]))*","*string(K)])
+            push!(valA,Float64(v_["2/AXH"]))
             ig,ig_,_ = s2mpj_ii("V"*string(Int64(v_["-M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(Int64(v_["-M"]))*","*string(K))
-            iv = ix_["PS"*string(Int64(v_["-M+1"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["2/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(Int64(v_["-M+1"]))*","*string(K)])
+            push!(valA,Float64(v_["2/AXH"]))
             ig,ig_,_ = s2mpj_ii("V"*string(Int64(v_["-M"]))*","*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"V"*string(Int64(v_["-M"]))*","*string(K))
-            iv = ix_["PS"*string(Int64(v_["-M"]))*","*string(K)]
-            pbm.A[ig,iv] += Float64(v_["-2/AXH"])
+            push!(irA,ig)
+            push!(icA,ix_["PS"*string(Int64(v_["-M"]))*","*string(K)])
+            push!(valA,Float64(v_["-2/AXH"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -438,15 +484,14 @@ function FLOSP2TL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 loaset(pbm.grelw,ig,posel,Float64(v_["AX/4H2"]))
             end
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNQR2-MY-V-V"

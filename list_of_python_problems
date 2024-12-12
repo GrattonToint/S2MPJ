@@ -16,6 +16,7 @@ ANTWERP.py
 ARGAUSS.py
 ARGLALE.py
 ARGLBLE.py
+ARGLINA.py
 ARGLINB.py
 ARGTRIGLS.py
 ARGTRIG.py
@@ -95,6 +96,8 @@ CBRATU3D.py
 CHACONN1.py
 CHACONN2.py
 CHANDHEQ.py
+CHANDHEULS.py
+CHANDHEU.py
 CHARDIS02.py
 CHARDIS0.py
 CHARDIS12.py
@@ -477,6 +480,9 @@ HS63.py
 HS64.py
 HS65.py
 HS66.py
+HS67.py
+HS68.py
+HS69.py
 HS6.py
 HS70.py
 HS71.py
@@ -494,9 +500,15 @@ HS80.py
 HS81.py
 HS83.py
 HS84.py
+HS85.py
 HS86.py
 HS87.py
+HS88.py
+HS89.py
 HS8.py
+HS90.py
+HS91.py
+HS92.py
 HS93.py
 HS95.py
 HS96.py
@@ -876,7 +888,6 @@ PRODPL0.py
 PRODPL1.py
 PSPDOC.py
 PT.py
-__pycache__
 QCNEW.py
 QC.py
 QINGB.py

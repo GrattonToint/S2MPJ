@@ -19,13 +19,14 @@ class  ALLINITA(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ALLINITA'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -37,6 +38,9 @@ class  ALLINITA(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
         self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
@@ -46,42 +50,45 @@ class  ALLINITA(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('X4',ix_)
         self.xnames=arrset(self.xnames,iv,'X4')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('FT1',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FT2',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('FT3',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FT4',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FT5',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X4']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('FT6',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FNT1',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FNT2',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X4']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X4']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('FNT3',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FNT4',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('FNT5',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('FNT6',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('C1',ig_)
@@ -93,19 +100,24 @@ class  ALLINITA(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('L1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L1')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X2']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X2']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('L2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'L2')
-        iv = ix_['X1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['X3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X1']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X3']])
+        valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -117,7 +129,7 @@ class  ALLINITA(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -353,6 +365,8 @@ class  ALLINITA(CUTEst_problem):
         posel = posel+1
         self.grelt = loaset(self.grelt,ig,posel,ie_['FT5E1'])
         self.grelw = loaset(self.grelw,ig,posel, 1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -361,15 +375,10 @@ class  ALLINITA(CUTEst_problem):
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-COOR2-AY-4-4"
+        self.pbclass   = "C-COOR2-AY-4-4"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

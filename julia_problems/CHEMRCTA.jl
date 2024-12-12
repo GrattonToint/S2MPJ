@@ -35,7 +35,7 @@ function CHEMRCTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHEMRCTA"
@@ -119,6 +119,9 @@ function CHEMRCTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
@@ -128,71 +131,86 @@ function CHEMRCTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["1"])))
-        iv = ix_["U"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["1"])))
-        iv = ix_["U"*string(Int64(v_["2"]))]
-        pbm.A[ig,iv] += Float64(v_["CU1"])
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["2"]))])
+        push!(valA,Float64(v_["CU1"]))
         ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["1"])))
-        iv = ix_["T"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T"*string(Int64(v_["1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["1"])))
-        iv = ix_["T"*string(Int64(v_["2"]))]
-        pbm.A[ig,iv] += Float64(v_["CT1"])
+        push!(irA,ig)
+        push!(icA,ix_["T"*string(Int64(v_["2"]))])
+        push!(valA,Float64(v_["CT1"]))
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("GU"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"GU"*string(I))
-            iv = ix_["U"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["CUI-1"])
-            iv = ix_["U"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["CUI"])
-            iv = ix_["U"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["1/H2PEM"])
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["CUI-1"]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(I)])
+            push!(valA,Float64(v_["CUI"]))
+            push!(irA,ig)
+            push!(icA,ix_["U"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["1/H2PEM"]))
             ig,ig_,_ = s2mpj_ii("GT"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"GT"*string(I))
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["BETA"])
-            iv = ix_["T"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["CTI-1"])
-            iv = ix_["T"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["CTI"])
-            iv = ix_["T"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["1/H2PEH"])
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(v_["BETA"]))
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["CTI-1"]))
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(I)])
+            push!(valA,Float64(v_["CTI"]))
+            push!(irA,ig)
+            push!(icA,ix_["T"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["1/H2PEH"]))
         end
         ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["N"])))
-        iv = ix_["U"*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["N"])))
-        iv = ix_["U"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["U"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["N"])))
-        iv = ix_["T"*string(Int64(v_["N-1"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T"*string(Int64(v_["N-1"]))])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["N"])))
-        iv = ix_["T"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["T"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -283,15 +301,14 @@ function CHEMRCTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-MN-V-V"

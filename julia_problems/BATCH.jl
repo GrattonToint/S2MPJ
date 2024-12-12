@@ -18,7 +18,7 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BATCH"
@@ -138,6 +138,9 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["M"])
             iv,ix_,_ = s2mpj_ii("N"*string(J),ix_)
             arrset(pb.xnames,iv,"N"*string(J))
@@ -161,7 +164,7 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("COST",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -169,10 +172,12 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
                 ig,ig_,_ = s2mpj_ii("VOL"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VOL"*string(I)*","*string(J))
-                iv = ix_["V"*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["B"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["B"*string(I)])
+                push!(valA,Float64(-1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -180,10 +185,12 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
                 ig,ig_,_ = s2mpj_ii("CYCL"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CYCL"*string(I)*","*string(J))
-                iv = ix_["N"*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["TL"*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["N"*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["TL"*string(I)])
+                push!(valA,Float64(1.0))
             end
         end
         ig,ig_,_ = s2mpj_ii("HORIZON",ig_)
@@ -194,22 +201,25 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
                 ig,ig_,_ = s2mpj_ii("NPAR"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"NPAR"*string(J))
-                iv = ix_["Y"*string(K)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["LOGI"*string(K)])
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(J)])
+                push!(valA,Float64(v_["LOGI"*string(K)]))
             end
             ig,ig_,_ = s2mpj_ii("NPAR"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"NPAR"*string(J))
-            iv = ix_["N"*string(J)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["N"*string(J)])
+            push!(valA,Float64(-1.0))
         end
         for J = Int64(v_["1"]):Int64(v_["M"])
             for K = Int64(v_["1"]):Int64(v_["NU"])
                 ig,ig_,_ = s2mpj_ii("SOS1"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"SOS1"*string(J))
-                iv = ix_["Y"*string(K)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(J)])
+                push!(valA,Float64(1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -326,6 +336,8 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -335,9 +347,6 @@ function BATCH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AN-46-73"

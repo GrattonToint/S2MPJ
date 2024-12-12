@@ -27,7 +27,7 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRUSPYR2"
@@ -103,6 +103,9 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
             iv,ix_,_ = s2mpj_ii("XAREA"*string(J),ix_)
             arrset(pb.xnames,iv,"XAREA"*string(J))
@@ -112,12 +115,13 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"DISPL"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
             ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["XAREA"*string(J)]
-            pbm.A[ig,iv] += Float64(v_["W"*string(J)])
+            push!(irA,ig)
+            push!(icA,ix_["XAREA"*string(J)])
+            push!(valA,Float64(v_["W"*string(J)]))
         end
         for K = Int64(v_["1"]):Int64(v_["NDIM"])
             ig,ig_,_ = s2mpj_ii("EQUIL"*string(K),ig_)
@@ -129,8 +133,9 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("STRES"*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"STRES"*string(J))
-                iv = ix_["DISPL"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["R"*string(I)*","*string(J)])
+                push!(irA,ig)
+                push!(icA,ix_["DISPL"*string(I)])
+                push!(valA,Float64(v_["R"*string(I)*","*string(J)]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -208,6 +213,8 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Objective function value corresponding to the local minimizer above
         pb.objlower = 1.2287408808
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -215,9 +222,6 @@ function TRUSPYR2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-MN-11-11"

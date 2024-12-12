@@ -25,13 +25,14 @@ class  AIRCRFTB(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRCRFTB'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -46,6 +47,9 @@ class  AIRCRFTB(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('ROLLRATE',ix_)
         self.xnames=arrset(self.xnames,iv,'ROLLRATE')
         [iv,ix_,_] = s2mpj_ii('PITCHRAT',ix_)
@@ -63,62 +67,81 @@ class  AIRCRFTB(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('RUDDERDF',ix_)
         self.xnames=arrset(self.xnames,iv,'RUDDERDF')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['ROLLRATE']
-        self.A[ig,iv] = float(-3.933)+self.A[ig,iv]
-        iv = ix_['PITCHRAT']
-        self.A[ig,iv] = float(0.107)+self.A[ig,iv]
-        iv = ix_['YAWRATE']
-        self.A[ig,iv] = float(0.126)+self.A[ig,iv]
-        iv = ix_['SSLIPANG']
-        self.A[ig,iv] = float(-9.99)+self.A[ig,iv]
-        iv = ix_['AILERON']
-        self.A[ig,iv] = float(-45.83)+self.A[ig,iv]
-        iv = ix_['RUDDERDF']
-        self.A[ig,iv] = float(-7.64)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ROLLRATE']])
+        valA = np.append(valA,float(-3.933))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['PITCHRAT']])
+        valA = np.append(valA,float(0.107))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['YAWRATE']])
+        valA = np.append(valA,float(0.126))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['SSLIPANG']])
+        valA = np.append(valA,float(-9.99))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['AILERON']])
+        valA = np.append(valA,float(-45.83))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['RUDDERDF']])
+        valA = np.append(valA,float(-7.64))
         [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['PITCHRAT']
-        self.A[ig,iv] = float(-0.987)+self.A[ig,iv]
-        iv = ix_['ATTCKANG']
-        self.A[ig,iv] = float(-22.95)+self.A[ig,iv]
-        iv = ix_['ELEVATOR']
-        self.A[ig,iv] = float(-28.37)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['PITCHRAT']])
+        valA = np.append(valA,float(-0.987))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ATTCKANG']])
+        valA = np.append(valA,float(-22.95))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ELEVATOR']])
+        valA = np.append(valA,float(-28.37))
         [ig,ig_,_] = s2mpj_ii('G3',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['ROLLRATE']
-        self.A[ig,iv] = float(0.002)+self.A[ig,iv]
-        iv = ix_['YAWRATE']
-        self.A[ig,iv] = float(-0.235)+self.A[ig,iv]
-        iv = ix_['SSLIPANG']
-        self.A[ig,iv] = float(5.67)+self.A[ig,iv]
-        iv = ix_['AILERON']
-        self.A[ig,iv] = float(-0.921)+self.A[ig,iv]
-        iv = ix_['RUDDERDF']
-        self.A[ig,iv] = float(-6.51)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ROLLRATE']])
+        valA = np.append(valA,float(0.002))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['YAWRATE']])
+        valA = np.append(valA,float(-0.235))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['SSLIPANG']])
+        valA = np.append(valA,float(5.67))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['AILERON']])
+        valA = np.append(valA,float(-0.921))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['RUDDERDF']])
+        valA = np.append(valA,float(-6.51))
         [ig,ig_,_] = s2mpj_ii('G4',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['PITCHRAT']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['ATTCKANG']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['ELEVATOR']
-        self.A[ig,iv] = float(-1.168)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['PITCHRAT']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ATTCKANG']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['ELEVATOR']])
+        valA = np.append(valA,float(-1.168))
         [ig,ig_,_] = s2mpj_ii('G5',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['YAWRATE']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['SSLIPANG']
-        self.A[ig,iv] = float(-0.196)+self.A[ig,iv]
-        iv = ix_['AILERON']
-        self.A[ig,iv] = float(-0.0071)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['YAWRATE']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['SSLIPANG']])
+        valA = np.append(valA,float(-0.196))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['AILERON']])
+        valA = np.append(valA,float(-0.0071))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -346,14 +369,11 @@ class  AIRCRFTB(CUTEst_problem):
         self.objlower = 0.0
 #    Solution
 # LO SOLTN               6.4099D-02
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSXR2-RN-8-0"
+        self.pbclass   = "C-CSXR2-RN-8-0"
         self.objderlvl = 2
 
 # **********************

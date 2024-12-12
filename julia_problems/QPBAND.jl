@@ -17,7 +17,7 @@ function QPBAND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   50000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QPBAND"
@@ -51,30 +51,36 @@ function QPBAND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
             v_["RI/RN"] = v_["RI"]/v_["RN"]
             v_["-RI/RN"] = -1.0*v_["RI/RN"]
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["-RI/RN"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["-RI/RN"]))
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["M+I"] = v_["M"]+I
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["M+I"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["M+I"]))])
+            push!(valA,Float64(1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -98,30 +104,33 @@ function QPBAND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(2.0,pb.n)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
+        irH  = Int64[]
+        icH  = Int64[]
+        valH = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = I+v_["1"]
-            ix1 = ix_["X"*string(I)]
-            ix2 = ix_["X"*string(I)]
-            pbm.H[ix1,ix2] = Float64(2.0)+pbm.H[ix1,ix2]
-            pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
-            ix2 = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.H[ix1,ix2] = Float64(-1.0)+pbm.H[ix1,ix2]
-            pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+            push!(irH,ix_["X"*string(I)])
+            push!(icH,ix_["X"*string(I)])
+            push!(valH,Float64(2.0))
+            push!(irH,ix_["X"*string(I)])
+            push!(icH,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valH,Float64(-1.0))
+            push!(irH,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(icH,ix_["X"*string(I)])
+            push!(valH,Float64(-1.0))
         end
-        ix1 = ix_["X"*string(Int64(v_["N"]))]
-        ix2 = ix_["X"*string(Int64(v_["N"]))]
-        pbm.H[ix1,ix2] = Float64(2.0)+pbm.H[ix1,ix2]
-        pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+        push!(irH,ix_["X"*string(Int64(v_["N"]))])
+        push!(icH,ix_["X"*string(Int64(v_["N"]))])
+        push!(valH,Float64(2.0))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
+        pbm.H = sparse(irH,icH,valH,pb.n,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
-        pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-V-V"

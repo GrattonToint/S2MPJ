@@ -28,13 +28,14 @@ class  CAMSHAPE(CUTEst_problem):
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CAMSHAPE'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -82,21 +83,24 @@ class  CAMSHAPE(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('R'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'R'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('AREA',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['R'+str(I)]
-            self.A[ig,iv] = float(v_['-PIRV/N'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['R'+str(I)]])
+            valA = np.append(valA,float(v_['-PIRV/N']))
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             [ig,ig_,_] = s2mpj_ii('CO'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
@@ -104,47 +108,57 @@ class  CAMSHAPE(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('E1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E1')
-        iv = ix_['R'+str(int(v_['1']))]
-        self.A[ig,iv] = float(v_['-RMIN'])+self.A[ig,iv]
-        iv = ix_['R'+str(int(v_['2']))]
-        self.A[ig,iv] = float(v_['RMIN2CD'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['1']))]])
+        valA = np.append(valA,float(v_['-RMIN']))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['2']))]])
+        valA = np.append(valA,float(v_['RMIN2CD']))
         v_['R'] = v_['RMIN2CD']-v_['RMIN']
         [ig,ig_,_] = s2mpj_ii('E2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E2')
-        iv = ix_['R'+str(int(v_['1']))]
-        self.A[ig,iv] = float(v_['R'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['1']))]])
+        valA = np.append(valA,float(v_['R']))
         [ig,ig_,_] = s2mpj_ii('E3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E3')
-        iv = ix_['R'+str(int(v_['N']))]
-        self.A[ig,iv] = float(v_['-RMAX'])+self.A[ig,iv]
-        iv = ix_['R'+str(int(v_['N-1']))]
-        self.A[ig,iv] = float(v_['RMAX2CD'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['N']))]])
+        valA = np.append(valA,float(v_['-RMAX']))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['N-1']))]])
+        valA = np.append(valA,float(v_['RMAX2CD']))
         [ig,ig_,_] = s2mpj_ii('E4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E4')
-        iv = ix_['R'+str(int(v_['N']))]
-        self.A[ig,iv] = float(v_['-2RMAX'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['N']))]])
+        valA = np.append(valA,float(v_['-2RMAX']))
         [ig,ig_,_] = s2mpj_ii('CU'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CU'+str(int(v_['0'])))
-        iv = ix_['R'+str(int(v_['1']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['1']))]])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             [ig,ig_,_] = s2mpj_ii('CU'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CU'+str(I))
-            iv = ix_['R'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['R'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['R'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['R'+str(I)]])
+            valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('CU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CU'+str(int(v_['N'])))
-        iv = ix_['R'+str(int(v_['N']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['R'+str(int(v_['N']))]])
+        valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -156,7 +170,7 @@ class  CAMSHAPE(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -291,6 +305,8 @@ class  CAMSHAPE(CUTEst_problem):
 # LO SOLUTION             -4.2785D+00   $ (NH=200)
 # LO SOLUTION             -4.2757D+00   $ (NH=400)
 # LO SOLUTION             -4.2743D+00   $ (NH=800)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -299,15 +315,10 @@ class  CAMSHAPE(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
         self.cupper[np.arange(self.nge)] = grange[gegrps]
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLOR2-AN-V-V"
+        self.pbclass   = "C-CLOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

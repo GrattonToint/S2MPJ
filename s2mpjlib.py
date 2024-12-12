@@ -313,8 +313,7 @@ class CUTEst_problem:
         #  Check for the presence and size of a linear term
 
         if hasattr( self, "A" ):
-            sA1 = self.Ashape[0]
-            sA2 = self.Ashape[1]
+            sA1, sA2 = self.A.shape
             has_A = True
         else:
             has_A = False
@@ -654,8 +653,7 @@ class CUTEst_problem:
         #  Check for the presence and size of a linear term
 
         if hasattr( self, "A" ):
-            sA1 = self.Ashape[0]
-            sA2 = self.Ashape[1]
+            sA1, sA2 = self.A.shape
             has_A = True
         else:
             has_A = False

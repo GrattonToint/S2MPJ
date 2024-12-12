@@ -44,13 +44,14 @@ class  TORSIONA(CUTEst_problem):
 # IE Q                   37             $-PARAMETER n= 5476
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TORSIONA'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -82,17 +83,19 @@ class  TORSIONA(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 self.xnames=arrset(self.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['2']),int(v_['P'])+1):
             for J in range(int(v_['2']),int(v_['P'])+1):
                 [ig,ig_,_] = s2mpj_ii('GL'+str(I)+','+str(J),ig_)
@@ -105,8 +108,9 @@ class  TORSIONA(CUTEst_problem):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 [ig,ig_,_] = s2mpj_ii('G',ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['X'+str(I)+','+str(J)]
-                self.A[ig,iv] = float(v_['LC'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(I)+','+str(J)]])
+                valA = np.append(valA,float(v_['LC']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -324,14 +328,11 @@ class  TORSIONA(CUTEst_problem):
 # LO SOLTN(37)           -0.4183000
 # LO SOLTN(50)           -0.4183900
 # LO SOLTN(61)           -0.4184200
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CQBR2-MY-V-0"
+        self.pbclass   = "C-CQBR2-MY-V-0"
         self.objderlvl = 2
 
 # **********************

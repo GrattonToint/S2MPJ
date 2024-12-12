@@ -22,7 +22,7 @@ function NCVXQP6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NCVXQP6"
@@ -55,56 +55,65 @@ function NCVXQP6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
             v_["J"] = 2*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
             v_["K"] = v_["K"]*v_["N"]
             v_["J"] = v_["J"]-v_["K"]
             v_["J"] = 1+v_["J"]
-            iv = ix_["X"*string(Int64(v_["J"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J"]))])
+            push!(valA,Float64(1.0))
             v_["J"] = 3*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
             v_["K"] = v_["K"]*v_["N"]
             v_["J"] = v_["J"]-v_["K"]
             v_["J"] = 1+v_["J"]
-            iv = ix_["X"*string(Int64(v_["J"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J"]))])
+            push!(valA,Float64(1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CON"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
             v_["J"] = 4*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
             v_["K"] = v_["K"]*v_["N"]
             v_["J"] = v_["J"]-v_["K"]
             v_["J"] = 1+v_["J"]
-            iv = ix_["X"*string(Int64(v_["J"]))]
-            pbm.A[ig,iv] += Float64(2.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J"]))])
+            push!(valA,Float64(2.0))
             v_["J"] = 5*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
             v_["K"] = v_["K"]*v_["N"]
             v_["J"] = v_["J"]-v_["K"]
             v_["J"] = 1+v_["J"]
-            iv = ix_["X"*string(Int64(v_["J"]))]
-            pbm.A[ig,iv] += Float64(3.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["J"]))])
+            push!(valA,Float64(3.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -162,15 +171,14 @@ function NCVXQP6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -3.54861D+07   $ (n=1000)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-V-V"

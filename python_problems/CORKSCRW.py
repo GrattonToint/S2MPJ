@@ -34,13 +34,14 @@ class  CORKSCRW(CUTEst_problem):
 # IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CORKSCRW'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -87,6 +88,9 @@ class  CORKSCRW(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['0']),int(v_['T'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
@@ -108,74 +112,92 @@ class  CORKSCRW(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('UZ'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'UZ'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['T'])+1):
             [ig,ig_,_] = s2mpj_ii('OX'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             self.gscale = arrset(self.gscale,ig,float(v_['W/T'+str(I)]))
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['T'])+1):
             v_['I-1'] = -1+I
             [ig,ig_,_] = s2mpj_ii('ACX'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACX'+str(I))
-            iv = ix_['VX'+str(I)]
-            self.A[ig,iv] = float(v_['M/H'])+self.A[ig,iv]
-            iv = ix_['VX'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-M/H'])+self.A[ig,iv]
-            iv = ix_['UX'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VX'+str(I)]])
+            valA = np.append(valA,float(v_['M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VX'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['UX'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('ACY'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACY'+str(I))
-            iv = ix_['VY'+str(I)]
-            self.A[ig,iv] = float(v_['M/H'])+self.A[ig,iv]
-            iv = ix_['VY'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-M/H'])+self.A[ig,iv]
-            iv = ix_['UY'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VY'+str(I)]])
+            valA = np.append(valA,float(v_['M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VY'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['UY'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('ACZ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACZ'+str(I))
-            iv = ix_['VZ'+str(I)]
-            self.A[ig,iv] = float(v_['M/H'])+self.A[ig,iv]
-            iv = ix_['VZ'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-M/H'])+self.A[ig,iv]
-            iv = ix_['UZ'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VZ'+str(I)]])
+            valA = np.append(valA,float(v_['M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VZ'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-M/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['UZ'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('PSX'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSX'+str(I))
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(v_['1/H'])+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-1/H'])+self.A[ig,iv]
-            iv = ix_['VX'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(v_['1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VX'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('PSY'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSY'+str(I))
-            iv = ix_['Y'+str(I)]
-            self.A[ig,iv] = float(v_['1/H'])+self.A[ig,iv]
-            iv = ix_['Y'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-1/H'])+self.A[ig,iv]
-            iv = ix_['VY'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Y'+str(I)]])
+            valA = np.append(valA,float(v_['1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Y'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VY'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('PSZ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSZ'+str(I))
-            iv = ix_['Z'+str(I)]
-            self.A[ig,iv] = float(v_['1/H'])+self.A[ig,iv]
-            iv = ix_['Z'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['-1/H'])+self.A[ig,iv]
-            iv = ix_['VZ'+str(I)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Z'+str(I)]])
+            valA = np.append(valA,float(v_['1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['Z'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['-1/H']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['VZ'+str(I)]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('SC'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SC'+str(I))
@@ -190,7 +212,7 @@ class  CORKSCRW(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -320,6 +342,8 @@ class  CORKSCRW(CUTEst_problem):
 # LO SOLTN(100)          44.368110588
 # LO SOLTN(500)
 # LO SOLTN(1000)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -327,15 +351,10 @@ class  CORKSCRW(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CSOR2-AN-V-V"
+        self.pbclass   = "C-CSOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

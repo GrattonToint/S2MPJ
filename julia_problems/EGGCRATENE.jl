@@ -24,7 +24,7 @@ function EGGCRATENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EGGCRATENE"
@@ -46,22 +46,27 @@ function EGGCRATENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X",ix_)
         arrset(pb.xnames,iv,"X")
         iv,ix_,_ = s2mpj_ii("Y",ix_)
         arrset(pb.xnames,iv,"Y")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("F1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F1")
-        iv = ix_["X"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("F2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F2")
-        iv = ix_["Y"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Y"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("F3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"F3")
@@ -141,15 +146,14 @@ function EGGCRATENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pb.objlower = 0.0
 #    Solution
 # LO SOLUTION            0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-MN-4-2"

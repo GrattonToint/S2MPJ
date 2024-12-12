@@ -33,7 +33,7 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   50
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TFI2"
@@ -58,6 +58,9 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         iv,ix_,_ = s2mpj_ii("X2",ix_)
@@ -65,15 +68,18 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(0.5)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(v_["1/3"])
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(0.5))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(v_["1/3"]))
         for I = Int64(v_["0"]):Int64(v_["M"])
             v_["RI"] = Float64(I)
             v_["T"] = v_["RI"]*v_["H"]
@@ -83,12 +89,15 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             ig,ig_,_ = s2mpj_ii("CG"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"CG"*string(I))
-            iv = ix_["X1"]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["X2"]
-            pbm.A[ig,iv] += Float64(v_["-T"])
-            iv = ix_["X3"]
-            pbm.A[ig,iv] += Float64(v_["-TT"])
+            push!(irA,ig)
+            push!(icA,ix_["X1"])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X2"])
+            push!(valA,Float64(v_["-T"]))
+            push!(irA,ig)
+            push!(icA,ix_["X3"])
+            push!(valA,Float64(v_["-TT"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -118,14 +127,13 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.64903110696
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CLLR2-AN-3-V"

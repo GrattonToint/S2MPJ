@@ -29,7 +29,7 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE NY                  30             $-PARAMETER n = 3966
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ZAMB2"
@@ -1414,6 +1414,9 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for k = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("V1"*string(k),ix_)
             arrset(pb.xnames,iv,"V1"*string(k))
@@ -1445,7 +1448,7 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         iv,ix_,_ = s2mpj_ii("F2-2",ix_)
         arrset(pb.xnames,iv,"F2-2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for k = Int64(v_["0"]):Int64(v_["N-1"])
             v_["k+1"] = 1+k
             v_["k-2"] = -2+k
@@ -1457,96 +1460,124 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
             arrset(gtype,ig,"<>")
             ig,ig_,_ = s2mpj_ii("F0Q1"*string(k),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["Q1"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Q1"*string(k)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(v_["SPSI"]))
             ig,ig_,_ = s2mpj_ii("F0F2"*string(k),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["F2"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["F2"*string(k)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(v_["SPSI"]))
             ig,ig_,_ = s2mpj_ii("F0Q3"*string(k),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["Q3"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Q3"*string(k)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(v_["SPSI"]))
             ig,ig_,_ = s2mpj_ii("F0Q4"*string(k),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["Q4"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Q4"*string(k)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(v_["SPSI"]))
             ig,ig_,_ = s2mpj_ii("SE1"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SE1"*string(k))
-            iv = ix_["V1"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q1"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["F1"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["V1"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["V1"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q1"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F1"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V1"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("SE2"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SE2"*string(k))
-            iv = ix_["V2"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["F2"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["V2"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["V2"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F2"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V2"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("SE3"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SE3"*string(k))
-            iv = ix_["V3"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["F2"*string(Int64(v_["k-2"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q3"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["F3"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["V3"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["V3"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F2"*string(Int64(v_["k-2"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q3"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F3"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V3"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("SE4"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SE4"*string(k))
-            iv = ix_["V4"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q1"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["F1"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q3"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["F3"*string(k)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Q4"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["F4"*string(k)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["V4"*string(Int64(v_["k+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["V4"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q1"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F1"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q3"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F3"*string(k)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Q4"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["F4"*string(k)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["V4"*string(Int64(v_["k+1"]))])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("V1END",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["V1"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["V1"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["SPHI"]))
         ig,ig_,_ = s2mpj_ii("V2END",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["V2"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["V2"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["SPHI"]))
         ig,ig_,_ = s2mpj_ii("V3END",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["V3"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["V3"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["SPHI3"]))
         ig,ig_,_ = s2mpj_ii("V4END",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["V4"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["V4"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["SPHI"]))
         ig,ig_,_ = s2mpj_ii("V1E",ig_)
         arrset(gtype,ig,"<>")
@@ -1973,15 +2004,14 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # XL SOLUTION            -4.14220D+00   $ NY = 10
 # XL SOLUTION            -7.33826D+00   $ NY = 20
 # XL SOLUTION            -1.11312D+01   $ NY = 30
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-MN-V-V"

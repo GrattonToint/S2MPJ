@@ -24,7 +24,7 @@ function PALMER3A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER3A"
@@ -91,6 +91,9 @@ function PALMER3A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
         iv,ix_,_ = s2mpj_ii("A2",ix_)
@@ -104,21 +107,25 @@ function PALMER3A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("C",ix_)
         arrset(pb.xnames,iv,"C")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["XSQR"] = v_["X"*string(I)]*v_["X"*string(I)]
             v_["XQUART"] = v_["XSQR"]*v_["XSQR"]
             v_["XSEXT"] = v_["XQUART"]*v_["XSQR"]
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["A0"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["A2"]
-            pbm.A[ig,iv] += Float64(v_["XSQR"])
-            iv = ix_["A4"]
-            pbm.A[ig,iv] += Float64(v_["XQUART"])
-            iv = ix_["A6"]
-            pbm.A[ig,iv] += Float64(v_["XSEXT"])
+            push!(irA,ig)
+            push!(icA,ix_["A0"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["A2"])
+            push!(valA,Float64(v_["XSQR"]))
+            push!(irA,ig)
+            push!(icA,ix_["A4"])
+            push!(valA,Float64(v_["XQUART"]))
+            push!(irA,ig)
+            push!(icA,ix_["A6"])
+            push!(valA,Float64(v_["XSEXT"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -193,10 +200,9 @@ function PALMER3A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                 2.043142D-02
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-RN-6-0"
         pbm.objderlvl = 2

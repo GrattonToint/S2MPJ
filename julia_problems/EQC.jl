@@ -18,7 +18,7 @@ function EQC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EQC"
@@ -184,6 +184,9 @@ function EQC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("F1",ix_)
         arrset(pb.xnames,iv,"F1")
         iv,ix_,_ = s2mpj_ii("F2",ix_)
@@ -203,110 +206,139 @@ function EQC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         iv,ix_,_ = s2mpj_ii("PBUBB",ix_)
         arrset(pb.xnames,iv,"PBUBB")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["F1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["F1"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["2"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["F1"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["F1"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["3"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["F2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["F2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["4"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["F2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["F2"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["5"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBUBG"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBUBG"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["6"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PUBGB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PUBGB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["7"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["F1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["F2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["F1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["F2"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["8"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PGBGB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PGBGB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["9"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBGBG"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBGBG"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["10"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBBBB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBBBB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["11"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PGBGB"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["PUBGB"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PGBGB"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PUBGB"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["12"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBGBG"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["PBUBG"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBGBG"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PBUBG"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["13"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBBBB"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["PUBBB"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBBBB"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PUBBB"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["13"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBUBB"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBUBB"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["14"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBUBG"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBUBG"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["15"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PBUBB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBUBB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["16"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PUBGB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PUBGB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("OBJ"*string(Int64(v_["17"])),ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PUBBB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PUBBB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("CON0",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"CON0")
-        iv = ix_["PBGBG"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["PBUBG"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBGBG"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PBUBG"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("CON1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"CON1")
-        iv = ix_["PGBGB"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["PUBGB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PGBGB"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PUBGB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("CON2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"CON2")
-        iv = ix_["PBBBB"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["PUBBB"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["PBUBB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["PBBBB"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PUBBB"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["PBUBB"])
+        push!(valA,Float64(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -690,14 +722,13 @@ function EQC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               1138.416240
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-MY-9-3"

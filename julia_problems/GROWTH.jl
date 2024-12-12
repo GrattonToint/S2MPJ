@@ -17,7 +17,7 @@ function GROWTH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "GROWTH"
@@ -37,6 +37,9 @@ function GROWTH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("U1",ix_)
         arrset(pb.xnames,iv,"U1")
         iv,ix_,_ = s2mpj_ii("U2",ix_)
@@ -44,7 +47,7 @@ function GROWTH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         iv,ix_,_ = s2mpj_ii("U3",ix_)
         arrset(pb.xnames,iv,"U3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G8")
@@ -445,8 +448,6 @@ function GROWTH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CNOR2-AN-3-12"

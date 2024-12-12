@@ -48,7 +48,7 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE PX                  100            $-PARAMETER n = 10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OBSTCLAE"
@@ -102,6 +102,9 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["PX"])
             for I = Int64(v_["1"]):Int64(v_["PY"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -109,13 +112,14 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["PY-1"])
             for J = Int64(v_["2"]):Int64(v_["PX-1"])
                 ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["LINC"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(v_["LINC"]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -260,10 +264,9 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(75)           ???
 # LO SOLTN(100)          ???
 # LO SOLTN(125)          ???
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-AY-V-0"
         pbm.objderlvl = 2

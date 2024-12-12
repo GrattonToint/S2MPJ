@@ -28,7 +28,7 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DITTERT"
@@ -68,6 +68,9 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for M = Int64(v_["1"]):Int64(v_["N-1"])
             v_["RK1"] = v_["T"*string(M)]
             v_["K1"] = trunc(Int,v_["RK1"])
@@ -92,15 +95,16 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"C"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("ROWPROD",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("COLPROD",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["P"*string(Int64(v_["2**N-1"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P"*string(Int64(v_["2**N-1"]))])
+        push!(valA,Float64(1.0))
         for M = Int64(v_["1"]):Int64(v_["N-1"])
             v_["RK1"] = v_["T"*string(M)]
             v_["K1"] = trunc(Int,v_["RK1"])
@@ -111,8 +115,9 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("PE"*string(K),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"PE"*string(K))
-                iv = ix_["P"*string(K)]
-                pbm.A[ig,iv] += Float64(- 1.0)
+                push!(irA,ig)
+                push!(icA,ix_["P"*string(K)])
+                push!(valA,Float64(- 1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -120,33 +125,38 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"R"*string(I))
-                iv = ix_["A"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["A"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
                 ig,ig_,_ = s2mpj_ii("C"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"C"*string(J))
-                iv = ix_["A"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["A"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(I))
-            iv = ix_["C"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["C"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("SUM",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SUM")
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -357,15 +367,14 @@ function DITTERT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # LO SOLTN(18)          1.62718123D-7
 # LO SOLTN(19)          6.14859946D-8
 # LO SOLTN(20)          2.32019615D-8
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COQR2-AN-V-V"

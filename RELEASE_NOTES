@@ -21,4 +21,10 @@ Release notes for S2MPJ
 
 11 XI 2024 : cleanup of the matlab_problems directory
              improvement in error handling in SPARCO problems
+
+25 XI 2024 : added problem ARGLINA, CHANDHEU (which had escaped, somehow) and CHANDHEULS
+             improved comments for problems WATSON and WATSONNE
+             improved construction of sparse matrices, including removal of the addinA option of s2mpj.m
+             updating of the documentation to reflect these modifications.
+             
              

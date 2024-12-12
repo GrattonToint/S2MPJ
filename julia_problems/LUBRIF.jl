@@ -31,7 +31,7 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE NN                  250            $-PARAMETER n = 3751
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUBRIF"
@@ -85,6 +85,9 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("K",ix_)
         arrset(pb.xnames,iv,"K")
         for I = Int64(v_["0"]):Int64(v_["2"]):Int64(v_["2N"])
@@ -100,19 +103,21 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             arrset(pb.xnames,iv,"R"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
             ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(Int64(v_["0"])))
-            iv = ix_["P"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["2DX/PI"])
+            push!(irA,ig)
+            push!(icA,ix_["P"*string(I)])
+            push!(valA,Float64(v_["2DX/PI"]))
         end
         ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"R"*string(Int64(v_["0"])))
-        iv = ix_["P"*string(Int64(v_["2N"]))]
-        pbm.A[ig,iv] += Float64(v_["DX/PI"])
+        push!(irA,ig)
+        push!(icA,ix_["P"*string(Int64(v_["2N"]))])
+        push!(valA,Float64(v_["DX/PI"]))
         ig,ig_,_ = s2mpj_ii("COMPL",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
@@ -121,22 +126,27 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             ig,ig_,_ = s2mpj_ii("DR"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"DR"*string(I))
-            iv = ix_["H"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(v_["L/DX"])
-            iv = ix_["H"*string(Int64(v_["I-1"]))]
-            pbm.A[ig,iv] += Float64(v_["-L/DX"])
-            iv = ix_["R"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["H"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(v_["L/DX"]))
+            push!(irA,ig)
+            push!(icA,ix_["H"*string(Int64(v_["I-1"]))])
+            push!(valA,Float64(v_["-L/DX"]))
+            push!(irA,ig)
+            push!(icA,ix_["R"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for J = Int64(v_["1"]):Int64(v_["2"]):Int64(v_["2N-1"])
             v_["-J"] = -1*J
             ig,ig_,_ = s2mpj_ii("DH"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"DH"*string(J))
-            iv = ix_["K"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["H"*string(J)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["K"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["H"*string(J)])
+            push!(valA,Float64(-1.0))
             for I = Int64(v_["2"]):Int64(v_["2N"])
                 v_["C"*string(I)] = 0.0
             end
@@ -185,8 +195,9 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
                 ig,ig_,_ = s2mpj_ii("DH"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"DH"*string(J))
-                iv = ix_["P"*string(I)]
-                pbm.A[ig,iv] += Float64(v_["C"*string(I)])
+                push!(irA,ig)
+                push!(icA,ix_["P"*string(I)])
+                push!(valA,Float64(v_["C"*string(I)]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -362,15 +373,14 @@ function LUBRIF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQOR2-MN-V-V"

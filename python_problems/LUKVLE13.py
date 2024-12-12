@@ -26,13 +26,14 @@ class  LUKVLE13(CUTEst_problem):
 # IE N                   9998           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLE13'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -57,16 +58,18 @@ class  LUKVLE13(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['(N-2)/3'])+1):
             v_['I-1'] = -1+I
             v_['J'] = v_['3']*v_['I-1']
@@ -77,20 +80,25 @@ class  LUKVLE13(CUTEst_problem):
             v_['J+5'] = 5+v_['J']
             [ig,ig_,_] = s2mpj_ii('OBJ1'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(int(v_['J+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+1']))]])
+            valA = np.append(valA,float(1.0))
             [ig,ig_,_] = s2mpj_ii('OBJ2'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(int(v_['J+2']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['J+3']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+2']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+3']))]])
+            valA = np.append(valA,float(-1.0))
             [ig,ig_,_] = s2mpj_ii('OBJ3'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(int(v_['J+4']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['J+5']))]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+4']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['J+5']))]])
+            valA = np.append(valA,float(-1.0))
         for K in range(int(v_['1']),int(v_['NC'])+1,int(v_['2'])):
             v_['K+1'] = 1+K
             v_['K+2'] = 2+K
@@ -99,21 +107,27 @@ class  LUKVLE13(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(K))
-            iv = ix_['X'+str(K)]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+2']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+3']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+4']))]
-            self.A[ig,iv] = float(4.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(K)]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+2']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+3']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+4']))]])
+            valA = np.append(valA,float(4.0))
             [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['K+1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(int(v_['K+1'])))
-            iv = ix_['X'+str(int(v_['K+3']))]
-            self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['K+4']))]
-            self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+3']))]])
+            valA = np.append(valA,float(-2.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['K+4']))]])
+            valA = np.append(valA,float(-2.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -125,7 +139,7 @@ class  LUKVLE13(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -213,21 +227,18 @@ class  LUKVLE13(CUTEst_problem):
         self.objlower = 0.0
 #    Solution
 # LO SOLTN               9.00734E+03
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-COQR2-AY-V-V"
+        self.pbclass   = "C-COQR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

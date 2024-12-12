@@ -38,13 +38,14 @@ class  CHENHARK(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHENHARK'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -98,47 +99,58 @@ class  CHENHARK(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
             [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(-2.0))
         [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X'+str(int(v_['1']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['1']))]])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X'+str(int(v_['1']))]
-        self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['2']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['1']))]])
+        valA = np.append(valA,float(2.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['2']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X'+str(int(v_['N']))]
-        self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['N-1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N']))]])
+        valA = np.append(valA,float(2.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N-1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['N+1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X'+str(int(v_['N']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N']))]])
+        valA = np.append(valA,float(1.0))
         for I in range(int(v_['1']),int(v_['NF+ND'])+1):
             v_['I+1'] = 1+I
             v_['I+2'] = 2+I
@@ -155,8 +167,9 @@ class  CHENHARK(CUTEst_problem):
             v_['Q'] = v_['Q']+v_['Q5']
             [ig,ig_,_] = s2mpj_ii('L',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(v_['Q'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(v_['Q']))
         for I in range(int(v_['NF+ND+1']),int(v_['N'])+1):
             v_['I+1'] = 1+I
             v_['I+2'] = 2+I
@@ -174,8 +187,9 @@ class  CHENHARK(CUTEst_problem):
             v_['Q'] = 1.0+v_['Q']
             [ig,ig_,_] = s2mpj_ii('L',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(v_['Q'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(v_['Q']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -202,16 +216,13 @@ class  CHENHARK(CUTEst_problem):
         self.objlower = 1.0
 #    Solution
 # LO SOLTN               -0.5
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         self.xlower = np.zeros((self.n,1))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CQBR2-AN-V-V"
+        self.pbclass   = "C-CQBR2-AN-V-V"
         self.objderlvl = 2
 
 # ********************

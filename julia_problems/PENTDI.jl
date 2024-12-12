@@ -33,7 +33,7 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PENTDI"
@@ -67,33 +67,42 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("OBJ0",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("OBJ1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X"*string(Int64(v_["1"]))]
-        pbm.A[ig,iv] += Float64(-3.000)
-        iv = ix_["X"*string(Int64(v_["2"]))]
-        pbm.A[ig,iv] += Float64(1.000)
-        iv = ix_["X"*string(Int64(v_["N/2-1"]))]
-        pbm.A[ig,iv] += Float64(1.000)
-        iv = ix_["X"*string(Int64(v_["N/2"]))]
-        pbm.A[ig,iv] += Float64(-3.000)
-        iv = ix_["X"*string(Int64(v_["N/2+1"]))]
-        pbm.A[ig,iv] += Float64(4.000)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["1"]))])
+        push!(valA,Float64(-3.000))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["2"]))])
+        push!(valA,Float64(1.000))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N/2-1"]))])
+        push!(valA,Float64(1.000))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N/2"]))])
+        push!(valA,Float64(-3.000))
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N/2+1"]))])
+        push!(valA,Float64(4.000))
         for I = Int64(v_["N/2+3"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("OBJ1",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.000)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.000))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -183,12 +192,11 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION               -0.75
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CQBR2-AN-V-0"
         pb.x0          = zeros(Float64,pb.n)

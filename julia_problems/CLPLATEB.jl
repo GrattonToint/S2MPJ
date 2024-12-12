@@ -40,7 +40,7 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CLPLATEB"
@@ -75,6 +75,9 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
@@ -82,7 +85,7 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["2"]):Int64(v_["P"])
             v_["I-1"] = -1+I
             for J = Int64(v_["2"]):Int64(v_["P"])
@@ -90,38 +93,47 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("A"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(2.0))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(I)*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("B"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(2.0))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(Int64(v_["I-1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I-1"]))*","*string(J)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(v_["1/HP2"]))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(I)*","*string(Int64(v_["J-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(Int64(v_["J-1"]))])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(v_["1/HP2"]))
-                iv = ix_["X"*string(I)*","*string(J)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(Int64(v_["I-1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(J)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I-1"]))*","*string(J)])
+                push!(valA,Float64(-1.0))
             end
         end
         for J = Int64(v_["1"]):Int64(v_["P"])
             ig,ig_,_ = s2mpj_ii("W",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["P"]))*","*string(J)]
-            pbm.A[ig,iv] += Float64(v_["DISW"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["P"]))*","*string(J)])
+            push!(valA,Float64(v_["DISW"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -167,10 +179,9 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(23)           -5.4274D-03
 # LO SOLTN(32)           -5.2835D-03
 # LO SOLTN(71)           -5.0948D-03
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COXR2-MN-V-0"
         pbm.objderlvl = 2

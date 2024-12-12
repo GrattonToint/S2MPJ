@@ -18,7 +18,7 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FERRISDC"
@@ -313,6 +313,9 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for i = Int64(v_["1"]):Int64(v_["k"])
             for j = Int64(v_["1"]):Int64(v_["n"])
                 iv,ix_,_ = s2mpj_ii("A"*string(i)*","*string(j),ix_)
@@ -324,13 +327,14 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"W"*string(i))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for j = Int64(v_["1"]):Int64(v_["n"])
             for i = Int64(v_["1"]):Int64(v_["k"])
                 ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["A"*string(i)*","*string(j)]
-                pbm.A[ig,iv] += Float64(v_["Y"*string(i)*","*string(j)])
+                push!(irA,ig)
+                push!(icA,ix_["A"*string(i)*","*string(j)])
+                push!(valA,Float64(v_["Y"*string(i)*","*string(j)]))
             end
         end
         for i = Int64(v_["1"]):Int64(v_["k"])
@@ -338,24 +342,28 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("C"*string(i),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"C"*string(i))
-                iv = ix_["A"*string(i)*","*string(j)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["W"*string(j)]
-                pbm.A[ig,iv] += Float64(v_["-1/k"])
+                push!(irA,ig)
+                push!(icA,ix_["A"*string(i)*","*string(j)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["W"*string(j)])
+                push!(valA,Float64(v_["-1/k"]))
             end
         end
         for j = Int64(v_["1"]):Int64(v_["n"])
             ig,ig_,_ = s2mpj_ii("A"*string(j),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"A"*string(j))
-            iv = ix_["W"*string(j)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["W"*string(j)])
+            push!(valA,Float64(-1.0))
             for i = Int64(v_["1"]):Int64(v_["k"])
                 ig,ig_,_ = s2mpj_ii("A"*string(j),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"A"*string(j))
-                iv = ix_["A"*string(i)*","*string(j)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["A"*string(i)*","*string(j)])
+                push!(valA,Float64(1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -397,39 +405,45 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             end
         end
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
+        irH  = Int64[]
+        icH  = Int64[]
+        valH = Float64[]
         for i = Int64(v_["1"]):Int64(v_["k"])
             for l = Int64(v_["1"]):Int64(v_["n"])
                 for j = Int64(v_["1"]):Int64(l)
-                    ix1 = ix_["A"*string(i)*","*string(j)]
-                    ix2 = ix_["A"*string(i)*","*string(l)]
-                    pbm.H[ix1,ix2] = Float64(v_["K"*string(j)*","*string(l)])+pbm.H[ix1,ix2]
-                    pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+                    push!(irH,ix_["A"*string(i)*","*string(j)])
+                    push!(icH,ix_["A"*string(i)*","*string(l)])
+                    push!(valH,Float64(v_["K"*string(j)*","*string(l)]))
+                    push!(irH,ix_["A"*string(i)*","*string(l)])
+                    push!(icH,ix_["A"*string(i)*","*string(j)])
+                    push!(valH,Float64(v_["K"*string(j)*","*string(l)]))
                 end
             end
         end
         for l = Int64(v_["1"]):Int64(v_["n"])
             for j = Int64(v_["1"]):Int64(l)
                 v_["coef"] = v_["-1/k"]*v_["K"*string(j)*","*string(l)]
-                ix1 = ix_["W"*string(j)]
-                ix2 = ix_["W"*string(l)]
-                pbm.H[ix1,ix2] = Float64(v_["coef"])+pbm.H[ix1,ix2]
-                pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+                push!(irH,ix_["W"*string(j)])
+                push!(icH,ix_["W"*string(l)])
+                push!(valH,Float64(v_["coef"]))
+                push!(irH,ix_["W"*string(l)])
+                push!(icH,ix_["W"*string(j)])
+                push!(valH,Float64(v_["coef"]))
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
 # XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
+        pbm.H = sparse(irH,icH,valH,pb.n,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
-        pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-V-V"

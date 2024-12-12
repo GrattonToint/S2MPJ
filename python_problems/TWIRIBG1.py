@@ -26,13 +26,14 @@ class  TWIRIBG1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWIRIBG1'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -2837,6 +2838,9 @@ class  TWIRIBG1(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for l in range(int(v_['1']),int(v_['Nage'])+1):
                 for m in range(int(v_['1']),int(v_['Ntra'])+1):
@@ -2854,32 +2858,35 @@ class  TWIRIBG1(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('epsilon',ix_)
         self.xnames=arrset(self.xnames,iv,'epsilon')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         v_['t'] = 1*v_['Ntim']
         [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['keff'+str(int(v_['t']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['epsilon']
-        self.A[ig,iv] = float(v_['w1'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['keff'+str(int(v_['t']))]])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['epsilon']])
+        valA = np.append(valA,float(v_['w1']))
         for l in range(int(v_['1']),int(v_['Nage'])+1):
             for m in range(int(v_['1']),int(v_['Ntra'])+1):
                 for i in range(int(v_['1']),int(v_['Nnod'])+1):
                     [ig,ig_,_] = s2mpj_ii('sumi'+str(l)+','+str(m),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'sumi'+str(l)+','+str(m))
-                    iv = ix_['x'+str(i)+','+str(l)+','+str(m)]
-                    self.A[ig,iv] = float(v_['V'+str(i)])+self.A[ig,iv]
+                    irA  = np.append(irA,[ig])
+                    icA  = np.append(icA,[ix_['x'+str(i)+','+str(l)+','+str(m)]])
+                    valA = np.append(valA,float(v_['V'+str(i)]))
                     [ig,ig_,_] = s2mpj_ii('sumlm'+str(i),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'sumlm'+str(i))
-                    iv = ix_['x'+str(i)+','+str(l)+','+str(m)]
-                    self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                    irA  = np.append(irA,[ig])
+                    icA  = np.append(icA,[ix_['x'+str(i)+','+str(l)+','+str(m)]])
+                    valA = np.append(valA,float(1.0))
         for t in range(int(v_['1']),int(v_['Ntim'])+1):
             [ig,ig_,_] = s2mpj_ii('Norm'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
@@ -2892,39 +2899,46 @@ class  TWIRIBG1(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('Peak'+str(i)+','+str(t),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'Peak'+str(i)+','+str(t))
-                iv = ix_['epsilon']
-                self.A[ig,iv] = float(v_['-FluNred'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['epsilon']])
+                valA = np.append(valA,float(v_['-FluNred']))
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim-1'])+1):
                 v_['t+1'] = 1+t
                 [ig,ig_,_] = s2mpj_ii('Burn'+str(i)+','+str(t),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'Burn'+str(i)+','+str(t))
-                iv = ix_['k'+str(i)+','+str(int(v_['t+1']))]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['k'+str(i)+','+str(t)]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['k'+str(i)+','+str(int(v_['t+1']))]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['k'+str(i)+','+str(t)]])
+                valA = np.append(valA,float(-1.0))
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             [ig,ig_,_] = s2mpj_ii('Plac'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'Plac'+str(i))
-            iv = ix_['k'+str(i)+','+str(int(v_['1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['k'+str(i)+','+str(int(v_['1']))]])
+            valA = np.append(valA,float(1.0))
             for m in range(int(v_['1']),int(v_['Ntra'])+1):
                 [ig,ig_,_] = s2mpj_ii('Plac'+str(i),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'Plac'+str(i))
-                iv = ix_['x'+str(i)+','+str(int(v_['1']))+','+str(m)]
-                self.A[ig,iv] = float(v_['-Kfresh'])+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['x'+str(i)+','+str(int(v_['1']))+','+str(m)]])
+                valA = np.append(valA,float(v_['-Kfresh']))
         for t in range(int(v_['1']),int(v_['Ntim-1'])+1):
             v_['t+1'] = 1+t
             [ig,ig_,_] = s2mpj_ii('Kefford'+str(t),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'Kefford'+str(t))
-            iv = ix_['keff'+str(int(v_['t+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['keff'+str(t)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['keff'+str(int(v_['t+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['keff'+str(t)]])
+            valA = np.append(valA,float(-1.0))
         for d in range(int(v_['1']),int(v_['Ndia'])+1):
             v_['d1'] = 0+v_['D'+str(d)+','+str(int(v_['1']))]
             v_['d2'] = 0+v_['D'+str(d)+','+str(int(v_['2']))]
@@ -2935,10 +2949,12 @@ class  TWIRIBG1(CUTEst_problem):
                     [ig,ig_,_] = s2mpj_ii('Dia'+str(d)+','+str(l)+','+str(m),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'Dia'+str(d)+','+str(l)+','+str(m))
-                    iv = ix_['x'+str(int(v_['d1']))+','+str(l)+','+str(m)]
-                    self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                    iv = ix_['x'+str(int(v_['d2']))+','+str(l)+','+str(m)]
-                    self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                    irA  = np.append(irA,[ig])
+                    icA  = np.append(icA,[ix_['x'+str(int(v_['d1']))+','+str(l)+','+str(m)]])
+                    valA = np.append(valA,float(1.0))
+                    irA  = np.append(irA,[ig])
+                    icA  = np.append(icA,[ix_['x'+str(int(v_['d2']))+','+str(l)+','+str(m)]])
+                    valA = np.append(valA,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -2950,7 +2966,7 @@ class  TWIRIBG1(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -18778,6 +18794,8 @@ class  TWIRIBG1(CUTEst_problem):
                           loaset(self.grelt,ig,posel,ie_['xc'+str(i)+','+str(j)+','+str(m)]))
                     nlc = np.union1d(nlc,np.array([ig]))
                     self.grelw = loaset(self.grelw,ig,posel,float(v_['-V'+str(j)]))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -18785,15 +18803,10 @@ class  TWIRIBG1(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CLOI2-RN-3127-1239"
+        self.pbclass   = "C-CLOI2-RN-3127-1239"
         self.objderlvl = 2
         self.conderlvl = [2]
 

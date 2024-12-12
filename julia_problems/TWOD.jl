@@ -20,7 +20,7 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   40             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TWOD"
@@ -87,6 +87,9 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["0"]):Int64(v_["N"])
                 for K = Int64(v_["0"]):Int64(v_["M"])
@@ -102,7 +105,7 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N1"])
@@ -116,30 +119,36 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
                     ig,ig_,_ = s2mpj_ii("P"*string(K)*","*string(I)*","*string(J),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"P"*string(K)*","*string(I)*","*string(J))
-                    iv = ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(J)]
-                    pbm.A[ig,iv] += Float64(v_["1/DT+2/H2"])
-                    iv = ix_["Y"*string(K)*","*string(I)*","*string(J)]
-                    pbm.A[ig,iv] += Float64(v_["-1/DT+2/H2"])
-                    iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["J-"]))]
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["J+"]))]
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv = ix_["Y"*string(K)*","*string(Int64(v_["I-"]))*","*string(J)]
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv = ix_["Y"*string(K)*","*string(Int64(v_["I+"]))*","*string(J)]
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv  = (
-                          ix_["Y"*string(Int64(v_["K+"]))*","*string(Int64(v_["I-"]))*","*string(J)])
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv  = (
-                          ix_["Y"*string(Int64(v_["K+"]))*","*string(Int64(v_["I+"]))*","*string(J)])
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv  = (
-                          ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(Int64(v_["J-"]))])
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
-                    iv  = (
-                          ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(Int64(v_["J+"]))])
-                    pbm.A[ig,iv] += Float64(v_["-.1/2H2"])
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(J)])
+                    push!(valA,Float64(v_["1/DT+2/H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(J)])
+                    push!(valA,Float64(v_["-1/DT+2/H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["J-"]))])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["J+"]))])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["I-"]))*","*string(J)])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["I+"]))*","*string(J)])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(Int64(v_["K+"]))*","*string(Int64(v_["I-"]))*","*string(J)])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(Int64(v_["K+"]))*","*string(Int64(v_["I+"]))*","*string(J)])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(Int64(v_["J-"]))])
+                    push!(valA,Float64(v_["-.1/2H2"]))
+                    push!(irA,ig)
+                    push!(icA,ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(Int64(v_["J+"]))])
+                    push!(valA,Float64(v_["-.1/2H2"]))
                 end
             end
         end
@@ -148,23 +157,30 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
                 ig,ig_,_ = s2mpj_ii("B1"*string(K)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B1"*string(K)*","*string(I))
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N2"]))]
-                pbm.A[ig,iv] += Float64(v_["1/2DY"])
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N1"]))]
-                pbm.A[ig,iv] += Float64(v_["-2/DY"])
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N"]))]
-                pbm.A[ig,iv] += Float64(v_["3/2DY+1"])
-                iv = ix_["U"*string(K)*","*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N2"]))])
+                push!(valA,Float64(v_["1/2DY"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N1"]))])
+                push!(valA,Float64(v_["-2/DY"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N"]))])
+                push!(valA,Float64(v_["3/2DY+1"]))
+                push!(irA,ig)
+                push!(icA,ix_["U"*string(K)*","*string(I)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("B2"*string(K)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B2"*string(K)*","*string(I))
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["2"]))]
-                pbm.A[ig,iv] += Float64(v_["1/2DY"])
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["1"]))]
-                pbm.A[ig,iv] += Float64(v_["-2/DY"])
-                iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["0"]))]
-                pbm.A[ig,iv] += Float64(v_["3/2DY+1"])
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["2"]))])
+                push!(valA,Float64(v_["1/2DY"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["1"]))])
+                push!(valA,Float64(v_["-2/DY"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["0"]))])
+                push!(valA,Float64(v_["3/2DY+1"]))
             end
         end
         for J = Int64(v_["1"]):Int64(v_["N1"])
@@ -172,21 +188,27 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
                 ig,ig_,_ = s2mpj_ii("B3"*string(K)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B3"*string(K)*","*string(J))
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["2"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/2DX"])
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/DX"])
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["0"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["3/2DX+1"])
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["2"]))*","*string(J)])
+                push!(valA,Float64(v_["1/2DX"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["1"]))*","*string(J)])
+                push!(valA,Float64(v_["-2/DX"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["0"]))*","*string(J)])
+                push!(valA,Float64(v_["3/2DX+1"]))
                 ig,ig_,_ = s2mpj_ii("B4"*string(K)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B4"*string(K)*","*string(J))
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["N2"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["1/2DX"])
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["N1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["-2/DX"])
-                iv = ix_["Y"*string(K)*","*string(Int64(v_["N"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["3/2DX+1"])
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["N2"]))*","*string(J)])
+                push!(valA,Float64(v_["1/2DX"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["N1"]))*","*string(J)])
+                push!(valA,Float64(v_["-2/DX"]))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(K)*","*string(Int64(v_["N"]))*","*string(J)])
+                push!(valA,Float64(v_["3/2DX+1"]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -351,15 +373,14 @@ function TWOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             arrset(nlc,length(nlc)+1,ig)
             loaset(pbm.grelw,ig,posel,Float64(v_[".25ADTDX"]))
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-AN-V-V"

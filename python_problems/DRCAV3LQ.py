@@ -38,13 +38,14 @@ class  DRCAV3LQ(CUTEst_problem):
 # IE M                   63             $-PARAMETER  n =  3969
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRCAV3LQ'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -76,17 +77,19 @@ class  DRCAV3LQ(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['-1']),int(v_['M+2'])+1):
             for J in range(int(v_['-1']),int(v_['M+2'])+1):
                 [iv,ix_,_] = s2mpj_ii('Y'+str(I)+','+str(J),ix_)
                 self.xnames=arrset(self.xnames,iv,'Y'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['I-2'] = -2+I
             v_['I-1'] = -1+I
@@ -99,32 +102,45 @@ class  DRCAV3LQ(CUTEst_problem):
                 v_['J+2'] = 2+J
                 [ig,ig_,_] = s2mpj_ii('E'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['Y'+str(I)+','+str(J)]
-                self.A[ig,iv] = float(20.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I-1']))+','+str(J)]
-                self.A[ig,iv] = float(-8.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+1']))+','+str(J)]
-                self.A[ig,iv] = float(-8.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)+','+str(int(v_['J-1']))]
-                self.A[ig,iv] = float(-8.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)+','+str(int(v_['J+1']))]
-                self.A[ig,iv] = float(-8.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I-1']))+','+str(int(v_['J+1']))]
-                self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+1']))+','+str(int(v_['J-1']))]
-                self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I-1']))+','+str(int(v_['J-1']))]
-                self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+1']))+','+str(int(v_['J+1']))]
-                self.A[ig,iv] = float(2.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I-2']))+','+str(J)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(int(v_['I+2']))+','+str(J)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)+','+str(int(v_['J-2']))]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)+','+str(int(v_['J+2']))]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(J)]])
+                valA = np.append(valA,float(20.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I-1']))+','+str(J)]])
+                valA = np.append(valA,float(-8.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+1']))+','+str(J)]])
+                valA = np.append(valA,float(-8.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(int(v_['J-1']))]])
+                valA = np.append(valA,float(-8.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(int(v_['J+1']))]])
+                valA = np.append(valA,float(-8.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I-1']))+','+str(int(v_['J+1']))]])
+                valA = np.append(valA,float(2.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+1']))+','+str(int(v_['J-1']))]])
+                valA = np.append(valA,float(2.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I-1']))+','+str(int(v_['J-1']))]])
+                valA = np.append(valA,float(2.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+1']))+','+str(int(v_['J+1']))]])
+                valA = np.append(valA,float(2.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I-2']))+','+str(J)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(int(v_['I+2']))+','+str(J)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(int(v_['J-2']))]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)+','+str(int(v_['J+2']))]])
+                valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -298,14 +314,11 @@ class  DRCAV3LQ(CUTEst_problem):
         self.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-COXR2-MY-V-V"
+        self.pbclass   = "C-COXR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

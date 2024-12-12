@@ -22,7 +22,7 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DNIEPER"
@@ -87,6 +87,9 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["56"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -102,21 +105,25 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("AC",ix_)
         arrset(pb.xnames,iv,"AC")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["12"])
             v_["I0"] = 12+I
             v_["I1"] = 24+I
             v_["I2"] = 36+I
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["I1"]))]
-            pbm.A[ig,iv] += Float64(19.95)
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(0.07656)
-            iv = ix_["X"*string(Int64(v_["I2"]))]
-            pbm.A[ig,iv] += Float64(-24.89)
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-0.7135)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I1"]))])
+            push!(valA,Float64(19.95))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(0.07656))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I2"]))])
+            push!(valA,Float64(-24.89))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-0.7135))
         end
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
@@ -126,8 +133,9 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
         end
         for I = Int64(v_["5"]):Int64(v_["8"])
             v_["I0"] = 24+I
@@ -135,18 +143,21 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["X"*string(Int64(v_["I1"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I1"]))])
+            push!(valA,Float64(-2.68))
         end
         for I = Int64(v_["9"]):Int64(v_["12"])
             v_["I0"] = 24+I
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
         end
         for I = Int64(v_["13"]):Int64(v_["16"])
             v_["I0"] = 12+I
@@ -154,12 +165,15 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["X"*string(Int64(v_["I1"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["AC"]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I1"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["AC"])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["17"]):Int64(v_["20"])
             v_["I0"] = 12+I
@@ -168,14 +182,18 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["X"*string(Int64(v_["I1"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["X"*string(Int64(v_["I2"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["AC"]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I1"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I2"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["AC"])
+            push!(valA,Float64(-1.0))
         end
         for I = Int64(v_["21"]):Int64(v_["24"])
             v_["I0"] = 12+I
@@ -183,12 +201,15 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
-            iv = ix_["X"*string(Int64(v_["I0"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["X"*string(Int64(v_["I1"]))]
-            pbm.A[ig,iv] += Float64(-2.68)
-            iv = ix_["AC"]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I0"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I1"]))])
+            push!(valA,Float64(-2.68))
+            push!(irA,ig)
+            push!(icA,ix_["AC"])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -430,15 +451,14 @@ function DNIEPER(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLUTION             1.87439D+04
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQOR2-MN-61-24"

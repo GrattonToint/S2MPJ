@@ -29,7 +29,7 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "AIRPORT"
@@ -177,6 +177,9 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -184,22 +187,26 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = I+v_["1"]
             for J = Int64(v_["I+1"]):Int64(v_["N"])
                 ig,ig_,_ = s2mpj_ii("OBJ1"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("OBJ2"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["Y"*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["Y"*string(J)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(I)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["Y"*string(J)])
+                push!(valA,Float64(-1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -299,14 +306,13 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.objlower = .0
 #    Solution
 # LO SOLTN              47952.695811
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CSQR2-MN-84-42"

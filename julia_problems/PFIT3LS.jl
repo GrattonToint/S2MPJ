@@ -21,7 +21,7 @@ function PFIT3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PFIT3LS"
@@ -43,6 +43,9 @@ function PFIT3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("A",ix_)
         arrset(pb.xnames,iv,"A")
         iv,ix_,_ = s2mpj_ii("R",ix_)
@@ -50,7 +53,7 @@ function PFIT3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("H",ix_)
         arrset(pb.xnames,iv,"H")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("EF",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("EG",ig_)
@@ -219,8 +222,6 @@ function PFIT3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    Solution at ( 1.0, 3.0 , 2.0 )
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.A = spzeros(Float64,0,0)
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSBR2-AN-3-0"
         pbm.objderlvl = 2

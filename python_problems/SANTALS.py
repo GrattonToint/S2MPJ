@@ -104,13 +104,14 @@ class  SANTALS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SANTALS'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -171,6 +172,9 @@ class  SANTALS(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('PHI1',ix_)
         self.xnames=arrset(self.xnames,iv,'PHI1')
         for I in range(int(v_['2']),int(v_['S-1'])+1):
@@ -179,12 +183,11 @@ class  SANTALS(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('LAM'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'LAM'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('R0,1',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['2']),int(v_['S'])+1):
@@ -491,9 +494,8 @@ class  SANTALS(CUTEst_problem):
 #    Solution
 # LO SANTA               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSBR2-AN-21-0"
+        self.pbclass   = "C-CSBR2-AN-21-0"
         self.objderlvl = 2
 
 # **********************

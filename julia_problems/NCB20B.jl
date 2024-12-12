@@ -23,7 +23,7 @@ function NCB20B(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   21             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NCB20B"
@@ -62,12 +62,15 @@ function NCB20B(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
@@ -78,8 +81,9 @@ function NCB20B(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
                 v_["I+J-1"] = -1+v_["I+J"]
                 ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
                 arrset(gtype,ig,"<>")
-                iv = ix_["X"*string(Int64(v_["I+J-1"]))]
-                pbm.A[ig,iv] += Float64(v_["CL"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(Int64(v_["I+J-1"]))])
+                push!(valA,Float64(v_["CL"]))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -255,10 +259,9 @@ function NCB20B(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             loaset(pbm.grelt,ig,posel,ie_["S"*string(I)])
             loaset(pbm.grelw,ig,posel,Float64(100.0))
         end
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-COUR2-AN-V-0"
         pb.x0          = zeros(Float64,pb.n)

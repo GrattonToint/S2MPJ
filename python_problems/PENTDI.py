@@ -34,13 +34,14 @@ class  PENTDI(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PENTDI'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -66,37 +67,45 @@ class  PENTDI(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('OBJ0',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('OBJ1',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['X'+str(int(v_['1']))]
-        self.A[ig,iv] = float(-3.000)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['2']))]
-        self.A[ig,iv] = float(1.000)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['N/2-1']))]
-        self.A[ig,iv] = float(1.000)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['N/2']))]
-        self.A[ig,iv] = float(-3.000)+self.A[ig,iv]
-        iv = ix_['X'+str(int(v_['N/2+1']))]
-        self.A[ig,iv] = float(4.000)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['1']))]])
+        valA = np.append(valA,float(-3.000))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['2']))]])
+        valA = np.append(valA,float(1.000))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N/2-1']))]])
+        valA = np.append(valA,float(1.000))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N/2']))]])
+        valA = np.append(valA,float(-3.000))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['X'+str(int(v_['N/2+1']))]])
+        valA = np.append(valA,float(4.000))
         for I in range(int(v_['N/2+3']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJ1',ig_)
             gtype = arrset(gtype,ig,'<>')
-            iv = ix_['X'+str(I)]
-            self.A[ig,iv] = float(1.000)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['X'+str(I)]])
+            valA = np.append(valA,float(1.000))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -186,16 +195,13 @@ class  PENTDI(CUTEst_problem):
             self.grelw = loaset(self.grelw,ig,posel,float(1.000))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION               -0.75
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         self.xlower = np.zeros((self.n,1))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CQBR2-AN-V-0"
+        self.pbclass   = "C-CQBR2-AN-V-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

@@ -25,7 +25,7 @@ function LIN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LIN"
@@ -54,6 +54,9 @@ function LIN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["C"])
             for K = Int64(v_["1"]):Int64(v_["P"])
                 iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(K),ix_)
@@ -61,7 +64,7 @@ function LIN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["C"])
@@ -69,8 +72,9 @@ function LIN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
                 ig,ig_,_ = s2mpj_ii("MB"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"MB"*string(I))
-                iv = ix_["X"*string(I)*","*string(K)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(K)])
+                push!(valA,Float64(1.0))
             end
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -344,15 +348,14 @@ function LIN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 #  XV LIN       X(2,1)    0.37544
 #  XV LIN       X(2,2)    0.12456
 # LO SOLTN               -0.02020
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-AY-4-2"

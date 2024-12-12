@@ -25,7 +25,7 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MESH"
@@ -57,6 +57,9 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for i = Int64(v_["1"]):Int64(v_["np"])
             iv,ix_,_ = s2mpj_ii("x"*string(i),ix_)
             arrset(pb.xnames,iv,"x"*string(i))
@@ -86,18 +89,21 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         iv,ix_,_ = s2mpj_ii("fmax",ix_)
         arrset(pb.xnames,iv,"fmax")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("obj1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["deltamin"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["deltamin"])
+        push!(valA,Float64(1.0))
         arrset(pbm.gscale,ig,Float64(v_["omega1"]))
         ig,ig_,_ = s2mpj_ii("obj2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["fmax"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["fmin"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["fmax"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["fmin"])
+        push!(valA,Float64(-1.0))
         arrset(pbm.gscale,ig,Float64(v_["omega2"]))
         ig,ig_,_ = s2mpj_ii("obj3",ig_)
         arrset(gtype,ig,"<>")
@@ -119,65 +125,81 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
             ig,ig_,_ = s2mpj_ii("doppf"*string(i),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"doppf"*string(i))
-            iv = ix_["f"*string(i)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["f"*string(i)])
+            push!(valA,Float64(-1.0))
         end
         for i = Int64(v_["1"]):Int64(v_["nd"])
             ig,ig_,_ = s2mpj_ii("wisum"*string(i),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"wisum"*string(i))
-            iv = ix_["alpha"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["beta"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["gamma"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["alpha"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["beta"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["gamma"*string(i)])
+            push!(valA,Float64(1.0))
         end
         for i = Int64(v_["1"]):Int64(v_["nd"])
             ig,ig_,_ = s2mpj_ii("alphd"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"alphd"*string(i))
-            iv = ix_["alpha"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["delta"*string(i)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["alpha"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["delta"*string(i)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("betad"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"betad"*string(i))
-            iv = ix_["beta"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["delta"*string(i)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["beta"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["delta"*string(i)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("gammd"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"gammd"*string(i))
-            iv = ix_["gamma"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["delta"*string(i)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["gamma"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["delta"*string(i)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("deltd"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"deltd"*string(i))
-            iv = ix_["delta"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["deltamin"]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["delta"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["deltamin"])
+            push!(valA,Float64(-1.0))
         end
         for i = Int64(v_["1"]):Int64(v_["nd"])
             ig,ig_,_ = s2mpj_ii("fmind"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"fmind"*string(i))
-            iv = ix_["f"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["fmin"]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["f"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["fmin"])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("fmaxd"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"fmaxd"*string(i))
-            iv = ix_["fmax"]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["f"*string(i)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["fmax"])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["f"*string(i)])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -1041,6 +1063,8 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN              5.9213448D-4
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -1049,9 +1073,6 @@ function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AY-41-48"

@@ -27,7 +27,7 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YAO"
@@ -65,17 +65,21 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for i = Int64(v_["1"]):Int64(v_["P+k"])
             iv,ix_,_ = s2mpj_ii("X"*string(i),ix_)
             arrset(pb.xnames,iv,"X"*string(i))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for i = Int64(v_["1"]):Int64(v_["P+k"])
             ig,ig_,_ = s2mpj_ii("S"*string(i),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(i)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(2.0))
         end
         for i = Int64(v_["1"]):Int64(v_["P"])
@@ -83,13 +87,16 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
             ig,ig_,_ = s2mpj_ii("B"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"B"*string(i))
-            iv = ix_["X"*string(i)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["i+1"]))]
-            pbm.A[ig,iv] += Float64(-2.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(i)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["i+1"]))])
+            push!(valA,Float64(-2.0))
             v_["i+2"] = 2+i
-            iv = ix_["X"*string(Int64(v_["i+2"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["i+2"]))])
+            push!(valA,Float64(1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -137,15 +144,14 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # XL SOLUTION             2.39883D+00   $ (p=20)
 # XL SOLUTION             2.01517D+01   $ (p=200)
 # XL SOLUTION             1.97705D+02   $ (p=2000)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-V-V"

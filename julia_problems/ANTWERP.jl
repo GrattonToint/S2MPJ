@@ -142,7 +142,7 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ANTWERP"
@@ -205,6 +205,9 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("P1F",ix_)
         arrset(pb.xnames,iv,"P1F")
         iv,ix_,_ = s2mpj_ii("P2F",ix_)
@@ -260,7 +263,7 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         iv,ix_,_ = s2mpj_ii("NA3",ix_)
         arrset(pb.xnames,iv,"NA3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("HSZ3",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["M3"]))
@@ -310,32 +313,40 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         ig,ig_,_ = s2mpj_ii("HCH",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["WHCH"]))
-        iv = ix_["NC2"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["NC3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NC2"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NC3"])
+        push!(valA,Float64(-1.0))
         v_["WHAD"] = 100.0*v_["N234"]
         ig,ig_,_ = s2mpj_ii("HAD",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["WHAD"]))
-        iv = ix_["NA2"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["NA3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NA2"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NA3"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("AGE2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"AGE2")
-        iv = ix_["NC2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NA2"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NC2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NA2"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("AGE3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"AGE3")
-        iv = ix_["NC3"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NA3"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NC3"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NA3"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("HINF",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("HINN",ig_)
@@ -343,75 +354,99 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         ig,ig_,_ = s2mpj_ii("PSF",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"PSF")
-        iv = ix_["P1F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P2F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P3F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P4F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P5F"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P1F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P2F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P3F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P4F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P5F"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("PSW",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"PSW")
-        iv = ix_["P1W"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P2W"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P3W"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P1W"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P2W"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P3W"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("PSM",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"PSM")
-        iv = ix_["P1M"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P2M"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["P3M"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["P1M"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P2M"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["P3M"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("QSF",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"QSF")
-        iv = ix_["Q0F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q1F"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q2F"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q0F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q1F"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q2F"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("QSM",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"QSM")
-        iv = ix_["Q0M"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q1M"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q2M"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q0M"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q1M"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q2M"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("QSW",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"QSW")
-        iv = ix_["Q0W"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q1W"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["Q2W"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Q0W"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q1W"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["Q2W"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("INEQ2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"INEQ2")
-        iv = ix_["NC2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NA2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NC2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NA2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("INEQ3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"INEQ3")
-        iv = ix_["NC3"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NA3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["NC3"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NA3"])
+        push!(valA,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -1681,6 +1716,8 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -1688,9 +1725,6 @@ function ANTWERP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CSLR2-RN-27-8-0-3-24-0-2-0-8-0-0-0"

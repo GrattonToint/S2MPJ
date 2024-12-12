@@ -36,7 +36,7 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MADSSCHJ"
@@ -68,6 +68,9 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -75,50 +78,59 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("Z",ix_)
         arrset(pb.xnames,iv,"Z")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["Z"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Z"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C1")
-        iv = ix_["Z"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Z"])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["2"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("C1",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C1")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C2")
-        iv = ix_["Z"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Z"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["3"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("C2",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C2")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C3")
-        iv = ix_["Z"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Z"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(-1.0))
         for I = Int64(v_["3"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("C3",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C3")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         for K = Int64(v_["4"]):Int64(v_["2"]):Int64(v_["M-1"])
             v_["K+1"] = 1+K
@@ -129,49 +141,57 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(K))
-            iv = ix_["Z"]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"])
+            push!(valA,Float64(1.0))
             ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
-            iv = ix_["Z"]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Z"])
+            push!(valA,Float64(1.0))
             for I = Int64(v_["1"]):Int64(v_["J-1"])
                 ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(K))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(-1.0))
             end
             for I = Int64(v_["J+1"]):Int64(v_["N"])
                 ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(K))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(-1.0))
                 ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
-                iv = ix_["X"*string(I)]
-                pbm.A[ig,iv] += Float64(-1.0)
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)])
+                push!(valA,Float64(-1.0))
             end
         end
         ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["M"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C"*string(Int64(v_["M"])))
-        iv = ix_["Z"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["Z"])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["M"])))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -269,15 +289,14 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # LO SOLTN(90)            -1009.3542892
 # LO SOLTN(100)           -1246.4249710
 # LO SOLTN(200)           -4992.1339031
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
         pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-AN-V-V"

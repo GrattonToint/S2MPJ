@@ -141,13 +141,14 @@ class  FCCU(CUTEst_problem):
 # *************************************
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FCCU'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -197,6 +198,9 @@ class  FCCU(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [iv,ix_,_] = s2mpj_ii('Feed',ix_)
         self.xnames=arrset(self.xnames,iv,'Feed')
         [iv,ix_,_] = s2mpj_ii('Effluent',ix_)
@@ -236,186 +240,232 @@ class  FCCU(CUTEst_problem):
         [iv,ix_,_] = s2mpj_ii('MCN',ix_)
         self.xnames=arrset(self.xnames,iv,'MCN')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('F1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F1')
-        iv = ix_['Feed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Decurecy']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Effluent']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Feed']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Decurecy']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Effluent']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F2')
-        iv = ix_['Effluent']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['MFuohd']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['HCN']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['LCO']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['HCO']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['MFubtms']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Effluent']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFuohd']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['HCN']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['LCO']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['HCO']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFubtms']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F3')
-        iv = ix_['MFubtms']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Decant']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Decurecy']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFubtms']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Decant']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Decurecy']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F4')
-        iv = ix_['MFuohd']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Leanuoil']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Offugas']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['DC4ufeed']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFuohd']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Leanuoil']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Offugas']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ufeed']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F5')
-        iv = ix_['DC4ufeed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['DC3ufeed']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['DC4ubtms']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ufeed']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC3ufeed']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ubtms']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F6')
-        iv = ix_['DC4ubtms']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Leanuoil']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['C8splufd']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ubtms']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Leanuoil']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['C8splufd']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F7')
-        iv = ix_['DC3ufeed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['Propane']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['Butane']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC3ufeed']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Propane']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Butane']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('F8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F8')
-        iv = ix_['C8splufd']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-        iv = ix_['LCN']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-        iv = ix_['MCN']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['C8splufd']])
+        valA = np.append(valA,float(1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['LCN']])
+        valA = np.append(valA,float(-1.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MCN']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('Obj1',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Feed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Feed']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W1']))
         [ig,ig_,_] = s2mpj_ii('Obj2',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Effluent']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Effluent']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W2']))
         [ig,ig_,_] = s2mpj_ii('Obj3',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['MFuohd']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFuohd']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W3']))
         [ig,ig_,_] = s2mpj_ii('Obj4',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['HCN']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['HCN']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W4']))
         [ig,ig_,_] = s2mpj_ii('Obj5',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['LCO']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['LCO']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W5']))
         [ig,ig_,_] = s2mpj_ii('Obj6',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['HCO']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['HCO']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W6']))
         [ig,ig_,_] = s2mpj_ii('Obj7',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['MFubtms']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MFubtms']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W7']))
         [ig,ig_,_] = s2mpj_ii('Obj8',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Decant']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Decant']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W8']))
         [ig,ig_,_] = s2mpj_ii('Obj9',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Decurecy']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Decurecy']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W9']))
         [ig,ig_,_] = s2mpj_ii('Obj10',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Offugas']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Offugas']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W10']))
         [ig,ig_,_] = s2mpj_ii('Obj11',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['DC4ufeed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ufeed']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W11']))
         [ig,ig_,_] = s2mpj_ii('Obj12',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['DC3ufeed']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC3ufeed']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W12']))
         [ig,ig_,_] = s2mpj_ii('Obj13',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['DC4ubtms']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['DC4ubtms']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W13']))
         [ig,ig_,_] = s2mpj_ii('Obj14',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Leanuoil']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Leanuoil']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W14']))
         [ig,ig_,_] = s2mpj_ii('Obj15',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Propane']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Propane']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W15']))
         [ig,ig_,_] = s2mpj_ii('Obj16',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['Butane']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Butane']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W16']))
         [ig,ig_,_] = s2mpj_ii('Obj17',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['C8splufd']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['C8splufd']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W17']))
         [ig,ig_,_] = s2mpj_ii('Obj18',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['LCN']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['LCN']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W18']))
         [ig,ig_,_] = s2mpj_ii('Obj19',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['MCN']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['MCN']])
+        valA = np.append(valA,float(1.0))
         self.gscale = arrset(self.gscale,ig,float(v_['W19']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
@@ -428,7 +478,7 @@ class  FCCU(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -522,6 +572,8 @@ class  FCCU(CUTEst_problem):
         self.grftype = arrset(self.grftype,ig,'gSQUARE')
         ig = ig_['Obj19']
         self.grftype = arrset(self.grftype,ig,'gSQUARE')
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         self.xlower = np.zeros((self.n,1))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -530,14 +582,9 @@ class  FCCU(CUTEst_problem):
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-CSLR2-MN-19-8"
+        self.pbclass   = "C-CSLR2-MN-19-8"
         self.objderlvl = 2
         self.conderlvl = [2]
 

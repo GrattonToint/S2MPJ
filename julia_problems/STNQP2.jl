@@ -34,7 +34,7 @@ function STNQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE P                   13             $-PARAMETER n = 8193
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "STNQP2"
@@ -69,17 +69,21 @@ function STNQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
         end
         for L = Int64(v_["1"]):Int64(v_["N/P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
@@ -88,8 +92,9 @@ function STNQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
                     v_["K+L"] = v_["K"]+L
                     ig,ig_,_ = s2mpj_ii("N"*string(I)*","*string(L),ig_)
                     arrset(gtype,ig,"<>")
-                    iv = ix_["X"*string(Int64(v_["K+L"]))]
-                    pbm.A[ig,iv] += Float64(1.0)
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(Int64(v_["K+L"]))])
+                    push!(valA,Float64(1.0))
                     v_["K"] = v_["K"]*v_["2"]
                 end
             end
@@ -103,8 +108,9 @@ function STNQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
                     ig,ig_,_ = s2mpj_ii("E"*string(I)*","*string(L),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"E"*string(I)*","*string(L))
-                    iv = ix_["X"*string(Int64(v_["LL+J"]))]
-                    pbm.A[ig,iv] += Float64(1.0)
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(Int64(v_["LL+J"]))])
+                    push!(valA,Float64(1.0))
                 end
             end
         end
@@ -166,15 +172,14 @@ function STNQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLUTION            -2.476395E+5   $ (P=12)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CQLR2-AN-V-V"

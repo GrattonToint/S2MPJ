@@ -48,7 +48,7 @@ function DTOC6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   5001           $-PARAMETER n =10001, m =5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC6"
@@ -74,6 +74,9 @@ function DTOC6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             iv,ix_,_ = s2mpj_ii("X"*string(T),ix_)
             arrset(pb.xnames,iv,"X"*string(T))
@@ -83,17 +86,19 @@ function DTOC6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
             arrset(pb.xnames,iv,"Y"*string(T))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             ig,ig_,_ = s2mpj_ii("OY"*string(T),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["Y"*string(T)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(2.0))
             ig,ig_,_ = s2mpj_ii("OX"*string(T),ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(T)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(T)])
+            push!(valA,Float64(1.0))
             arrset(pbm.gscale,ig,Float64(2.0))
         end
         for T = Int64(v_["1"]):Int64(v_["N-1"])
@@ -101,10 +106,12 @@ function DTOC6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
             ig,ig_,_ = s2mpj_ii("TT"*string(T),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T))
-            iv = ix_["Y"*string(Int64(v_["T+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["Y"*string(T)]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(Int64(v_["T+1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["Y"*string(T)])
+            push!(valA,Float64(1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -184,15 +191,14 @@ function DTOC6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # LO SOLUTION( 501)      6846.330143698
 # LO SOLUTION(1001)      17176.03828316
 # LO SOLUTION(5001)      
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AN-V-V"

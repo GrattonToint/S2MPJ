@@ -16,7 +16,7 @@ function AVION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "AVION2"
@@ -39,6 +39,9 @@ function AVION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("SR",ix_)
         arrset(pb.xnames,iv,"SR")
         iv,ix_,_ = s2mpj_ii("LR",ix_)
@@ -138,218 +141,284 @@ function AVION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         iv,ix_,_ = s2mpj_ii("NG",ix_)
         arrset(pb.xnames,iv,"NG")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("E1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E1")
-        iv = ix_["SD"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SR"]
-        pbm.A[ig,iv] += Float64(-0.13)
+        push!(irA,ig)
+        push!(icA,ix_["SD"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SR"])
+        push!(valA,Float64(-0.13))
         ig,ig_,_ = s2mpj_ii("E2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E2")
-        iv = ix_["SX"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SR"]
-        pbm.A[ig,iv] += Float64(-0.7)
+        push!(irA,ig)
+        push!(icA,ix_["SX"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SR"])
+        push!(valA,Float64(-0.7))
         ig,ig_,_ = s2mpj_ii("E3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E3")
-        iv = ix_["LX"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["LR"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["LX"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["LR"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("E4",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["SK"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["SK"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E5")
-        iv = ix_["SF"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["ST"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["SD"]
-        pbm.A[ig,iv] += Float64(-2.0)
-        iv = ix_["SX"]
-        pbm.A[ig,iv] += Float64(-2.0)
-        iv = ix_["SK"]
-        pbm.A[ig,iv] += Float64(-2.0)
+        push!(irA,ig)
+        push!(icA,ix_["SF"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["ST"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SD"])
+        push!(valA,Float64(-2.0))
+        push!(irA,ig)
+        push!(icA,ix_["SX"])
+        push!(valA,Float64(-2.0))
+        push!(irA,ig)
+        push!(icA,ix_["SK"])
+        push!(valA,Float64(-2.0))
         ig,ig_,_ = s2mpj_ii("E6",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["CA"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["CA"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E7",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["AM"]
-        pbm.A[ig,iv] += Float64(-2.0)
-        iv = ix_["SO"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SS"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["AM"])
+        push!(valA,Float64(-2.0))
+        push!(irA,ig)
+        push!(icA,ix_["SO"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SS"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E8",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["AM"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["AM"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E9",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["IMPDER"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SD"]
-        pbm.A[ig,iv] += Float64(-27.5)
+        push!(irA,ig)
+        push!(icA,ix_["IMPDER"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SD"])
+        push!(valA,Float64(-27.5))
         ig,ig_,_ = s2mpj_ii("E10",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["IMPK"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SK"]
-        pbm.A[ig,iv] += Float64(-70.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPK"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SK"])
+        push!(valA,Float64(-70.0))
         ig,ig_,_ = s2mpj_ii("E11",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E11")
-        iv = ix_["IMPFUS"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["SF"]
-        pbm.A[ig,iv] += Float64(-20.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPFUS"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["SF"])
+        push!(valA,Float64(-20.0))
         ig,ig_,_ = s2mpj_ii("E12",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E12")
-        iv = ix_["MD"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["MV"]
-        pbm.A[ig,iv] += Float64(-2.0)
+        push!(irA,ig)
+        push!(icA,ix_["MD"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MV"])
+        push!(valA,Float64(-2.0))
         ig,ig_,_ = s2mpj_ii("E13",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["QI"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["QI"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E14",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["PT"]
-        pbm.A[ig,iv] += Float64(1000.0)
+        push!(irA,ig)
+        push!(icA,ix_["PT"])
+        push!(valA,Float64(1000.0))
         ig,ig_,_ = s2mpj_ii("E15",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E15")
-        iv = ix_["QF"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["QI"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["QV"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["QF"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["QI"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["QV"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("E16",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["VN"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["VS"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["QF"]
-        pbm.A[ig,iv] += Float64(v_["1/790"])
+        push!(irA,ig)
+        push!(icA,ix_["VN"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["VS"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["QF"])
+        push!(valA,Float64(v_["1/790"]))
         ig,ig_,_ = s2mpj_ii("E17",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E17")
-        iv = ix_["IMPTRAIN"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["MV"]
-        pbm.A[ig,iv] += Float64(-0.137)
+        push!(irA,ig)
+        push!(icA,ix_["IMPTRAIN"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MV"])
+        push!(valA,Float64(-0.137))
         ig,ig_,_ = s2mpj_ii("E18",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["IMPMOT"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPMOT"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E19",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E19")
-        iv = ix_["IMPNMOT"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NM"]
-        pbm.A[ig,iv] += Float64(-35.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPNMOT"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NM"])
+        push!(valA,Float64(-35.0))
         ig,ig_,_ = s2mpj_ii("E20",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E20")
-        iv = ix_["IMPPET"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["QI"]
-        pbm.A[ig,iv] += Float64(-0.043)
+        push!(irA,ig)
+        push!(icA,ix_["IMPPET"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["QI"])
+        push!(valA,Float64(-0.043))
         ig,ig_,_ = s2mpj_ii("E21",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E21")
-        iv = ix_["IMPPIL"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NP"]
-        pbm.A[ig,iv] += Float64(-200.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPPIL"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NP"])
+        push!(valA,Float64(-200.0))
         ig,ig_,_ = s2mpj_ii("E22",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E22")
-        iv = ix_["IMPCAN"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NG"]
-        pbm.A[ig,iv] += Float64(-120.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPCAN"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NG"])
+        push!(valA,Float64(-120.0))
         ig,ig_,_ = s2mpj_ii("E23",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E23")
-        iv = ix_["IMPSNA"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["NS"]
-        pbm.A[ig,iv] += Float64(-300.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPSNA"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NS"])
+        push!(valA,Float64(-300.0))
         ig,ig_,_ = s2mpj_ii("E24",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E24")
-        iv = ix_["MC"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["MV"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["NP"]
-        pbm.A[ig,iv] += Float64(95.0)
-        iv = ix_["NG"]
-        pbm.A[ig,iv] += Float64(70.0)
-        iv = ix_["NM"]
-        pbm.A[ig,iv] += Float64(660.0)
-        iv = ix_["QI"]
-        pbm.A[ig,iv] += Float64(0.5)
+        push!(irA,ig)
+        push!(icA,ix_["MC"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["MV"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["NP"])
+        push!(valA,Float64(95.0))
+        push!(irA,ig)
+        push!(icA,ix_["NG"])
+        push!(valA,Float64(70.0))
+        push!(irA,ig)
+        push!(icA,ix_["NM"])
+        push!(valA,Float64(660.0))
+        push!(irA,ig)
+        push!(icA,ix_["QI"])
+        push!(valA,Float64(0.5))
         ig,ig_,_ = s2mpj_ii("E25",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"E25")
-        iv = ix_["MZ"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["IMPTRAIN"]
-        pbm.A[ig,iv] += Float64(-1.0)
-        iv = ix_["IMPNMOT"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["IMPPET"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["IMPPIL"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["IMPCAN"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["IMPSNA"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["MZ"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPTRAIN"])
+        push!(valA,Float64(-1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPNMOT"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPPET"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPPIL"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPCAN"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["IMPSNA"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E26",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["ST"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["ST"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E27",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["SR"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["SR"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E28",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["QV"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["QV"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E29",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["SO"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["SO"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E30",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["SS"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["SS"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E31",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["CB"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["CB"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("E32",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["IMPVOIL"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["IMPVOIL"])
+        push!(valA,Float64(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -939,15 +1008,14 @@ function AVION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               9.46801297093018D+07
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COLR2-RN-49-15"

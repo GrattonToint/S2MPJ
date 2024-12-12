@@ -21,13 +21,14 @@ class  OPTCNTRL(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OPTCNTRL'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -43,6 +44,9 @@ class  OPTCNTRL(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for t in range(int(v_['0']),int(v_['T'])+1):
             [iv,ix_,_] = s2mpj_ii('x'+str(t),ix_)
             self.xnames=arrset(self.xnames,iv,'x'+str(t))
@@ -52,12 +56,11 @@ class  OPTCNTRL(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('u'+str(t),ix_)
             self.xnames=arrset(self.xnames,iv,'u'+str(t))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for t in range(int(v_['0']),int(v_['T-1'])+1):
@@ -65,23 +68,30 @@ class  OPTCNTRL(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('B'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'B'+str(t))
-            iv = ix_['x'+str(int(v_['t+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['x'+str(t)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['y'+str(t)]
-            self.A[ig,iv] = float(-0.2)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['x'+str(int(v_['t+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['x'+str(t)]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['y'+str(t)]])
+            valA = np.append(valA,float(-0.2))
             [ig,ig_,_] = s2mpj_ii('C'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(t))
-            iv = ix_['y'+str(int(v_['t+1']))]
-            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-            iv = ix_['y'+str(t)]
-            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-            iv = ix_['x'+str(t)]
-            self.A[ig,iv] = float(0.004)+self.A[ig,iv]
-            iv = ix_['u'+str(t)]
-            self.A[ig,iv] = float(-0.2)+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['y'+str(int(v_['t+1']))]])
+            valA = np.append(valA,float(1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['y'+str(t)]])
+            valA = np.append(valA,float(-1.0))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['x'+str(t)]])
+            valA = np.append(valA,float(0.004))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['u'+str(t)]])
+            valA = np.append(valA,float(-0.2))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -93,7 +103,7 @@ class  OPTCNTRL(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -172,21 +182,18 @@ class  OPTCNTRL(CUTEst_problem):
         self.objlower = 0.0
 #    Solution
 # LO SOLTN               549.9999869
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQQR2-AN-32-20"
+        self.pbclass   = "C-CQQR2-AN-32-20"
         self.objderlvl = 2
         self.conderlvl = [2]
 

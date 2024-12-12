@@ -42,7 +42,7 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OPTMASS"
@@ -79,6 +79,9 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["2"])
                 iv,ix_,_ = s2mpj_ii("X"*string(J)*","*string(I),ix_)
@@ -96,7 +99,7 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
             arrset(pb.xnames,iv,"V"*string(J)*","*string(Int64(v_["N+1"])))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("F",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N+1"])
@@ -105,23 +108,30 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
                 ig,ig_,_ = s2mpj_ii("A"*string(J)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"A"*string(J)*","*string(I))
-                iv = ix_["X"*string(J)*","*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["X"*string(J)*","*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["V"*string(J)*","*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(v_["-1/N"])
-                iv = ix_["F"*string(J)*","*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(v_["-1/2N2"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)*","*string(I)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(J)*","*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(J)*","*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(v_["-1/N"]))
+                push!(irA,ig)
+                push!(icA,ix_["F"*string(J)*","*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(v_["-1/2N2"]))
                 ig,ig_,_ = s2mpj_ii("B"*string(J)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B"*string(J)*","*string(I))
-                iv = ix_["V"*string(J)*","*string(I)]
-                pbm.A[ig,iv] += Float64(1.0)
-                iv = ix_["V"*string(J)*","*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["F"*string(J)*","*string(Int64(v_["I-1"]))]
-                pbm.A[ig,iv] += Float64(v_["-1/N"])
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(J)*","*string(I)])
+                push!(valA,Float64(1.0))
+                push!(irA,ig)
+                push!(icA,ix_["V"*string(J)*","*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["F"*string(J)*","*string(Int64(v_["I-1"]))])
+                push!(valA,Float64(v_["-1/N"]))
             end
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
@@ -257,6 +267,8 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # LO SOLTN(100)          ???
 # LO SOLTN(200)          ???
 # LO SOLTN(500)          ???
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -264,9 +276,6 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQQR2-AN-V-V"

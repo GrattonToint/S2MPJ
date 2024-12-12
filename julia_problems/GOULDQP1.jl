@@ -22,7 +22,7 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "GOULDQP1"
@@ -49,6 +49,9 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["15"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
@@ -70,7 +73,7 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"DS"*string(K))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for K = Int64(v_["0"]):Int64(v_["4"])
             v_["3K"] = 3*K
             v_["3K+1"] = 1+v_["3K"]
@@ -78,12 +81,15 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             v_["3K+3"] = 3+v_["3K"]
             ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
-            iv = ix_["X"*string(Int64(v_["3K+1"]))]
-            pbm.A[ig,iv] += Float64(2.3)
-            iv = ix_["X"*string(Int64(v_["3K+2"]))]
-            pbm.A[ig,iv] += Float64(1.7)
-            iv = ix_["X"*string(Int64(v_["3K+3"]))]
-            pbm.A[ig,iv] += Float64(2.2)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+1"]))])
+            push!(valA,Float64(2.3))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+2"]))])
+            push!(valA,Float64(1.7))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+3"]))])
+            push!(valA,Float64(2.2))
         end
         for K = Int64(v_["1"]):Int64(v_["4"])
             v_["3K"] = 3*K
@@ -95,86 +101,115 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("A"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"A"*string(K))
-            iv = ix_["X"*string(Int64(v_["3K+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["3K-2"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["AS"*string(K)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K-2"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["AS"*string(K)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("B"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"B"*string(K))
-            iv = ix_["X"*string(Int64(v_["3K+3"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["3K"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["BS"*string(K)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+3"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["BS"*string(K)])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(K))
-            iv = ix_["X"*string(Int64(v_["3K+2"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["3K-1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["CS"*string(K)]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K+2"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["3K-1"]))])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["CS"*string(K)])
+            push!(valA,Float64(-1.0))
         end
         ig,ig_,_ = s2mpj_ii("D1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D1")
-        iv = ix_["X1"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X3"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DS1"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X3"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DS1"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("D2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D2")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X5"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X6"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DS2"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X4"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X5"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X6"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DS2"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("D3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D3")
-        iv = ix_["X7"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X8"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X9"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DS3"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X7"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X8"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X9"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DS3"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("D4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D4")
-        iv = ix_["X10"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X11"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X12"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DS4"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X10"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X11"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X12"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DS4"])
+        push!(valA,Float64(-1.0))
         ig,ig_,_ = s2mpj_ii("D5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D5")
-        iv = ix_["X13"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X14"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X15"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["DS5"]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X13"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X14"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X15"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["DS5"])
+        push!(valA,Float64(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
@@ -440,15 +475,14 @@ function GOULDQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -3.485333E+3
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQLR2-AN-32-17"

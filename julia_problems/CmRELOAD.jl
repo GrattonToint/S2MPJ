@@ -15,7 +15,7 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CmRELOAD"
@@ -244,6 +244,9 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for K = Int64(v_["1"]):Int64(v_["L"])
                 for J = Int64(v_["1"]):Int64(v_["M"])
@@ -263,19 +266,21 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"KEFF"*string(S))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["KEFF"*string(Int64(v_["T"]))]
-        pbm.A[ig,iv] += Float64(-1.0)
+        push!(irA,ig)
+        push!(icA,ix_["KEFF"*string(Int64(v_["T"]))])
+        push!(valA,Float64(-1.0))
         for K = Int64(v_["1"]):Int64(v_["L"])
             for J = Int64(v_["1"]):Int64(v_["M"])
                 for I = Int64(v_["1"]):Int64(v_["N"])
                     ig,ig_,_ = s2mpj_ii("SUMI"*string(K)*","*string(J),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"SUMI"*string(K)*","*string(J))
-                    iv = ix_["X"*string(I)*","*string(K)*","*string(J)]
-                    pbm.A[ig,iv] += Float64(v_["V"*string(I)])
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(I)*","*string(K)*","*string(J)])
+                    push!(valA,Float64(v_["V"*string(I)]))
                 end
             end
         end
@@ -285,8 +290,9 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                     ig,ig_,_ = s2mpj_ii("SUMLM"*string(I),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"SUMLM"*string(I))
-                    iv = ix_["X"*string(I)*","*string(K)*","*string(J)]
-                    pbm.A[ig,iv] += Float64(1.0)
+                    push!(irA,ig)
+                    push!(icA,ix_["X"*string(I)*","*string(K)*","*string(J)])
+                    push!(valA,Float64(1.0))
                 end
             end
         end
@@ -294,14 +300,16 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("PLAC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PLAC"*string(I))
-            iv = ix_["KINF"*string(I)*","*string(Int64(v_["1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["KINF"*string(I)*","*string(Int64(v_["1"]))])
+            push!(valA,Float64(-1.0))
             for J = Int64(v_["1"]):Int64(v_["M"])
                 ig,ig_,_ = s2mpj_ii("PLAC"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"PLAC"*string(I))
-                iv = ix_["X"*string(I)*","*string(Int64(v_["1"]))*","*string(J)]
-                pbm.A[ig,iv] += Float64(v_["KFRESH"])
+                push!(irA,ig)
+                push!(icA,ix_["X"*string(I)*","*string(Int64(v_["1"]))*","*string(J)])
+                push!(valA,Float64(v_["KFRESH"]))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -317,10 +325,12 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
                 ig,ig_,_ = s2mpj_ii("KINFF"*string(I)*","*string(S),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"KINFF"*string(I)*","*string(S))
-                iv = ix_["KINF"*string(I)*","*string(Int64(v_["R"]))]
-                pbm.A[ig,iv] += Float64(-1.0)
-                iv = ix_["KINF"*string(I)*","*string(S)]
-                pbm.A[ig,iv] += Float64(1.0)
+                push!(irA,ig)
+                push!(icA,ix_["KINF"*string(I)*","*string(Int64(v_["R"]))])
+                push!(valA,Float64(-1.0))
+                push!(irA,ig)
+                push!(icA,ix_["KINF"*string(I)*","*string(S)])
+                push!(valA,Float64(1.0))
             end
         end
         for S = Int64(v_["1"]):Int64(v_["T"])
@@ -626,6 +636,8 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -633,9 +645,6 @@ function CmRELOAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLOR2-MN-342-284"

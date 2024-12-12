@@ -20,7 +20,7 @@ function OPTCNTRL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OPTCNTRL"
@@ -43,6 +43,9 @@ function OPTCNTRL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for t = Int64(v_["0"]):Int64(v_["T"])
             iv,ix_,_ = s2mpj_ii("x"*string(t),ix_)
             arrset(pb.xnames,iv,"x"*string(t))
@@ -54,7 +57,7 @@ function OPTCNTRL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             arrset(pb.xnames,iv,"u"*string(t))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for t = Int64(v_["0"]):Int64(v_["T-1"])
@@ -62,23 +65,30 @@ function OPTCNTRL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
             ig,ig_,_ = s2mpj_ii("B"*string(t),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"B"*string(t))
-            iv = ix_["x"*string(Int64(v_["t+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["x"*string(t)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["y"*string(t)]
-            pbm.A[ig,iv] += Float64(-0.2)
+            push!(irA,ig)
+            push!(icA,ix_["x"*string(Int64(v_["t+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["x"*string(t)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["y"*string(t)])
+            push!(valA,Float64(-0.2))
             ig,ig_,_ = s2mpj_ii("C"*string(t),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(t))
-            iv = ix_["y"*string(Int64(v_["t+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["y"*string(t)]
-            pbm.A[ig,iv] += Float64(-1.0)
-            iv = ix_["x"*string(t)]
-            pbm.A[ig,iv] += Float64(0.004)
-            iv = ix_["u"*string(t)]
-            pbm.A[ig,iv] += Float64(-0.2)
+            push!(irA,ig)
+            push!(icA,ix_["y"*string(Int64(v_["t+1"]))])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["y"*string(t)])
+            push!(valA,Float64(-1.0))
+            push!(irA,ig)
+            push!(icA,ix_["x"*string(t)])
+            push!(valA,Float64(0.004))
+            push!(irA,ig)
+            push!(icA,ix_["u"*string(t)])
+            push!(valA,Float64(-0.2))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -171,15 +181,14 @@ function OPTCNTRL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.objlower = 0.0
 #    Solution
 # LO SOLTN               549.9999869
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CQQR2-AN-32-20"

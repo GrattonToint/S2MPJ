@@ -17,9 +17,11 @@ function REPEAT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    N is the number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "REPEAT"
@@ -39,8 +41,6 @@ function REPEAT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER     original value
 # IE N                   1000000        $-PARAMETER
@@ -54,49 +54,59 @@ function REPEAT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C"*string(Int64(v_["N"])))
-        iv = ix_["X"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(1.0))
         end
         ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"R"*string(Int64(v_["N"])))
-        iv = ix_["X"*string(Int64(v_["N"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X"*string(Int64(v_["N"]))])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["1"]):Int64(v_["N/100"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
             ig,ig_,_ = s2mpj_ii("E",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E")
-            iv = ix_["X"*string(I)]
-            pbm.A[ig,iv] += Float64(v_["RI"])
+            push!(irA,ig)
+            push!(icA,ix_["X"*string(I)])
+            push!(valA,Float64(v_["RI"]))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -132,15 +142,14 @@ function REPEAT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xupper[ix_["X"*string(Int64(v_["N"]))]] = 0.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(0.0),pb.n)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CNLR2-AN-V-V"

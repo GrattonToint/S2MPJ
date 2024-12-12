@@ -34,7 +34,7 @@ function HEART8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HEART8LS"
@@ -61,6 +61,9 @@ function HEART8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         iv,ix_,_ = s2mpj_ii("a",ix_)
         arrset(pb.xnames,iv,"a")
         iv,ix_,_ = s2mpj_ii("b",ix_)
@@ -78,19 +81,23 @@ function HEART8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         iv,ix_,_ = s2mpj_ii("w",ix_)
         arrset(pb.xnames,iv,"w")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["a"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["b"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["a"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["b"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["c"]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["d"]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["c"])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["d"])
+        push!(valA,Float64(1.0))
         ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"<>")
         ig,ig_,_ = s2mpj_ii("G4",ig_)
@@ -610,10 +617,9 @@ function HEART8LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "C-CSUR2-MN-8-0"
         pbm.objderlvl = 2

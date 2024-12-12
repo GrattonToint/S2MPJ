@@ -36,13 +36,14 @@ class  CHEMRCTA(CUTEst_problem):
 # IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEMRCTA'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -112,6 +113,9 @@ class  CHEMRCTA(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('T'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'T'+str(I))
@@ -119,75 +123,89 @@ class  CHEMRCTA(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['1'])))
-        iv = ix_['U'+str(int(v_['1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['1'])))
-        iv = ix_['U'+str(int(v_['2']))]
-        self.A[ig,iv] = float(v_['CU1'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['2']))]])
+        valA = np.append(valA,float(v_['CU1']))
         [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['1'])))
-        iv = ix_['T'+str(int(v_['1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['T'+str(int(v_['1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['1'])))
-        iv = ix_['T'+str(int(v_['2']))]
-        self.A[ig,iv] = float(v_['CT1'])+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['T'+str(int(v_['2']))]])
+        valA = np.append(valA,float(v_['CT1']))
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
             [ig,ig_,_] = s2mpj_ii('GU'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'GU'+str(I))
-            iv = ix_['U'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['CUI-1'])+self.A[ig,iv]
-            iv = ix_['U'+str(I)]
-            self.A[ig,iv] = float(v_['CUI'])+self.A[ig,iv]
-            iv = ix_['U'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(v_['1/H2PEM'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['CUI-1']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(I)]])
+            valA = np.append(valA,float(v_['CUI']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['U'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(v_['1/H2PEM']))
             [ig,ig_,_] = s2mpj_ii('GT'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'GT'+str(I))
-            iv = ix_['T'+str(I)]
-            self.A[ig,iv] = float(v_['BETA'])+self.A[ig,iv]
-            iv = ix_['T'+str(int(v_['I-1']))]
-            self.A[ig,iv] = float(v_['CTI-1'])+self.A[ig,iv]
-            iv = ix_['T'+str(I)]
-            self.A[ig,iv] = float(v_['CTI'])+self.A[ig,iv]
-            iv = ix_['T'+str(int(v_['I+1']))]
-            self.A[ig,iv] = float(v_['1/H2PEH'])+self.A[ig,iv]
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['T'+str(I)]])
+            valA = np.append(valA,float(v_['BETA']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['T'+str(int(v_['I-1']))]])
+            valA = np.append(valA,float(v_['CTI-1']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['T'+str(I)]])
+            valA = np.append(valA,float(v_['CTI']))
+            irA  = np.append(irA,[ig])
+            icA  = np.append(icA,[ix_['T'+str(int(v_['I+1']))]])
+            valA = np.append(valA,float(v_['1/H2PEH']))
         [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['N'])))
-        iv = ix_['U'+str(int(v_['N-1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N-1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['N'])))
-        iv = ix_['U'+str(int(v_['N']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['U'+str(int(v_['N']))]])
+        valA = np.append(valA,float(1.0))
         [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['N'])))
-        iv = ix_['T'+str(int(v_['N-1']))]
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['T'+str(int(v_['N-1']))]])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['N'])))
-        iv = ix_['T'+str(int(v_['N']))]
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['T'+str(int(v_['N']))]])
+        valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -199,7 +217,7 @@ class  CHEMRCTA(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -281,21 +299,18 @@ class  CHEMRCTA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CNOR2-MN-V-V"
+        self.pbclass   = "C-CNOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

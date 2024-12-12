@@ -7,7 +7,7 @@ NAME          DIAGIQB
 *   Problem :
 *   *********
 *   A variable dimension indefinite quadratic problem
-*   with eigenvalues clusetered towards the bottom of the spectrum
+*   with eigenvalues clustered towards the bottom of the spectrum
 
 *   lambda_i = i^2/n - n/2 + 1/n, i = 1, ... , n
 

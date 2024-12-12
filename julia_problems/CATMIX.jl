@@ -28,7 +28,7 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE NH                  800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 9 XI 2024
+#   Translated to Julia by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CATMIX"
@@ -66,6 +66,9 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
+        irA   = Int64[]
+        icA   = Int64[]
+        valA  = Float64[]
         for I = Int64(v_["0"]):Int64(v_["NH"])
             iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
@@ -75,29 +78,35 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
             arrset(pb.xnames,iv,"X2"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        gtype    = String[]
+        gtype = String[]
         ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        iv = ix_["X1"*string(Int64(v_["NH"]))]
-        pbm.A[ig,iv] += Float64(1.0)
-        iv = ix_["X2"*string(Int64(v_["NH"]))]
-        pbm.A[ig,iv] += Float64(1.0)
+        push!(irA,ig)
+        push!(icA,ix_["X1"*string(Int64(v_["NH"]))])
+        push!(valA,Float64(1.0))
+        push!(irA,ig)
+        push!(icA,ix_["X2"*string(Int64(v_["NH"]))])
+        push!(valA,Float64(1.0))
         for I = Int64(v_["0"]):Int64(v_["NH-1"])
             v_["I+1"] = 1+I
             ig,ig_,_ = s2mpj_ii("ODE1"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ODE1"*string(I))
-            iv = ix_["X1"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X1"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X1"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X1"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
             ig,ig_,_ = s2mpj_ii("ODE2"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ODE2"*string(I))
-            iv = ix_["X2"*string(I)]
-            pbm.A[ig,iv] += Float64(1.0)
-            iv = ix_["X2"*string(Int64(v_["I+1"]))]
-            pbm.A[ig,iv] += Float64(-1.0)
+            push!(irA,ig)
+            push!(icA,ix_["X2"*string(I)])
+            push!(valA,Float64(1.0))
+            push!(irA,ig)
+            push!(icA,ix_["X2"*string(Int64(v_["I+1"]))])
+            push!(valA,Float64(-1.0))
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -251,15 +260,14 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # LO SOLUTION             -4.8016D-02   $ (NH=200)
 # LO SOLUTION             -4.7862D-02   $ (NH=400)
 # LO SOLUTION             -4.7185D-02   $ (NH=800)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
-        Asave = pbm.A[1:ngrp, 1:pb.n]
-        pbm.A = Asave
-        pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-AN-V-V"

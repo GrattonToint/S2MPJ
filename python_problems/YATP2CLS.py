@@ -36,13 +36,14 @@ class  YATP2CLS(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP2CLS'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -60,6 +61,9 @@ class  YATP2CLS(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
@@ -70,30 +74,34 @@ class  YATP2CLS(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'Z'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 [ig,ig_,_] = s2mpj_ii('E'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['X'+str(I)+','+str(J)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
-                iv = ix_['Y'+str(I)]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
-                iv = ix_['Z'+str(J)]
-                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(I)+','+str(J)]])
+                valA = np.append(valA,float(1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Y'+str(I)]])
+                valA = np.append(valA,float(-1.0))
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['Z'+str(J)]])
+                valA = np.append(valA,float(-1.0))
                 [ig,ig_,_] = s2mpj_ii('ER'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['X'+str(I)+','+str(J)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(I)+','+str(J)]])
+                valA = np.append(valA,float(1.0))
                 [ig,ig_,_] = s2mpj_ii('EC'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                iv = ix_['X'+str(I)+','+str(J)]
-                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+                irA  = np.append(irA,[ig])
+                icA  = np.append(icA,[ix_['X'+str(I)+','+str(J)]])
+                valA = np.append(valA,float(1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         self.n   = len(ix_)
         ngrp   = len(ig_)
@@ -182,14 +190,11 @@ class  YATP2CLS(CUTEst_problem):
                 posel = len(self.grelt[ig])
                 self.grelt = loaset(self.grelt,ig,posel,ie_['SX'+str(I)+','+str(J)])
                 self.grelw = loaset(self.grelw,ig,posel,1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-CSUR2-AN-V-V"
+        self.pbclass   = "C-CSUR2-AN-V-V"
         self.objderlvl = 2
 
 

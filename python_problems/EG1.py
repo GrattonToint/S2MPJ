@@ -22,13 +22,14 @@ class  EG1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EG1'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -36,12 +37,14 @@ class  EG1(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         [ig,ig_,_] = s2mpj_ii('GROUP1',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('GROUP2',ig_)
@@ -56,12 +59,14 @@ class  EG1(CUTEst_problem):
         ngrp   = len(ig_)
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
         self.xnames=arrset(self.xnames,iv,'X1')
-        ig = ig_['GROUP1']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        icA  = np.append(icA,[iv])
+        irA  = np.append(irA,[ig_['GROUP1']])
+        valA = np.append(valA,float(1.0))
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
         self.xnames=arrset(self.xnames,iv,'X2')
-        ig = ig_['GROUP3']
-        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        icA  = np.append(icA,[iv])
+        irA  = np.append(irA,[ig_['GROUP3']])
+        valA = np.append(valA,float(1.0))
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
         self.xnames=arrset(self.xnames,iv,'X3')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -158,14 +163,11 @@ class  EG1(CUTEst_problem):
         posel = posel+1
         self.grelt = loaset(self.grelt,ig,posel,ie_['G3E2'])
         self.grelw = loaset(self.grelw,ig,posel, 1.)
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-COBR2-AY-3-0"
+        self.pbclass   = "C-COBR2-AY-3-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

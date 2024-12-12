@@ -121,13 +121,14 @@ class  ACOPP14(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 9 XI 2024
+#   Translated to Python by S2MPJ version 25 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ACOPP14'
 
     def __init__(self, *args): 
         import numpy as np
+        from scipy.sparse import csr_matrix
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -143,6 +144,9 @@ class  ACOPP14(CUTEst_problem):
         self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
+        irA          = np.array([],dtype=int)
+        icA          = np.array([],dtype=int)
+        valA         = np.array([],dtype=float)
         for I in range(int(v_['1']),int(v_['NODES'])+1):
             [iv,ix_,_] = s2mpj_ii('A'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'A'+str(I))
@@ -154,24 +158,28 @@ class  ACOPP14(CUTEst_problem):
             [iv,ix_,_] = s2mpj_ii('Q'+str(I),ix_)
             self.xnames=arrset(self.xnames,iv,'Q'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        self.A       = lil_matrix((1000000,1000000))
         self.gscale  = np.array([])
         self.grnames = np.array([])
-        cnames      = np.array([])
-        self.cnames = np.array([])
-        gtype       = np.array([])
+        cnames       = np.array([])
+        self.cnames  = np.array([])
+        gtype        = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        iv = ix_['P1']
-        self.A[ig,iv] = float(2000.0)+self.A[ig,iv]
-        iv = ix_['P2']
-        self.A[ig,iv] = float(2000.0)+self.A[ig,iv]
-        iv = ix_['P3']
-        self.A[ig,iv] = float(4000.0)+self.A[ig,iv]
-        iv = ix_['P4']
-        self.A[ig,iv] = float(4000.0)+self.A[ig,iv]
-        iv = ix_['P5']
-        self.A[ig,iv] = float(4000.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P1']])
+        valA = np.append(valA,float(2000.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P2']])
+        valA = np.append(valA,float(2000.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P3']])
+        valA = np.append(valA,float(4000.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P4']])
+        valA = np.append(valA,float(4000.0))
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P5']])
+        valA = np.append(valA,float(4000.0))
         for I in range(int(v_['1']),int(v_['NODES'])+1):
             [ig,ig_,_] = s2mpj_ii('RP'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
@@ -183,53 +191,63 @@ class  ACOPP14(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('RP1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'RP1')
-        iv = ix_['P1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('IP1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'IP1')
-        iv = ix_['Q1']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q1']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('RP2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'RP2')
-        iv = ix_['P2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('IP2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'IP2')
-        iv = ix_['Q2']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q2']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('RP3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'RP3')
-        iv = ix_['P3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('IP3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'IP3')
-        iv = ix_['Q3']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q3']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('RP6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'RP6')
-        iv = ix_['P4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P4']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('IP6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'IP6')
-        iv = ix_['Q4']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q4']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('RP8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'RP8')
-        iv = ix_['P5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['P5']])
+        valA = np.append(valA,float(-1.0))
         [ig,ig_,_] = s2mpj_ii('IP8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'IP8')
-        iv = ix_['Q5']
-        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+        irA  = np.append(irA,[ig])
+        icA  = np.append(icA,[ix_['Q5']])
+        valA = np.append(valA,float(-1.0))
         for I in range(int(v_['1']),int(v_['LINES'])+1):
             [ig,ig_,_] = s2mpj_ii('FN'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
@@ -249,7 +267,7 @@ class  ACOPP14(CUTEst_problem):
         self.nge = len(gegrps)
         self.m   = self.nle+self.neq+self.nge
         self.congrps = np.concatenate((legrps,eqgrps,gegrps))
-        self.cnames= cnames[self.congrps]
+        self.cnames = cnames[self.congrps]
         self.nob = ngrp-self.m
         self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -404,27 +422,24 @@ class  ACOPP14(CUTEst_problem):
         self.x0[ix_['Q4']] = float(0.122)
         self.x0[ix_['Q5']] = float(0.174)
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        self.H = lil_matrix((self.n, self.n))
-        ix1 = ix_['P1']
-        ix2 = ix_['P1']
-        self.H[ix1,ix2] = float(860.586)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
-        ix1 = ix_['P2']
-        ix2 = ix_['P2']
-        self.H[ix1,ix2] = float(5000.0)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
-        ix1 = ix_['P3']
-        ix2 = ix_['P3']
-        self.H[ix1,ix2] = float(200.0)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
-        ix1 = ix_['P4']
-        ix2 = ix_['P4']
-        self.H[ix1,ix2] = float(200.0)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
-        ix1 = ix_['P5']
-        ix2 = ix_['P5']
-        self.H[ix1,ix2] = float(200.0)+self.H[ix1,ix2]
-        self.H[ix2,ix1] = self.H[ix1,ix2]
+        irH  = np.array([],dtype=int)
+        icH  = np.array([],dtype=int)
+        valH = np.array([],dtype=float)
+        irH  = np.append(irH,[ix_['P1']])
+        icH  = np.append(icH,[ix_['P1']])
+        valH = np.append(valH,float(860.586))
+        irH  = np.append(irH,[ix_['P2']])
+        icH  = np.append(icH,[ix_['P2']])
+        valH = np.append(valH,float(5000.0))
+        irH  = np.append(irH,[ix_['P3']])
+        icH  = np.append(icH,[ix_['P3']])
+        valH = np.append(valH,float(200.0))
+        irH  = np.append(irH,[ix_['P4']])
+        icH  = np.append(icH,[ix_['P4']])
+        valH = np.append(valH,float(200.0))
+        irH  = np.append(irH,[ix_['P5']])
+        icH  = np.append(icH,[ix_['P5']])
+        valH = np.append(valH,float(200.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -7587,6 +7602,9 @@ class  ACOPP14(CUTEst_problem):
         self.grelt = loaset(self.grelt,ig,posel,ie_['E132'])
         nlc = np.union1d(nlc,np.array([ig]))
         self.grelw = loaset(self.grelw,ig,posel,float(6.651811606))
+        #%%%%%%%% BUILD THE SPARSE MATRICES %%%%%%%%%%%%%%%
+        self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
+        self.H = csr_matrix((valH,(irH,icH)),shape=(self.n,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         self.clower = np.full((self.m,1),-float('Inf'))
@@ -7594,18 +7612,12 @@ class  ACOPP14(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
-        #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        self.A.resize(ngrp,self.n)
-        self.A     = self.A.tocsr()
-        sA1,sA2    = self.A.shape
-        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQOR2-AY-38-68"
+        self.pbclass   = "C-CQOR2-AY-38-68"
         self.objderlvl = 2
         self.conderlvl = [2]
-        self.H = self.H.tocsr()
 
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
