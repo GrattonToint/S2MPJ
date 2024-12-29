@@ -67,7 +67,7 @@ by issuing the  command
 ```
 Jxv  = PROBLEM( 'cJxv', x, v );
 ```      
-and the product of the Jacobian transposed times `v` is obtained by
+and the product of the Jacobian transposed (at `x`) times `v` is obtained by
 ```   
 Jxv  = PROBLEM( 'cJtxv', x, v );
 ```
@@ -78,7 +78,7 @@ Lxy = PROBLEM( 'Lxy', x, y );}
 [ Lxy, Lgxy ] = PROBLEM( 'Lgxy', x, y );
 [ Lxy, Lgxy, LHxy ] = PROBLEM( 'LgHxy', x, y );
 ```      
-while the product of the Lagrangian's Hessian times a vector `v`
+while the product of the Lagrangian's Hessian at `(x,y)` times a vector `v`
 can be computed with the command
 ```   
 HLxyv = PROBLEM( 'HLxyv', x, y, v );
@@ -164,7 +164,7 @@ Lxy, Lgxy   = PROBLEM( "Lgxy", pbm, x, y )
 Lxy, Lgxy, LgHxy = PROBLEM( "LgHxy", pbm, x, y )
 LHxyv       = PROBLEM( "LHxyv", pbm, x, y, v )
 LIxy        = PROBLEM( "LIxy", pbm, x, y, I )
-LIxy, LIgxy = PROBLEM( "LIgxy(", pbm, x, y, I )
+LIxy, LIgxy = PROBLEM( "LIgxy", pbm, x, y, I )
 LIxy, LIgxy, LIgHxy = PROBLEM( "LIgHxy", pbm, x, y, I )
 LIHxyv      = PROBLEM( "LIHxyv", pbm, x, y, v, I )
 ```
