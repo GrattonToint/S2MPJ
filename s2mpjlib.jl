@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. L. Toint (this version 2 X 2024)
+#   Programming: S. Gratton and Ph. L. Toint (this version 5 III 2025)
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,6 +222,26 @@ end
 
 function s2mpj_eval( action::String, pbm::PBM, args::Union{Vector{Int},Vector{Float64}}... )
 
+    #  Check plausibility of the request.
+
+    if action in  ["fx","fgx","fgHx","fHxv"]
+       if isempty( pbm.objgrps ) && isempty( pbm.H )
+          println(" ")
+          println("ERROR: problem "*pbm.name*".jl has no objective function!")
+          println("       Please refer to the problem classification for checking a problem's type.")
+          println(" ")
+          return Nothing
+       end
+    elseif action in  ["cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","cJxv","cJtxv","cIJtxv"]
+       if isempty( pbm.congrps )
+          println(" ")
+          println("ERROR: problem "*pbm.name*".jl has no constraint!")
+          println("       Please refer to the problem classification for checking a problem's type.")
+          println(" ")
+          return Nothing
+       end
+    end
+
     #  Get the problem data and possible global parameters' values.
     
     if pbm.has_globs[1] >0 
@@ -232,8 +252,10 @@ function s2mpj_eval( action::String, pbm::PBM, args::Union{Vector{Int},Vector{Fl
     end
     
     #  Evaluations of the objective function and constraints
+
+    print(pbm.objgrps)
     
-    if action == "fx"   
+    if action == "fx" 
         return evalgrsum( true,  pbm.objgrps, args[1], pbm, 1 )
     elseif action == "fgx" 
         return evalgrsum( true,  pbm.objgrps, args[1], pbm, 2 )
@@ -250,7 +272,7 @@ function s2mpj_eval( action::String, pbm::PBM, args::Union{Vector{Int},Vector{Fl
     elseif action == "cIJx"
         return evalgrsum( false, pbm.congrps[args[1]], args[1], pbm, 2 )
     elseif action == "cIJHx"
-        return evalgrsum( false, pbm.congrps[args[2]], args[1], pbm, 3 )
+        return evalgrsum( false, pbm.congrps[args[1]], args[1], pbm, 3 )
     elseif action == "fHxv"
         return evalHJv( "Hv", pbm.objgrps, args[1], args[2], Float64[], pbm ); 
     elseif action == "cJxv"
@@ -284,7 +306,7 @@ function s2mpj_eval( action::String, pbm::PBM, args::Union{Vector{Int},Vector{Fl
     # Error
 
     else
-        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
+        println("ERROR: action "*action*" unavailable for problem "*pbm.name*".jl")
         return ntuple(i->undef,args[end])
     end
     
@@ -913,7 +935,7 @@ function evalLx( gobjlist::Vector{Int}, gconlist::Vector{Int},
     # Handling the case of function evaluation
     
     if nargout == 1
-        if length( gobjlist ) > 0 || isdefined( pbm, :H )
+        if length( gobjlist ) > 0 || !isempty( pbm.H )
             Lxy = evalgrsum( true, gobjlist, x, pbm, 1 )
         else
             Lxy = 0.0
@@ -928,7 +950,7 @@ function evalLx( gobjlist::Vector{Int}, gconlist::Vector{Int},
     
     elseif nargout == 2
 
-        if length( gobjlist ) > 0 || isdefined( pbm, :H)
+        if length( gobjlist ) > 0 || !isempty( pbm.H )
             Lxy, Lgxy = evalgrsum( true, gobjlist, x, pbm, 2 )
         else
             Lxy  = 0.0
@@ -945,7 +967,7 @@ function evalLx( gobjlist::Vector{Int}, gconlist::Vector{Int},
     
     elseif nargout == 3
     
-        if length( gobjlist ) > 0 || isdefined( pbm, :H)
+        if length( gobjlist ) > 0 || !isempty( pbm.H )
             Lxy, Lgxy, LgHxy = evalgrsum( true, gobjlist, x, pbm, 3 )
         else
             n     = length( x )

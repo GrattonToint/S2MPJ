@@ -9,7 +9,7 @@
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #   Also contains the problem selection tool.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 9 XI 2024)
+#   Programming: S. Gratton and Ph. Toint (this version 5 III 2025)
 #
 #####################################################################################################
 #####################################################################################################
@@ -64,118 +64,157 @@ class CUTEst_problem:
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    
     def fx( self, x ):              # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
+        if ( hasattr( self, "objgrps" ) and len( self.objgrps) ) or hasattr( self, "H" ):
+            x = x.reshape(-1,1)
             self.getglobs()
             return self.evalgrsum( True, self.objgrps, x, 1 )
         else:
-            print( "ERROR: no objective groups in "+self.name+"!" )
+            print( " ")
+            print( "ERROR: problem "+self.name+" has no objective function!" )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def fgx( self, x ):             # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
+        if ( hasattr( self, "objgrps" ) and len( self.objgrps) ) or hasattr( self, "H" ):
+            x = x.reshape(-1,1)
             self.getglobs()
             return self.evalgrsum( True, self.objgrps, x, 2 )
         else:
-            print( "ERROR: no objective groups in "+self.name+"!" )
+            print( " " )
+            print( "ERROR: problem "+self.name+" has no objective function!" )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
         
     def fgHx( self, x ):            # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
+        if ( hasattr( self, "objgrps" ) and len( self.objgrps) ) or hasattr( self, "H" ):
+            x = x.reshape(-1,1)
             self.getglobs()
             return self.evalgrsum( True, self.objgrps, x, 3 )
         else:
-            print( "ERROR: no objective groups in "+self.name+"!" )
+            print( " " )
+            print( "ERROR: problem "+self.name+" has no objective function!" )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
         
     def fHxv( self, x, v ):          # input = ( x, v )
-        x = x.reshape(-1,1)
-        v = v.reshape(-1,1)
-        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
+        if ( hasattr( self, "objgrps" ) and len( self.objgrps) ) or hasattr( self, "H" ):
+            x = x.reshape(-1,1)
+            v = v.reshape(-1,1)
             self.getglobs()
             return self.evalHJv( "Hv", self.objgrps, x, v, [] )
         else:
-            print( "ERROR: no objective groups in "+self.name+"!" )
+            print( " " )
+            print( "ERROR: problem "+self.name+" has no objective function!" )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
         
     def cx( self, x ):               # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "congrps" ):
+        if hasattr( self, "congrps" ) and len( self.congrps):
+            x = x.reshape(-1,1)
             self.getglobs()
             return self.evalgrsum( False, self.congrps, x, 1 )
         else:
-            print( 'ERROR: no constraint groups in '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
         
     def cJHx( self, x ):             # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "congrps" ):
+        if hasattr( self, "congrps" ) and len( self.congrps):
+            x = x.reshape(-1,1)
             self.getglobs()
             return self.evalgrsum( False, self.congrps, x, 3 )
         else:
-            print( 'ERROR: no constraint groups in '+self.name+'!' )
+            print( " ")
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
 
     def cJxv( self, x, v ):          # input = ( x, v )
-        x = x.reshape(-1,1)
-        v = v.reshape(-1,1)
-        if hasattr( self, "congrps" ):
+        if hasattr( self, "congrps" ) and len( self.congrps):
+            x = x.reshape(-1,1)
+            v = v.reshape(-1,1)
             self.getglobs()
             return self.evalHJv( "Jv", self.congrps, x, v, [] )
         else:
-            print( 'ERROR: no constraint groups in '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cJtxv( self, x, v ):          # input = ( x, v )
-        x = x.reshape(-1,1)
-        v = v.reshape(-1,1)
-        if hasattr( self, "congrps" ):
+        if hasattr( self, "congrps" ) and len( self.congrps):
+            x = x.reshape(-1,1)
+            v = v.reshape(-1,1)
             self.getglobs()
             return self.evalHJv( "Jtv", self.congrps, x, v, [] )
         else:
-            print( 'ERROR: no constraint groups in '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cIx( self, x, clist ):       # input = ( x, clist )
-        x      = x.reshape(-1,1)
-        iclist = [ self.congrps[i] for i in clist ]
-        if hasattr( self, "congrps" ) and len( iclist ):
+        if hasattr( self, "congrps" ) and len( self.congrps) and len( clist ):
+            x      = x.reshape(-1,1)
+            iclist = [ self.congrps[i] for i in clist ]
             self.getglobs()
             return self.evalgrsum( False, iclist , x, 1 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cIJx( self, x, clist ):          # input = ( x , clist )
-        x      = x.reshape(-1,1)
-        iclist = [ self.congrps[i] for i in clist ]
-        if hasattr( self, "congrps" ) and len( iclist  ):
+        if hasattr( self, "congrps" ) and len( self.congrps) > 0 and len( clist ):
+            x      = x.reshape(-1,1)
+            iclist = [ self.congrps[i] for i in clist ]
             self.getglobs()
             return self.evalgrsum( False, iclist, x, 2 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cIJHx( self, x , clist ):        # input = ( x, clist )
-        x      = x.reshape(-1,1)
-        iclist = [ self.congrps[i] for i in clist ]
-        if hasattr( self, "congrps" ) and len(iclist ):
+        if hasattr( self, "congrps" ) and len( self.congrps) > 0 and len( clist ):
+            x      = x.reshape(-1,1)
+            iclist = [ self.congrps[i] for i in clist ]
             self.getglobs()
             return self.evalgrsum( False, iclist, x, 3 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cIJxv( self, x, v, clist ):      # input = ( x, v, clist )
-        x      = x.reshape(-1,1)
-        v      = v.reshape(-1,1)
-        iclist = [ self.congrps[i] for i in clist ]
-        if hasattr( self, "congrps" ) and len( iclist ):
+        if hasattr( self, "congrps" ) and len( self.congrps) > 0 and len( clist ):
+            x      = x.reshape(-1,1)
+            v      = v.reshape(-1,1)
+            iclist = [ self.congrps[i] for i in clist ]
             self.getglobs()
             return self.evalHJv( "Jv", iclist, x, v, [] )
         else:
-            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def cIJtxv( self, x, v, clist ):      # input = ( x, v, clist )
-        x      = x.reshape(-1,1)
-        v      = v.reshape(-1,1)
-        iclist = [ self.congrps[i] for i in clist ]
-        if hasattr( self, "congrps" ) and len( iclist ):
+        if hasattr( self, "congrps" ) and len( self.congrps) > 0 and len( clist ):
+            x      = x.reshape(-1,1)
+            v      = v.reshape(-1,1)
+            iclist = [ self.congrps[i] for i in clist ]
             self.getglobs()
             return self.evalHJv( "Jvt", iclist, x, v, [] )
         else:
-            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " ")
         
     def Lxy( self, x, y ):           # input = ( x, y )
         x = x.reshape(-1,1)

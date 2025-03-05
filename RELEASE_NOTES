@@ -28,3 +28,4 @@ Release notes for S2MPJ
              updating of the documentation to reflect these modifications.
              
              
+5 III 2025 : improved error messages when the user requests values or derivatives of undefined functions

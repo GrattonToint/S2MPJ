@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 9 XI 2024)
+%   Programming: Ph. Toint (this version 5 III 2025)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,50 +166,74 @@ case { 'fx', 'fgx', 'fgHx', 'cx', 'cJx', 'cJHx', 'cIx', 'cIJx', 'cIJHx', 'fHxv',
            ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
          [varargout{1:nargout}] = evalgrsum( 1, pbm.objgrps, varargin{2}, pbm );
       else
-         disp( ' ERROR: no objective function!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no objective function!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case 'fHxv'                                          % varargin = { problem, x, v }
       if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ...
            ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
          varargout{1} = evalHJv( 'Hv', pbm.objgrps, varargin{2}, varargin{3}, [], pbm );
       else
-         disp( ' ERROR: no objective function!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no objective function!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case { 'cx', 'cJx', 'cJHx' }                      % varargin = { pbm, x }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          [varargout{1:nargout}] = evalgrsum( 0, pbm.congrps, varargin{2}, pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case { 'cIx', 'cIJx', 'cIJHx' }                % varargin = { problem, x, I }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          [varargout{1:nargout}] = evalgrsum( 0, pbm.congrps( varargin{3} ), varargin{2}, pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case 'cJxv'                                          % varargin = { pbm, x, v }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          varargout{1} = evalHJv( 'Jv', pbm.congrps, varargin{2}, varargin{3}, [], pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case 'cJtxv'                                          % varargin = { pbm, x, v }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          varargout{1} = evalHJv( 'Jtv', pbm.congrps, varargin{2}, varargin{3}, [], pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case 'cIJxv'                                        % varargin = { pbm, x, v, I }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          varargout{1} = evalHJv( 'Jv', pbm.congrps( varargin{4} ), varargin{2}, varargin{3}, [], pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case 'cIJtxv'                                        % varargin = { pbm, x, v, I }
       if ( isfield( pbm, 'congrps' ) && ~isempty( pbm.congrps ) )  % Check there are constraints!
          varargout{1} = evalHJv( 'Jtv', pbm.congrps( varargin{4} ), varargin{2}, varargin{3}, [], pbm );
       else
-         disp( ' ERROR: no constraint!' )
+         disp( ' ' )
+         disp( [ ' ERROR: problem ', pbm.name , ' has no constraint!' ] )
+         disp( '        Please refer to the problem classification for checking a problem''s type.')
+         disp( ' ' )
       end
    case { 'Lxy', 'Lgxy', 'LgHxy' }                % varargin = { pbm, x, y }
       if ( ~isfield( pbm, 'objgrps' ) )
