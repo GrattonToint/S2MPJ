@@ -130,14 +130,18 @@ The list of Python test problems is available in the "list_of_python_problems" f
 
 ## Using the collection in Julia
 
-After dowloading the content of the repository, make sure the directory containing
-the file "s2mpjlib.jl" and the subdirectory 'python_problems" are in LOAD_PATH.
-To use of the problem `PROBLEM.jl` in an optimization code, one then first includes the
-problem as in
+To use of the problem `PROBLEM.jl` in an optimization code (after dowloading the
+content of the repository), one first includes the
+s2mpj Julia library and problem as in
 ```
+include( "s2mpjlib.jl" )
 include( "PROBLEM.jl" )
 ```
-and the setup of the problem is performed by a call 
+(possibly giving the full path to these files if they are not in the current directory).
+
+NOTE: this differs from the obsolete procedure described in the published paper!
+
+The setup of the problem is then performed by a call 
 ```
 pb, pbm = PROBLEM( "setup", args[:] )
 ```

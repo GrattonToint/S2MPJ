@@ -1,31 +1,37 @@
 Release notes for S2MPJ
 -----------------------
 
-6 X 2024   : correction of a few minor bugs,
-             addition of the problem selection tool in s2mpjlib,
-             handling of missing derivatives,
-             addition of the cJtxv and cIJtxv evaluation actions.
-             updating of the documentation to reflect these modifications.
+6 X 2024    : correction of a few minor bugs,
+              addition of the problem selection tool in s2mpjlib,
+              handling of missing derivatives,
+              addition of the cJtxv and cIJtxv evaluation actions.
+              updating of the documentation to reflect these modifications.
 
-16 X 2024  : added a warning about the github lists of test problems in the README
-             correction of a bug in the Python library
+16 X 2024   : added a warning about the github lists of test problems in the README
+              correction of a bug in the Python library
             
-5 XI 2024  : addition of the SPARCO*.m and NOZZLEfp.m problems
-             extension of the classifiaction scheme to reflect problem's origin and variables' types
-             updating of the documentation to reflect these modifications.
+5 XI 2024   : addition of the SPARCO*.m and NOZZLEfp.m problems
+              extension of the classifiaction scheme to reflect problem's origin and variables' types
+              updating of the documentation to reflect these modifications.
             
-9 XI 2024  : correction to problem's lower bounds
-             corrections to problem's classifications
-             improved selection tool
-             updating of the documentation to reflect these modifications.
+9 XI 2024   : correction to problem's lower bounds
+              corrections to problem's classifications
+              improved selection tool
+              updating of the documentation to reflect these modifications.
 
-11 XI 2024 : cleanup of the matlab_problems directory
-             improvement in error handling in SPARCO problems
+11 XI 2024  : cleanup of the matlab_problems directory
+              improvement in error handling in SPARCO problems
 
-25 XI 2024 : added problem ARGLINA, CHANDHEU (which had escaped, somehow) and CHANDHEULS
-             improved comments for problems WATSON and WATSONNE
-             improved construction of sparse matrices, including removal of the addinA option of s2mpj.m
-             updating of the documentation to reflect these modifications.
+25 XI 2024  : added problem ARGLINA, CHANDHEU (which had escaped, somehow) and CHANDHEULS
+              improved comments for problems WATSON and WATSONNE
+              improved construction of sparse matrices, including removal of the addinA option of s2mpj.m
+              updating of the documentation to reflect these modifications.
              
              
-5 III 2025 : improved error messages when the user requests values or derivatives of undefined functions
+5 III 2025  : improved error messages when the user requests values or derivatives of undefined functions
+
+21 VI 2025  : added error message in Julia files if the library has not been included before calling it
+              and relevant corrections to the README and paper (despite the incomplete OMS version
+              being oublished)
+
+10 VII 2025 : correction in README.md for the procedure to include the s2MPJ library in Julia.
