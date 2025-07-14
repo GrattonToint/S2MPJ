@@ -1,4 +1,4 @@
-function ACOPP14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function ACOPP14(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -120,10 +120,13 @@ function ACOPP14(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ACOPP14"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling ACOPP14.")
+    end
 
     if action == "setup"
         pb           = PB(name)

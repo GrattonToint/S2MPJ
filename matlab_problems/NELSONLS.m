@@ -19,13 +19,13 @@ function varargout = NELSONLS(action,varargin)
 % 
 %    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 % 
-%    classification = 'C-CSUR2-MN-3'
+%    classification = 'C-CSUR2-MN-3-0'
 % 
 %    Number of data values
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -529,7 +529,7 @@ switch(action)
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-CSUR2-MN-3';
+        pb.pbclass = 'C-CSUR2-MN-3-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

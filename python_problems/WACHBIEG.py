@@ -23,7 +23,7 @@ class  WACHBIEG(CUTEst_problem):
 # RE A                   -1.0           $-PARAMETER a
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 25 XI 2024
+#   Translated to Python by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WACHBIEG'

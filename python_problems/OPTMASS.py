@@ -43,7 +43,7 @@ class  OPTMASS(CUTEst_problem):
 # IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 25 XI 2024
+#   Translated to Python by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OPTMASS'

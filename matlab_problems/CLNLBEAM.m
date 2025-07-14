@@ -32,7 +32,7 @@ function varargout = CLNLBEAM(action,varargin)
 % IE NI                  2000           $-PARAMETER n=6003, m=4000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

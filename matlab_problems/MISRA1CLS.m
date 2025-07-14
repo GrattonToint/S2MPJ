@@ -10,8 +10,6 @@ function varargout = MISRA1CLS(action,varargin)
 % 
 %    Fit: y = b1 * (1-(1+2*b2*x)**(-.5)) + e
 % 
-%    WARNING: this problem my return complex values!
-% 
 %    Source:  Problem from the NIST nonlinear regression test set
 %      http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml
 % 
@@ -22,8 +20,11 @@ function varargout = MISRA1CLS(action,varargin)
 % 
 %    classification = 'C-CSUR2-MN-2-0'
 % 
+%    Number of data values
+% 
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

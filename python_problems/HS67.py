@@ -26,7 +26,7 @@ class  HS67(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 25 XI 2024
+#   Translated to Python by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS67'
@@ -407,202 +407,46 @@ class  HS67(CUTEst_problem):
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
-#    @staticmethod
-#    def e_globs(self):
-
-#        import numpy as np
-#        self.efpar = np.array([]);
-#        self.efpar = arrset( self.efpar,0,.FALSE.0)
-#        return pbm
-
     @staticmethod
-    def extfunc(self,X1,X2,X3):
-    # PAGE 129 Hock and Schittkowski.
+    def e_globs(self):
 
         import numpy as np
-        
-        Y = np.zeros((8,1))
-        G = np.zeros((8,3))
-        H = np.zeros((8,6))
+        self.efpar = np.array([]);
+        self.efpar = arrset( self.efpar,0,.FALSE.0)
+        return pbm
 
-     #  First approximation to Y1.
-
-        Y[1] = 1.6 * X1
-
-     #  Loop until Y1 converges.
-
-        for I in range(1,1000):
-
-            #  Y2.
-
-            Y[2]   = 1.22 * Y[1] - X1
-            G[2,0] = 1.22 * G[1,0] - 1.0
-            G[2,1] = 1.22 * G[1,1]
-            G[2,2] = 1.22 * G[1,2]
-            H[2,0] = 1.22 * H[1,0]
-            H[2,1] = 1.22 * H[1,1]
-            H[2,2] = 1.22 * H[1,2]
-            H[2,3] = 1.22 * H[1,3]
-            H[2,4] = 1.22 * H[1,4]
-            H[2,5] = 1.22 * H[1,5]
-
-            #  Y5.
-
-            Y[5]   = ( X2 + Y[2] ) / X1
-            G[5,0] = - Y[5] / X1 + G[2,0] / X1
-            G[5,1] =   1.0  / X1 + G[2,1] / X1
-            G[5,2] =  G[2,2] / X1
-            H[5,0] = - G[5,0] / X1 + Y[5]/ X1**2 - G[2,0] / X1**2 + H[2,0] / X1
-            H[5,1] = - G[5,1] / X1 + H[2,1] / X1
-            H[5,2] = - G[5,2] / X1 + H[2,2] / X1
-            H[5,3] = H[2,3] / X1
-            H[5,4] = H[2,4] / X1
-            H[5,5] = H[2,5] / X1
-            Y1C    = 0.01 * X1 * ( 112.0 + 13.167 * Y[5] - 0.6667 * Y[5]**2 );
-   
-            #  Y1.
-
-            if np.abs( Y1C - Y[1] ) > 0.001 :
-   
-                Y[1]   = Y1C;
-                G[1,0] = ( 0.01 * ( 112.0 + 13.167 * Y[5] - 0.6667 * Y[5]**2 )
-                         +  X1 * 0.13167 * G[5,0] -  X1 * 0.013334 * Y[5] * G[5,0] )
-                G[1,1] = X1 * ( 0.13167 * G[5,1] - 0.013334 * Y[5] * G[5,1] )
-                G[1,2] = X1 * ( 0.13167 * G[5,2] - 0.013334 * Y[5] * G[5,2] )
-                H[1,0] = (  0.13167 * G[5,0] - 0.013334 * Y[5] * G[5,0] + 0.13167 * G[5,0]
-                           - 0.013334 * Y[5] * G[5,0] + X1 * 0.13167 * H[5,0] - X1 * 0.013334 * G[5,0]**2 
-                           - X1 * 0.013334 * Y[5] * H[5,0] )
-                H[1,1] = (  0.13167 * G[5,1] - 0.013334 * Y[5] * G[5,1]         + X1 * 0.13167 * H[5,1]
-                           - X1 * 0.013334 * G[5,1] * G[5,0]                     - X1 * 0.013334 * Y[5] * H[5,1] )
-                H[1,2] = ( 0.13167 * G[5,2] - 0.013334 * Y[5] *  G[5,2]          + X1 * 0.13167 * H[5,2] 
-                           - X1 * 0.013334 * G[5,2] * G[5,0]                     - X1 * 0.013334 * Y[5] * H[5,2] )
-                H[1,3] = X1 * ( 0.13167 * H[5,3] - 0.013334 * G[5,1]**2         - 0.013334 * Y[5] * H[5,3])
-                H[1,4] = X1 * ( 0.13167 * H[5,4] - 0.013334 * G[5,2] * G[5,1]  - 0.013334 * Y[5] * H[5,4])
-                H[1,5] = X1 * ( 0.13167 * H[5,5] - 0.013334 * G[5,2]**2         - 0.013334 * Y[5] * H[5,5])
-            else:
-                break
-
-#        print( "Y = ", Y )
-#        print( "G = ", G )
-#        print( "H = ", H )
-#        exit()%D
-
-        #  First approximation to Y3.
-
-        Y[3] = 93.0
-
-        #  Loop until Y3 converges.
-
-        for I in range(1,1000):
-
-            #  Y4.
-
-            Y[4]   = 86.35 + 1.098 * Y[5] - 0.038 * Y[5]**2 + 0.325 * ( Y[3] - 89.0 )
-            G[4,0] = 1.098 * G[5,0] - 0.076 * Y[5] * G[5,0] + 0.325 * G[3,0]
-            G[4,1] = 1.098 * G[5,1] - 0.076 * Y[5] * G[5,1] + 0.325 * G[3,1]
-            G[4,2] = 1.098 * G[5,2] - 0.076 * Y[5] * G[5,2] + 0.325 * G[3,2]
-            H[4,0] = 1.098 * H[5,0] - 0.076 * G[5,0] * G[5,0] - 0.076 * Y[5] * H[5,0] + 0.325 * H[3,0]
-            H[4,1] = 1.098 * H[5,1] - 0.076 * G[5,0] * G[5,1] - 0.076 * Y[5] * H[5,1] + 0.325 * H[3,1]
-            H[4,2] = 1.098 * H[5,2] - 0.076 * G[5,0] * G[5,2] - 0.076 * Y[5] * H[5,2] + 0.325 * H[3,2]
-            H[4,3] = 1.098 * H[5,3] - 0.076 * G[5,1] * G[5,1] - 0.076 * Y[5] * H[5,3] + 0.325 * H[3,3]
-            H[4,4] = 1.098 * H[5,4] - 0.076 * G[5,1] * G[5,2] - 0.076 * Y[5] * H[5,4] + 0.325 * H[3,4]
-            H[4,5] = 1.098 * H[5,5] - 0.076 * G[5,2] * G[5,2] - 0.076 * Y[5] * H[5,5] + 0.325 * H[3,5]
-
-            #  Y7.
-
-            Y[7] = 3.0 * Y[4] - 133.0
-            G[7,0] = 3.0 * G[4,0]
-            G[7,1] = 3.0 * G[4,1]
-            G[7,2] = 3.0 * G[4,2]
-            H[7,0] = 3.0 * H[4,0]
-            H[7,1] = 3.0 * H[4,1]
-            H[7,2] = 3.0 * H[4,2]
-            H[7,3] = 3.0 * H[4,3]
-            H[7,4] = 3.0 * H[4,4]
-            H[7,5] = 3.0 * H[4,5]
-
-            #  Y6.
-
-            Y[6]   = 35.82 - 0.222 * Y[7]
-            G[6,0] = - 0.222 * G[7,0]
-            G[6,1] = - 0.222 * G[7,1]
-            G[6,2] = - 0.222 * G[7,2]
-            H[6,0] = - 0.222 * H[7,0]
-            H[6,1] = - 0.222 * H[7,1]
-            H[6,2] = - 0.222 * H[7,2]
-            H[6,3] = - 0.222 * H[7,3]
-            H[6,4] = - 0.222 * H[7,4]
-            H[6,5] = - 0.222 * H[7,5]
-            Y1Y6X3 = Y[1] * Y[6] + 1000.0 * X3
-            Y3C    = 98000.0 * X3 / Y1Y6X3
-
-#            print( "Y = ", Y )
-#            print( "G = ", G )
-#            print( "H = ", H )
-#            print( "===1===")
-#            exit()%D        
-                       
-            #  Y3.
-
-            if np.abs( Y3C - Y[3] ) > 0.001 :
-                Y[3]    = Y3C
-                G[3,0] =   -  98000.0 * X3 * ( G[1,0] * Y[6] + Y[1] * G[6,0] ) / Y1Y6X3**2
-                G[3,1] =   -  98000.0 * X3 * ( G[1,1] * Y[6] + Y[1] * G[6,1] ) / Y1Y6X3**2;
-                G[3,2] =      98000.0 / Y1Y6X3  - 98000.0 * X3 * ( G[1,2] * Y[6] + Y[1] * G[6,2] + 1000.0 ) / Y1Y6X3**2
-                H[3,0] = ( -  98000.0 * X3 * ( H[1,0] * Y[6] + 2.0 * G[1,0] * G[6,0] + Y[1] * H[6,0] ) / Y1Y6X3**2 
-                           + 196000.0 * X3 * ( G[1,0] * Y[6] + Y[1] * G[6,0] )**2 / Y1Y6X3**3 )
-                H[3,1] = ( -  98000.0 * X3 * ( H[1,1] * Y[6] + G[1,1] * G[6,0] + G[1,0] * G[6,1]  + Y[1] * H[6,1] ) / Y1Y6X3**2
-                           + 196000.0 * X3 * ( G[1,1] * Y[6] + Y[1] * G[6,1] ) * ( G[1,0] * Y[6]  + Y[1] * G[6,0] ) / Y1Y6X3**3 )
-                H[3,2] = ( -  98000.0 * ( Y[1] * G[6,0] + Y[6] *  G[1,0] ) / Y1Y6X3**2
-                           -  98000.0 * X3 * ( G[1,2] * G[6,0] + Y[1] * H[6,2] + G[1,0] * G[6,2]
-                           + H[1,2] * Y[6] ) / Y1Y6X3**2 + 196000.0 * X3 * ( Y[1] * G[6,0]
-                           + Y[6] * G[1,0] ) * ( G[1,2] * Y[6] + Y[1] * G[6,2] + 1000.0 ) / Y1Y6X3**3 )
-                H[3,3] = ( - 98000.0 * X3 * ( H[1,3] * Y[6] + 2.0 * G[1,1] * G[6,1] + Y[1] * H[6,3]) / Y1Y6X3**2 
-                           + 196000.0 * X3 * ( G[1,1] * Y[6] + Y[1] * G[6,1] )**2 / Y1Y6X3**3 )
-                H[3,4] = ( -  98000.0 * ( Y[1] * G[6,1] + Y[6] *  G[1,1]) / Y1Y6X3**2
-                           -  98000.0 * X3 * ( G[1,2] * G[6,1] + Y[1] * H[6,4]
-                          + G[1,1] * G[6,2] + H[1,4] * Y[6] ) / Y1Y6X3**2  + 196000.0 * X3 * ( Y[1] * G[6,1]
-                          + Y[6] * G[1,1] ) * ( G[1,2] * Y[6] + Y[1] *  G[6,2] + 1000.0 ) / Y1Y6X3**3 )
-                H[3,5] = ( - 196000.0 * ( Y[1] * G[6,2] + Y[6] * G[1,2] + 1000.0 ) / Y1Y6X3**2 
-                           -  98000.0 * X3 * ( H[1,5] * Y[6] + 2.0 * G[1,2] * G[6,2] + Y[1] * H[6,5] ) / Y1Y6X3**2 
-                           + 196000.0 * X3 * ( G[1,2] * Y[6] + Y[1] * G[6,2] + 1000.0 )**2 / Y1Y6X3**3 )
-            else:
-                break
-
-#        print( "Y = ", Y )
-#        print( "G = ", G )
-#        print( "H = ", H )
-#        print( "===========")
-
-        return Y, G, H
-     
     @staticmethod
-    def eY2Y5(self,nargout,*args):
+    def eY2Y5(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc(self,EV_[0],EV_[1],EV_[2])
-        f_   = YY[1]*YY[4]
+        if self.efpar[0]==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(2)*Y(5)
         if not isinstance( f_, float ):
-            f_ = f_.item();
+            f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = YY[1]*GG[4,0]+YY[4]*GG[1,0]
-            g_[1] = YY[1]*GG[4,1]+YY[4]*GG[1,1]
-            g_[2] = YY[1]*GG[4,2]+YY[4]*GG[1,2]
+            g_[0] = Y(2)*G(5,1)+Y(5)*G(2,1)
+            g_[1] = Y(2)*G(5,2)+Y(5)*G(2,2)
+            g_[2] = Y(2)*G(5,3)+Y(5)*G(2,3)
             if nargout>2:
-                H_      = np.zeros((3,3))
-                H_[0,0] = YY[1]*HH[4,0]+2.0*GG[4,0]*GG[1,0]+YY[4]*HH[1,0]
-                H_[0,1] = YY[1]*HH[4,1]+GG[4,0]*GG[1,1]+GG[4,1]*GG[1,0]+YY[4]*HH[1,1]
+                H_ = np.zeros((3,3))
+                H_[0,0] = Y(2)*H(5,1)+2.0*G(5,1)*G(2,1)+Y(5)*H(2,1)
+                H_[0,1] = Y(2)*H(5,2)+G(5,1)*G(2,2)+G(5,2)*G(2,1)+Y(5)*H(2,2)
                 H_[1,0] = H_[0,1]
-                H_[0,2] = YY[1]*HH[4,2]+GG[4,0]*GG[1,2]+GG[4,2]*GG[1,0]+YY[4]*HH[1,2]
+                H_[0,2] = Y(2)*H(5,3)+G(5,1)*G(2,3)+G(5,3)*G(2,1)+Y(5)*H(2,3)
                 H_[2,0] = H_[0,2]
-                H_[1,1] = YY[1]*HH[4,3]+2.0*GG[4,1]*GG[1,1]            +YY[4]*HH[1,3]
-                H_[1,2] = YY[1]*HH[4,4]+GG[4,1]*GG[1,2]+GG[4,2]*GG[1,1]+YY[4]*HH[1,4]
+                H_[1,1] = Y(2)*H(5,4)+2.0*G(5,2)*G(2,2)+Y(5)*H(2,4)
+                H_[1,2] = Y(2)*H(5,5)+G(5,2)*G(2,3)+G(5,3)*G(2,2)+Y(5)*H(2,5)
                 H_[2,1] = H_[1,2]
-                H_[2,2] = YY[1]*HH[4,5]+2.0*GG[4,2]*GG[1,2]            +YY[4]*HH[1,5]
+                H_[2,2] = Y(2)*H(5,6)+2.0*G(5,3)*G(2,3)+Y(5)*H(2,6)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -611,27 +455,31 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY2(self,nargout,*args):
+    def eY2(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[1]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(2)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[1,0]
-            g_[1] = GG[1,1]
-            g_[2] = 0.0
+            g_[0] = G(2,1)
+            g_[1] = G(2,2)
             if nargout>2:
-                H_ = np.zeros((3,3))
-                H_[0,0] = HH[1,0]
-                H_[1,0] = HH[1,1]
+                H_ = np.zeros((2,2))
+                H_[0,0] = H(2,1)
+                H_[1,0] = H(2,2)
                 H_[0,1] = H_[1,0]
-                H_[1,1] = HH[1,3]
+                H_[1,1] = H(2,4)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -640,27 +488,31 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY3(self,nargout,*args):
+    def eY3(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[2]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(3)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[2,0]
-            g_[1] = GG[2,1]
-            g_[2] = 0.0
+            g_[0] = G(3,1)
+            g_[1] = G(3,2)
             if nargout>2:
-                H_ = np.zeros((3,3))
-                H_[0,0] = HH[2,0]
-                H_[1,0] = HH[2,1]
+                H_ = np.zeros((2,2))
+                H_[0,0] = H(3,1)
+                H_[1,0] = H(3,2)
                 H_[0,1] = H_[1,0]
-                H_[1,1] = HH[2,3]
+                H_[1,1] = H(3,4)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -669,32 +521,37 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY4(self,nargout,*args):
+    def eY4(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[3]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(4)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[3,0]
-            g_[1] = GG[3,1]
-            g_[2] = GG[3,2]
+            g_[0] = G(4,1)
+            g_[1] = G(4,2)
+            g_[2] = G(4,3)
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = HH[3,0]
-                H_[1,0] = HH[3,1]
+                H_[0,0] = H(4,1)
+                H_[1,0] = H(4,2)
                 H_[0,1] = H_[1,0]
-                H_[2,0] = HH[3,2]
+                H_[2,0] = H(4,3)
                 H_[0,2] = H_[2,0]
-                H_[1,1] = HH[3,3]
-                H_[2,1] = HH[3,4]
+                H_[1,1] = H(4,4)
+                H_[2,1] = H(4,5)
                 H_[1,2] = H_[2,1]
-                H_[2,2] = HH[3,5]
+                H_[2,2] = H(4,6)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -703,32 +560,37 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY5(self,nargout,*args):
+    def eY5(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[4]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(5)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[4,0]
-            g_[1] = GG[4,1]
-            g_[2] = GG[4,2]
+            g_[0] = G(5,1)
+            g_[1] = G(5,2)
+            g_[2] = G(5,3)
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = HH[4,0]
-                H_[1,0] = HH[4,1]
+                H_[0,0] = H(5,1)
+                H_[1,0] = H(5,2)
                 H_[0,1] = H_[1,0]
-                H_[2,0] = HH[4,2]
+                H_[2,0] = H(5,3)
                 H_[0,2] = H_[2,0]
-                H_[1,1] = HH[4,3]
-                H_[2,1] = HH[4,4]
+                H_[1,1] = H(5,4)
+                H_[2,1] = H(5,5)
                 H_[1,2] = H_[2,1]
-                H_[2,2] = HH[4,5]
+                H_[2,2] = H(5,6)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -737,27 +599,31 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY6(self,nargout,*args):
+    def eY6(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[5]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(6)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[5,0]
-            g_[1] = GG[5,1]
-            g_[2] = 0.0
+            g_[0] = G(6,1)
+            g_[1] = G(6,2)
             if nargout>2:
-                H_ = np.zeros((3,3))
-                H_[0,0] = HH[5,0]
-                H_[1,0] = HH[5,1]
+                H_ = np.zeros((2,2))
+                H_[0,0] = H(6,1)
+                H_[1,0] = H(6,2)
                 H_[0,1] = H_[1,0]
-                H_[1,1] = HH[5,3]
+                H_[1,1] = H(6,4)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -766,66 +632,75 @@ class  HS67(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eY7(self,nargout,*args):
+    def eY7(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[6]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        EVAL = .TRUE.0
+        f_   = Y(7)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
-            dim = len(EV_)
-            g_  = np.zeros(dim)
-            g_[0] = GG[6,0]
-            g_[1] = GG[6,1]
-            g_[2] = GG[6,2]
-            if nargout>2:
-                H_ = np.zeros((3,3))
-                H_[0,0] = HH[6,0]
-                H_[1,0] = HH[6,1]
-                H_[0,1] = H_[1,0]
-                H_[2,0] = HH[6,2]
-                H_[0,2] = H_[2,0]
-                H_[1,1] = HH[6,3]
-                H_[2,1] = HH[6,4]
-                H_[1,2] = H_[2,1]
-                H_[2,2] = HH[6,5]
-        if nargout == 1:
-            return f_
-        elif nargout == 2:
-            return f_,g_
-        elif nargout == 3:
-            return f_,g_,H_
-
-    @staticmethod
-    def eY8(self,nargout,*args):
-
-        import numpy as np
-        EV_  = args[0]
-        iel_ = args[1]
-        YY, GG, HH = self.extfunc( self, EV_[0], EV_[1], EV_[2] )
-        f_   = YY[7]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
-        if nargout>1:
-            dim = len(EV_)
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = GG[7,0]
-            g_[1] = GG[7,1]
-            g_[2] = GG[7,2]
+            g_[0] = G(7,1)
+            g_[1] = G(7,2)
+            g_[2] = G(7,3)
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = HH[7,0]
-                H_[1,0] = HH[7,1]
+                H_[0,0] = H(7,1)
+                H_[1,0] = H(7,2)
                 H_[0,1] = H_[1,0]
-                H_[2,0] = HH[7,2]
+                H_[2,0] = H(7,3)
                 H_[0,2] = H_[2,0]
-                H_[1,1] = HH[7,3]
-                H_[2,1] = HH[7,4]
+                H_[1,1] = H(7,4)
+                H_[2,1] = H(7,5)
                 H_[1,2] = H_[2,1]
-                H_[2,2] = HH[7,5]
+                H_[2,2] = H(7,6)
+        if nargout == 1:
+            return f_
+        elif nargout == 2:
+            return f_,g_
+        elif nargout == 3:
+            return f_,g_,H_
+
+    @staticmethod
+    def eY8(self, nargout,*args):
+
+        import numpy as np
+        EV_  = args[0]
+        iel_ = args[1]
+        if EVAL==0:
+            DUMMY = HS67(EV_[0],EV_[1],EV_[2],Y,G,H)
+        f_   = Y(8)
+        if not isinstance( f_, float ):
+            f_   = f_.item();
+        if nargout>1:
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
+            g_ = np.zeros(dim)
+            g_[0] = G(8,1)
+            g_[1] = G(8,2)
+            g_[2] = G(8,3)
+            if nargout>2:
+                H_ = np.zeros((3,3))
+                H_[0,0] = H(8,1)
+                H_[1,0] = H(8,2)
+                H_[0,1] = H_[1,0]
+                H_[2,0] = H(8,3)
+                H_[0,2] = H_[2,0]
+                H_[1,1] = H(8,4)
+                H_[2,1] = H(8,5)
+                H_[1,2] = H_[2,1]
+                H_[2,2] = H(8,6)
         if nargout == 1:
             return f_
         elif nargout == 2:

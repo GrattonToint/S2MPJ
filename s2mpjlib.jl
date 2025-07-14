@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. L. Toint (this version 5 III 2025)
+#   Programming: S. Gratton and Ph. L. Toint (this version 14 VII 2025)
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,7 +157,7 @@ function s2mpj_nlx( name::String, dict::Dict{String,Int}, pb::PB, getxnames::Int
             arrset( pb.xnames, iv, name )
         end
         if hasproperty( pb, :xlower )
-            arrset( pb.xlower, iv, isnothing( xlowdef ) ? 0.0 : xlowdef )
+            arrset( pb.xlower, iv, isnothing( xlowdef ) ? -Inf : xlowdef )
         end
         if hasproperty( pb, :xupper )
             arrset( pb.xupper, iv, isnothing( xuppdef ) ? Inf : xuppdef )

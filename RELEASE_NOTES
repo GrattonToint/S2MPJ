@@ -27,11 +27,15 @@ Release notes for S2MPJ
               improved construction of sparse matrices, including removal of the addinA option of s2mpj.m
               updating of the documentation to reflect these modifications.
              
-             
 5 III 2025  : improved error messages when the user requests values or derivatives of undefined functions
 
 21 VI 2025  : added error message in Julia files if the library has not been included before calling it
               and relevant corrections to the README and paper (despite the incomplete OMS version
               being oublished)
 
-10 VII 2025 : correction in README.md for the procedure to include the s2MPJ library in Julia.
+10 VII 2025 : correction in README.md for the procedure to include the S2MPJ library in Julia.
+
+14 VII 2025 : correction of the default bounds for purely nonlinear variables
+              added problems SPMSRTLS and WOODS
+              corrected classifications for BLOWEYA, BLOWEYB, BLOWEYC and NELSONLS
+              

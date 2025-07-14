@@ -12,8 +12,6 @@ function varargout = DANWOOD(action,varargin)
 % 
 %    Fit: y  = (b1*x)**b2  +  e
 % 
-%    WARNING: this problem may return complex values.
-%
 %    Source:  Problem from the NIST nonlinear regression test set
 %      http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml
 % 
@@ -25,8 +23,11 @@ function varargout = DANWOOD(action,varargin)
 % 
 %    classification = 'C-CNOR2-MN-2-6'
 % 
+%    Number of data values
+% 
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

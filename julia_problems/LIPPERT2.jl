@@ -1,4 +1,4 @@
-function LIPPERT2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function LIPPERT2(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -42,10 +42,13 @@ function LIPPERT2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LIPPERT2"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling LIPPERT2.")
+    end
 
     if action == "setup"
         pb           = PB(name)

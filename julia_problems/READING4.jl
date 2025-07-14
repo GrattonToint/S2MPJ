@@ -1,4 +1,4 @@
-function READING4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function READING4(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -31,10 +31,13 @@ function READING4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "READING4"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling READING4.")
+    end
 
     if action == "setup"
         pb           = PB(name)

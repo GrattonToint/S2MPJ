@@ -29,7 +29,7 @@ function varargout = ZAMB2(action,varargin)
 % IE NY                  30             $-PARAMETER n = 3966
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

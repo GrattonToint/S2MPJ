@@ -1,4 +1,4 @@
-function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function OPTMASS(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -42,10 +42,13 @@ function OPTMASS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OPTMASS"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling OPTMASS.")
+    end
 
     if action == "setup"
         pb           = PB(name)

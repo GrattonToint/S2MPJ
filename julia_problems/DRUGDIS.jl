@@ -1,4 +1,4 @@
-function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function DRUGDIS(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -37,10 +37,13 @@ function DRUGDIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE NI                  10             $-PARAMETER n=  34, m= 20 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRUGDIS"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling DRUGDIS.")
+    end
 
     if action == "setup"
         pb           = PB(name)

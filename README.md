@@ -178,7 +178,7 @@ The list of Julia test problems is available in the "list_of_julia_problems" fil
 
 ## Authors
 
-We hope that S2MPJ will  prove useful in your benchmarking.  If you have
+We hope that S2MPJ will prove useful in your benchmarking.  If you have
 any bug reports or comments, please feel free to email one of the
 toolbox authors:
 ```

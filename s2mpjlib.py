@@ -9,7 +9,7 @@
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #   Also contains the problem selection tool.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 5 III 2025)
+#   Programming: S. Gratton and Ph. Toint (this version 14 VII 2025)
 #
 #####################################################################################################
 #####################################################################################################
@@ -956,15 +956,15 @@ def s2mpj_nlx( self, name, List, getxnames=None, xlowdef=None, xuppdef=None, x0d
         if hasattr( self, "xlower" ):
             thelen = len( self.xlower )
             if ( iv <= thelen ):
-                self.xlower = np.append( self.xlower, np.full( (iv-thelen+1,1), float(0.0) ), 0 )
+                self.xlower = np.append( self.xlower, np.full( (iv-thelen+1,1), -float('Inf') ), 0 )
             if not xlowdef is None:
-                self.xlower[iv] 
+                self.xlower[iv] = xlowdef
         if hasattr( self, "xupper" ):
             thelen = len( self.xupper )
             if ( iv <= thelen ):
                 self.xupper = np.append( self.xupper, np.full( (iv-thelen+1,1), float('Inf') ), 0 )
             if not xuppdef is None:
-                self.xupper[iv] 
+                self.xupper[iv] = xuppdef
         try:
             self.xtype  = arrset( self.xtype, iv, 'r' )
         except:

@@ -1,4 +1,4 @@
-function NELSONLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function NELSONLS(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -19,16 +19,19 @@ function NELSONLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "C-CSUR2-MN-3"
+#    classification = "C-CSUR2-MN-3-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NELSONLS"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling NELSONLS.")
+    end
 
     if action == "setup"
         pb           = PB(name)
@@ -522,7 +525,7 @@ function NELSONLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-CSUR2-MN-3"
+        pb.pbclass = "C-CSUR2-MN-3-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

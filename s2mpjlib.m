@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 5 III 2025)
+%   Programming: Ph. Toint (this version 14 VII 2025)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,21 +66,21 @@ case 'nlx'
       if ( varargin{4} )
          pb.xnames{iv} = varargin{1};
       end
-      if ( ~isempty( varargin{4} ) )
-         pb.xlower(iv,1) = varargin{4};
-      else
-         pb.xlower(iv,1) = 0.0;
-      end
       if ( ~isempty( varargin{5} ) )
-         pb.xupper(iv,1) = varargin{5};
+         pb.xlower(iv,1) = varargin{5};
+      else
+         pb.xlower(iv,1) = -Inf;
+      end
+      if ( ~isempty( varargin{6} ) )
+         pb.xupper(iv,1) = varargin{6};
       else
          pb.xupper(iv,1) = +Inf;
       end
       if ( isfield( pb, 'xtype' ) )
          pb.xtype(iv) = 'r';
       end
-      if ( ~isempty( varargin{6} ) )
-         pb.x0(iv,1) = varargin{6};
+      if ( ~isempty( varargin{7} ) )
+         pb.x0(iv,1) = varargin{7};
       else
          pb.x0(iv,1) = 0;
       end

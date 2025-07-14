@@ -1,4 +1,4 @@
-function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function BLOWEYC(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -27,12 +27,53 @@ function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    The function v(s) is chosen to be 
 # 
+#      0  a  b   c  d   1
+#   1  ----         ----
+#          \       /
+#           \     /
+#            \   /
+#  -1         --- 
+# 
+#    Thus the problem is formulated as the nonconvex QP
+# 
+#    minimize 
+# 
+#         u(s) (trans) A u(s) + u(s) (trans) w(s) - 
+#         v(s)(trans) A u(s) - 2.0 v(s)(trans) w(s) - 
+#         u(s)(trans) v(s) + constant (ignored)
+# 
+#    subject to A w(s) = u(s), 
+#               u(s) in [-1,1],
+#           and int[0,1] u(s) ds = 1 + a + b - c - d
+# 
+#    Case C: a = 0.2, b = 0.5, c = 0.5 and d = 0.8. 
+# 
+#    Source: a simplification of
+#    J.F. Blowey and C.M. Elliott,
+#    "The Cahn-Hilliard gradient theory for phase separation with 
+#    non-smooth free energy Part II: Numerical analysis",
+#    European Journal of Applied Mathematics (3) pp 147-179, 1992.
+# 
+#    SIF input: Nick Gould, August 1996
+# 
+#    classification = "C-CQLR2-MN-V-V"
+# 
+#    The number of discretization intervals
+# 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER  n = 22, m = 12
+# IE N                   100            $-PARAMETER  n = 202, m = 102
+# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
+# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BLOWEYC"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling BLOWEYC.")
+    end
 
     if action == "setup"
         pb           = PB(name)
@@ -44,12 +85,6 @@ function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-#    classification = "C-CQLR2-MN-V-V"
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER  n = 22, m = 12
-# IE N                   100            $-PARAMETER  n = 202, m = 102
-# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
-# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
         if nargin<1
             v_["N"] = Int64(10);  #  SIF file default value
         else

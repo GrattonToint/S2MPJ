@@ -8,8 +8,6 @@ function varargout = MISRA1C(action,varargin)
 % 
 %    NIST Data fitting problem MISRA1C given as an inconsistent set of
 %    nonlinear equations.
-%
-%    WARNING: this problem my return complex values!
 % 
 %    Fit: y = b1 * (1-(1+2*b2*x)**(-.5)) + e
 % 
@@ -23,8 +21,11 @@ function varargout = MISRA1C(action,varargin)
 % 
 %    classification = 'C-CNOR2-MN-2-14'
 % 
+%    Number of data values
+% 
+% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

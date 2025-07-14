@@ -20,13 +20,13 @@ class  NELSONLS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "C-CSUR2-MN-3"
+#    classification = "C-CSUR2-MN-3-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 25 XI 2024
+#   Translated to Python by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NELSONLS'
@@ -527,7 +527,7 @@ class  NELSONLS(CUTEst_problem):
         self.A = csr_matrix((valA,(irA,icA)),shape=(ngrp,self.n))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass   = "C-CSUR2-MN-3"
+        self.pbclass   = "C-CSUR2-MN-3-0"
         self.objderlvl = 2
 
 # **********************

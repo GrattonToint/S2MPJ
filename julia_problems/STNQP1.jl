@@ -1,4 +1,4 @@
-function STNQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
+function STNQP1(action::String,args::Union{Any}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -34,10 +34,13 @@ function STNQP1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE P                   13             $-PARAMETER n = 8193
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 25 XI 2024
+#   Translated to Julia by S2MPJ version 21 VI 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "STNQP1"
+    if ( !isdefined(@__MODULE__, :s2mpj_ii) )
+        error( "Please include(\"s2mpjlib.jl\") using \"s2mpjlib.jl\" from the S2MPJ distribution before calling STNQP1.")
+    end
 
     if action == "setup"
         pb           = PB(name)

@@ -27,9 +27,47 @@ function varargout = BLOWEYC(action,varargin)
 % 
 %    The function v(s) is chosen to be 
 % 
+%      0  a  b   c  d   1
+%   1  ----         ----
+%          \       /
+%           \     /
+%            \   /
+%  -1         --- 
+% 
+%    Thus the problem is formulated as the nonconvex QP
+% 
+%    minimize 
+% 
+%         u(s) (trans) A u(s) + u(s) (trans) w(s) - 
+%         v(s)(trans) A u(s) - 2.0 v(s)(trans) w(s) - 
+%         u(s)(trans) v(s) + constant (ignored)
+% 
+%    subject to A w(s) = u(s), 
+%               u(s) in [-1,1],
+%           and int[0,1] u(s) ds = 1 + a + b - c - d
+% 
+%    Case C: a = 0.2, b = 0.5, c = 0.5 and d = 0.8. 
+% 
+%    Source: a simplification of
+%    J.F. Blowey and C.M. Elliott,
+%    "The Cahn-Hilliard gradient theory for phase separation with 
+%    non-smooth free energy Part II: Numerical analysis",
+%    European Journal of Applied Mathematics (3) pp 147-179, 1992.
+% 
+%    SIF input: Nick Gould, August 1996
+% 
+%    classification = 'C-CQLR2-MN-V-V'
+% 
+%    The number of discretization intervals
+% 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER  n = 22, m = 12
+% IE N                   100            $-PARAMETER  n = 202, m = 102
+% IE N                   1000           $-PARAMETER  n = 2002, m = 1002
+% IE N                   2000           $-PARAMETER  n = 4002, m = 2002
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 25 XI 2024
+%   Translated to Matlab by S2MPJ version 21 VI 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -55,12 +93,6 @@ switch(action)
         v_  = containers.Map('KeyType','char', 'ValueType', 'double');
         ix_ = containers.Map('KeyType','char', 'ValueType', 'double');
         ig_ = containers.Map('KeyType','char', 'ValueType', 'double');
-%    classification = 'C-CQLR2-MN-V-V'
-%       Alternative values for the SIF file parameters:
-% IE N                   10             $-PARAMETER  n = 22, m = 12
-% IE N                   100            $-PARAMETER  n = 202, m = 102
-% IE N                   1000           $-PARAMETER  n = 2002, m = 1002
-% IE N                   2000           $-PARAMETER  n = 4002, m = 2002
         if(nargs<1)
             v_('N') = 10;  %  SIF file default value
         else

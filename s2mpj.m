@@ -744,7 +744,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '25 XI 2024';
+                 this_version = '21 VI 2025';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1252,7 +1252,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printcjline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidjl );
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( sprintf( 'name = "%s"', probname ),                                      1,      bindent, pbs.fidjl );
-
+         printjline( 'if ( !isdefined(@__MODULE__, :s2mpj_ii) )',                             1,      bindent, pbs.fidjl );
+         printjline( sprintf( ['error( "Please include(\\"s2mpjlib.jl\\") using \\"s2mpjlib.jl\\" ',                        ...
+                     'from the S2MPJ distribution before calling %s.")'], probname ),         2,      bindent, pbs.fidjl );
+         printjline( 'end',                                                                   1,      bindent, pbs.fidjl );
+         
          %   Start the SETUP section of the output file.
 
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
@@ -1489,8 +1493,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printcpline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidpy );
          printcpline( ' ', bindent, pbs.fidpy );
       case 'julia'
-         printjline( sprintf( 'function %s(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)', ...
-                              probname ),                                                          0, bindent, pbs.fidjl );
+%         printjline( sprintf( 'function %s(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)', ...
+         printjline( sprintf( 'function %s(action::String,args::Union{Any}...)', probname ),       0, bindent, pbs.fidjl );
          printcjline( ' ',                                                                            bindent, pbs.fidjl );
          printcjline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',    bindent, pbs.fidjl );
          printcjline( ' ',                                                                            bindent, pbs.fidjl );
