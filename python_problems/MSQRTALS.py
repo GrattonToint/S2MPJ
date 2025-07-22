@@ -130,11 +130,11 @@ class  MSQRTALS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     vname = 'X'+str(I)+','+str(T)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='XIT')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'X'+str(T)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='XTJ')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

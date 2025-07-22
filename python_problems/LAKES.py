@@ -582,13 +582,13 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'W'+str(i)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['1']))
@@ -602,13 +602,13 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'W'+str(i)+','+str(int(v_['3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['2']))
@@ -622,7 +622,7 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['4']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['3']))

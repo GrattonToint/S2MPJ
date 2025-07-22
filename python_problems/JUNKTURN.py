@@ -208,7 +208,7 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'U2S'+str(T)
@@ -216,7 +216,7 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'U3S'+str(T)
@@ -224,7 +224,7 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for T in range(int(v_['1']),int(v_['N'])+1):
@@ -233,11 +233,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P16'+str(T)
@@ -245,11 +245,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P17'+str(T)
@@ -257,11 +257,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P25'+str(T)
@@ -269,11 +269,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P26'+str(T)
@@ -281,11 +281,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P27'+str(T)
@@ -293,11 +293,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P35'+str(T)
@@ -305,11 +305,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P36'+str(T)
@@ -317,11 +317,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P37'+str(T)
@@ -329,11 +329,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P45'+str(T)
@@ -341,11 +341,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P46'+str(T)
@@ -353,11 +353,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P47'+str(T)
@@ -365,11 +365,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P56'+str(T)
@@ -377,11 +377,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P57'+str(T)
@@ -389,11 +389,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P67'+str(T)
@@ -401,11 +401,11 @@ class  JUNKTURN(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

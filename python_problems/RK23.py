@@ -314,11 +314,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePROD')
         ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -326,11 +326,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePROD')
         ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
@@ -338,11 +338,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePROD')
         ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'BB2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
@@ -350,11 +350,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePROD')
         ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
@@ -362,11 +362,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODS')
         ielftype = arrset(ielftype,ie,iet_["ePRODS"])
         vname = 'BB2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E6'
@@ -374,11 +374,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODS')
         ielftype = arrset(ielftype,ie,iet_["ePRODS"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E7'
@@ -386,15 +386,15 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eTPROD')
         ielftype = arrset(ielftype,ie,iet_["eTPROD"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'A32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E8'
@@ -402,11 +402,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODQ')
         ielftype = arrset(ielftype,ie,iet_["ePRODQ"])
         vname = 'BB2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E9'
@@ -414,11 +414,11 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODQ')
         ielftype = arrset(ielftype,ie,iet_["ePRODQ"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E10'
@@ -426,19 +426,19 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eQPROD')
         ielftype = arrset(ielftype,ie,iet_["eQPROD"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'A32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z4')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E11'
@@ -446,15 +446,15 @@ class  RK23(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eTPRODS')
         ielftype = arrset(ielftype,ie,iet_["eTPRODS"])
         vname = 'BB3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'A32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='U2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'C2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='U3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

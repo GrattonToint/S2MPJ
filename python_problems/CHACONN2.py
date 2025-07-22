@@ -129,7 +129,7 @@ class  CHACONN2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eFR')
         ielftype = arrset(ielftype,ie,iet_["eFR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'X2SQ'
@@ -137,7 +137,7 @@ class  CHACONN2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'TMX1SQ'
@@ -145,7 +145,7 @@ class  CHACONN2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eTWOMSQ')
         ielftype = arrset(ielftype,ie,iet_["eTWOMSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'TMX2SQ'
@@ -153,7 +153,7 @@ class  CHACONN2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eTWOMSQ')
         ielftype = arrset(ielftype,ie,iet_["eTWOMSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EX12'
@@ -161,11 +161,11 @@ class  CHACONN2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eEX')
         ielftype = arrset(ielftype,ie,iet_["eEX"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

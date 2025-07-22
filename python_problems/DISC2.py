@@ -275,15 +275,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c162'
@@ -291,15 +291,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'b273'
@@ -307,15 +307,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c273'
@@ -323,15 +323,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'b384'
@@ -339,15 +339,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c384'
@@ -355,15 +355,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'b495'
@@ -371,15 +371,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c495'
@@ -387,15 +387,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'b5101'
@@ -403,15 +403,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c5101'
@@ -419,15 +419,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'b5111'
@@ -435,15 +435,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'c5111'
@@ -451,15 +451,15 @@ class  DISC2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eLINE')
         ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'V5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
@@ -468,15 +468,15 @@ class  DISC2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eCIRCLE')
             ielftype = arrset(ielftype,ie,iet_["eCIRCLE"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'EPSILON'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]

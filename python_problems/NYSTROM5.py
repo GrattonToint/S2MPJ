@@ -299,11 +299,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3BE2'
@@ -311,11 +311,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3BE3'
@@ -323,11 +323,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3BE4'
@@ -335,11 +335,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3CE1'
@@ -347,11 +347,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3CE2'
@@ -359,11 +359,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3CE3'
@@ -371,11 +371,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3CE4'
@@ -383,11 +383,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3DE1'
@@ -395,11 +395,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3DE2'
@@ -407,11 +407,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3DE3'
@@ -419,11 +419,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '3DE4'
@@ -431,11 +431,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4AE1'
@@ -443,11 +443,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4AE2'
@@ -455,15 +455,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PRI2')
         ielftype = arrset(ielftype,ie,iet_["en2PRI2"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4AE3'
@@ -471,19 +471,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PRI3')
         ielftype = arrset(ielftype,ie,iet_["en2PRI3"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4BE1'
@@ -491,15 +491,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4BE2'
@@ -507,19 +507,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
         ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4BE3'
@@ -527,23 +527,23 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PRI3')
         ielftype = arrset(ielftype,ie,iet_["en3PRI3"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE1'
@@ -551,15 +551,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE2'
@@ -567,15 +567,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE3'
@@ -583,15 +583,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE4'
@@ -599,15 +599,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE5'
@@ -615,15 +615,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '4CE6'
@@ -631,15 +631,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B1AL1'
@@ -647,11 +647,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B2AL2'
@@ -659,11 +659,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B3AL3'
@@ -671,11 +671,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B4AL4'
@@ -683,11 +683,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B1AL1S'
@@ -695,11 +695,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B2AL2S'
@@ -707,11 +707,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B3AL3S'
@@ -719,11 +719,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B4AL4S'
@@ -731,11 +731,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B1AL1C'
@@ -743,11 +743,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B2AL2C'
@@ -755,11 +755,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B3AL3C'
@@ -767,11 +767,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B4AL4C'
@@ -779,11 +779,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY3')
         ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B1AL1F'
@@ -791,11 +791,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY4')
         ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B2AL2F'
@@ -803,11 +803,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY4')
         ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B3AL3F'
@@ -815,11 +815,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY4')
         ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B4AL4F'
@@ -827,11 +827,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY4')
         ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B2BE21'
@@ -839,11 +839,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6AE2'
@@ -851,15 +851,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PRI2')
         ielftype = arrset(ielftype,ie,iet_["en2PRI2"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6AE3'
@@ -867,19 +867,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PRI3')
         ielftype = arrset(ielftype,ie,iet_["en2PRI3"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6BE1'
@@ -887,15 +887,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6BE2'
@@ -903,19 +903,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
         ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6BE3'
@@ -923,23 +923,23 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PRI3')
         ielftype = arrset(ielftype,ie,iet_["en3PRI3"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6CE1'
@@ -947,15 +947,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
         ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6CE2'
@@ -963,19 +963,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2ZI2')
         ielftype = arrset(ielftype,ie,iet_["eXY2ZI2"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '6CE3'
@@ -983,23 +983,23 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2ZI3')
         ielftype = arrset(ielftype,ie,iet_["eXY2ZI3"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '7E1'
@@ -1007,11 +1007,11 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2')
         ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '7E2'
@@ -1019,15 +1019,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2I2')
         ielftype = arrset(ielftype,ie,iet_["eXY2I2"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '7E3'
@@ -1035,19 +1035,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2I3')
         ielftype = arrset(ielftype,ie,iet_["eXY2I3"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE1'
@@ -1055,15 +1055,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE2'
@@ -1071,15 +1071,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE3'
@@ -1087,15 +1087,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE4'
@@ -1103,15 +1103,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE5'
@@ -1119,15 +1119,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8AE6'
@@ -1135,15 +1135,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE1'
@@ -1151,19 +1151,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE2'
@@ -1171,19 +1171,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE3'
@@ -1191,19 +1191,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE4'
@@ -1211,19 +1211,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE5'
@@ -1231,19 +1231,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8BE6'
@@ -1251,19 +1251,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en4PR')
         ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8CE1'
@@ -1271,15 +1271,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
         ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8CE2'
@@ -1287,15 +1287,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
         ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '8CE3'
@@ -1303,15 +1303,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
         ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'AL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '9E1'
@@ -1319,15 +1319,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '9E2'
@@ -1335,15 +1335,15 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PR')
         ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE2,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = '9E3'
@@ -1351,19 +1351,19 @@ class  NYSTROM5(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
         ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'B4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE4,3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'BE3,2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -120,7 +120,7 @@ class  NONDIA(CUTEst_problem):
             ielftype = arrset(ielftype,ie,iet_["eETYPE"])
             v_['J'] = -1+I
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='GAMMA')[0]

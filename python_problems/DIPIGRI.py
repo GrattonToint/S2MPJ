@@ -203,7 +203,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='S')[0]
@@ -213,7 +213,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='S')[0]
@@ -223,7 +223,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eP4')
         ielftype = arrset(ielftype,ie,iet_["eP4"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O4'
@@ -231,7 +231,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='S')[0]
@@ -241,7 +241,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eP6')
         ielftype = arrset(ielftype,ie,iet_["eP6"])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O6'
@@ -249,11 +249,11 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eOE')
         ielftype = arrset(ielftype,ie,iet_["eOE"])
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C11'
@@ -261,7 +261,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C12'
@@ -269,7 +269,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eP4')
         ielftype = arrset(ielftype,ie,iet_["eP4"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C13'
@@ -277,7 +277,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C21'
@@ -285,7 +285,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C31'
@@ -293,7 +293,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C32'
@@ -301,7 +301,7 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C41'
@@ -309,11 +309,11 @@ class  DIPIGRI(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCE')
         ielftype = arrset(ielftype,ie,iet_["eCE"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -173,11 +173,11 @@ class  HAGER4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eELT')
             ielftype = arrset(ielftype,ie,iet_["eELT"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             v_['DD'] = v_['SCDA']*v_['Z'+str(int(v_['I-1']))]
@@ -194,7 +194,7 @@ class  HAGER4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

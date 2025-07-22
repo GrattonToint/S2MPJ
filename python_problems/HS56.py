@@ -157,15 +157,15 @@ class  HS56(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PROD')
         ielftype = arrset(ielftype,ie,iet_["en3PROD"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='V3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['4'])+1):
@@ -178,7 +178,7 @@ class  HS56(CUTEst_problem):
             ename = 'E'+str(int(v_['J']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['J']))

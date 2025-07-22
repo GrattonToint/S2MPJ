@@ -130,11 +130,11 @@ class  HS52(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ1M2')
         ielftype = arrset(ielftype,ie,iet_["eSQ1M2"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -142,11 +142,11 @@ class  HS52(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ1P2')
         ielftype = arrset(ielftype,ie,iet_["eSQ1P2"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['3']),int(v_['4'])+1):
@@ -156,7 +156,7 @@ class  HS52(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQM1')
             ielftype = arrset(ielftype,ie,iet_["eSQM1"])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

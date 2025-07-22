@@ -132,11 +132,11 @@ class  BARDNE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eBD')
                 ielftype = arrset(ielftype,ie,iet_['eBD'])
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='U')[0]
@@ -154,11 +154,11 @@ class  BARDNE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eBD')
                 ielftype = arrset(ielftype,ie,iet_['eBD'])
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='U')[0]

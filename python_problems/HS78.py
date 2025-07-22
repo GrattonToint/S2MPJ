@@ -140,23 +140,23 @@ class  HS78(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en5PR')
         ielftype = arrset(ielftype,ie,iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V4')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V5')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -165,7 +165,7 @@ class  HS78(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E6'
@@ -173,11 +173,11 @@ class  HS78(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E7'
@@ -185,11 +185,11 @@ class  HS78(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E8'
@@ -197,7 +197,7 @@ class  HS78(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCB')
         ielftype = arrset(ielftype,ie,iet_["eCB"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E9'
@@ -205,7 +205,7 @@ class  HS78(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCB')
         ielftype = arrset(ielftype,ie,iet_["eCB"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -295,11 +295,11 @@ class  CORKSCRW(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eERRSIN')
             ielftype = arrset(ielftype,ie,iet_["eERRSIN"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EC'+str(I)
@@ -307,11 +307,11 @@ class  CORKSCRW(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eERRCOS')
             ielftype = arrset(ielftype,ie,iet_["eERRCOS"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Z'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

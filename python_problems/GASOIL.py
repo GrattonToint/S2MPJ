@@ -489,15 +489,15 @@ class  GASOIL(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePROD1')
                 ielftype = arrset(ielftype,ie,iet_["ePROD1"])
                 vname = 'THETA'+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='THETA1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'THETA'+str(int(v_['3']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='THETA3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(J)+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'P2'+str(I)+','+str(J)
@@ -505,11 +505,11 @@ class  GASOIL(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePROD2')
                 ielftype = arrset(ielftype,ie,iet_["ePROD2"])
                 vname = 'THETA'+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='THETA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(J)+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'P3'+str(I)+','+str(J)
@@ -517,11 +517,11 @@ class  GASOIL(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePROD3')
                 ielftype = arrset(ielftype,ie,iet_["ePROD3"])
                 vname = 'THETA'+str(int(v_['2']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='THETA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(J)+','+str(int(v_['2']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

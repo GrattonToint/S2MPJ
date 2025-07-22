@@ -159,7 +159,7 @@ class  PENLT2NE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eE10')
             ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.5))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(I)
@@ -167,7 +167,7 @@ class  PENLT2NE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eE10')
             ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.5))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['N+1']),int(v_['M-1'])+1):
@@ -179,7 +179,7 @@ class  PENLT2NE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eE10')
             ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(int(v_['I-N+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.5))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for J in range(int(v_['1']),int(v_['N'])+1):
@@ -188,7 +188,7 @@ class  PENLT2NE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.5))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

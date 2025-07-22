@@ -120,15 +120,15 @@ class  YFITU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'etanab')
             ielftype = arrset(ielftype,ie,iet_["etanab"])
             vname = 'alpha'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='a1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'beta'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='b1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'dist'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='d1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='point')[0]

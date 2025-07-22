@@ -111,11 +111,11 @@ class  HYPCIR(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PR')
         ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -123,7 +123,7 @@ class  HYPCIR(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
@@ -131,7 +131,7 @@ class  HYPCIR(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -139,11 +139,11 @@ class  COOLHANS(CUTEst_problem):
                     ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     self.x0 = np.zeros((self.n,1))
                     vname = 'X'+str(K)+','+str(M)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'X'+str(M)+','+str(L)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

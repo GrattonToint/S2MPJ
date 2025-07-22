@@ -116,11 +116,11 @@ class  DENSCHNFNE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eISQP')
         ielftype = arrset(ielftype,ie,iet_["eISQP"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -128,11 +128,11 @@ class  DENSCHNFNE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eISQM')
         ielftype = arrset(ielftype,ie,iet_["eISQM"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
@@ -140,7 +140,7 @@ class  DENSCHNFNE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='S')[0]
@@ -150,7 +150,7 @@ class  DENSCHNFNE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='S')[0]

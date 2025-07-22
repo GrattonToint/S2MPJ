@@ -144,7 +144,7 @@ class  DJTL(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCBm10')
         ielftype = arrset(ielftype,ie,iet_["eCBm10"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -152,7 +152,7 @@ class  DJTL(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCBm20')
         ielftype = arrset(ielftype,ie,iet_["eCBm20"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
@@ -160,7 +160,7 @@ class  DJTL(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQm5')
         ielftype = arrset(ielftype,ie,iet_["eSQm5"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
@@ -168,7 +168,7 @@ class  DJTL(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQm5')
         ielftype = arrset(ielftype,ie,iet_["eSQm5"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
@@ -176,7 +176,7 @@ class  DJTL(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQm6')
         ielftype = arrset(ielftype,ie,iet_["eSQm6"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

@@ -111,7 +111,7 @@ class  BOX2(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXPT')
                 ielftype = arrset(ielftype,ie,iet_['eEXPT'])
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='T')[0]
@@ -122,7 +122,7 @@ class  BOX2(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXPT')
                 ielftype = arrset(ielftype,ie,iet_['eEXPT'])
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='T')[0]

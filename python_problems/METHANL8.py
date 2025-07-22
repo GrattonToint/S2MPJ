@@ -405,11 +405,11 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PROD')
             ielftype = arrset(ielftype,ie,iet_["en2PROD"])
             vname = 'X'+str(int(v_['1']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -421,15 +421,15 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
             ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
             vname = 'V'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['0']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -451,11 +451,11 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
                 ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -465,15 +465,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
                 ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = 'V'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -492,11 +492,11 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
                 ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -506,15 +506,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
                 ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = 'V'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -558,11 +558,11 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eEXP2PROD')
             ielftype = arrset(ielftype,ie,iet_["eEXP2PROD"])
             vname = 'X'+str(int(v_['N-2']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(int(v_['N-2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -583,11 +583,11 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXP2PROD')
                 ielftype = arrset(ielftype,ie,iet_["eEXP2PROD"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -606,15 +606,15 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
             ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
             vname = 'V'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['0']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -639,11 +639,11 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePOLY1PRD')
             ielftype = arrset(ielftype,ie,iet_["ePOLY1PRD"])
             vname = 'X'+str(int(v_['0']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -659,15 +659,15 @@ class  METHANL8(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
             ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
             vname = 'X'+str(int(v_['1']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V'+str(int(v_['0']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -688,15 +688,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
                 ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = 'V'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -720,15 +720,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
                 ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -744,15 +744,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
                 ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = 'V'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -777,15 +777,15 @@ class  METHANL8(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
                 ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'T'+str(int(v_['I+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='V3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P1')[0]

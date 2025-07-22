@@ -229,23 +229,23 @@ class  VIBRBEAMNE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'efun')
                 ielftype = arrset(ielftype,ie,iet_["efun"])
                 vname = 'd0'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='a0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='a1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd2'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='a2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd3'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='a3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'c'+str(j)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='b')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='y')[0]

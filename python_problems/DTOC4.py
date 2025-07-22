@@ -183,7 +183,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y1SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['1']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'Y2SQ'+str(int(v_['1']))
@@ -193,7 +193,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y2SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'XSQ'+str(int(v_['1']))
@@ -203,7 +203,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'XSQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for T in range(int(v_['2']),int(v_['N-1'])+1):
@@ -212,7 +212,7 @@ class  DTOC4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(T)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Y2SQ'+str(T)
@@ -220,7 +220,7 @@ class  DTOC4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(T)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'XSQ'+str(T)
@@ -228,7 +228,7 @@ class  DTOC4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'Y1SQ'+str(int(v_['N']))
@@ -238,7 +238,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y1SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['N']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'Y2SQ'+str(int(v_['N']))
@@ -248,7 +248,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y2SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['N']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for T in range(int(v_['1']),int(v_['N-1'])+1):
@@ -257,11 +257,11 @@ class  DTOC4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eAAB')
             ielftype = arrset(ielftype,ie,iet_["eAAB"])
             vname = 'Y'+str(T)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='A')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(T)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='B')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

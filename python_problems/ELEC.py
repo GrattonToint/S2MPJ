@@ -161,27 +161,27 @@ class  ELEC(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePE')
                 ielftype = arrset(ielftype,ie,iet_["ePE"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ZI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ZJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NP'])+1):
@@ -190,7 +190,7 @@ class  ELEC(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Y'+str(I)
@@ -198,7 +198,7 @@ class  ELEC(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'Y'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Z'+str(I)
@@ -206,7 +206,7 @@ class  ELEC(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'Z'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

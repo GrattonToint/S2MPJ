@@ -214,43 +214,43 @@ class  DRCAVTY2(CUTEst_problem):
                     ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='A1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='A2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-2']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B5')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B6')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B7')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+2']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B8')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'Z'+str(I)+','+str(J)
@@ -259,43 +259,43 @@ class  DRCAVTY2(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eIPR')
                     ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='A1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='A2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J-2']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B5')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B6')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B7')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J+2']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='B8')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

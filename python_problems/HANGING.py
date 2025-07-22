@@ -188,11 +188,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'RY'+str(I)+','+str(J)
@@ -201,11 +201,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'RZ'+str(I)+','+str(J)
@@ -214,11 +214,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NX-1'])+1):
@@ -230,11 +230,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DY'+str(I)+','+str(J)
@@ -243,11 +243,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DZ'+str(I)+','+str(J)
@@ -256,11 +256,11 @@ class  HANGING(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eISQ')
                     ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

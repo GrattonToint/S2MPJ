@@ -164,7 +164,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+1']))
@@ -174,7 +174,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+2']))
@@ -184,13 +184,13 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+3']))
@@ -200,13 +200,13 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+4']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+5']))
@@ -216,7 +216,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+5']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+6']))
@@ -226,13 +226,13 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+4']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             v_['I'] = 3+v_['I']

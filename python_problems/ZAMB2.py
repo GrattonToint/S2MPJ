@@ -1731,7 +1731,7 @@ class  ZAMB2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eFE')
         ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V1'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1745,7 +1745,7 @@ class  ZAMB2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eFE')
         ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V2'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1759,7 +1759,7 @@ class  ZAMB2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eFE')
         ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V3'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1773,7 +1773,7 @@ class  ZAMB2(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eFE')
         ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V4'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1788,7 +1788,7 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFA')
             ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V1'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1802,7 +1802,7 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFA')
             ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V2'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1816,7 +1816,7 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFA')
             ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V3'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1830,7 +1830,7 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFA')
             ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V4'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1845,15 +1845,15 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q1'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V1'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V1'+str(int(v_['k+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='VN')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1867,15 +1867,15 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q3'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V3'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V3'+str(int(v_['k+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='VN')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -1889,15 +1889,15 @@ class  ZAMB2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q4'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V4'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'V4'+str(int(v_['k+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='VN')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]

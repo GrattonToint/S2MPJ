@@ -185,7 +185,7 @@ class  LUKVLE4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eEXPN')
             ielftype = arrset(ielftype,ie,iet_["eEXPN"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CE'+str(I)
@@ -193,11 +193,11 @@ class  LUKVLE4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eTANG')
             ielftype = arrset(ielftype,ie,iet_["eTANG"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for K in range(int(v_['1']),int(v_['N-2'])+1):
@@ -208,11 +208,11 @@ class  LUKVLE4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eCUBEP')
             ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
             vname = 'X'+str(int(v_['K+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CB'+str(K)
@@ -220,7 +220,7 @@ class  LUKVLE4(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['K+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

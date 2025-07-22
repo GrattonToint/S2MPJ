@@ -3120,8 +3120,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                end
                has_xlowdef = 1;
                has_xuppdef = 1;
-               xlowdef     = -Inf;
-               xuppdef     =  Inf;
+               xlowdef     = '-Inf';
+               xuppdef     =  'Inf';
                pending     = {};
                pendingkey  = '';
             case { 'MI', 'XM' }
@@ -3129,14 +3129,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( 'self.xlower =  np.full((self.n,1),-float(''Inf''))',              indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xlower =  -1*fill(Inf,pb.n)',                                  indlvl, bindent, pbs.fidjl );
                has_xlowdef = 1;
-               xlowdef     = -Inf;
+               xlowdef     = '-Inf';
             case { 'PL', 'XP' }
                printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
                printpline( 'self.xupper = np.full((self.n,1),+float(''Inf''))',               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xupper =    fill(Inf,pb.n)',                                   indlvl, bindent, pbs.fidjl );
                MPSbounds   = MPSbounds + 1;
                has_xuppdef = 1;
-               xuppdef     = Inf;
+               xuppdef     = 'Inf';
             case { 'LO', 'XL', 'ZL' }
                xlowdef = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.xlower = %s*ones(pb.n,1);', xlowdef ),                indlvl, bindent, pbs.fidma );
@@ -3671,6 +3671,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                 printpline( 'self.x0 = np.zeros((self.n,1))',                                 indlvl, bindent, pbs.fidpy );
                 has_x0def = 1;
             end
+            switch ( pbs.lang )                 % Transform the infinity string for Python
+            case 'python'
+               if ( ~isempty( xlowdef ) && strcmp( xlowdef, '-Inf' ) )
+                  xlowdef = '''-Inf''';
+               end
+               if ( ~isempty( xuppdef ) && strcmp( xuppdef,  'Inf' ) )
+                  xuppdef = '''Inf''';
+               end
+            end
             vname = s2mpjname('',f{5},pbs);
             printmline( sprintf( 'vname = %s;', vname ),                                      indlvl, bindent, pbs.fidma );
             printpline( sprintf( 'vname = %s',  vname ),                                      indlvl, bindent, pbs.fidpy );
@@ -3685,7 +3694,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             elseif ( ~isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],[]);',               ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self, vname,ix_,%d,float(%s),None,None)',            ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self, vname,ix_,%d,float(%s),None,None)',         ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,Float64(%s),nothing,nothing)',      ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidjl );

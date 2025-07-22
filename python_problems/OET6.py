@@ -159,13 +159,13 @@ class  OET6(CUTEst_problem):
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.x0 = np.zeros((self.n,1))
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
@@ -179,13 +179,13 @@ class  OET6(CUTEst_problem):
             ename = 'E'+str(int(v_['2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['2']))+','+str(I)

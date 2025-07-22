@@ -4881,11 +4881,11 @@ class  ROTDISC(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'w'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'sigr'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for k in range(int(v_['0']),int(v_['K'])+1):
@@ -4894,11 +4894,11 @@ class  ROTDISC(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'w'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'sigt'+str(k)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

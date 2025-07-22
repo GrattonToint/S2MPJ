@@ -122,7 +122,7 @@ class  PRICE3NE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQR')
         ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -130,7 +130,7 @@ class  PRICE3NE(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSSQR')
         ielftype = arrset(ielftype,ie,iet_["eSSQR"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

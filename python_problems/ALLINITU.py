@@ -130,7 +130,7 @@ class  ALLINITU(CUTEst_problem):
             ielftype = arrset(ielftype,ie,iet_['eSQR'])
         self.x0 = np.zeros((self.n,1))
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FT4E1'
@@ -139,7 +139,7 @@ class  ALLINITU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FT4E2'
@@ -147,11 +147,11 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQR2')
         ielftype = arrset(ielftype,ie,iet_["eSQR2"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FT56E1'
@@ -159,7 +159,7 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSINSQR')
         ielftype = arrset(ielftype,ie,iet_["eSINSQR"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FT5E2'
@@ -167,11 +167,11 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODSQR')
         ielftype = arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FNT3E1'
@@ -180,7 +180,7 @@ class  ALLINITU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FNT4E1'
@@ -189,7 +189,7 @@ class  ALLINITU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FNT4E2'
@@ -197,11 +197,11 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSQR2')
         ielftype = arrset(ielftype,ie,iet_["eSQR2"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FNT56E1'
@@ -209,7 +209,7 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSINSQR')
         ielftype = arrset(ielftype,ie,iet_["eSINSQR"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FNT5E2'
@@ -217,11 +217,11 @@ class  ALLINITU(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'ePRODSQR')
         ielftype = arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

@@ -237,11 +237,11 @@ class  S268(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='D')[0]

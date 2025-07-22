@@ -196,7 +196,7 @@ class  MANCINO(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eMANC')
                 ielftype = arrset(ielftype,ie,iet_["eMANC"])
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='II')[0]
@@ -213,7 +213,7 @@ class  MANCINO(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eMANC')
                 ielftype = arrset(ielftype,ie,iet_["eMANC"])
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='II')[0]

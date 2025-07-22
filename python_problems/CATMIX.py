@@ -181,11 +181,11 @@ class  CATMIX(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eDIFSQ')
             ielftype = arrset(ielftype,ie,iet_["eDIFSQ"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='U1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'U'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='U2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['NH'])+1):
@@ -194,15 +194,15 @@ class  CATMIX(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eP1')
             ielftype = arrset(ielftype,ie,iet_["eP1"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X1'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X2'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P2'+str(I)
@@ -210,11 +210,11 @@ class  CATMIX(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eP2')
             ielftype = arrset(ielftype,ie,iet_["eP2"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X2'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

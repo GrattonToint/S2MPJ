@@ -164,7 +164,7 @@ class  LUKVLI7(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSIN')
             ielftype = arrset(ielftype,ie,iet_["eSIN"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CO'+str(I)
@@ -172,7 +172,7 @@ class  LUKVLI7(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eCOS')
             ielftype = arrset(ielftype,ie,iet_["eCOS"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['1']))
@@ -182,7 +182,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C1'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C2'+str(int(v_['1']))
@@ -192,7 +192,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C2'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['2']))
@@ -202,13 +202,13 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C1'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C2'+str(int(v_['2']))
@@ -218,7 +218,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C2'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C3'+str(int(v_['2']))
@@ -228,7 +228,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C3'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['4']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['3']))
@@ -238,13 +238,13 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C1'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C2'+str(int(v_['3']))
@@ -254,7 +254,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C2'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C3'+str(int(v_['3']))
@@ -264,7 +264,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C3'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['4']))
@@ -274,13 +274,13 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C1'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C2'+str(int(v_['4']))
@@ -290,7 +290,7 @@ class  LUKVLI7(CUTEst_problem):
         ename = 'C2'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

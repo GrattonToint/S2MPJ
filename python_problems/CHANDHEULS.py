@@ -99,11 +99,11 @@ class  CHANDHEULS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'H'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='HI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'H'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='HJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

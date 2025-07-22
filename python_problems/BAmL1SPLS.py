@@ -553,7 +553,7 @@ class  BAmL1SPLS(CUTEst_problem):
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['IP1']),int(v_['N'])+1):
@@ -562,11 +562,11 @@ class  BAmL1SPLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

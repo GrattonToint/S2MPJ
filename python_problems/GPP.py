@@ -123,7 +123,7 @@ class  GPP(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eEXP')
             ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N-1'])+1):
@@ -134,11 +134,11 @@ class  GPP(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eEXPDIF')
                 ielftype = arrset(ielftype,ie,iet_["eEXPDIF"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='XI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

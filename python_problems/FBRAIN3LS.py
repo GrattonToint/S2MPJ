@@ -11171,11 +11171,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C01'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -11190,11 +11190,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C01'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -11209,11 +11209,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA2'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C02'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -11228,11 +11228,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA2'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C02'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -11247,11 +11247,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA3'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C03'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -11266,11 +11266,11 @@ class  FBRAIN3LS(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eFBRAIN')
                     ielftype = arrset(ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA3'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'C03'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='C0')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]

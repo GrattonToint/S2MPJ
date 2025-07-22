@@ -169,11 +169,11 @@ class  QR3DLS(CUTEst_problem):
                         self.elftype = arrset(self.elftype,ie,'en2PR')
                         ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(J)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -185,11 +185,11 @@ class  QR3DLS(CUTEst_problem):
                         self.elftype = arrset(self.elftype,ie,'en2PR')
                         ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'R'+str(K)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                     posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

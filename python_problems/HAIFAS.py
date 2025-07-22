@@ -118,7 +118,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -127,7 +127,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 5
@@ -139,7 +139,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -148,7 +148,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 5
@@ -160,7 +160,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -169,7 +169,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 11
@@ -181,7 +181,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -190,7 +190,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 10
@@ -202,7 +202,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -211,7 +211,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 10
@@ -223,7 +223,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -232,7 +232,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 11
@@ -244,7 +244,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -253,7 +253,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 4
@@ -265,7 +265,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -274,7 +274,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 4
@@ -286,7 +286,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -295,7 +295,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 10
@@ -307,7 +307,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -316,7 +316,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 5
@@ -328,7 +328,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -337,7 +337,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 6
@@ -349,7 +349,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -358,7 +358,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 6
@@ -370,7 +370,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -379,7 +379,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 12
@@ -391,7 +391,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -400,7 +400,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 11
@@ -412,7 +412,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -421,7 +421,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 11
@@ -433,7 +433,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -442,7 +442,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 12
@@ -454,7 +454,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -463,7 +463,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 5
@@ -475,7 +475,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -484,7 +484,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 5
@@ -496,7 +496,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -505,7 +505,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 11
@@ -517,7 +517,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -526,7 +526,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['I1'] = 6
@@ -538,7 +538,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['L']))
@@ -547,7 +547,7 @@ class  HAIFAS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X'+str(int(v_['I2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

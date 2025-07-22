@@ -170,7 +170,8 @@ class  BRATU3D(CUTEst_problem):
                         self.elftype = arrset(self.elftype,ie,'eEXP')
                         ielftype = arrset(ielftype,ie,iet_['eEXP'])
                     vname = 'U'+str(I)+','+str(J)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
+                    [iv,ix_]  = (
+                          s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.0)))
                     posev = np.where(elftv[ielftype[ie]]=='U')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

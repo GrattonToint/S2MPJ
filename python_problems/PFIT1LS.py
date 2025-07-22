@@ -117,15 +117,15 @@ class  PFIT1LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eT3')
         ielftype = arrset(ielftype,ie,iet_["eT3"])
         vname = 'A'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='RR')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'H'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EB'
@@ -133,15 +133,15 @@ class  PFIT1LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eT2')
         ielftype = arrset(ielftype,ie,iet_["eT2"])
         vname = 'A'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='RR')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'H'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EC'
@@ -149,15 +149,15 @@ class  PFIT1LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eT1')
         ielftype = arrset(ielftype,ie,iet_["eT1"])
         vname = 'A'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='RR')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'H'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'ED'
@@ -165,15 +165,15 @@ class  PFIT1LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eT4')
         ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'A'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='RR')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'H'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EE'
@@ -181,15 +181,15 @@ class  PFIT1LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eT5')
         ielftype = arrset(ielftype,ie,iet_["eT5"])
         vname = 'A'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='RR')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'H'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

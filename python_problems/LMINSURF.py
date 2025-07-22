@@ -182,11 +182,11 @@ class  LMINSURF(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
@@ -194,11 +194,11 @@ class  LMINSURF(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

@@ -144,7 +144,8 @@ class  BROYDN3D(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eBROY')
             ielftype = arrset(ielftype,ie,iet_["eBROY"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
+            [iv,ix_]  = (
+                  s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(-1.0)))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='K1')[0]

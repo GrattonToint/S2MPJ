@@ -175,7 +175,7 @@ class  LUKVLI18(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+1']))
@@ -185,7 +185,7 @@ class  LUKVLI18(CUTEst_problem):
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['K+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+2']))
@@ -195,7 +195,7 @@ class  LUKVLI18(CUTEst_problem):
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['K+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(2.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

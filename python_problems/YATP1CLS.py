@@ -136,7 +136,7 @@ class  YATP1CLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eCB')
                 ielftype = arrset(ielftype,ie,iet_["eCB"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'LS'+str(I)+','+str(J)
@@ -144,7 +144,7 @@ class  YATP1CLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DC'+str(I)+','+str(J)
@@ -152,15 +152,15 @@ class  YATP1CLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eLXC')
                 ielftype = arrset(ielftype,ie,iet_["eLXC"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DS'+str(I)+','+str(J)
@@ -168,15 +168,15 @@ class  YATP1CLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eLS')
                 ielftype = arrset(ielftype,ie,iet_["eLS"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'SX'+str(I)+','+str(J)
@@ -184,7 +184,7 @@ class  YATP1CLS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eRAT')
                 ielftype = arrset(ielftype,ie,iet_["eRAT"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float('-Inf'),float('Inf'),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
