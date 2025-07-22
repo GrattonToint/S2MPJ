@@ -35,7 +35,7 @@ class  HEART8LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HEART8LS'
@@ -186,11 +186,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
@@ -198,11 +198,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
@@ -210,11 +210,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
@@ -222,11 +222,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
@@ -234,11 +234,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E6'
@@ -246,11 +246,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E7'
@@ -258,11 +258,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E8'
@@ -270,11 +270,11 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en2PROD')
         ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E9'
@@ -282,15 +282,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eADFSQ')
         ielftype = arrset(ielftype,ie,iet_["eADFSQ"])
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E10'
@@ -298,15 +298,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PROD')
         ielftype = arrset(ielftype,ie,iet_["en3PROD"])
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E11'
@@ -314,15 +314,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eADFSQ')
         ielftype = arrset(ielftype,ie,iet_["eADFSQ"])
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E12'
@@ -330,15 +330,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PROD')
         ielftype = arrset(ielftype,ie,iet_["en3PROD"])
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E13'
@@ -346,15 +346,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eADFSQ')
         ielftype = arrset(ielftype,ie,iet_["eADFSQ"])
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E14'
@@ -362,15 +362,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PROD')
         ielftype = arrset(ielftype,ie,iet_["en3PROD"])
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E15'
@@ -378,15 +378,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eADFSQ')
         ielftype = arrset(ielftype,ie,iet_["eADFSQ"])
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E16'
@@ -394,15 +394,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3PROD')
         ielftype = arrset(ielftype,ie,iet_["en3PROD"])
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E17'
@@ -410,15 +410,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E18'
@@ -426,15 +426,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E19'
@@ -442,15 +442,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20'
@@ -458,15 +458,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E21'
@@ -474,15 +474,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'c'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E22'
@@ -490,15 +490,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'a'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'v'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 't'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E23'
@@ -506,15 +506,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'd'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E24'
@@ -522,15 +522,15 @@ class  HEART8LS(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'en3DPRD')
         ielftype = arrset(ielftype,ie,iet_["en3DPRD"])
         vname = 'b'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'w'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'u'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

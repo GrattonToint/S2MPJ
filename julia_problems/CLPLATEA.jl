@@ -39,7 +39,7 @@ function CLPLATEA(action::String,args::Union{Any}...)
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CLPLATEA"

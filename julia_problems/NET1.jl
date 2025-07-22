@@ -15,7 +15,7 @@ function NET1(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NET1"
@@ -641,15 +641,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -659,15 +662,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -677,15 +683,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -695,15 +704,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -713,15 +725,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -731,15 +746,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -749,15 +767,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -767,15 +788,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -785,15 +809,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -803,15 +830,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -821,15 +851,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -839,15 +872,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -857,15 +893,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -875,15 +914,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -893,15 +935,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -911,15 +956,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -929,15 +977,18 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA0PANHAN")
         arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -947,19 +998,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA1MAXHP")
         arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -971,19 +1026,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA1MAXHP")
         arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -995,19 +1054,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA1MAXHP")
         arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -1019,19 +1082,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA2HPFUN")
         arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -1043,19 +1110,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA2HPFUN")
         arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -1067,19 +1138,23 @@ function NET1(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eA2HPFUN")
         arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(5.00000e+02)))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])

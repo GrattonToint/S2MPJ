@@ -20,7 +20,7 @@ function varargout = HATFLDF(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -113,11 +113,11 @@ switch(action)
                 ielftype(ie) = iet_('eXPEXP');
             end
             vname = 'X2';
-            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = 'X3';
-            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1);
             posev = find(strcmp('Y',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             [~,posep] = ismember('T',elftp{ielftype(ie)});

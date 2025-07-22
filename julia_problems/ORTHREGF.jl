@@ -36,7 +36,7 @@ function ORTHREGF(action::String,args::Union{Any}...)
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGF"
@@ -250,23 +250,23 @@ function ORTHREGF(action::String,args::Union{Any}...)
                 arrset(pbm.elftype,ie,"eTA")
                 arrset(ielftype,ie,iet_["eTA"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P1"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="A",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P2"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="B",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P4"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EB"*string(I)*","*string(J)
@@ -274,11 +274,11 @@ function ORTHREGF(action::String,args::Union{Any}...)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype,ie,iet_["eISQ"])
                 vname = "Z"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P3"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="P",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EC"*string(I)*","*string(J)
@@ -286,7 +286,7 @@ function ORTHREGF(action::String,args::Union{Any}...)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype,ie,iet_["eSQ"])
                 vname = "P5"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end

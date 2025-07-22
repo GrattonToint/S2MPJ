@@ -34,7 +34,7 @@ function varargout = VANDERM2(action,varargin)
 % IE N                   100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -177,7 +177,7 @@ switch(action)
                 pbm.elftype{ie} = 'ePOWER';
                 ielftype(ie) = iet_('ePOWER');
                 vname = ['X',int2str(I)];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('X',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('PWR',elftp{ielftype(ie)});

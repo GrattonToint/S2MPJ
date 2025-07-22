@@ -23,7 +23,7 @@ function RK23(action::String,args::Union{Any}...)
 #    ... COMPUTED PARAMETERS
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RK23"
@@ -309,11 +309,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype,ie,iet_["ePROD"])
         vname = "B2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
@@ -321,11 +321,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype,ie,iet_["ePROD"])
         vname = "B3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
@@ -333,11 +333,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype,ie,iet_["ePROD"])
         vname = "BB2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
@@ -345,11 +345,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype,ie,iet_["ePROD"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E5"
@@ -357,11 +357,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePRODS")
         arrset(ielftype,ie,iet_["ePRODS"])
         vname = "BB2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="W1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="W2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E6"
@@ -369,11 +369,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePRODS")
         arrset(ielftype,ie,iet_["ePRODS"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="W1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="W2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E7"
@@ -381,15 +381,15 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eTPROD")
         arrset(ielftype,ie,iet_["eTPROD"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "A32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E8"
@@ -397,11 +397,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePRODQ")
         arrset(ielftype,ie,iet_["ePRODQ"])
         vname = "BB2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E9"
@@ -409,11 +409,11 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"ePRODQ")
         arrset(ielftype,ie,iet_["ePRODQ"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E10"
@@ -421,19 +421,19 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eQPROD")
         arrset(ielftype,ie,iet_["eQPROD"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Z1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Z2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "A32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Z3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Z4",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E11"
@@ -441,15 +441,15 @@ function RK23(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eTPRODS")
         arrset(ielftype,ie,iet_["eTPRODS"])
         vname = "BB3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "A32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="U2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "C2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="U3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

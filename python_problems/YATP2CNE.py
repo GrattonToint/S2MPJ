@@ -34,7 +34,7 @@ class  YATP2CNE(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP2CNE'
@@ -158,15 +158,15 @@ class  YATP2CNE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eATP2')
                 ielftype = arrset(ielftype,ie,iet_["eATP2"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'SX'+str(I)+','+str(J)
@@ -174,7 +174,7 @@ class  YATP2CNE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eSINX')
                 ielftype = arrset(ielftype,ie,iet_["eSINX"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -37,7 +37,7 @@ function VAREIGVL(action::String,args::Union{Any}...)
 # IE N                   4999           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "VAREIGVL"
@@ -188,11 +188,13 @@ function VAREIGVL(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
             vname = "MU"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="M",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "S"*string(I)
@@ -200,7 +202,8 @@ function VAREIGVL(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype,ie,iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end

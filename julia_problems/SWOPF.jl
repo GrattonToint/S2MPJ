@@ -22,7 +22,7 @@ function SWOPF(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SWOPF"
@@ -1540,7 +1540,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20001"
@@ -1548,7 +1548,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20002"
@@ -1556,7 +1556,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20002"
@@ -1564,7 +1564,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20003"
@@ -1572,7 +1572,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20003"
@@ -1580,7 +1580,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20004"
@@ -1588,7 +1588,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20004"
@@ -1596,7 +1596,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20005"
@@ -1604,7 +1604,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20005"
@@ -1612,7 +1612,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20006"
@@ -1620,7 +1620,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20006"
@@ -1628,7 +1628,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E20007"
@@ -1636,7 +1636,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "F20007"
@@ -1644,7 +1644,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0001"
@@ -1652,11 +1652,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0001"
@@ -1664,11 +1664,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0001"
@@ -1676,11 +1676,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0001"
@@ -1688,11 +1688,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0001"
@@ -1700,11 +1700,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0001"
@@ -1712,11 +1712,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0001"
@@ -1724,11 +1724,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0001"
@@ -1736,11 +1736,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20001"
@@ -1748,7 +1748,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20001"
@@ -1756,7 +1756,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20001"
@@ -1764,7 +1764,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20001"
@@ -1772,7 +1772,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0001"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0002"
@@ -1780,11 +1780,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0002"
@@ -1792,11 +1792,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0002"
@@ -1804,11 +1804,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0002"
@@ -1816,11 +1816,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0002"
@@ -1828,11 +1828,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0002"
@@ -1840,11 +1840,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0002"
@@ -1852,11 +1852,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0002"
@@ -1864,11 +1864,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20002"
@@ -1876,7 +1876,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20002"
@@ -1884,7 +1884,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20002"
@@ -1892,7 +1892,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20002"
@@ -1900,7 +1900,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0003"
@@ -1908,11 +1908,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0003"
@@ -1920,11 +1920,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0003"
@@ -1932,11 +1932,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0003"
@@ -1944,11 +1944,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0002"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0003"
@@ -1956,11 +1956,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0003"
@@ -1968,11 +1968,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0003"
@@ -1980,11 +1980,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0003"
@@ -1992,11 +1992,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20003"
@@ -2004,7 +2004,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20003"
@@ -2012,7 +2012,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20003"
@@ -2020,7 +2020,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20003"
@@ -2028,7 +2028,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0004"
@@ -2036,11 +2036,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0004"
@@ -2048,11 +2048,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0004"
@@ -2060,11 +2060,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0004"
@@ -2072,11 +2072,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0003"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0004"
@@ -2084,11 +2084,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0004"
@@ -2096,11 +2096,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0004"
@@ -2108,11 +2108,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0004"
@@ -2120,11 +2120,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20004"
@@ -2132,7 +2132,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20004"
@@ -2140,7 +2140,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20004"
@@ -2148,7 +2148,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20004"
@@ -2156,7 +2156,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0005"
@@ -2164,11 +2164,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0005"
@@ -2176,11 +2176,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0005"
@@ -2188,11 +2188,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0005"
@@ -2200,11 +2200,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0004"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0005"
@@ -2212,11 +2212,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0005"
@@ -2224,11 +2224,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0005"
@@ -2236,11 +2236,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0005"
@@ -2248,11 +2248,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20005"
@@ -2260,7 +2260,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20005"
@@ -2268,7 +2268,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20005"
@@ -2276,7 +2276,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20005"
@@ -2284,7 +2284,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0006"
@@ -2292,11 +2292,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0006"
@@ -2304,11 +2304,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0006"
@@ -2316,11 +2316,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0006"
@@ -2328,11 +2328,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0005"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0006"
@@ -2340,11 +2340,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0006"
@@ -2352,11 +2352,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0006"
@@ -2364,11 +2364,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0006"
@@ -2376,11 +2376,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20006"
@@ -2388,7 +2388,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20006"
@@ -2396,7 +2396,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20006"
@@ -2404,7 +2404,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20006"
@@ -2412,7 +2412,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIEI0007"
@@ -2420,11 +2420,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIFI0007"
@@ -2432,11 +2432,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EIFI0007"
@@ -2444,11 +2444,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FIEI0007"
@@ -2456,11 +2456,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0006"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJEJ0007"
@@ -2468,11 +2468,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJFJ0007"
@@ -2480,11 +2480,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EJFJ0007"
@@ -2492,11 +2492,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VF0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FJEJ0007"
@@ -2504,11 +2504,11 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXTIMESY")
         arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "VE0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PI20007"
@@ -2516,7 +2516,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QI20007"
@@ -2524,7 +2524,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "PJ20007"
@@ -2532,7 +2532,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "QJ20007"
@@ -2540,7 +2540,7 @@ function SWOPF(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eXSQUARE")
         arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0007"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

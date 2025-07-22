@@ -28,7 +28,7 @@ function ARTIF(action::String,args::Union{Any}...)
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ARTIF"
@@ -124,7 +124,8 @@ function ARTIF(action::String,args::Union{Any}...)
                 arrset(ielftype,ie,iet_["eTRIG"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="PAR",elftp[ielftype[ie]])

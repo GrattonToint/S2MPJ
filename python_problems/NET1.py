@@ -16,7 +16,7 @@ class  NET1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NET1'
@@ -644,15 +644,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -662,15 +665,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -680,15 +686,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -698,15 +707,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -716,15 +728,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -734,15 +749,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -752,15 +770,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -770,15 +791,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -788,15 +812,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -806,15 +833,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -824,15 +854,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -842,15 +875,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -860,15 +896,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -878,15 +917,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -896,15 +938,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -914,15 +959,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -932,15 +980,18 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA0PANHAN')
         ielftype = arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = 'NOP18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PFL17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PIPRES')[0]
@@ -950,19 +1001,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA1MAXHP')
         ielftype = arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = 'NOP2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]
@@ -974,19 +1029,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA1MAXHP')
         ielftype = arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = 'NOP5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]
@@ -998,19 +1057,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA1MAXHP')
         ielftype = arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = 'NOP7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]
@@ -1022,19 +1085,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA2HPFUN')
         ielftype = arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = 'NOP2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]
@@ -1046,19 +1113,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA2HPFUN')
         ielftype = arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = 'NOP5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]
@@ -1070,19 +1141,23 @@ class  NET1(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eA2HPFUN')
         ielftype = arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = 'NOP7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='PIN')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'NOP8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='POUT')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CFL20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='FLOW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'CBV20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(5.00000e+02))
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(5.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='CBV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='IPL')[0]

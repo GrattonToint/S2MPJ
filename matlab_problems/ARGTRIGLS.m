@@ -29,7 +29,7 @@ function varargout = ARGTRIGLS(action,varargin)
 % IE N                   200            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -115,7 +115,7 @@ switch(action)
             pbm.elftype{ie} = 'eCOSINE';
             ielftype(ie) = iet_('eCOSINE');
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
             posev = find(strcmp('XJ',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['SC',int2str(I)];
@@ -123,7 +123,7 @@ switch(action)
             pbm.elftype{ie} = 'eSINCOS';
             ielftype(ie) = iet_('eSINCOS');
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
             posev = find(strcmp('XI',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end

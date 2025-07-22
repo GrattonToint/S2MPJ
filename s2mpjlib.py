@@ -956,7 +956,7 @@ def s2mpj_nlx( self, name, List, getxnames=None, xlowdef=None, xuppdef=None, x0d
         if hasattr( self, "xlower" ):
             thelen = len( self.xlower )
             if ( iv <= thelen ):
-                self.xlower = np.append( self.xlower, np.full( (iv-thelen+1,1), -float('Inf') ), 0 )
+                self.xlower = np.append( self.xlower, np.full( (iv-thelen+1,1), float(0.0) ), 0 )
             if not xlowdef is None:
                 self.xlower[iv] = xlowdef
         if hasattr( self, "xupper" ):

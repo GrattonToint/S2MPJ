@@ -26,7 +26,7 @@ class  LUKVLE2(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLE2'
@@ -188,7 +188,7 @@ class  LUKVLE2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'C'+str(I)
@@ -196,7 +196,7 @@ class  LUKVLE2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for K in range(int(v_['6']),int(v_['N-2'])+1):
@@ -205,7 +205,7 @@ class  LUKVLE2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eCUBE')
             ielftype = arrset(ielftype,ie,iet_["eCUBE"])
             vname = 'X'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for K in range(int(v_['1']),int(v_['N-1'])+1):
@@ -214,7 +214,7 @@ class  LUKVLE2(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

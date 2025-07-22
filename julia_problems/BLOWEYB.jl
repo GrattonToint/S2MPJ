@@ -67,7 +67,7 @@ function BLOWEYB(action::String,args::Union{Any}...)
 # IE N                   2000           $-PARAMETER  n = 4002, m = 2002
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BLOWEYB"
@@ -327,11 +327,13 @@ function BLOWEYB(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype,ie,iet_["ePROD"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "W"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -342,7 +344,8 @@ function BLOWEYB(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype,ie,iet_["eSQ"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O"*string(I)
@@ -350,11 +353,13 @@ function BLOWEYB(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype,ie,iet_["ePROD"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -365,7 +370,8 @@ function BLOWEYB(action::String,args::Union{Any}...)
         ename = "D"*string(Int64(v_["N"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "U"*string(Int64(v_["N"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -20,7 +20,7 @@ function varargout = LUKSAN17(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -152,7 +152,7 @@ switch(action)
                     ename = ['S',int2str(round(v_('K'))),',',int2str(Q)];
                     [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     vname = ['X',int2str(round(v_('I+Q')))];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                     posev = find(strcmp('X',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     ename = ['S',int2str(round(v_('K'))),',',int2str(Q)];
@@ -167,7 +167,7 @@ switch(action)
                     ename = ['C',int2str(round(v_('K'))),',',int2str(Q)];
                     [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     vname = ['X',int2str(round(v_('I+Q')))];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                     posev = find(strcmp('X',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     ename = ['C',int2str(round(v_('K'))),',',int2str(Q)];

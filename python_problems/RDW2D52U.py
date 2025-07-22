@@ -42,7 +42,7 @@ class  RDW2D52U(CUTEst_problem):
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RDW2D52U'
@@ -281,19 +281,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eM')
                 ielftype = arrset(ielftype,ie,iet_["eM"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='V1')[0]
@@ -316,19 +316,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eM0')
                 ielftype = arrset(ielftype,ie,iet_["eM0"])
                 vname = 'F'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N-1'])+1):
@@ -340,19 +340,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eA')
                 ielftype = arrset(ielftype,ie,iet_["eA"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
@@ -360,19 +360,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eB')
                 ielftype = arrset(ielftype,ie,iet_["eB"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'C'+str(I)+','+str(J)
@@ -380,19 +380,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eC')
                 ielftype = arrset(ielftype,ie,iet_["eC"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'D'+str(I)+','+str(J)
@@ -400,19 +400,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eD')
                 ielftype = arrset(ielftype,ie,iet_["eD"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'U'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='U4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N-1'])+1):
@@ -424,19 +424,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eP')
                 ielftype = arrset(ielftype,ie,iet_["eP"])
                 vname = 'F'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'Q'+str(I)+','+str(J)
@@ -444,19 +444,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eQ')
                 ielftype = arrset(ielftype,ie,iet_["eQ"])
                 vname = 'F'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'R'+str(I)+','+str(J)
@@ -464,19 +464,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eR')
                 ielftype = arrset(ielftype,ie,iet_["eR"])
                 vname = 'F'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'S'+str(I)+','+str(J)
@@ -484,19 +484,19 @@ class  RDW2D52U(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eS')
                 ielftype = arrset(ielftype,ie,iet_["eS"])
                 vname = 'F'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(I)+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F3')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'F'+str(int(v_['I+']))+','+str(int(v_['J+']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='F4')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

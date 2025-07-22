@@ -31,7 +31,7 @@ function varargout = GASOIL(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -561,15 +561,15 @@ switch(action)
                 pbm.elftype{ie} = 'ePROD1';
                 ielftype(ie) = iet_('ePROD1');
                 vname = ['THETA',int2str(round(v_('1')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('THETA1',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['THETA',int2str(round(v_('3')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('THETA3',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['U',int2str(I),',',int2str(J),',',int2str(round(v_('1')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('U',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 ename = ['P2',int2str(I),',',int2str(J)];
@@ -577,11 +577,11 @@ switch(action)
                 pbm.elftype{ie} = 'ePROD2';
                 ielftype(ie) = iet_('ePROD2');
                 vname = ['THETA',int2str(round(v_('1')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('THETA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['U',int2str(I),',',int2str(J),',',int2str(round(v_('1')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('U',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 ename = ['P3',int2str(I),',',int2str(J)];
@@ -589,11 +589,11 @@ switch(action)
                 pbm.elftype{ie} = 'ePROD3';
                 ielftype(ie) = iet_('ePROD3');
                 vname = ['THETA',int2str(round(v_('2')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('THETA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['U',int2str(I),',',int2str(J),',',int2str(round(v_('2')))];
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('U',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end

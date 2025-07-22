@@ -39,7 +39,7 @@ function OET5(action::String,args::Union{Any}...)
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OET5"
@@ -161,19 +161,22 @@ function OET5(action::String,args::Union{Any}...)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="X3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)

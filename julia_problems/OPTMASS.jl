@@ -42,7 +42,7 @@ function OPTMASS(action::String,args::Union{Any}...)
 # IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OPTMASS"
@@ -194,7 +194,8 @@ function OPTMASS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype,ie,iet_["eSQ"])
         vname = "X"*string(Int64(v_["1"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O2"
@@ -202,7 +203,8 @@ function OPTMASS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype,ie,iet_["eSQ"])
         vname = "X"*string(Int64(v_["2"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O3"
@@ -210,7 +212,8 @@ function OPTMASS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype,ie,iet_["eSQ"])
         vname = "V"*string(Int64(v_["1"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O4"
@@ -218,7 +221,8 @@ function OPTMASS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype,ie,iet_["eSQ"])
         vname = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["0"]):Int64(v_["N"])
@@ -228,7 +232,8 @@ function OPTMASS(action::String,args::Union{Any}...)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype,ie,iet_["eSQ"])
                 vname = "F"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                iv,ix_,pb  = (
+                      s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end

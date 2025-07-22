@@ -26,7 +26,7 @@ function INTEGREQ(action::String,args::Union{Any}...)
 # IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "INTEGREQ"
@@ -141,7 +141,7 @@ function INTEGREQ(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eVBCUBE")
             arrset(ielftype,ie,iet_["eVBCUBE"])
             vname = "X"*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="B",elftp[ielftype[ie]])

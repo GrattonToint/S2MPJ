@@ -32,7 +32,7 @@ function CRAGGLVY(action::String,args::Union{Any}...)
 # IE M                   2499           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CRAGGLVY"
@@ -146,7 +146,8 @@ function CRAGGLVY(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eEXPN")
             arrset(ielftype,ie,iet_["eEXPN"])
             vname = "X"*string(Int64(v_["2I-1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(2.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(2.0)))
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "CE"*string(I)
@@ -154,11 +155,13 @@ function CRAGGLVY(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eTANG")
             arrset(ielftype,ie,iet_["eTANG"])
             vname = "X"*string(Int64(v_["2I+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(2.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(2.0)))
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2I+2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(2.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(2.0)))
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end

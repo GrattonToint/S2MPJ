@@ -41,7 +41,7 @@ class  LINVERSENE(CUTEst_problem):
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LINVERSENE'
@@ -173,7 +173,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['1']))+','+str(int(v_['1']))
@@ -182,7 +182,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))+','+str(int(v_['1']))
@@ -191,7 +191,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))+','+str(int(v_['1']))
@@ -200,7 +200,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['2']))+','+str(int(v_['1']))
@@ -209,7 +209,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['2']))+','+str(int(v_['1']))
@@ -218,7 +218,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['1']))
@@ -227,7 +227,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['1']))
@@ -236,7 +236,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['1']))
@@ -245,7 +245,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['1']))
@@ -254,7 +254,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -263,7 +263,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -272,7 +272,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -281,7 +281,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -290,7 +290,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -299,7 +299,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -308,7 +308,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -317,7 +317,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['2']))+','+str(int(v_['2']))
@@ -326,7 +326,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -335,7 +335,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -344,7 +344,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -353,7 +353,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -362,7 +362,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -371,7 +371,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -380,7 +380,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -389,7 +389,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['3']))+','+str(int(v_['2']))
@@ -398,7 +398,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -407,7 +407,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -416,7 +416,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -425,7 +425,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'U'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -434,7 +434,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -443,7 +443,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'A'+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'V'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -452,7 +452,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -461,7 +461,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'W'+str(int(v_['3']))+','+str(int(v_['3']))
@@ -470,7 +470,7 @@ class  LINVERSENE(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'B'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['4']),int(v_['N'])+1):
@@ -482,7 +482,7 @@ class  LINVERSENE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype,ie,iet_['en2PR'])
             vname = 'A'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'S'+str(I)+','+str(int(v_['I-2']))
@@ -491,7 +491,7 @@ class  LINVERSENE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype,ie,iet_['en2PR'])
             vname = 'A'+str(int(v_['I-2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'V'+str(I)+','+str(int(v_['I-2']))
@@ -500,7 +500,7 @@ class  LINVERSENE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype,ie,iet_['en2PR'])
             vname = 'B'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'V'+str(I)+','+str(int(v_['I-2']))
@@ -509,7 +509,7 @@ class  LINVERSENE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype,ie,iet_['en2PR'])
             vname = 'A'+str(int(v_['I-2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['I-1']),int(I)+1):
@@ -520,11 +520,11 @@ class  LINVERSENE(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'A'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'A'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'U'+str(I)+','+str(J)
@@ -533,11 +533,11 @@ class  LINVERSENE(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'A'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'B'+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'V'+str(I)+','+str(J)
@@ -546,11 +546,11 @@ class  LINVERSENE(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'B'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'A'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'W'+str(I)+','+str(J)
@@ -559,11 +559,11 @@ class  LINVERSENE(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'B'+str(int(v_['I-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'B'+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(-1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

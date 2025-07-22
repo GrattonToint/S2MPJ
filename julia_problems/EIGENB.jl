@@ -30,7 +30,7 @@ function EIGENB(action::String,args::Union{Any}...)
 # IE N                   50             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EIGENB"
@@ -145,15 +145,18 @@ function EIGENB(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"en3PROD")
                     arrset(ielftype,ie,iet_["en3PROD"])
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "D"*string(K)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                     posev = findfirst(x->x=="D",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     ename = "O"*string(I)*","*string(J)*","*string(K)
@@ -161,11 +164,13 @@ function EIGENB(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"en2PROD")
                     arrset(ielftype,ie,iet_["en2PROD"])
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.0)))
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end

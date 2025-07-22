@@ -33,7 +33,7 @@ class  CLNLBEAM(CUTEst_problem):
 # IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLNLBEAM'
@@ -177,7 +177,7 @@ class  CLNLBEAM(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eCOS')
             ielftype = arrset(ielftype,ie,iet_["eCOS"])
             vname = 'T'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'S'+str(I)
@@ -185,7 +185,7 @@ class  CLNLBEAM(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSIN')
             ielftype = arrset(ielftype,ie,iet_["eSIN"])
             vname = 'T'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'USQ'+str(I)
@@ -193,7 +193,7 @@ class  CLNLBEAM(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

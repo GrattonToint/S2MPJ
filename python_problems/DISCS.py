@@ -26,7 +26,7 @@ class  DISCS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISCS'
@@ -179,11 +179,11 @@ class  DISCS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eIPSQ')
                 ielftype = arrset(ielftype,ie,iet_["eIPSQ"])
                 vname = 'R'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'R'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DX'+str(J)+','+str(I)
@@ -191,11 +191,11 @@ class  DISCS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eIMSQ')
                 ielftype = arrset(ielftype,ie,iet_["eIMSQ"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'DY'+str(J)+','+str(I)
@@ -203,11 +203,11 @@ class  DISCS(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eIMSQ')
                 ielftype = arrset(ielftype,ie,iet_["eIMSQ"])
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

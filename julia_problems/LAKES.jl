@@ -46,7 +46,7 @@ function LAKES(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LAKES"
@@ -583,13 +583,15 @@ function LAKES(action::String,args::Union{Any}...)
             ename = "B"*string(i)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "V"*string(i)*","*string(Int64(v_["2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(i)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "W"*string(i)*","*string(Int64(v_["2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(i)*","*string(Int64(v_["1"]))
@@ -603,13 +605,15 @@ function LAKES(action::String,args::Union{Any}...)
             ename = "B"*string(i)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "V"*string(i)*","*string(Int64(v_["3"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(i)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "W"*string(i)*","*string(Int64(v_["3"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(i)*","*string(Int64(v_["2"]))
@@ -623,7 +627,8 @@ function LAKES(action::String,args::Union{Any}...)
             ename = "B"*string(i)*","*string(Int64(v_["3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "V"*string(i)*","*string(Int64(v_["4"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(1.0))
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(1.0)))
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(i)*","*string(Int64(v_["3"]))

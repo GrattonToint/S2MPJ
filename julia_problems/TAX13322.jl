@@ -27,7 +27,7 @@ function TAX13322(action::String,args::Union{Any}...)
 # IE NA                  1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TAX13322"
@@ -262,7 +262,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA1")
                     arrset(ielftype,ie,iet_["eA1"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -276,7 +277,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA2")
                     arrset(ielftype,ie,iet_["eA2"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -290,7 +292,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA3")
                     arrset(ielftype,ie,iet_["eA3"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -304,7 +307,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA4")
                     arrset(ielftype,ie,iet_["eA4"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -318,7 +322,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA5")
                     arrset(ielftype,ie,iet_["eA5"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -332,7 +337,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eA6")
                     arrset(ielftype,ie,iet_["eA6"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -346,7 +352,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eB1")
                     arrset(ielftype,ie,iet_["eB1"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -360,7 +367,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eB2")
                     arrset(ielftype,ie,iet_["eB2"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -374,7 +382,8 @@ function TAX13322(action::String,args::Union{Any}...)
                     arrset(pbm.elftype,ie,"eB3")
                     arrset(ielftype,ie,iet_["eB3"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
+                    iv,ix_,pb  = (
+                          s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),Float64(0.1e0)))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end

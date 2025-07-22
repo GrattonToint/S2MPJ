@@ -27,7 +27,7 @@ function varargout = CBRATU3D(action,varargin)
 % IE P                   3              $-PARAMETER n = 54   original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -244,11 +244,11 @@ switch(action)
                     pbm.elftype{ie} = 'eRPART';
                     ielftype(ie) = iet_('eRPART');
                     vname = ['U',int2str(I),',',int2str(J),',',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('U',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['X',int2str(I),',',int2str(J),',',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('V',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     ename = ['B',int2str(I),',',int2str(J),',',int2str(K)];
@@ -256,11 +256,11 @@ switch(action)
                     pbm.elftype{ie} = 'eCPART';
                     ielftype(ie) = iet_('eCPART');
                     vname = ['U',int2str(I),',',int2str(J),',',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('U',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['X',int2str(I),',',int2str(J),',',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('V',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end

@@ -22,7 +22,7 @@ class  DMN15333(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DMN15333'
@@ -9893,15 +9893,15 @@ class  DMN15333(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eLORENTZ3')
                 ielftype = arrset(ielftype,ie,iet_["eLORENTZ3"])
                 vname = 'WEIGHT'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='WEIGHT')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'WIDTH'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='WIDTH')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'POSIT'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='POSIT')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='X')[0]

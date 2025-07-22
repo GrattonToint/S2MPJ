@@ -42,7 +42,7 @@ function LIPPERT2(action::String,args::Union{Any}...)
 # IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LIPPERT2"
@@ -216,7 +216,7 @@ function LIPPERT2(action::String,args::Union{Any}...)
             arrset(ielftype,ie,iet_["eSQR"])
         end
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["0"]):Int64(v_["NX"])
@@ -228,7 +228,7 @@ function LIPPERT2(action::String,args::Union{Any}...)
                     arrset(ielftype,ie,iet_["eSQR"])
                 end
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -242,7 +242,7 @@ function LIPPERT2(action::String,args::Union{Any}...)
                     arrset(ielftype,ie,iet_["eSQR"])
                 end
                 vname = "V"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end

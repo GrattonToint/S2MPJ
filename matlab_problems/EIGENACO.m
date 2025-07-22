@@ -30,7 +30,7 @@ function varargout = EIGENACO(action,varargin)
 % IE N                   50             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -147,15 +147,15 @@ switch(action)
                     pbm.elftype{ie} = 'en3PROD';
                     ielftype(ie) = iet_('en3PROD');
                     vname = ['Q',int2str(K),',',int2str(I)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('Q1',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['Q',int2str(K),',',int2str(J)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('Q2',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['D',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('D',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     ename = ['O',int2str(I),',',int2str(J),',',int2str(K)];
@@ -163,11 +163,11 @@ switch(action)
                     pbm.elftype{ie} = 'en2PROD';
                     ielftype(ie) = iet_('en2PROD');
                     vname = ['Q',int2str(K),',',int2str(I)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('Q1',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['Q',int2str(K),',',int2str(J)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('Q2',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end

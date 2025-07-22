@@ -21,7 +21,7 @@ function PFIT3LS(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PFIT3LS"
@@ -113,15 +113,15 @@ function PFIT3LS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eT3")
         arrset(ielftype,ie,iet_["eT3"])
         vname = "A"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EB"
@@ -129,15 +129,15 @@ function PFIT3LS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eT2")
         arrset(ielftype,ie,iet_["eT2"])
         vname = "A"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EC"
@@ -145,15 +145,15 @@ function PFIT3LS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eT1")
         arrset(ielftype,ie,iet_["eT1"])
         vname = "A"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "ED"
@@ -161,15 +161,15 @@ function PFIT3LS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype,ie,iet_["eT4"])
         vname = "A"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EE"
@@ -177,15 +177,15 @@ function PFIT3LS(action::String,args::Union{Any}...)
         arrset(pbm.elftype,ie,"eT5")
         arrset(ielftype,ie,iet_["eT5"])
         vname = "A"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

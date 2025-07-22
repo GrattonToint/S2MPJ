@@ -31,7 +31,7 @@ class  SPMSRTLS(CUTEst_problem):
 # IE M                   334            $-PARAMETER n = 1000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPMSRTLS'
@@ -242,7 +242,7 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'D'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['1']))
@@ -252,13 +252,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'G'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['1']))
@@ -268,13 +268,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'H'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['1']))
@@ -284,13 +284,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'R'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['1']))
@@ -300,13 +300,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'S'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['2']))
@@ -316,13 +316,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'B'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['2']))
@@ -332,13 +332,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'C'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['2']))
@@ -348,13 +348,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'F'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D'+str(int(v_['2']))
@@ -364,7 +364,7 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'D'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['2']))
@@ -374,13 +374,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'G'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['2']))
@@ -390,13 +390,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'H'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['2']))
@@ -406,13 +406,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'R'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))
@@ -422,13 +422,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'S'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'S'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))+','+str(int(v_['4']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['3']),int(v_['M-2'])+1):
@@ -441,11 +441,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))+','+str(int(v_['I-2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(I)
@@ -453,11 +453,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))+','+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'C'+str(I)
@@ -465,11 +465,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)+','+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'F'+str(I)
@@ -477,11 +477,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'D'+str(I)
@@ -489,7 +489,7 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'G'+str(I)
@@ -497,11 +497,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'H'+str(I)
@@ -509,11 +509,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)+','+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'R'+str(I)
@@ -521,11 +521,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'S'+str(I)
@@ -533,11 +533,11 @@ class  SPMSRTLS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'X'+str(I)+','+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VI')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'A'+str(int(v_['M-1']))
@@ -547,13 +547,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'A'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'A'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-2']))+','+str(int(v_['M-3']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['M-1']))
@@ -563,13 +563,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'B'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-2']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['M-1']))
@@ -579,13 +579,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'C'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['M-1']))
@@ -595,13 +595,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'F'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-2']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D'+str(int(v_['M-1']))
@@ -611,7 +611,7 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'D'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['M-1']))
@@ -621,13 +621,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'G'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['M-1']))
@@ -637,13 +637,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'H'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'H'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['M-1']))
@@ -653,13 +653,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'R'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'R'+str(int(v_['M-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'A'+str(int(v_['M']))
@@ -669,13 +669,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'A'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'A'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['M']))
@@ -685,13 +685,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'B'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'B'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['M']))
@@ -701,13 +701,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'C'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['M']))
@@ -717,13 +717,13 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'F'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VI')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M-1']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='VJ')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D'+str(int(v_['M']))
@@ -733,7 +733,7 @@ class  SPMSRTLS(CUTEst_problem):
         ename = 'D'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['M']))+','+str(int(v_['M']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

@@ -29,7 +29,7 @@ class  CHANDHEU(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHANDHEU'
@@ -124,11 +124,11 @@ class  CHANDHEU(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_['en2PR'])
                 vname = 'H'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='HI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'H'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='HJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

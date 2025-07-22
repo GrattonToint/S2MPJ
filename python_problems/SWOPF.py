@@ -23,7 +23,7 @@ class  SWOPF(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SWOPF'
@@ -1545,7 +1545,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20001'
@@ -1553,7 +1553,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20002'
@@ -1561,7 +1561,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20002'
@@ -1569,7 +1569,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20003'
@@ -1577,7 +1577,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20003'
@@ -1585,7 +1585,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20004'
@@ -1593,7 +1593,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20004'
@@ -1601,7 +1601,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20005'
@@ -1609,7 +1609,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20005'
@@ -1617,7 +1617,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20006'
@@ -1625,7 +1625,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20006'
@@ -1633,7 +1633,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E20007'
@@ -1641,7 +1641,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VE0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'F20007'
@@ -1649,7 +1649,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'VF0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0001'
@@ -1657,11 +1657,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0001'
@@ -1669,11 +1669,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0001'
@@ -1681,11 +1681,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0001'
@@ -1693,11 +1693,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0001'
@@ -1705,11 +1705,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0001'
@@ -1717,11 +1717,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0001'
@@ -1729,11 +1729,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0001'
@@ -1741,11 +1741,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20001'
@@ -1753,7 +1753,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20001'
@@ -1761,7 +1761,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20001'
@@ -1769,7 +1769,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20001'
@@ -1777,7 +1777,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0001'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0002'
@@ -1785,11 +1785,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0002'
@@ -1797,11 +1797,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0002'
@@ -1809,11 +1809,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0002'
@@ -1821,11 +1821,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0002'
@@ -1833,11 +1833,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0002'
@@ -1845,11 +1845,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0002'
@@ -1857,11 +1857,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0002'
@@ -1869,11 +1869,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20002'
@@ -1881,7 +1881,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20002'
@@ -1889,7 +1889,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20002'
@@ -1897,7 +1897,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20002'
@@ -1905,7 +1905,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0003'
@@ -1913,11 +1913,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0003'
@@ -1925,11 +1925,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0003'
@@ -1937,11 +1937,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0003'
@@ -1949,11 +1949,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0002'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0003'
@@ -1961,11 +1961,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0003'
@@ -1973,11 +1973,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0003'
@@ -1985,11 +1985,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0003'
@@ -1997,11 +1997,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20003'
@@ -2009,7 +2009,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20003'
@@ -2017,7 +2017,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20003'
@@ -2025,7 +2025,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20003'
@@ -2033,7 +2033,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0004'
@@ -2041,11 +2041,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0004'
@@ -2053,11 +2053,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0004'
@@ -2065,11 +2065,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0004'
@@ -2077,11 +2077,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0003'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0004'
@@ -2089,11 +2089,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0004'
@@ -2101,11 +2101,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0004'
@@ -2113,11 +2113,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0004'
@@ -2125,11 +2125,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20004'
@@ -2137,7 +2137,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20004'
@@ -2145,7 +2145,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20004'
@@ -2153,7 +2153,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20004'
@@ -2161,7 +2161,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0005'
@@ -2169,11 +2169,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0005'
@@ -2181,11 +2181,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0005'
@@ -2193,11 +2193,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0005'
@@ -2205,11 +2205,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0004'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0005'
@@ -2217,11 +2217,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0005'
@@ -2229,11 +2229,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0005'
@@ -2241,11 +2241,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0005'
@@ -2253,11 +2253,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20005'
@@ -2265,7 +2265,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20005'
@@ -2273,7 +2273,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20005'
@@ -2281,7 +2281,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20005'
@@ -2289,7 +2289,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0006'
@@ -2297,11 +2297,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0006'
@@ -2309,11 +2309,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0006'
@@ -2321,11 +2321,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0006'
@@ -2333,11 +2333,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0005'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0006'
@@ -2345,11 +2345,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0006'
@@ -2357,11 +2357,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0006'
@@ -2369,11 +2369,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0006'
@@ -2381,11 +2381,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20006'
@@ -2393,7 +2393,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20006'
@@ -2401,7 +2401,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20006'
@@ -2409,7 +2409,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20006'
@@ -2417,7 +2417,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIEI0007'
@@ -2425,11 +2425,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIFI0007'
@@ -2437,11 +2437,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EIFI0007'
@@ -2449,11 +2449,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FIEI0007'
@@ -2461,11 +2461,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0006'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJEJ0007'
@@ -2473,11 +2473,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJFJ0007'
@@ -2485,11 +2485,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJFJ0007'
@@ -2497,11 +2497,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'EJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VF0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'FJEJ0007'
@@ -2509,11 +2509,11 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXTIMESY')
         ielftype = arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = 'FJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'VE0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PI20007'
@@ -2521,7 +2521,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QI20007'
@@ -2529,7 +2529,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QI0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'PJ20007'
@@ -2537,7 +2537,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'PJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'QJ20007'
@@ -2545,7 +2545,7 @@ class  SWOPF(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXSQUARE')
         ielftype = arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = 'QJ0007'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

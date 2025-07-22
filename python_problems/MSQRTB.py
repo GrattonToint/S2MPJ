@@ -30,7 +30,7 @@ class  MSQRTB(CUTEst_problem):
 # IE P                   32             $-PARAMETER n = 1024
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MSQRTB'
@@ -145,11 +145,11 @@ class  MSQRTB(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     vname = 'X'+str(I)+','+str(T)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                     posev = np.where(elftv[ielftype[ie]]=='XIT')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'X'+str(T)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                     posev = np.where(elftv[ielftype[ie]]=='XTJ')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

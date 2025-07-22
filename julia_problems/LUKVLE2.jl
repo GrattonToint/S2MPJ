@@ -25,7 +25,7 @@ function LUKVLE2(action::String,args::Union{Any}...)
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUKVLE2"
@@ -192,7 +192,7 @@ function LUKVLE2(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
             vname = "X"*string(Int64(v_["2I-1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "C"*string(I)
@@ -200,7 +200,7 @@ function LUKVLE2(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
             vname = "X"*string(Int64(v_["2I+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -210,7 +210,7 @@ function LUKVLE2(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eCUBE")
             arrset(ielftype,ie,iet_["eCUBE"])
             vname = "X"*string(K)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -220,7 +220,7 @@ function LUKVLE2(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
             vname = "X"*string(K)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end

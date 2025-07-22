@@ -24,7 +24,7 @@ class  VESUVIOU(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'VESUVIOU'
@@ -2203,15 +2203,15 @@ class  VESUVIOU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eGAUSSIAN')
             ielftype = arrset(ielftype,ie,iet_["eGAUSSIAN"])
             vname = 'B3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='C')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='S')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='X')[0]
@@ -2221,15 +2221,15 @@ class  VESUVIOU(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eGAUSSIAN')
             ielftype = arrset(ielftype,ie,iet_["eGAUSSIAN"])
             vname = 'B6'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B7'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='C')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B8'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='S')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='X')[0]

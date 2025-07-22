@@ -43,7 +43,7 @@ class  TENBARS3(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TENBARS3'
@@ -181,11 +181,11 @@ class  TENBARS3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXU')
         ielftype = arrset(ielftype,ie,iet_["eXU"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EB'
@@ -193,15 +193,15 @@ class  TENBARS3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXUPV')
         ielftype = arrset(ielftype,ie,iet_["eXUPV"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EC'
@@ -210,15 +210,15 @@ class  TENBARS3(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eXUMV')
             ielftype = arrset(ielftype,ie,iet_['eXUMV'])
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'ED'
@@ -226,23 +226,23 @@ class  TENBARS3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXBIG')
         ielftype = arrset(ielftype,ie,iet_["eXBIG"])
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EE'
@@ -251,15 +251,15 @@ class  TENBARS3(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eXUMV')
             ielftype = arrset(ielftype,ie,iet_['eXUMV'])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EF'
@@ -268,15 +268,15 @@ class  TENBARS3(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eXUMV')
             ielftype = arrset(ielftype,ie,iet_['eXUMV'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EG'
@@ -284,11 +284,11 @@ class  TENBARS3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXU')
         ielftype = arrset(ielftype,ie,iet_["eXU"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EH'
@@ -296,23 +296,23 @@ class  TENBARS3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXBIG')
         ielftype = arrset(ielftype,ie,iet_["eXBIG"])
         vname = 'X8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EI'
@@ -321,15 +321,15 @@ class  TENBARS3(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eXUMV')
             ielftype = arrset(ielftype,ie,iet_['eXUMV'])
         vname = 'X9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'EJ'
@@ -338,15 +338,15 @@ class  TENBARS3(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eXUMV')
             ielftype = arrset(ielftype,ie,iet_['eXUMV'])
         vname = 'X10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='U')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

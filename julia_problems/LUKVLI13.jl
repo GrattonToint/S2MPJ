@@ -27,7 +27,7 @@ function LUKVLI13(action::String,args::Union{Any}...)
 # IE N                   9998           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUKVLI13"
@@ -186,7 +186,7 @@ function LUKVLI13(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
             vname = "X"*string(Int64(v_["K+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["K+1"]))
@@ -196,7 +196,7 @@ function LUKVLI13(action::String,args::Union{Any}...)
             ename = "E"*string(Int64(v_["K+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["K+2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end

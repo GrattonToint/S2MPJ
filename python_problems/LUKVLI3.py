@@ -29,7 +29,7 @@ class  LUKVLI3(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLI3'
@@ -176,7 +176,7 @@ class  LUKVLI3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eCUBE')
         ielftype = arrset(ielftype,ie,iet_["eCUBE"])
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C12'
@@ -184,11 +184,11 @@ class  LUKVLI3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eSINASINB')
         ielftype = arrset(ielftype,ie,iet_["eSINASINB"])
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X'+str(int(v_['2']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C21'
@@ -196,11 +196,11 @@ class  LUKVLI3(CUTEst_problem):
         self.elftype = arrset(self.elftype,ie,'eXEXP')
         ielftype = arrset(ielftype,ie,iet_["eXEXP"])
         vname = 'X'+str(int(v_['N-1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X'+str(int(v_['N']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
         posev = np.where(elftv[ielftype[ie]]=='X2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

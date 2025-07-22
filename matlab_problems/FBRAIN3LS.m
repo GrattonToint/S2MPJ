@@ -25,7 +25,7 @@ function varargout = FBRAIN3LS(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -11174,11 +11174,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA1';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C01';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});
@@ -11192,11 +11192,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA1';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C01';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});
@@ -11210,11 +11210,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA2';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C02';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});
@@ -11228,11 +11228,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA2';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C02';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});
@@ -11246,11 +11246,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA3';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C03';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});
@@ -11264,11 +11264,11 @@ switch(action)
                     ielftype(ie) = iet_('eFBRAIN');
                 end
                 vname = 'ALPHA3';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('ALPHA',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = 'C03';
-                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                 posev = find(strcmp('C0',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('COEFF',elftp{ielftype(ie)});

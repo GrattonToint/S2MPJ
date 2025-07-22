@@ -27,7 +27,7 @@ class  FREURONE(CUTEst_problem):
 # IE N                   2              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FREURONE'
@@ -149,7 +149,7 @@ class  FREURONE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eFRDRTH')
                 ielftype = arrset(ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='ELV')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
@@ -162,7 +162,7 @@ class  FREURONE(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eFRDRTH')
                 ielftype = arrset(ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='ELV')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]

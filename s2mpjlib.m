@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 14 VII 2025)
+%   Programming: Ph. Toint (this version 22 VII 2025)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,7 +69,7 @@ case 'nlx'
       if ( ~isempty( varargin{5} ) )
          pb.xlower(iv,1) = varargin{5};
       else
-         pb.xlower(iv,1) = -Inf;
+         pb.xlower(iv,1) = 0;
       end
       if ( ~isempty( varargin{6} ) )
          pb.xupper(iv,1) = varargin{6};

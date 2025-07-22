@@ -39,7 +39,7 @@ class  WOODS(CUTEst_problem):
 # IE NS                  250            $-PARAMETER n = 1000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WOODS'
@@ -171,7 +171,7 @@ class  WOODS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eMSQ')
             ielftype = arrset(ielftype,ie,iet_["eMSQ"])
             vname = 'X'+str(int(v_['J-3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Z'+str(I)
@@ -179,7 +179,7 @@ class  WOODS(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eMSQ')
             ielftype = arrset(ielftype,ie,iet_["eMSQ"])
             vname = 'X'+str(int(v_['J-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

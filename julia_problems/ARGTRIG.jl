@@ -28,7 +28,7 @@ function ARGTRIG(action::String,args::Union{Any}...)
 # IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 21 VI 2025
+#   Translated to Julia by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ARGTRIG"
@@ -123,7 +123,7 @@ function ARGTRIG(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eCOSINE")
             arrset(ielftype,ie,iet_["eCOSINE"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "SC"*string(I)
@@ -131,7 +131,7 @@ function ARGTRIG(action::String,args::Union{Any}...)
             arrset(pbm.elftype,ie,"eSINCOS")
             arrset(ielftype,ie,iet_["eSINCOS"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-Inf),Float64(Inf),nothing)
             posev = findfirst(x->x=="XI",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end

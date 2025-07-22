@@ -744,7 +744,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '21 VI 2025';
+                 this_version = '22 VII 2025';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3120,6 +3120,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                end
                has_xlowdef = 1;
                has_xuppdef = 1;
+               xlowdef     = -Inf;
+               xuppdef     =  Inf;
                pending     = {};
                pendingkey  = '';
             case { 'MI', 'XM' }
@@ -3127,12 +3129,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( 'self.xlower =  np.full((self.n,1),-float(''Inf''))',              indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xlower =  -1*fill(Inf,pb.n)',                                  indlvl, bindent, pbs.fidjl );
                has_xlowdef = 1;
+               xlowdef     = -Inf;
             case { 'PL', 'XP' }
                printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
                printpline( 'self.xupper = np.full((self.n,1),+float(''Inf''))',               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xupper =    fill(Inf,pb.n)',                                   indlvl, bindent, pbs.fidjl );
                MPSbounds   = MPSbounds + 1;
                has_xuppdef = 1;
+               xuppdef     = Inf;
             case { 'LO', 'XL', 'ZL' }
                xlowdef = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.xlower = %s*ones(pb.n,1);', xlowdef ),                indlvl, bindent, pbs.fidma );
@@ -3660,7 +3664,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             %  Assign the elemental variable. Note that vname may be the name of a 'nonlinear' variable not declared in
             %  the VARIABLES section, in which case vname must be added to the variables' dictionary ix_, with bounds,
             %  start point and types defined by their default settings (it is too late to define problem-specific values).
-            %  This task is performed by s2mpj_nlx,( ...) and the different calls are needed to reflect the fact that these
+            %  This task is performed by s2mpj_nlx( ...) and the different calls are needed to reflect the fact that these
             %  defaults may have been set or not (the default variable type is always defined to be 'r').
             
             if ( ~has_x0def )
@@ -3671,7 +3675,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printmline( sprintf( 'vname = %s;', vname ),                                      indlvl, bindent, pbs.fidma );
             printpline( sprintf( 'vname = %s',  vname ),                                      indlvl, bindent, pbs.fidpy );
             printjline( sprintf( 'vname = %s',  vname ),                                      indlvl, bindent, pbs.fidjl );
-            if     (  isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
+            if ( isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],[]);',               ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidma );
                printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,None)',                  ...

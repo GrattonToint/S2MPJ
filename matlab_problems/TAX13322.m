@@ -27,7 +27,7 @@ function varargout = TAX13322(action,varargin)
 % IE NA                  1              $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -271,7 +271,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA1';
                     ielftype(ie) = iet_('eA1');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -285,7 +285,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA2';
                     ielftype(ie) = iet_('eA2');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -299,7 +299,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA3';
                     ielftype(ie) = iet_('eA3');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -313,7 +313,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA4';
                     ielftype(ie) = iet_('eA4');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -327,7 +327,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA5';
                     ielftype(ie) = iet_('eA5');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -341,7 +341,7 @@ switch(action)
                     pbm.elftype{ie} = 'eA6';
                     ielftype(ie) = iet_('eA6');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -355,7 +355,7 @@ switch(action)
                     pbm.elftype{ie} = 'eB1';
                     ielftype(ie) = iet_('eB1');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -369,7 +369,7 @@ switch(action)
                     pbm.elftype{ie} = 'eB2';
                     ielftype(ie) = iet_('eB2');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -383,7 +383,7 @@ switch(action)
                     pbm.elftype{ie} = 'eB3';
                     ielftype(ie) = iet_('eB3');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end

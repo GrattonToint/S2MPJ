@@ -157,7 +157,7 @@ function s2mpj_nlx( name::String, dict::Dict{String,Int}, pb::PB, getxnames::Int
             arrset( pb.xnames, iv, name )
         end
         if hasproperty( pb, :xlower )
-            arrset( pb.xlower, iv, isnothing( xlowdef ) ? -Inf : xlowdef )
+            arrset( pb.xlower, iv, isnothing( xlowdef ) ? 0.0 : xlowdef )
         end
         if hasproperty( pb, :xupper )
             arrset( pb.xupper, iv, isnothing( xuppdef ) ? Inf : xuppdef )

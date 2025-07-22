@@ -70,7 +70,7 @@ class  NUFFIELD(CUTEst_problem):
 # RE A                   5.0            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NUFFIELD'
@@ -433,39 +433,39 @@ class  NUFFIELD(CUTEst_problem):
                 ielftype = arrset(ielftype,ie,iet_["eCONVEX"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'V'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIP1J')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIM1J')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIJP1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIJM1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIPJP')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIMJM')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I+1']))+','+str(int(v_['J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIPJM')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='VIMJP')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

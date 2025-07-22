@@ -31,7 +31,7 @@ class  BRATU3D(CUTEst_problem):
 # IE P                   17             $-PARAMETER  n = 4913
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU3D'
@@ -170,7 +170,7 @@ class  BRATU3D(CUTEst_problem):
                         self.elftype = arrset(self.elftype,ie,'eEXP')
                         ielftype = arrset(ielftype,ie,iet_['eEXP'])
                     vname = 'U'+str(I)+','+str(J)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='U')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

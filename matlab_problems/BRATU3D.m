@@ -30,7 +30,7 @@ function varargout = BRATU3D(action,varargin)
 % IE P                   17             $-PARAMETER  n = 4913
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -195,7 +195,7 @@ switch(action)
                         ielftype(ie) = iet_('eEXP');
                     end
                     vname = ['U',int2str(I),',',int2str(J),',',int2str(K)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,0.0);
                     posev = find(strcmp('U',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end

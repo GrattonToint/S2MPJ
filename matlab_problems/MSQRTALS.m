@@ -30,7 +30,7 @@ function varargout = MSQRTALS(action,varargin)
 % IE P                   32             $-PARAMETER n = 1024
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 21 VI 2025
+%   Translated to Matlab by S2MPJ version 22 VII 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -148,11 +148,11 @@ switch(action)
                     pbm.elftype{ie} = 'en2PR';
                     ielftype(ie) = iet_('en2PR');
                     vname = ['X',int2str(I),',',int2str(T)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                     posev = find(strcmp('XIT',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['X',int2str(T),',',int2str(J)];
-                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-Inf,Inf,[]);
                     posev = find(strcmp('XTJ',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end

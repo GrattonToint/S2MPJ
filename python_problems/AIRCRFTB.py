@@ -25,7 +25,7 @@ class  AIRCRFTB(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRCRFTB'
@@ -178,11 +178,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1B'
@@ -191,11 +191,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1C'
@@ -204,11 +204,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1D'
@@ -217,11 +217,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2A'
@@ -230,11 +230,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2B'
@@ -243,11 +243,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3A'
@@ -256,11 +256,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3B'
@@ -269,11 +269,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3C'
@@ -282,11 +282,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
@@ -295,11 +295,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
@@ -308,11 +308,11 @@ class  AIRCRFTB(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

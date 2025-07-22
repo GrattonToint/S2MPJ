@@ -37,7 +37,7 @@ class  ORTHREGF(CUTEst_problem):
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGF'
@@ -237,23 +237,23 @@ class  ORTHREGF(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eTA')
                 ielftype = arrset(ielftype,ie,iet_["eTA"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='YY')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'P1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='A')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'P2'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='B')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'P4'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='C')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'EB'+str(I)+','+str(J)
@@ -261,11 +261,11 @@ class  ORTHREGF(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'Z'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'P3'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='P')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'EC'+str(I)+','+str(J)
@@ -273,7 +273,7 @@ class  ORTHREGF(CUTEst_problem):
                 self.elftype = arrset(self.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'P5'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%

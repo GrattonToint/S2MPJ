@@ -28,7 +28,7 @@ class  TAX13322(CUTEst_problem):
 # IE NA                  1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 21 VI 2025
+#   Translated to Python by S2MPJ version 22 VII 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TAX13322'
@@ -248,7 +248,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA1')
                     ielftype = arrset(ielftype,ie,iet_["eA1"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -259,7 +259,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA2')
                     ielftype = arrset(ielftype,ie,iet_["eA2"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -270,7 +270,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA3')
                     ielftype = arrset(ielftype,ie,iet_["eA3"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -281,7 +281,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA4')
                     ielftype = arrset(ielftype,ie,iet_["eA4"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -292,7 +292,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA5')
                     ielftype = arrset(ielftype,ie,iet_["eA5"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -303,7 +303,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eA6')
                     ielftype = arrset(ielftype,ie,iet_["eA6"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -314,7 +314,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eB1')
                     ielftype = arrset(ielftype,ie,iet_["eB1"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -325,7 +325,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eB2')
                     ielftype = arrset(ielftype,ie,iet_["eB2"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -336,7 +336,7 @@ class  TAX13322(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'eB3')
                     ielftype = arrset(ielftype,ie,iet_["eB3"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-Inf),float(Inf),float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
