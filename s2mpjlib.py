@@ -119,6 +119,17 @@ class CUTEst_problem:
             print( "       Please refer to the problem classification for checking a problem's type." )
             print( " " )
         
+    def cJx( self, x ):               # input = ( x )
+        if hasattr( self, "congrps" ) and len( self.congrps):
+            x = x.reshape(-1,1)
+            self.getglobs()
+            return self.evalgrsum( False, self.congrps, x, 2 )
+        else:
+            print( " " )
+            print( 'ERROR: problem '+self.name+' has no constraint!' )
+            print( "       Please refer to the problem classification for checking a problem's type." )
+            print( " " )
+        
     def cJHx( self, x ):             # input = ( x )
         if hasattr( self, "congrps" ) and len( self.congrps):
             x = x.reshape(-1,1)
