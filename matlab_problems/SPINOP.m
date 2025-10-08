@@ -39,7 +39,7 @@ function varargout = SPINOP(action,varargin)
 % IE N                   50             $-PARAMETER matrix dimension
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

@@ -40,7 +40,7 @@ function FLOSP2HL(action::String,args::Union{Any}...)
 # IE M                   15             $-PARAMETER n=2883
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FLOSP2HL"

@@ -28,7 +28,7 @@ open Matlab and make sure the local directory containing the 's2mpjlib.m' file  
 subdirectory 'matlab_problems' are in the Matlab path.
 
 Suppose now  we have an optimization code MyOptimizer.m which we would like to apply to
-one on the S2MPJ problems, let's say `PROBLEM.m`.  We
+one of the S2MPJ problems, let's say `PROBLEM.m`.  We
 first setup the problem data structure, along with the
 starting point and bounds on the variables by issuing the command
 ``` 

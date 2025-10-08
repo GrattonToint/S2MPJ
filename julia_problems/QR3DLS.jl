@@ -33,7 +33,7 @@ function QR3DLS(action::String,args::Union{Any}...)
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QR3DLS"

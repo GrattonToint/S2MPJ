@@ -31,7 +31,7 @@ function READING4(action::String,args::Union{Any}...)
 # IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "READING4"
@@ -205,7 +205,7 @@ function READING4(action::String,args::Union{Any}...)
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
-        pb.cupper[1:pb.nge] = grange[gegrps]
+        pb.cupper[pb.nle+pb.neq+1:pb.m] = grange[gegrps]
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COOR2-MN-V-V"

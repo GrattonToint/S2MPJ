@@ -27,7 +27,7 @@ function CBRATU2D(action::String,args::Union{Any}...)
 # IE P                   4              $-PARAMETER n = 32     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CBRATU2D"

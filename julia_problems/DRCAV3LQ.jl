@@ -37,7 +37,7 @@ function DRCAV3LQ(action::String,args::Union{Any}...)
 # IE M                   63             $-PARAMETER  n =  3969
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRCAV3LQ"

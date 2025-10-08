@@ -31,7 +31,7 @@ class  BRATU2D(CUTEst_problem):
 # IE P                   72             $-PARAMETER  n=P**2
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU2D'

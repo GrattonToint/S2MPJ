@@ -31,7 +31,7 @@ function varargout = LUBRIF(action,varargin)
 % IE NN                  250            $-PARAMETER n = 3751
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

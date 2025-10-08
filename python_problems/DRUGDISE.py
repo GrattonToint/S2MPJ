@@ -39,7 +39,7 @@ class  DRUGDISE(CUTEst_problem):
 # IE NI                  100            $-PARAMETER n=6003, m=5000 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRUGDISE'

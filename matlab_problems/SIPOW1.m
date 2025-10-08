@@ -26,7 +26,7 @@ function varargout = SIPOW1(action,varargin)
 % IE M                   500 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -132,7 +132,7 @@ switch(action)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
         pb.pbclass = 'C-CLLR2-AN-2-V';

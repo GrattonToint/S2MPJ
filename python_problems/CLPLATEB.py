@@ -41,7 +41,7 @@ class  CLPLATEB(CUTEst_problem):
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLPLATEB'

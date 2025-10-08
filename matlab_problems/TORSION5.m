@@ -39,7 +39,7 @@ function varargout = TORSION5(action,varargin)
 % IE Q                   37             $-PARAMETER n= 5476
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

@@ -42,7 +42,7 @@ function varargout = OPTMASS(action,varargin)
 % IE N                   500            $-PARAMETER n = 3010
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

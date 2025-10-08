@@ -33,7 +33,7 @@ class  READING9(CUTEst_problem):
 # IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING9'

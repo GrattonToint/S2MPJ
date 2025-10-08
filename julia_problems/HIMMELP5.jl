@@ -24,7 +24,7 @@ function HIMMELP5(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HIMMELP5"
@@ -208,7 +208,7 @@ function HIMMELP5(action::String,args::Union{Any}...)
         pb.cupper =    fill(Inf,pb.m)
         pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
-        pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
+        pb.cupper[pb.nle+pb.neq+1:pb.m] = fill(Inf,pb.nge)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-COQR2-AN-2-3"

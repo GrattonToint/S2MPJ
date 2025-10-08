@@ -20,7 +20,7 @@ function varargout = HS117(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 22 VII 2025
+%   Translated to Matlab by S2MPJ version 8 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -294,7 +294,7 @@ switch(action)
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-COQR2-AN-15-5';

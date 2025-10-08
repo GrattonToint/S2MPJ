@@ -36,7 +36,7 @@ function MADSSCHJ(action::String,args::Union{Any}...)
 # IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MADSSCHJ"
@@ -300,7 +300,7 @@ function MADSSCHJ(action::String,args::Union{Any}...)
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
-        pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
+        pb.cupper[pb.nle+pb.neq+1:pb.m] = fill(Inf,pb.nge)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "C-CLQR2-AN-V-V"

@@ -744,7 +744,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '22 VII 2025';
+                 this_version = '8 X 2025';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1191,6 +1191,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printmline( 'else',                                                               2,      bindent, pbs.fidma );
             printmline( 'nargs = nargin-1;',                                                  3,      bindent, pbs.fidma );
             printmline( 'end',                                                                2,      bindent, pbs.fidma );
+         else
+            printmline( 'nargs = nargin-1;',                                                  3,      bindent, pbs.fidma );
          end
          printmline( sprintf( 'pb.name   = name;' ),                                          2,      bindent, pbs.fidma );
          printmline( sprintf( 'pbm.name  = name;' ),                                          2,      bindent, pbs.fidma );
@@ -2147,12 +2149,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   %  Set the >= constraint's upper bound.
                   
                   if ( has_ranges )
-                     printmline( 'pb.cupper(1:pb.nge) = grange(gegrps);',                     indlvl, bindent, pbs.fidma );
-                     printpline( 'self.cupper[np.arange(self.nge)] = grange[gegrps]',         indlvl, bindent, pbs.fidpy );
-                     printjline( 'pb.cupper[1:pb.nge] = grange[gegrps]',                      indlvl, bindent, pbs.fidjl );
+                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m) = grange(gegrps);',         indlvl, bindent, pbs.fidma );
+                     printpline( 'self.cupper[np.arange(self.nle+self.neq,self.m)] = grange[gegrps]',       ...
+                                                                                              indlvl, bindent, pbs.fidpy );
+                     printjline( 'pb.cupper[pb.nle+pb.neq+1:pb.m] = grange[gegrps]',          indlvl, bindent, pbs.fidjl );
                   else
-                     printmline( 'pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);',                indlvl, bindent, pbs.fidma );
-                     printjline( 'pb.cupper[1:pb.nge] = fill(Inf,pb.nge)',                    indlvl, bindent, pbs.fidjl );
+                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);',    indlvl, bindent, pbs.fidma );
+                     printjline( 'pb.cupper[pb.nle+pb.neq+1:pb.m] = fill(Inf,pb.nge)',        indlvl, bindent, pbs.fidjl );
                   end
                end
             end

@@ -40,3 +40,5 @@ Release notes for S2MPJ
               corrected classifications for BLOWEYA, BLOWEYB, BLOWEYC and NELSONLS
               
 22 VII 2025 : improvement to the handling of bounds on nonlinear variables
+
+8 X 2025    : correction to ranges of inequality constraints

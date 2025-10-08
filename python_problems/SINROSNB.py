@@ -27,7 +27,7 @@ class  SINROSNB(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SINROSNB'
@@ -178,7 +178,7 @@ class  SINROSNB(CUTEst_problem):
         self.clower = np.full((self.m,1),-float('Inf'))
         self.cupper = np.full((self.m,1),+float('Inf'))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        self.cupper[np.arange(self.nge)] = grange[gegrps]
+        self.cupper[np.arange(self.nle+self.neq,self.m)] = grange[gegrps]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])

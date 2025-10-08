@@ -21,7 +21,7 @@ class  HS104(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 22 VII 2025
+#   Translated to Python by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS104'
@@ -403,7 +403,7 @@ class  HS104(CUTEst_problem):
         self.clower[np.arange(self.nle)] = grange[legrps]
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
-        self.cupper[np.arange(self.nge)] = grange[gegrps]
+        self.cupper[np.arange(self.nle+self.neq,self.m)] = grange[gegrps]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])

@@ -39,7 +39,7 @@ function OET1(action::String,args::Union{Any}...)
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 22 VII 2025
+#   Translated to Julia by S2MPJ version 8 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OET1"
@@ -150,7 +150,7 @@ function OET1(action::String,args::Union{Any}...)
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
         pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
-        pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
+        pb.cupper[pb.nle+pb.neq+1:pb.m] = fill(Inf,pb.nge)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "C-CLLR2-AN-3-V"
