@@ -44,7 +44,7 @@ function KISSING2(action::String,args::Union{Any}...)
 # IE m                   25             $-PARAMETER  number of points
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "KISSING2"

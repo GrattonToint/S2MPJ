@@ -65,7 +65,7 @@ function varargout = LISWET8(action,varargin)
 % IE N                   2000           $-PARAMETER 2002 variables    
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -231,8 +231,8 @@ switch(action)
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);
+        pb.clower(pb.nle+pb.neq+1:pb.m,1) = zeros(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m,1) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-CQLR2-AN-V-V';

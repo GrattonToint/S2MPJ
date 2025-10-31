@@ -20,7 +20,7 @@ function varargout = CSFI1(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -111,7 +111,7 @@ switch(action)
         pbm.gconst(ig_('WOT')) = v_('MAXASPR');
         pbm.gconst(ig_('TTW')) = v_('MINAREA');
         %%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
-        grange(legrps,1) = Inf*ones(pb.nle,1);
+        grange(legrps,1) = -Inf*ones(pb.nle,1);
         grange(gegrps,1) = Inf*ones(pb.nge,1);
         v_('RHS') = v_('MAXAREA')-v_('MINAREA');
         grange(ig_('TTW')) = v_('RHS');
@@ -224,12 +224,12 @@ switch(action)
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(1:pb.nle) = grange(legrps);
-        pb.cupper(1:pb.nle) = zeros(pb.nle,1);
-        pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(pb.nle+pb.neq+1:pb.m) = grange(gegrps);
+        pb.clower(1:pb.nle,1) = grange(legrps);
+        pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);
+        pb.clower(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.cupper(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.clower(pb.nle+pb.neq+1:pb.m,1) = zeros(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m,1) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-CLOR2-RN-5-4';

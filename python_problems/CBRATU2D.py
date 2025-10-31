@@ -28,7 +28,7 @@ class  CBRATU2D(CUTEst_problem):
 # IE P                   4              $-PARAMETER n = 32     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CBRATU2D'

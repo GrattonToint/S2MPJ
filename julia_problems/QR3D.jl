@@ -31,7 +31,7 @@ function QR3D(action::String,args::Union{Any}...)
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QR3D"

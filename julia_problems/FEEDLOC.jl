@@ -15,7 +15,7 @@ function FEEDLOC(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FEEDLOC"
@@ -401,7 +401,7 @@ function FEEDLOC(action::String,args::Union{Any}...)
         end
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         for I = Int64(v_["1"]):Int64(v_["NMAX"])
             arrset(grange,ig_["PE1"*string(I)],Float64(2.0))

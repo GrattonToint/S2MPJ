@@ -31,7 +31,7 @@ function READING4(action::String,args::Union{Any}...)
 # IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "READING4"

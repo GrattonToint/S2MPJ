@@ -22,7 +22,7 @@ class  DEMBO7(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEMBO7'
@@ -200,7 +200,7 @@ class  DEMBO7(CUTEst_problem):
         self.gconst = arrset(self.gconst,ig_['C0'],float(50.0))
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
-        grange[legrps] = np.full((self.nle,1),float('inf'))
+        grange[legrps] = -np.full((self.nle,1),float('inf'))
         grange[gegrps] = np.full((self.nge,1),float('inf'))
         grange = arrset(grange,ig_['C0'],float(200.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%

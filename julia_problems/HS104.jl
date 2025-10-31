@@ -20,7 +20,7 @@ function HS104(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS104"
@@ -111,7 +111,7 @@ function HS104(action::String,args::Union{Any}...)
         pbm.gconst[ig_["C5"]] = Float64(-9.0e+0)
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         arrset(grange,ig_["C5"],Float64(3.2e+0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%

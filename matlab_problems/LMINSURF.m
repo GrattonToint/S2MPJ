@@ -52,7 +52,7 @@ function varargout = LMINSURF(action,varargin)
 % IE P                   75             $-PARAMETER n = 5625
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

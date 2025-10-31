@@ -19,7 +19,7 @@ function varargout = MAKELA4(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -211,8 +211,8 @@ switch(action)
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(1:pb.nle) = -Inf*ones(pb.nle,1);
-        pb.cupper(1:pb.nle) = zeros(pb.nle,1);
+        pb.clower(1:pb.nle,1) = -Inf*ones(pb.nle,1);
+        pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
         pb.pbclass = 'C-CLLR2-AN-21-40';

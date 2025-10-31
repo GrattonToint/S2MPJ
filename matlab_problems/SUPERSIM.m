@@ -18,7 +18,7 @@ function varargout = SUPERSIM(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -105,8 +105,8 @@ switch(action)
         pbm.A = sparse(irA,icA,valA,ngrp,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
+        pb.clower(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.cupper(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
         pb.pbclass = 'C-CLLR2-AN-2-2';

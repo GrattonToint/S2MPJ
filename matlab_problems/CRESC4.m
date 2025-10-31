@@ -46,7 +46,7 @@ function varargout = CRESC4(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -327,10 +327,10 @@ switch(action)
 %    Solution             0.87189692
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(1:pb.nle) = -Inf*ones(pb.nle,1);
-        pb.cupper(1:pb.nle) = zeros(pb.nle,1);
-        pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);
+        pb.clower(1:pb.nle,1) = -Inf*ones(pb.nle,1);
+        pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);
+        pb.clower(pb.nle+pb.neq+1:pb.m,1) = zeros(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m,1) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-COOR2-MY-6-8';

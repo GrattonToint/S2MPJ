@@ -42,3 +42,7 @@ Release notes for S2MPJ
 22 VII 2025 : improvement to the handling of bounds on nonlinear variables
 
 8 X 2025    : correction to ranges of inequality constraints
+
+31 X 2025   : again a correction to infinite ranges of inequality constraints
+              forcing pb.clower and pb.cupper tto be column vectors (in Matlab)
+              

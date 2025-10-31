@@ -110,7 +110,7 @@ class  ACOPR30(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ACOPR30'
@@ -434,7 +434,7 @@ class  ACOPR30(CUTEst_problem):
         self.gconst = arrset(self.gconst,ig_['VM30'],float(0.9025))
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
-        grange[legrps] = np.full((self.nle,1),float('inf'))
+        grange[legrps] = -np.full((self.nle,1),float('inf'))
         grange[gegrps] = np.full((self.nge,1),float('inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-1.0e+30)

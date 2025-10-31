@@ -18,7 +18,7 @@ function varargout = HS102(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -89,7 +89,7 @@ switch(action)
         pbm.gconst(ig_('CONSTR4')) = 1.0;
         pbm.gconst(ig_('CONSTR5')) = 3000.0;
         %%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
-        grange(legrps,1) = Inf*ones(pb.nle,1);
+        grange(legrps,1) = -Inf*ones(pb.nle,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 0.1*ones(pb.n,1);
         pb.xupper = 10.0*ones(pb.n,1);
@@ -836,8 +836,8 @@ switch(action)
 % LO SOLTN               1809.76476
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(1:pb.nle) = grange(legrps);
-        pb.cupper(1:pb.nle) = zeros(pb.nle,1);
+        pb.clower(1:pb.nle,1) = grange(legrps);
+        pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-COOR2-AN-7-5';

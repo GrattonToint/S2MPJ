@@ -744,7 +744,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '8 X 2025';
+                 this_version = '31 X 2025';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1630,11 +1630,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       if( has_leconstr )
          switch( pbs.lang )
          case 'matlab'
-            pending{end+1} = sprintf( 'grange(legrps,1) = Inf*ones(pb.nle,1);' );
+            pending{end+1} = sprintf( 'grange(legrps,1) = -Inf*ones(pb.nle,1);' );
          case 'python'
-            pending{end+1} = sprintf( 'grange[legrps] = np.full((self.nle,1),float(''inf''))' );
+            pending{end+1} = sprintf( 'grange[legrps] = -np.full((self.nle,1),float(''inf''))' );
          case 'julia'
-            pending{end+1} = sprintf( 'grange[legrps,1] = fill(Inf,pb.nle)' );
+            pending{end+1} = sprintf( 'grange[legrps,1] = -fill(Inf,pb.nle)' );
          end
       end
       if( has_geconstr )
@@ -2105,16 +2105,16 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   %  Set the <= contraint's lower bound.
                   
                   if ( has_ranges )
-                     printmline( 'pb.clower(1:pb.nle) = grange(legrps);',                     indlvl, bindent, pbs.fidma );
+                     printmline( 'pb.clower(1:pb.nle,1) = grange(legrps);',                   indlvl, bindent, pbs.fidma );
                      printpline( 'self.clower[np.arange(self.nle)] = grange[legrps]',         indlvl, bindent, pbs.fidpy );
                      printjline( 'pb.clower[1:pb.nle] = grange[legrps]',                      indlvl, bindent, pbs.fidjl );
                   else
-                     printmline( 'pb.clower(1:pb.nle) = -Inf*ones(pb.nle,1);',                indlvl, bindent, pbs.fidma );
+                     printmline( 'pb.clower(1:pb.nle,1) = -Inf*ones(pb.nle,1);',              indlvl, bindent, pbs.fidma );
                   end
 
                   %  Set the <= constraint's upper bound
                    
-                  printmline( 'pb.cupper(1:pb.nle) = zeros(pb.nle,1);',                       indlvl, bindent, pbs.fidma );
+                  printmline( 'pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);',                     indlvl, bindent, pbs.fidma );
                   printpline( 'self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))',    indlvl, bindent, pbs.fidpy );
                   printjline( 'pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)',                  indlvl, bindent, pbs.fidjl );
                end
@@ -2123,8 +2123,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                
                if ( has_eqconstr )
                
-                  printmline( 'pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);',         indlvl, bindent, pbs.fidma );
-                  printmline( 'pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);',         indlvl, bindent, pbs.fidma );
+                  printmline( 'pb.clower(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);',       indlvl, bindent, pbs.fidma );
+                  printmline( 'pb.cupper(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);',       indlvl, bindent, pbs.fidma );
                   %
                   printpline( 'self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))', ...
                                                                                               indlvl, bindent, pbs.fidpy );
@@ -2141,7 +2141,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                
                   %  Set the >= constraint's lower bound.
                   
-                  printmline( 'pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);',           indlvl, bindent, pbs.fidma );
+                  printmline( 'pb.clower(pb.nle+pb.neq+1:pb.m,1) = zeros(pb.nge,1);',         indlvl, bindent, pbs.fidma );
                   printpline( 'self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))',  ...
                                                                                               indlvl, bindent, pbs.fidpy );
                   printjline( 'pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)',      indlvl, bindent, pbs.fidjl );
@@ -2149,12 +2149,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   %  Set the >= constraint's upper bound.
                   
                   if ( has_ranges )
-                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m) = grange(gegrps);',         indlvl, bindent, pbs.fidma );
+                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m,1) = grange(gegrps);',       indlvl, bindent, pbs.fidma );
                      printpline( 'self.cupper[np.arange(self.nle+self.neq,self.m)] = grange[gegrps]',       ...
                                                                                               indlvl, bindent, pbs.fidpy );
                      printjline( 'pb.cupper[pb.nle+pb.neq+1:pb.m] = grange[gegrps]',          indlvl, bindent, pbs.fidjl );
                   else
-                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m) = +Inf*ones(pb.nge,1);',    indlvl, bindent, pbs.fidma );
+                     printmline( 'pb.cupper(pb.nle+pb.neq+1:pb.m,1) = +Inf*ones(pb.nge,1);',  indlvl, bindent, pbs.fidma );
                      printjline( 'pb.cupper[pb.nle+pb.neq+1:pb.m] = fill(Inf,pb.nge)',        indlvl, bindent, pbs.fidjl );
                   end
                end

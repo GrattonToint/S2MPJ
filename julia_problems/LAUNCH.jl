@@ -25,7 +25,7 @@ function LAUNCH(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LAUNCH"
@@ -496,7 +496,7 @@ function LAUNCH(action::String,args::Union{Any}...)
         pbm.gconst[ig_["GLGCON"]] = Float64(35000.0)
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         arrset(grange,ig_["GLGCON"],Float64(15000.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%

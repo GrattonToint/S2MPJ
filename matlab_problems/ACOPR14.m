@@ -109,7 +109,7 @@ function varargout = ACOPR14(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -352,7 +352,7 @@ switch(action)
         pbm.gconst(ig_('VM13')) = 0.8836;
         pbm.gconst(ig_('VM14')) = 0.8836;
         %%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
-        grange(legrps,1) = Inf*ones(pb.nle,1);
+        grange(legrps,1) = -Inf*ones(pb.nle,1);
         grange(gegrps,1) = Inf*ones(pb.nge,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1.0e+30*ones(pb.n,1);
@@ -13952,12 +13952,12 @@ switch(action)
         pbm.H = sparse(irH,icH,valH,pb.n,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(1:pb.nle) = grange(legrps);
-        pb.cupper(1:pb.nle) = zeros(pb.nle,1);
-        pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
-        pb.cupper(pb.nle+pb.neq+1:pb.m) = grange(gegrps);
+        pb.clower(1:pb.nle,1) = grange(legrps);
+        pb.cupper(1:pb.nle,1) = zeros(pb.nle,1);
+        pb.clower(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.cupper(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.clower(pb.nle+pb.neq+1:pb.m,1) = zeros(pb.nge,1);
+        pb.cupper(pb.nle+pb.neq+1:pb.m,1) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'C-CQOR2-AN-38-82';

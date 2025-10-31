@@ -109,7 +109,7 @@ function ACOPR14(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ACOPR14"
@@ -347,7 +347,7 @@ function ACOPR14(action::String,args::Union{Any}...)
         pbm.gconst[ig_["VM14"]] = Float64(0.8836)
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-1.0e+30,pb.n)

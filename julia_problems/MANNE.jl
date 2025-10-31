@@ -28,7 +28,7 @@ function MANNE(action::String,args::Union{Any}...)
 # IE T                   2000           $-PARAMETER n = 6000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MANNE"
@@ -155,7 +155,7 @@ function MANNE(action::String,args::Union{Any}...)
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)

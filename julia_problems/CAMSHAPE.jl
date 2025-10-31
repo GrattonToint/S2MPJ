@@ -27,7 +27,7 @@ function CAMSHAPE(action::String,args::Union{Any}...)
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 8 X 2025
+#   Translated to Julia by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CAMSHAPE"
@@ -187,7 +187,7 @@ function CAMSHAPE(action::String,args::Union{Any}...)
         pbm.gconst[ig_["CU"*string(Int64(v_["N"]))]] = Float64(v_["R"])
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = Vector{Float64}(undef,ngrp)
-        grange[legrps,1] = fill(Inf,pb.nle)
+        grange[legrps,1] = -fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
         for I = Int64(v_["0"]):Int64(v_["N"])
             arrset(grange,ig_["CU"*string(I)],Float64(v_["2ADTHETA"]))

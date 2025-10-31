@@ -19,7 +19,7 @@ class  HS102(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS102'
@@ -85,7 +85,7 @@ class  HS102(CUTEst_problem):
         self.gconst = arrset(self.gconst,ig_['CONSTR5'],float(3000.0))
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
-        grange[legrps] = np.full((self.nle,1),float('inf'))
+        grange[legrps] = -np.full((self.nle,1),float('inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),0.1)
         self.xupper = np.full((self.n,1),10.0)

@@ -18,7 +18,7 @@ function varargout = FERRISDC(action,varargin)
 % IE n                   200            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 8 X 2025
+%   Translated to Matlab by S2MPJ version 31 X 2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -450,8 +450,8 @@ switch(action)
         pbm.H = sparse(irH,icH,valH,pb.n,pb.n);
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
+        pb.clower(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
+        pb.cupper(pb.nle+1:pb.nle+pb.neq,1) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
         pb.pbclass = 'C-CQLR2-AN-V-V';

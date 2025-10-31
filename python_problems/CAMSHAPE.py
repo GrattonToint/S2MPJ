@@ -28,7 +28,7 @@ class  CAMSHAPE(CUTEst_problem):
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CAMSHAPE'
@@ -184,7 +184,7 @@ class  CAMSHAPE(CUTEst_problem):
         self.gconst = arrset(self.gconst,ig_['CU'+str(int(v_['N']))],float(v_['R']))
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
-        grange[legrps] = np.full((self.nle,1),float('inf'))
+        grange[legrps] = -np.full((self.nle,1),float('inf'))
         grange[gegrps] = np.full((self.nge,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             grange = arrset(grange,ig_['CU'+str(I)],float(v_['2ADTHETA']))

@@ -16,7 +16,7 @@ class  FEEDLOC(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 8 X 2025
+#   Translated to Python by S2MPJ version 31 X 2025
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FEEDLOC'
@@ -381,7 +381,7 @@ class  FEEDLOC(CUTEst_problem):
             self.gconst = arrset(self.gconst,ig_['RECR'+str(I)],float(v_['RHS']))
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
-        grange[legrps] = np.full((self.nle,1),float('inf'))
+        grange[legrps] = -np.full((self.nle,1),float('inf'))
         grange[gegrps] = np.full((self.nge,1),float('inf'))
         for I in range(int(v_['1']),int(v_['NMAX'])+1):
             grange = arrset(grange,ig_['PE1'+str(I)],float(2.0))
