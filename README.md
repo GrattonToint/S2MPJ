@@ -190,5 +190,5 @@ toolbox authors:
 
 Many thanks to
 ```
-Nick Gould, Zaikun Zhang, Cunxin Huang, Filippo Marini, Greta Malaspina, Mihai Costin
+Nick Gould, Zaikun Zhang, Cunxin Huang, Filippo Marini, Greta Malaspina, Mihai Costin and MathWorks
 ```
