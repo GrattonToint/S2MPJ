@@ -23,7 +23,7 @@ class  WAYSEA1NE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WAYSEA1NE'
@@ -180,19 +180,17 @@ class  WAYSEA1NE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]**4
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**4
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 4.0*EV_[0]**3
+            g_[0] = 4.0*EV_[0,0]**3
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 12.0*EV_[0]**2
+                H_[0,0] = 12.0*EV_[0,0]**2
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -206,19 +204,17 @@ class  WAYSEA1NE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]**6
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**6
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 6.0*EV_[0]**5
+            g_[0] = 6.0*EV_[0,0]**5
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 30.0*EV_[0]**4
+                H_[0,0] = 30.0*EV_[0,0]**4
         if nargout == 1:
             return f_
         elif nargout == 2:

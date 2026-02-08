@@ -42,7 +42,7 @@ class  RDW2D51U(CUTEst_problem):
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RDW2D51U'
@@ -728,7 +728,6 @@ class  RDW2D51U(CUTEst_problem):
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
         self.pbclass   = "C-CQLR2-AN-V-V"
-        self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]
 
@@ -741,14 +740,12 @@ class  RDW2D51U(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        UV1 = EV_[0]-self.elpar[iel_][0]
-        UV2 = EV_[1]-self.elpar[iel_][1]
-        UV3 = EV_[2]-self.elpar[iel_][2]
-        UV4 = EV_[3]-self.elpar[iel_][3]
+        UV1 = EV_[0,0]-self.elpar[iel_][0]
+        UV2 = EV_[1,0]-self.elpar[iel_][1]
+        UV3 = EV_[2,0]-self.elpar[iel_][2]
+        UV4 = EV_[3,0]-self.elpar[iel_][3]
         f_   = (2.0*UV1**2+2.0*UV2**2+2.0*UV3**2+2.0*UV4**2+2.0*UV1*UV2+2.0*UV1*UV3+
              UV1*UV4+UV2*UV3+2.0*UV2*UV4+2.0*UV3*UV4)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -790,20 +787,18 @@ class  RDW2D51U(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_    = (
-              2.0*EV_[0]**2+2.0*EV_[1]**2+2.0*EV_[2]**2+2.0*EV_[3]**2+2.0*EV_[0]*EV_[1]+2.0*EV_[0]*EV_[2]+EV_[0]*EV_[3]+EV_[1]*EV_[2]+2.0*EV_[1]*EV_[3]+2.0*EV_[2]*EV_[3])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = (2.0*EV_[0,0]**2+2.0*EV_[1,0]**2+2.0*EV_[2,0]**2+2.0*EV_[3,0]**2+
+             2.0*EV_[0,0]*EV_[1,0]+2.0*EV_[0,0]*EV_[2,0]+EV_[0,0]*EV_[3,0]+EV_[1,0]*EV_[2,0]+2.0*EV_[1,0]*EV_[3,0]+2.0*EV_[2,0]*EV_[3,0])
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 4.0*EV_[0]+2.0*EV_[1]+2.0*EV_[2]+EV_[3]
-            g_[1] = 2.0*EV_[0]+4.0*EV_[1]+EV_[2]+2.0*EV_[3]
-            g_[2] = 2.0*EV_[0]+EV_[1]+4.0*EV_[2]+2.0*EV_[3]
-            g_[3] = EV_[0]+2.0*EV_[1]+2.0*EV_[2]+4.0*EV_[3]
+            g_[0] = 4.0*EV_[0,0]+2.0*EV_[1,0]+2.0*EV_[2,0]+EV_[3,0]
+            g_[1] = 2.0*EV_[0,0]+4.0*EV_[1,0]+EV_[2,0]+2.0*EV_[3,0]
+            g_[2] = 2.0*EV_[0,0]+EV_[1,0]+4.0*EV_[2,0]+2.0*EV_[3,0]
+            g_[3] = EV_[0,0]+2.0*EV_[1,0]+2.0*EV_[2,0]+4.0*EV_[3,0]
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,0] = 4.0
@@ -839,9 +834,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = -1.0
         C3 = -1.0
         C4 = -2.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -872,9 +865,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = 4.0
         C3 = -2.0
         C4 = -1.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -905,9 +896,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = -2.0
         C3 = 4.0
         C4 = -1.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -938,9 +927,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = -1.0
         C3 = -1.0
         C4 = 4.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -971,9 +958,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = 2.0
         C3 = 2.0
         C4 = 1.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1004,9 +989,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = 4.0
         C3 = 1.0
         C4 = 2.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1037,9 +1020,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = 1.0
         C3 = 4.0
         C4 = 2.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1070,9 +1051,7 @@ class  RDW2D51U(CUTEst_problem):
         C2 = 2.0
         C3 = 2.0
         C4 = 4.0
-        f_   = C1*EV_[0]+C2*EV_[1]+C3*EV_[2]+C4*EV_[3]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = C1*EV_[0,0]+C2*EV_[1,0]+C3*EV_[2,0]+C4*EV_[3,0]
         if nargout>1:
             try:
                 dim = len(IV_)

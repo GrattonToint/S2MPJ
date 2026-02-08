@@ -24,7 +24,7 @@ class  SPARSQUR(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPARSQUR'
@@ -70,6 +70,7 @@ class  SPARSQUR(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -183,16 +184,14 @@ class  SPARSQUR(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = 0.5e0*EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = 0.5e0*EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]
+            g_[0] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 1.0e0

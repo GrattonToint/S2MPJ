@@ -28,7 +28,7 @@ class  PALMER5ENE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PALMER5ENE'
@@ -258,21 +258,19 @@ class  PALMER5ENE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EXPON = np.exp(-EV_[0]*self.elpar[iel_][0])
-        f_   = EV_[1]*EXPON
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        EXPON = np.exp(-EV_[0,0]*self.elpar[iel_][0])
+        f_   = EV_[1,0]*EXPON
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -self.elpar[iel_][0]*EV_[1]*EXPON
+            g_[0] = -self.elpar[iel_][0]*EV_[1,0]*EXPON
             g_[1] = EXPON
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = self.elpar[iel_][0]*self.elpar[iel_][0]*EV_[1]*EXPON
+                H_[0,0] = self.elpar[iel_][0]*self.elpar[iel_][0]*EV_[1,0]*EXPON
                 H_[0,1] = -self.elpar[iel_][0]*EXPON
                 H_[1,0] = H_[0,1]
         if nargout == 1:

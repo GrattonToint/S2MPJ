@@ -34,7 +34,7 @@ class  TFI3(CUTEst_problem):
 # IE M                   50
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TFI3'
@@ -207,10 +207,8 @@ class  TFI3(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EX = np.exp(EV_[0])
+        EX = np.exp(EV_[0,0])
         f_   = EX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -34,7 +34,7 @@ class  SCHMVETT(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCHMVETT'
@@ -80,6 +80,7 @@ class  SCHMVETT(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -196,13 +197,11 @@ class  SCHMVETT(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         USQ = IV_[0]*IV_[0]
         T = 1.0+USQ
         T2 = T*T
         f_   = -1.0/T
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -232,12 +231,10 @@ class  SCHMVETT(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+3.141593e+00
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         HALFU = 0.5*IV_[0]
         SHALFU = np.sin(HALFU)
         f_   = -SHALFU
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -268,8 +265,8 @@ class  SCHMVETT(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[0,2] = U_[0,2]+1
         U_[1,1] = U_[1,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         U2SQ = IV_[1]*IV_[1]
         A = IV_[0]/IV_[1]-2.0
         E = -A*A
@@ -283,8 +280,6 @@ class  SCHMVETT(CUTEst_problem):
         DEDASQ = DEDA*DEDA
         G = EXPE*DEDA
         f_   = -EXPE
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -28,7 +28,7 @@ class  DANWOOD(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DANWOOD'
@@ -186,14 +186,12 @@ class  DANWOOD(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V1X = EV_[0]*self.elpar[iel_][0]
-        V2X = EV_[1]*self.elpar[iel_][0]
+        V1X = EV_[0,0]*self.elpar[iel_][0]
+        V2X = EV_[1,0]*self.elpar[iel_][0]
         LOGV1X = np.log(V1X)
-        V1XV2 = V1X**EV_[1]
-        V1XV21 = V1X**(EV_[1]-1.0)
+        V1XV2 = V1X**EV_[1,0]
+        V1XV21 = V1X**(EV_[1,0]-1.0)
         f_   = V1XV2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -204,7 +202,7 @@ class  DANWOOD(CUTEst_problem):
             g_[1] = LOGV1X*V1XV2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = EV_[1]*(EV_[1]-1.0)*self.elpar[iel_][0]**2*V1X**(EV_[1]-2.0)
+                H_[0,0] = EV_[1,0]*(EV_[1,0]-1.0)*self.elpar[iel_][0]**2*V1X**(EV_[1,0]-2.0)
                 H_[0,1] = self.elpar[iel_][0]*V1XV21+V2X*LOGV1X*V1XV21
                 H_[1,0] = H_[0,1]
                 H_[1,1] = V1XV2*LOGV1X**2

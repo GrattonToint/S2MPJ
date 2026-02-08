@@ -26,7 +26,7 @@ class  WEEDS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WEEDS'
@@ -82,6 +82,7 @@ class  WEEDS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -166,16 +167,14 @@ class  WEEDS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ARG = -EV_[2]*self.elpar[iel_][0]
+        ARG = -EV_[2,0]*self.elpar[iel_][0]
         EXPA = np.exp(ARG)
-        DENOM = 1.0/(1+EV_[1]*EXPA)
+        DENOM = 1.0/(1+EV_[1,0]*EXPA)
         DDE = DENOM*DENOM*EXPA
-        TY = self.elpar[iel_][0]*EV_[1]
-        D2 = -EV_[0]*DDE
+        TY = self.elpar[iel_][0]*EV_[1,0]
+        D2 = -EV_[0,0]*DDE
         HYZ = -D2*self.elpar[iel_][0]+2.0e0*D2*TY*EXPA*DENOM
-        f_   = EV_[0]*DENOM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*DENOM
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -191,7 +190,7 @@ class  WEEDS(CUTEst_problem):
                 H_[1,0] = H_[0,1]
                 H_[0,2] = DDE*TY
                 H_[2,0] = H_[0,2]
-                H_[1,1] = 2.0*DENOM**3*EV_[0]*EXPA**2
+                H_[1,1] = 2.0*DENOM**3*EV_[0,0]*EXPA**2
                 H_[1,2] = HYZ
                 H_[2,1] = H_[1,2]
                 H_[2,2] = -HYZ*TY

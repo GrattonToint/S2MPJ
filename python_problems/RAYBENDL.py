@@ -40,7 +40,7 @@ class  RAYBENDL(CUTEst_problem):
 # IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RAYBENDL'
@@ -96,6 +96,7 @@ class  RAYBENDL(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -204,9 +205,9 @@ class  RAYBENDL(CUTEst_problem):
         U_[2,1] = U_[2,1]+1
         U_[0,2] = U_[0,2]+1
         U_[1,3] = U_[1,3]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
-        IV_[2] = U_[2:3,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
+        IV_[2] = to_scalar(U_[2:3,:].dot(EV_))
         C0 = 1.0+self.efpar[0]*IV_[0]
         C1 = 1.0+self.efpar[0]*IV_[1]
         DCDZ = self.efpar[0]
@@ -227,8 +228,6 @@ class  RAYBENDL(CUTEst_problem):
         RDZ0Z0 = RDZ1Z1
         RDZ0Z1 = -RDZ1Z1
         f_   = V*R
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

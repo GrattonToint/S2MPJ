@@ -30,7 +30,7 @@ class  MGH10SLS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH10SLS'
@@ -104,6 +104,7 @@ class  MGH10SLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -194,14 +195,12 @@ class  MGH10SLS(CUTEst_problem):
         S1 = 0.01
         S2 = 1000.0
         S3 = 100.0
-        XPV3 = self.elpar[iel_][0]+S3*EV_[2]
+        XPV3 = self.elpar[iel_][0]+S3*EV_[2,0]
         XPV32 = XPV3*XPV3
         XPV33 = XPV3*XPV32
-        E = S1*np.exp(S2*EV_[1]/XPV3)
-        F = EV_[0]*E
+        E = S1*np.exp(S2*EV_[1,0]/XPV3)
+        F = EV_[0,0]*E
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -210,17 +209,17 @@ class  MGH10SLS(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = E
             g_[1] = S2*F/XPV3
-            g_[2] = -S2*S3*F*EV_[1]/XPV32
+            g_[2] = -S2*S3*F*EV_[1,0]/XPV32
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = S2*E/XPV3
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -S2*S3*EV_[1]*E/XPV32
+                H_[0,2] = -S2*S3*EV_[1,0]*E/XPV32
                 H_[2,0] = H_[0,2]
                 H_[1,1] = S2*S2*F/XPV32
-                H_[1,2] = -S2*S3*F*(1.0/XPV32+S2*EV_[1]/XPV33)
+                H_[1,2] = -S2*S3*F*(1.0/XPV32+S2*EV_[1,0]/XPV33)
                 H_[2,1] = H_[1,2]
-                H_[2,2] = S2*S3*S3*F*EV_[1]*(S2*EV_[1]/XPV3**4+2.0/XPV33)
+                H_[2,2] = S2*S3*S3*F*EV_[1,0]*(S2*EV_[1,0]/XPV3**4+2.0/XPV33)
         if nargout == 1:
             return f_
         elif nargout == 2:

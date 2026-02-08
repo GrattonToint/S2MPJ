@@ -23,7 +23,7 @@ class  LUKSAN11LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN11LS'
@@ -80,6 +80,7 @@ class  LUKSAN11LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1,int(v_['2'])):
@@ -157,20 +158,18 @@ class  LUKSAN11LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = 1.0e0+EV_[0]*EV_[0]
-        f_   = 2.0e1*EV_[0]/D
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        D = 1.0e0+EV_[0,0]*EV_[0,0]
+        f_   = 2.0e1*EV_[0,0]/D
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0e1*(1.0e0-EV_[0]*EV_[0])/D**2
+            g_[0] = 2.0e1*(1.0e0-EV_[0,0]*EV_[0,0])/D**2
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = -4.0e1*EV_[0]*(3.0e0-EV_[0]*EV_[0])/D**3
+                H_[0,0] = -4.0e1*EV_[0,0]*(3.0e0-EV_[0,0]*EV_[0,0])/D**3
         if nargout == 1:
             return f_
         elif nargout == 2:

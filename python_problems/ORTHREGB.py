@@ -27,7 +27,7 @@ class  ORTHREGB(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGB'
@@ -446,22 +446,20 @@ class  ORTHREGB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EV_[1]
-            g_[1] = 2.0*EV_[0]*EV_[1]
+            g_[0] = EV_[1,0]*EV_[1,0]
+            g_[1] = 2.0*EV_[0,0]*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = EV_[1]+EV_[1]
+                H_[0,1] = EV_[1,0]+EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]+EV_[0]
+                H_[1,1] = EV_[0,0]+EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -475,25 +473,23 @@ class  ORTHREGB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]*EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]*EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EV_[2]
-            g_[1] = EV_[0]*EV_[2]
-            g_[2] = EV_[0]*EV_[1]
+            g_[0] = EV_[1,0]*EV_[2,0]
+            g_[1] = EV_[0,0]*EV_[2,0]
+            g_[2] = EV_[0,0]*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = EV_[2]
+                H_[0,1] = EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]
+                H_[0,2] = EV_[1,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]
+                H_[1,2] = EV_[0,0]
                 H_[2,1] = H_[1,2]
         if nargout == 1:
             return f_
@@ -508,17 +504,15 @@ class  ORTHREGB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0

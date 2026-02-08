@@ -33,7 +33,7 @@ class  CRAGGLVY(CUTEst_problem):
 # IE M                   2499           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRAGGLVY'
@@ -113,6 +113,7 @@ class  CRAGGLVY(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -221,10 +222,8 @@ class  CRAGGLVY(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        FVAL = np.exp(EV_[0])
+        FVAL = np.exp(EV_[0,0])
         f_   = FVAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -252,13 +251,11 @@ class  CRAGGLVY(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         TANU = np.tan(IV_[0])
         SECU = 1.0/np.cos(IV_[0])
         SECUSQ = SECU*SECU
         f_   = TANU
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

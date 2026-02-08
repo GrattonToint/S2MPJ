@@ -17,6 +17,7 @@ NAME          LIN
 *   Computers & Chemical Engineering, (submitted), 1994.
 
 *   SIF input: Marcel Mongeau, 9 February 1994.
+*              slightly modified to avoid division by zero at the strating point
 
 *   classification OLR2-AY-4-2
 
@@ -114,8 +115,10 @@ BOUNDS
 START POINT
 
  XV LIN       X(1,1)    0.5
- XV LIN       X(1,2)    0.0
- XV LIN       X(2,1)    0.0
+*XV LIN       X(1,2)    0.0
+*XV LIN       X(2,1)    0.0
+ XV LIN       X(1,2)    1.D-30
+ XV LIN       X(2,1)    1.D-30
  XV LIN       X(2,2)    0.5
 
 ELEMENT TYPE

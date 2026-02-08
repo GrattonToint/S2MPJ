@@ -23,7 +23,7 @@ class  HIMMELBJ(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBJ'
@@ -962,10 +962,8 @@ class  HIMMELBJ(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        LOGX = np.log(EV_[0])
-        f_   = EV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        LOGX = np.log(EV_[0,0])
+        f_   = EV_[0,0]*LOGX
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -975,7 +973,7 @@ class  HIMMELBJ(CUTEst_problem):
             g_[0] = LOGX+1.0
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 1.0/EV_[0]
+                H_[0,0] = 1.0/EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -994,12 +992,10 @@ class  HIMMELBJ(CUTEst_problem):
         U_[1,0] = U_[1,0]+1
         U_[1,1] = U_[1,1]+1
         U_[0,2] = U_[0,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1034,12 +1030,10 @@ class  HIMMELBJ(CUTEst_problem):
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
         U_[0,3] = U_[0,3]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1075,12 +1069,10 @@ class  HIMMELBJ(CUTEst_problem):
         U_[1,2] = U_[1,2]+1
         U_[1,3] = U_[1,3]+1
         U_[0,4] = U_[0,4]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1125,12 +1117,10 @@ class  HIMMELBJ(CUTEst_problem):
         U_[1,11] = U_[1,11]+1
         U_[1,12] = U_[1,12]+1
         U_[0,13] = U_[0,13]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1180,12 +1170,10 @@ class  HIMMELBJ(CUTEst_problem):
         U_[1,16] = U_[1,16]+1
         U_[1,17] = U_[1,17]+1
         U_[0,18] = U_[0,18]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

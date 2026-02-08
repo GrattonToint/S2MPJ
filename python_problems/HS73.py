@@ -23,7 +23,7 @@ class  HS73(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS73'
@@ -215,40 +215,38 @@ class  HS73(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        VALUE = 0.28*EV_[0]**2+0.19*EV_[1]**2+20.5*EV_[2]**2+0.62*EV_[3]**2
+        VALUE = 0.28*EV_[0,0]**2+0.19*EV_[1,0]**2+20.5*EV_[2,0]**2+0.62*EV_[3,0]**2
         FVALUE = np.sqrt(VALUE)
         FVAL = FVALUE*VALUE
         f_   = FVALUE
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = .28*EV_[0]/FVALUE
-            g_[1] = .19*EV_[1]/FVALUE
-            g_[2] = 20.5*EV_[2]/FVALUE
-            g_[3] = .62*EV_[3]/FVALUE
+            g_[0] = .28*EV_[0,0]/FVALUE
+            g_[1] = .19*EV_[1,0]/FVALUE
+            g_[2] = 20.5*EV_[2,0]/FVALUE
+            g_[3] = .62*EV_[3,0]/FVALUE
             if nargout>2:
                 H_ = np.zeros((4,4))
-                H_[0,0] = -.0784*EV_[0]**2/FVAL+.28/FVALUE
-                H_[0,1] = -.0532*EV_[0]*EV_[1]/FVAL
+                H_[0,0] = -.0784*EV_[0,0]**2/FVAL+.28/FVALUE
+                H_[0,1] = -.0532*EV_[0,0]*EV_[1,0]/FVAL
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -5.74*EV_[0]*EV_[2]/FVAL
+                H_[0,2] = -5.74*EV_[0,0]*EV_[2,0]/FVAL
                 H_[2,0] = H_[0,2]
-                H_[0,3] = -.1736*EV_[0]*EV_[3]/FVAL
+                H_[0,3] = -.1736*EV_[0,0]*EV_[3,0]/FVAL
                 H_[3,0] = H_[0,3]
-                H_[1,1] = -.0361*EV_[1]**2/FVAL+.19/FVALUE
-                H_[1,2] = -3.895*EV_[1]*EV_[2]/FVAL
+                H_[1,1] = -.0361*EV_[1,0]**2/FVAL+.19/FVALUE
+                H_[1,2] = -3.895*EV_[1,0]*EV_[2,0]/FVAL
                 H_[2,1] = H_[1,2]
-                H_[1,3] = -.1178*EV_[1]*EV_[3]/FVAL
+                H_[1,3] = -.1178*EV_[1,0]*EV_[3,0]/FVAL
                 H_[3,1] = H_[1,3]
-                H_[2,2] = -420.25*EV_[2]**2/FVAL+20.5/FVALUE
-                H_[2,3] = -12.71*EV_[2]*EV_[3]/FVAL
+                H_[2,2] = -420.25*EV_[2,0]**2/FVAL+20.5/FVALUE
+                H_[2,3] = -12.71*EV_[2,0]*EV_[3,0]/FVAL
                 H_[3,2] = H_[2,3]
-                H_[3,3] = -.3844*EV_[3]**2/FVAL+.62/FVALUE
+                H_[3,3] = -.3844*EV_[3,0]**2/FVAL+.62/FVALUE
         if nargout == 1:
             return f_
         elif nargout == 2:

@@ -22,7 +22,7 @@ class  ELATTAR(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELATTAR'
@@ -266,18 +266,16 @@ class  ELATTAR(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A = -EV_[1]*self.elpar[iel_][0]
-        B = EV_[2]*self.elpar[iel_][0]+EV_[3]
+        A = -EV_[1,0]*self.elpar[iel_][0]
+        B = EV_[2,0]*self.elpar[iel_][0]+EV_[3,0]
         EA = np.exp(A)
         CB = np.cos(B)
         SB = np.sin(B)
         EACB = EA*CB
         EASB = EA*SB
-        V1EACB = EV_[0]*EACB
-        V1EASB = EV_[0]*EASB
+        V1EACB = EV_[0,0]*EACB
+        V1EASB = EV_[0,0]*EASB
         f_   = V1EACB
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -318,12 +316,10 @@ class  ELATTAR(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A = -EV_[1]*self.elpar[iel_][0]
+        A = -EV_[1,0]*self.elpar[iel_][0]
         EA = np.exp(A)
-        B = EV_[0]*EA
+        B = EV_[0,0]*EA
         f_   = B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -22,7 +22,7 @@ class  PFIT3LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PFIT3LS'
@@ -70,6 +70,7 @@ class  PFIT3LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['EF'],float(v_['CF']))
@@ -247,25 +248,23 @@ class  PFIT3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]*EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]*EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EV_[2]
-            g_[1] = EV_[0]*EV_[2]
-            g_[2] = EV_[0]*EV_[1]
+            g_[0] = EV_[1,0]*EV_[2,0]
+            g_[1] = EV_[0,0]*EV_[2,0]
+            g_[2] = EV_[0,0]*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = EV_[2]
+                H_[0,1] = EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]
+                H_[0,2] = EV_[1,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]
+                H_[1,2] = EV_[0,0]
                 H_[2,1] = H_[1,2]
         if nargout == 1:
             return f_
@@ -280,8 +279,8 @@ class  PFIT3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A1 = EV_[0]+1.0
-        Y = 1.0+EV_[2]
+        A1 = EV_[0,0]+1.0
+        Y = 1.0+EV_[2,0]
         LOGY = np.log(Y)
         C = Y**(-A1)
         CC = C/Y
@@ -292,29 +291,27 @@ class  PFIT3LS(CUTEst_problem):
         BAA = -LOGY*LOGY*C
         BAX = -LOGY*BX+CC
         BXX = -A1*(A1+1.0)*CCC
-        ARX = EV_[0]*EV_[1]*EV_[2]
+        ARX = EV_[0,0]*EV_[1,0]*EV_[2,0]
         f_   = ARX*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EV_[2]*B+ARX*BA
-            g_[1] = EV_[0]*EV_[2]*B
-            g_[2] = EV_[0]*EV_[1]*B+ARX*BX
+            g_[0] = EV_[1,0]*EV_[2,0]*B+ARX*BA
+            g_[1] = EV_[0,0]*EV_[2,0]*B
+            g_[2] = EV_[0,0]*EV_[1,0]*B+ARX*BX
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = 2.0*EV_[1]*EV_[2]*BA+ARX*BAA
-                H_[0,1] = EV_[2]*B+EV_[0]*EV_[2]*BA
+                H_[0,0] = 2.0*EV_[1,0]*EV_[2,0]*BA+ARX*BAA
+                H_[0,1] = EV_[2,0]*B+EV_[0,0]*EV_[2,0]*BA
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]*B+EV_[1]*EV_[2]*BX+EV_[0]*EV_[1]*BA+ARX*BAX
+                H_[0,2] = EV_[1,0]*B+EV_[1,0]*EV_[2,0]*BX+EV_[0,0]*EV_[1,0]*BA+ARX*BAX
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]*B+EV_[0]*EV_[2]*BX
+                H_[1,2] = EV_[0,0]*B+EV_[0,0]*EV_[2,0]*BX
                 H_[2,1] = H_[1,2]
-                H_[2,2] = 2.0*EV_[0]*EV_[1]*BX+ARX*BXX
+                H_[2,2] = 2.0*EV_[0,0]*EV_[1,0]*BX+ARX*BXX
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -328,28 +325,26 @@ class  PFIT3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*(EV_[0]+1.0)*EV_[1]*EV_[2]*EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]*EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = (2.0*EV_[0]+1.0)*EV_[1]*EV_[2]*EV_[2]
-            g_[1] = EV_[0]*(EV_[0]+1.0)*EV_[2]*EV_[2]
-            g_[2] = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[1]*EV_[2]
+            g_[0] = (2.0*EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]*EV_[2,0]
+            g_[1] = EV_[0,0]*(EV_[0,0]+1.0)*EV_[2,0]*EV_[2,0]
+            g_[2] = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = 2.0*EV_[1]*EV_[2]*EV_[2]
-                H_[0,1] = (2.0*EV_[0]+1.0)*EV_[2]*EV_[2]
+                H_[0,0] = 2.0*EV_[1,0]*EV_[2,0]*EV_[2,0]
+                H_[0,1] = (2.0*EV_[0,0]+1.0)*EV_[2,0]*EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = 2.0*(2.0*EV_[0]+1.0)*EV_[1]*EV_[2]
+                H_[0,2] = 2.0*(2.0*EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[2]
+                H_[1,2] = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[2,0]
                 H_[2,1] = H_[1,2]
-                H_[2,2] = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[1]
+                H_[2,2] = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -363,39 +358,37 @@ class  PFIT3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        Y = 1.0+EV_[2]
+        Y = 1.0+EV_[2,0]
         LOGY = np.log(Y)
-        C = Y**(-EV_[0])
+        C = Y**(-EV_[0,0])
         CC = C/Y
         CCC = CC/Y
         B = 1.0-C
         BA = LOGY*C
-        BX = EV_[0]*CC
+        BX = EV_[0,0]*CC
         BAA = -LOGY*LOGY*C
         BAX = -LOGY*BX+CC
-        BXX = -EV_[0]*(EV_[0]+1.0)*CCC
-        f_   = EV_[1]*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        BXX = -EV_[0,0]*(EV_[0,0]+1.0)*CCC
+        f_   = EV_[1,0]*B
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*BA
+            g_[0] = EV_[1,0]*BA
             g_[1] = B
-            g_[2] = EV_[1]*BX
+            g_[2] = EV_[1,0]*BX
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = EV_[1]*BAA
+                H_[0,0] = EV_[1,0]*BAA
                 H_[0,1] = BA
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]*BAX
+                H_[0,2] = EV_[1,0]*BAX
                 H_[2,0] = H_[0,2]
                 H_[1,2] = BX
                 H_[2,1] = H_[1,2]
-                H_[2,2] = EV_[1]*BXX
+                H_[2,2] = EV_[1,0]*BXX
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -409,8 +402,8 @@ class  PFIT3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A1 = EV_[0]+2.0
-        Y = 1.0+EV_[2]
+        A1 = EV_[0,0]+2.0
+        Y = 1.0+EV_[2,0]
         LOGY = np.log(Y)
         C = Y**(-A1)
         CC = C/Y
@@ -421,18 +414,16 @@ class  PFIT3LS(CUTEst_problem):
         BAA = -LOGY*LOGY*C
         BAX = -LOGY*BX+CC
         BXX = -A1*(A1+1.0)*CCC
-        D = EV_[0]*(EV_[0]+1.0)*EV_[1]*EV_[2]*EV_[2]
-        DA = (2.0*EV_[0]+1.0)*EV_[1]*EV_[2]*EV_[2]
-        DR = EV_[0]*(EV_[0]+1.0)*EV_[2]*EV_[2]
-        DX = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[1]*EV_[2]
-        DAA = 2.0*EV_[1]*EV_[2]*EV_[2]
-        DAR = (2.0*EV_[0]+1.0)*EV_[2]*EV_[2]
-        DAX = 2.0*(2.0*EV_[0]+1.0)*EV_[1]*EV_[2]
-        DRX = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[2]
-        DXX = 2.0*EV_[0]*(EV_[0]+1.0)*EV_[1]
+        D = EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]*EV_[2,0]
+        DA = (2.0*EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]*EV_[2,0]
+        DR = EV_[0,0]*(EV_[0,0]+1.0)*EV_[2,0]*EV_[2,0]
+        DX = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]
+        DAA = 2.0*EV_[1,0]*EV_[2,0]*EV_[2,0]
+        DAR = (2.0*EV_[0,0]+1.0)*EV_[2,0]*EV_[2,0]
+        DAX = 2.0*(2.0*EV_[0,0]+1.0)*EV_[1,0]*EV_[2,0]
+        DRX = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[2,0]
+        DXX = 2.0*EV_[0,0]*(EV_[0,0]+1.0)*EV_[1,0]
         f_   = D*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

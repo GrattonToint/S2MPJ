@@ -28,7 +28,7 @@ class  POWELLBS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWELLBS'
@@ -192,17 +192,15 @@ class  POWELLBS(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         BIG = 10000.0
-        BIGV1 = BIG*EV_[0]
-        f_   = BIGV1*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        BIGV1 = BIG*EV_[0,0]
+        f_   = BIGV1*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = BIG*EV_[1]
+            g_[0] = BIG*EV_[1,0]
             g_[1] = BIGV1
             if nargout>2:
                 H_ = np.zeros((2,2))
@@ -223,10 +221,8 @@ class  POWELLBS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EXPMV = np.exp(-EV_[0])
+        EXPMV = np.exp(-EV_[0,0])
         f_   = EXPMV
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

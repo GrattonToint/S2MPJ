@@ -21,7 +21,7 @@ class  HYDCAR6(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HYDCAR6'
@@ -878,17 +878,15 @@ class  HYDCAR6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = self.elpar[iel_][0]*EV_[0]*(EV_[1]+self.elpar[iel_][1])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = self.elpar[iel_][0]*EV_[0,0]*(EV_[1,0]+self.elpar[iel_][1])
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*(EV_[1]+self.elpar[iel_][1])
-            g_[1] = self.elpar[iel_][0]*EV_[0]
+            g_[0] = self.elpar[iel_][0]*(EV_[1,0]+self.elpar[iel_][1])
+            g_[1] = self.elpar[iel_][0]*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = self.elpar[iel_][0]
@@ -907,11 +905,9 @@ class  HYDCAR6(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         POLY  = (
-              self.elpar[iel_][1]+self.elpar[iel_][2]*EV_[1]+self.elpar[iel_][3]*EV_[1]*EV_[1])
-        DPOLY = self.elpar[iel_][2]+2.0*self.elpar[iel_][3]*EV_[1]
-        f_   = self.elpar[iel_][0]*EV_[0]*POLY
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+              self.elpar[iel_][1]+self.elpar[iel_][2]*EV_[1,0]+self.elpar[iel_][3]*EV_[1,0]*EV_[1,0])
+        DPOLY = self.elpar[iel_][2]+2.0*self.elpar[iel_][3]*EV_[1,0]
+        f_   = self.elpar[iel_][0]*EV_[0,0]*POLY
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -919,12 +915,12 @@ class  HYDCAR6(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = self.elpar[iel_][0]*POLY
-            g_[1] = self.elpar[iel_][0]*EV_[0]*DPOLY
+            g_[1] = self.elpar[iel_][0]*EV_[0,0]*DPOLY
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = self.elpar[iel_][0]*DPOLY
                 H_[1,0] = H_[0,1]
-                H_[1,1] = self.elpar[iel_][0]*EV_[0]*2.0e+0*self.elpar[iel_][3]
+                H_[1,1] = self.elpar[iel_][0]*EV_[0,0]*2.0e+0*self.elpar[iel_][3]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -939,30 +935,28 @@ class  HYDCAR6(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         POLY  = (
-              self.elpar[iel_][2]+self.elpar[iel_][3]*EV_[2]+self.elpar[iel_][4]*EV_[2]*EV_[2])
-        DPOLY = self.elpar[iel_][3]+2.0*self.elpar[iel_][4]*EV_[2]
-        f_   = self.elpar[iel_][0]*EV_[0]*(self.elpar[iel_][1]+EV_[1])*POLY
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+              self.elpar[iel_][2]+self.elpar[iel_][3]*EV_[2,0]+self.elpar[iel_][4]*EV_[2,0]*EV_[2,0])
+        DPOLY = self.elpar[iel_][3]+2.0*self.elpar[iel_][4]*EV_[2,0]
+        f_   = self.elpar[iel_][0]*EV_[0,0]*(self.elpar[iel_][1]+EV_[1,0])*POLY
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*(self.elpar[iel_][1]+EV_[1])*POLY
-            g_[1] = self.elpar[iel_][0]*EV_[0]*POLY
-            g_[2] = self.elpar[iel_][0]*EV_[0]*(self.elpar[iel_][1]+EV_[1])*DPOLY
+            g_[0] = self.elpar[iel_][0]*(self.elpar[iel_][1]+EV_[1,0])*POLY
+            g_[1] = self.elpar[iel_][0]*EV_[0,0]*POLY
+            g_[2] = self.elpar[iel_][0]*EV_[0,0]*(self.elpar[iel_][1]+EV_[1,0])*DPOLY
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = self.elpar[iel_][0]*POLY
                 H_[1,0] = H_[0,1]
-                H_[0,2] = self.elpar[iel_][0]*(self.elpar[iel_][1]+EV_[1])*DPOLY
+                H_[0,2] = self.elpar[iel_][0]*(self.elpar[iel_][1]+EV_[1,0])*DPOLY
                 H_[2,0] = H_[0,2]
-                H_[1,2] = self.elpar[iel_][0]*EV_[0]*DPOLY
+                H_[1,2] = self.elpar[iel_][0]*EV_[0,0]*DPOLY
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      self.elpar[iel_][0]*EV_[0]*(self.elpar[iel_][1]+EV_[1])*2.0e+0*self.elpar[iel_][4])
+                      self.elpar[iel_][0]*EV_[0,0]*(self.elpar[iel_][1]+EV_[1,0])*2.0e+0*self.elpar[iel_][4])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -977,11 +971,9 @@ class  HYDCAR6(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         EXPROD  = (
-              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[1]+self.elpar[iel_][4]))))
-        F = EV_[0]*EXPROD
+              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[1,0]+self.elpar[iel_][4]))))
+        F = EV_[0,0]*EXPROD
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -989,13 +981,14 @@ class  HYDCAR6(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = EXPROD
-            g_[1] = -EV_[0]*EXPROD*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1])**2
+            g_[1]  = (
+                  -EV_[0,0]*EXPROD*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1,0])**2)
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = -EXPROD*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1])**2
+                H_[0,1] = -EXPROD*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1,0])**2
                 H_[1,0] = H_[0,1]
-                H_[1,1] = (F*(self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1])**2)**2+
-                     2.0e+0*F*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1])**3)
+                H_[1,1] = (F*(self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1,0])**2)**2+
+                     2.0e+0*F*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[1,0])**3)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1010,31 +1003,29 @@ class  HYDCAR6(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         EXPROD  = (
-              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[2]+self.elpar[iel_][4]))))
-        F = EV_[0]*EV_[1]*EXPROD
-        TERM = -self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**2
+              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[2,0]+self.elpar[iel_][4]))))
+        F = EV_[0,0]*EV_[1,0]*EXPROD
+        TERM = -self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EXPROD
-            g_[1] = EV_[0]*EXPROD
+            g_[0] = EV_[1,0]*EXPROD
+            g_[1] = EV_[0,0]*EXPROD
             g_[2] = F*TERM
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = EXPROD
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]*EXPROD*TERM
+                H_[0,2] = EV_[1,0]*EXPROD*TERM
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]*EXPROD*TERM
+                H_[1,2] = EV_[0,0]*EXPROD*TERM
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      F*(TERM*TERM+2.0e+0*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**3))
+                      F*(TERM*TERM+2.0e+0*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**3))
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1049,34 +1040,32 @@ class  HYDCAR6(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         EXPROD  = (
-              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[2]+self.elpar[iel_][4]))))
-        F = EV_[0]*EV_[1]*EXPROD
+              self.elpar[iel_][0]*self.elpar[iel_][1]*np.exp(self.elpar[iel_][2]+(self.elpar[iel_][3]/(EV_[2,0]+self.elpar[iel_][4]))))
+        F = EV_[0,0]*EV_[1,0]*EXPROD
         POLY  = (
-              self.elpar[iel_][5]+self.elpar[iel_][6]*EV_[2]+self.elpar[iel_][7]*EV_[2]*EV_[2])
-        DPOLY = self.elpar[iel_][6]+2.0*self.elpar[iel_][7]*EV_[2]
-        TERM = DPOLY-POLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**2
+              self.elpar[iel_][5]+self.elpar[iel_][6]*EV_[2,0]+self.elpar[iel_][7]*EV_[2,0]*EV_[2,0])
+        DPOLY = self.elpar[iel_][6]+2.0*self.elpar[iel_][7]*EV_[2,0]
+        TERM = DPOLY-POLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**2
         f_   = F*POLY
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EXPROD*POLY
-            g_[1] = EV_[0]*EXPROD*POLY
+            g_[0] = EV_[1,0]*EXPROD*POLY
+            g_[1] = EV_[0,0]*EXPROD*POLY
             g_[2] = F*TERM
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = EXPROD*POLY
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]*EXPROD*TERM
+                H_[0,2] = EV_[1,0]*EXPROD*TERM
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]*EXPROD*TERM
+                H_[1,2] = EV_[0,0]*EXPROD*TERM
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      F*(-(self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**2)*TERM+2.0*self.elpar[iel_][7]-DPOLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**2+2.0e+0*POLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2])**3))
+                      F*(-(self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**2)*TERM+2.0*self.elpar[iel_][7]-DPOLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**2+2.0e+0*POLY*self.elpar[iel_][3]/(self.elpar[iel_][4]+EV_[2,0])**3))
         if nargout == 1:
             return f_
         elif nargout == 2:

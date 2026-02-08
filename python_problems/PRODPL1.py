@@ -20,7 +20,7 @@ class  PRODPL1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PRODPL1'
@@ -967,12 +967,10 @@ class  PRODPL1(CUTEst_problem):
         U_[1,5] = U_[1,5]+1
         U_[1,6] = U_[1,6]+1
         U_[1,7] = U_[1,7]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         U1MU2 = IV_[0]-IV_[1]
         f_   = U1MU2**2-0.1*IV_[1]**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

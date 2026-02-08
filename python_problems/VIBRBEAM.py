@@ -34,7 +34,7 @@ class  VIBRBEAM(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'VIBRBEAM'
@@ -180,6 +180,7 @@ class  VIBRBEAM(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['1']),int(v_['m'])+1):
@@ -302,14 +303,12 @@ class  VIBRBEAM(CUTEst_problem):
         y5 = y2*y3
         y6 = y3*y3
         phi  = (
-              EV_[0]+self.elpar[iel_][0]*(EV_[1]+self.elpar[iel_][0]*(EV_[2]+self.elpar[iel_][0]*EV_[3]))-self.elpar[iel_][1])
+              EV_[0,0]+self.elpar[iel_][0]*(EV_[1,0]+self.elpar[iel_][0]*(EV_[2,0]+self.elpar[iel_][0]*EV_[3,0]))-self.elpar[iel_][1])
         cosphi = np.cos(phi)
         sinphi = np.sin(phi)
-        bcos = EV_[4]*cosphi
-        bsin = EV_[4]*sinphi
+        bcos = EV_[4,0]*cosphi
+        bsin = EV_[4,0]*sinphi
         f_   = bcos
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

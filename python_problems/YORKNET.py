@@ -25,7 +25,7 @@ class  YORKNET(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YORKNET'
@@ -889,16 +889,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -915,17 +913,15 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0
@@ -948,11 +944,9 @@ class  YORKNET(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
         U_[1,2] = U_[1,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]*IV_[1]**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -981,16 +975,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        MODX = np.absolute(EV_[0])
-        ISNEG = EV_[0]<0.0
-        ISPOS = EV_[0]>=0.0
+        MODX = np.absolute(EV_[0,0])
+        ISNEG = EV_[0,0]<0.0
+        ISPOS = EV_[0,0]>=0.0
         if ISNEG!=0:
             SGN = -1.0
         if ISPOS!=0:
             SGN = +1.0
         f_   = SGN*MODX**1.852
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1014,16 +1006,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = 0.074*EV_[0]*EV_[0]+3.062*EV_[0]+50.357
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = 0.074*EV_[0,0]*EV_[0,0]+3.062*EV_[0,0]+50.357
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 0.148*EV_[0]+3.062
+            g_[0] = 0.148*EV_[0,0]+3.062
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 0.148
@@ -1040,16 +1030,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = 0.747*EV_[0]*EV_[0]-10.287*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = 0.747*EV_[0,0]*EV_[0,0]-10.287*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.494*EV_[0]-10.287
+            g_[0] = 1.494*EV_[0,0]-10.287
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 1.494
@@ -1066,16 +1054,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = 0.034*EV_[0]*EV_[0]+0.220*EV_[0]+6.685
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = 0.034*EV_[0,0]*EV_[0,0]+0.220*EV_[0,0]+6.685
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 0.068*EV_[0]+0.220
+            g_[0] = 0.068*EV_[0,0]+0.220
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 0.068
@@ -1092,16 +1078,14 @@ class  YORKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = 0.079*EV_[0]*EV_[0]-2.761*EV_[0]+35.014
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = 0.079*EV_[0,0]*EV_[0,0]-2.761*EV_[0,0]+35.014
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 0.158*EV_[0]-2.761
+            g_[0] = 0.158*EV_[0,0]-2.761
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 0.158

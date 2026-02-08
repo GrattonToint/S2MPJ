@@ -21,7 +21,7 @@ class  HS55(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS55'
@@ -238,24 +238,22 @@ class  HS55(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        PROD = np.exp(EV_[0]*EV_[1])
+        PROD = np.exp(EV_[0,0]*EV_[1,0])
         f_   = PROD
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*PROD
-            g_[1] = EV_[0]*PROD
+            g_[0] = EV_[1,0]*PROD
+            g_[1] = EV_[0,0]*PROD
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = EV_[1]*EV_[1]*PROD
-                H_[0,1] = PROD+EV_[0]*EV_[1]*PROD
+                H_[0,0] = EV_[1,0]*EV_[1,0]*PROD
+                H_[0,1] = PROD+EV_[0,0]*EV_[1,0]*PROD
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]*EV_[0]*PROD
+                H_[1,1] = EV_[0,0]*EV_[0,0]*PROD
         if nargout == 1:
             return f_
         elif nargout == 2:

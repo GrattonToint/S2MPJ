@@ -27,7 +27,7 @@ class  GULF(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GULF'
@@ -71,6 +71,7 @@ class  GULF(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -161,36 +162,34 @@ class  GULF(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V1SQ = EV_[0]*EV_[0]
-        YMV2 = 25.0+(-50.0*np.log(self.elpar[iel_][0]))**(2.0/3.0)-EV_[1]
+        V1SQ = EV_[0,0]*EV_[0,0]
+        YMV2 = 25.0+(-50.0*np.log(self.elpar[iel_][0]))**(2.0/3.0)-EV_[1,0]
         YMV2SQ = YMV2*YMV2
         LNYMV2 = np.log(np.absolute(YMV2))
-        A = np.absolute(YMV2)**EV_[2]/EV_[0]
+        A = np.absolute(YMV2)**EV_[2,0]/EV_[0,0]
         AM1 = A-1.0
         ALN = A*LNYMV2
         EXPMA = np.exp(-A)
         AEXPMA = A*EXPMA
         f_   = EXPMA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = AEXPMA/EV_[0]
-            g_[1] = EV_[2]*AEXPMA/YMV2
+            g_[0] = AEXPMA/EV_[0,0]
+            g_[1] = EV_[2,0]*AEXPMA/YMV2
             g_[2] = -AEXPMA*LNYMV2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = (A-2.0)*AEXPMA/V1SQ
-                H_[0,1] = EV_[2]*AM1*AEXPMA/(EV_[0]*YMV2)
+                H_[0,1] = EV_[2,0]*AM1*AEXPMA/(EV_[0,0]*YMV2)
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -ALN*AEXPMA/EV_[0]
+                H_[0,2] = -ALN*AEXPMA/EV_[0,0]
                 H_[2,0] = H_[0,2]
-                H_[1,1] = EV_[2]*AEXPMA*(1.0+EV_[2]*AM1)/YMV2SQ
-                H_[1,2] = AEXPMA*(1.0+EV_[2]*ALN)/YMV2
+                H_[1,1] = EV_[2,0]*AEXPMA*(1.0+EV_[2,0]*AM1)/YMV2SQ
+                H_[1,2] = AEXPMA*(1.0+EV_[2,0]*ALN)/YMV2
                 H_[2,1] = H_[1,2]
                 H_[2,2] = ALN*LNYMV2*EXPMA*AM1
         if nargout == 1:

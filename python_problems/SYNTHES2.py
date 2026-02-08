@@ -18,7 +18,7 @@ class  SYNTHES2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SYNTHES2'
@@ -381,11 +381,9 @@ class  SYNTHES2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = np.log(EV_[0]+EV_[1]+1.0)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
-        DX = 1.0/(EV_[0]+EV_[1]+1.0)
-        DXDX = -1.0/(EV_[0]+EV_[1]+1.0)**2
+        f_   = np.log(EV_[0,0]+EV_[1,0]+1.0)
+        DX = 1.0/(EV_[0,0]+EV_[1,0]+1.0)
+        DXDX = -1.0/(EV_[0,0]+EV_[1,0]+1.0)**2
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -413,10 +411,8 @@ class  SYNTHES2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EXPXA = np.exp(EV_[0]/self.elpar[iel_][0])
+        EXPXA = np.exp(EV_[0,0]/self.elpar[iel_][0])
         f_   = EXPXA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

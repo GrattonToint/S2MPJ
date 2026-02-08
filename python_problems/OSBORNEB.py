@@ -27,7 +27,7 @@ class  OSBORNEB(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OSBORNEB'
@@ -69,6 +69,7 @@ class  OSBORNEB(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['G1'],float(1.366))
@@ -292,11 +293,9 @@ class  OSBORNEB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EXPA = np.exp(-self.elpar[iel_][0]*EV_[1])
-        FVAL = EV_[0]*EXPA
+        EXPA = np.exp(-self.elpar[iel_][0]*EV_[1,0])
+        FVAL = EV_[0,0]*EXPA
         f_   = FVAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -323,14 +322,12 @@ class  OSBORNEB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMV2 = self.elpar[iel_][0]-EV_[1]
+        TMV2 = self.elpar[iel_][0]-EV_[1,0]
         TMV2SQ = TMV2*TMV2
-        EXPA = np.exp(-TMV2SQ*EV_[2])
-        FVAL = EV_[0]*EXPA
-        A = 2.0*TMV2*EV_[2]
+        EXPA = np.exp(-TMV2SQ*EV_[2,0])
+        FVAL = EV_[0,0]*EXPA
+        A = 2.0*TMV2*EV_[2,0]
         f_   = FVAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -346,7 +343,7 @@ class  OSBORNEB(CUTEst_problem):
                 H_[1,0] = H_[0,1]
                 H_[0,2] = -TMV2SQ*EXPA
                 H_[2,0] = H_[0,2]
-                H_[1,1] = (A*A-2.0*EV_[2])*FVAL
+                H_[1,1] = (A*A-2.0*EV_[2,0])*FVAL
                 H_[1,2] = (2.0*TMV2-A*TMV2SQ)*FVAL
                 H_[2,1] = H_[1,2]
                 H_[2,2] = TMV2SQ*TMV2SQ*FVAL

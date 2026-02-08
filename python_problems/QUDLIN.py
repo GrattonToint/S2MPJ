@@ -21,7 +21,7 @@ class  QUDLIN(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QUDLIN'
@@ -82,6 +82,7 @@ class  QUDLIN(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +136,6 @@ class  QUDLIN(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.pbclass   = "C-CQBR2-AN-V-V"
-        self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 
 # **********************
@@ -151,17 +151,15 @@ class  QUDLIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[1,0] = 1.0

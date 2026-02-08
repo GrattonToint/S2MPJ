@@ -18,7 +18,7 @@ class  GROWTH(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GROWTH'
@@ -468,10 +468,8 @@ class  GROWTH(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         LOGRN = np.log(self.elpar[iel_][0])
-        POWER = self.elpar[iel_][0]**(EV_[1]+LOGRN*EV_[2])
-        f_   = EV_[0]*POWER
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        POWER = self.elpar[iel_][0]**(EV_[1,0]+LOGRN*EV_[2,0])
+        f_   = EV_[0,0]*POWER
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -479,8 +477,8 @@ class  GROWTH(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = POWER
-            g_[1] = EV_[0]*POWER*LOGRN
-            g_[2] = EV_[0]*POWER*LOGRN**2
+            g_[1] = EV_[0,0]*POWER*LOGRN
+            g_[2] = EV_[0,0]*POWER*LOGRN**2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = 0.0
@@ -488,10 +486,10 @@ class  GROWTH(CUTEst_problem):
                 H_[1,0] = H_[0,1]
                 H_[0,2] = POWER*LOGRN**2
                 H_[2,0] = H_[0,2]
-                H_[1,1] = EV_[0]*POWER*LOGRN**2
-                H_[1,2] = EV_[0]*POWER*LOGRN**3
+                H_[1,1] = EV_[0,0]*POWER*LOGRN**2
+                H_[1,2] = EV_[0,0]*POWER*LOGRN**3
                 H_[2,1] = H_[1,2]
-                H_[2,2] = EV_[0]*POWER*LOGRN**4
+                H_[2,2] = EV_[0,0]*POWER*LOGRN**4
         if nargout == 1:
             return f_
         elif nargout == 2:

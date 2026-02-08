@@ -23,7 +23,7 @@ class  HIMMELBB(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBB'
@@ -62,6 +62,7 @@ class  HIMMELBB(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -129,28 +130,26 @@ class  HIMMELBB(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        R1 = EV_[0]*EV_[1]
-        R2 = 1.0-EV_[0]
-        R3 = 1.0-EV_[1]-EV_[0]*R2**5
-        DR3DX = -R2**4*(1.0-6.0*EV_[0])
-        DR3DX2 = 10.0*R2**3*(1.0-3.0*EV_[0])
+        R1 = EV_[0,0]*EV_[1,0]
+        R2 = 1.0-EV_[0,0]
+        R3 = 1.0-EV_[1,0]-EV_[0,0]*R2**5
+        DR3DX = -R2**4*(1.0-6.0*EV_[0,0])
+        DR3DX2 = 10.0*R2**3*(1.0-3.0*EV_[0,0])
         f_   = R1*R2*R3
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*R2*R3-R1*R3+R1*R2*DR3DX
-            g_[1] = EV_[0]*R2*R3-R1*R2
+            g_[0] = EV_[1,0]*R2*R3-R1*R3+R1*R2*DR3DX
+            g_[1] = EV_[0,0]*R2*R3-R1*R2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = -2.0*EV_[1]*R3-2.0*R1*DR3DX+EV_[1]*R2*DR3DX+R1*R2*DR3DX2
-                H_[0,1] = R2*R3+EV_[0]*R2*DR3DX-EV_[1]*R2+R1-EV_[0]*R3
+                H_[0,0] = -2.0*EV_[1,0]*R3-2.0*R1*DR3DX+EV_[1,0]*R2*DR3DX+R1*R2*DR3DX2
+                H_[0,1] = R2*R3+EV_[0,0]*R2*DR3DX-EV_[1,0]*R2+R1-EV_[0,0]*R3
                 H_[1,0] = H_[0,1]
-                H_[1,1] = -2.0*EV_[0]*R2
+                H_[1,1] = -2.0*EV_[0,0]*R2
         if nargout == 1:
             return f_
         elif nargout == 2:

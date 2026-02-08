@@ -26,7 +26,7 @@ class  FBRAIN2LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FBRAIN2LS'
@@ -8919,6 +8919,7 @@ class  FBRAIN2LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['R0,1'],float(0.0000000e+0))
@@ -11286,23 +11287,21 @@ class  FBRAIN2LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        BETA = EV_[0]+EV_[0]-1.0e0
+        BETA = EV_[0,0]+EV_[0,0]-1.0e0
         LOGLAM = np.log(self.elpar[iel_][1])
         LAMBET = self.elpar[iel_][0]*(self.elpar[iel_][1]**BETA)
-        f_   = EV_[1]*LAMBET
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[1,0]*LAMBET
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0e0*EV_[1]*LAMBET*LOGLAM
+            g_[0] = 2.0e0*EV_[1,0]*LAMBET*LOGLAM
             g_[1] = LAMBET
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 4.0e0*EV_[1]*LAMBET*LOGLAM*LOGLAM
+                H_[0,0] = 4.0e0*EV_[1,0]*LAMBET*LOGLAM*LOGLAM
                 H_[0,1] = 2.0e0*LAMBET*LOGLAM
                 H_[1,0] = H_[0,1]
         if nargout == 1:

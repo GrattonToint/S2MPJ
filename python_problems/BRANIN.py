@@ -25,7 +25,7 @@ class  BRANIN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRANIN'
@@ -90,6 +90,7 @@ class  BRANIN(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['OBJ1'],float(v_['R']))
@@ -182,16 +183,14 @@ class  BRANIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*EV_[0]
+            g_[0] = 2.0*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -208,19 +207,17 @@ class  BRANIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = np.cos(EV_[0])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = np.cos(EV_[0,0])
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -np.sin(EV_[0])
+            g_[0] = -np.sin(EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = -np.cos(EV_[0])
+                H_[0,0] = -np.cos(EV_[0,0])
         if nargout == 1:
             return f_
         elif nargout == 2:

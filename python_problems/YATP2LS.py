@@ -35,7 +35,7 @@ class  YATP2LS(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP2LS'
@@ -107,6 +107,7 @@ class  YATP2LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -211,13 +212,11 @@ class  YATP2LS(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         C = np.cos(IV_[0])
         S = np.sin(IV_[0])
         f_   = IV_[1]*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -246,11 +245,9 @@ class  YATP2LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S = np.sin(EV_[0])
-        C = np.cos(EV_[0])
+        S = np.sin(EV_[0,0])
+        C = np.cos(EV_[0,0])
         f_   = S
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

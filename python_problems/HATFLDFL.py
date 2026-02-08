@@ -25,7 +25,7 @@ class  HATFLDFL(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HATFLDFL'
@@ -72,6 +72,7 @@ class  HATFLDFL(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['G1'],float(0.032))
@@ -150,10 +151,8 @@ class  HATFLDFL(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         IT = self.elpar[iel_][0]
-        EX = EV_[1]**IT
-        f_   = EV_[0]*EX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        EX = EV_[1,0]**IT
+        f_   = EV_[0,0]*EX
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -161,13 +160,13 @@ class  HATFLDFL(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = EX
-            g_[1] = self.elpar[iel_][0]*EV_[0]*EV_[1]**(IT-1)
+            g_[1] = self.elpar[iel_][0]*EV_[0,0]*EV_[1,0]**(IT-1)
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = self.elpar[iel_][0]*EV_[1]**(IT-1)
+                H_[0,1] = self.elpar[iel_][0]*EV_[1,0]**(IT-1)
                 H_[1,0] = H_[0,1]
                 H_[1,1]  = (
-                      self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0)*EV_[0]*EV_[1]**(IT-2))
+                      self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0)*EV_[0,0]*EV_[1,0]**(IT-2))
         if nargout == 1:
             return f_
         elif nargout == 2:

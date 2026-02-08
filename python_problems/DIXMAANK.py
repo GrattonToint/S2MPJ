@@ -30,7 +30,7 @@ class  DIXMAANK(CUTEst_problem):
 # IE M                   1000           $-PARAMETER n = 3000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXMAANK'
@@ -92,6 +92,7 @@ class  DIXMAANK(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['GA'],float(-1.0))
@@ -243,16 +244,14 @@ class  DIXMAANK(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -269,24 +268,22 @@ class  DIXMAANK(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        F1 = EV_[0]*EV_[0]
-        F2 = EV_[1]+EV_[1]*EV_[1]
-        DF2DY = 1.0+2.0*EV_[1]
+        F1 = EV_[0,0]*EV_[0,0]
+        F2 = EV_[1,0]+EV_[1,0]*EV_[1,0]
+        DF2DY = 1.0+2.0*EV_[1,0]
         f_   = F1*F2*F2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*EV_[0]*F2*F2
+            g_[0] = 2.0*EV_[0,0]*F2*F2
             g_[1] = 2.0*F1*F2*DF2DY
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = 2.0*F2*F2
-                H_[0,1] = 4.0*EV_[0]*DF2DY*F2
+                H_[0,1] = 4.0*EV_[0,0]*DF2DY*F2
                 H_[1,0] = H_[0,1]
                 H_[1,1] = 4.0*F1*F2+2.0*F1*DF2DY*DF2DY
         if nargout == 1:
@@ -302,25 +299,23 @@ class  DIXMAANK(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        F1 = EV_[0]*EV_[0]
-        F2 = EV_[1]**4
+        F1 = EV_[0,0]*EV_[0,0]
+        F2 = EV_[1,0]**4
         f_   = F1*F2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*EV_[0]*F2
-            g_[1] = 4.0*F1*EV_[1]**3
+            g_[0] = 2.0*EV_[0,0]*F2
+            g_[1] = 4.0*F1*EV_[1,0]**3
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = 2.0*F2
-                H_[0,1] = 8.0*EV_[0]*EV_[1]**3
+                H_[0,1] = 8.0*EV_[0,0]*EV_[1,0]**3
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 12.0*F1*EV_[1]**2
+                H_[1,1] = 12.0*F1*EV_[1,0]**2
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -334,17 +329,15 @@ class  DIXMAANK(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0

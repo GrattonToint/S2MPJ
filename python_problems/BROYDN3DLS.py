@@ -32,7 +32,7 @@ class  BROYDN3DLS(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BROYDN3DLS'
@@ -106,6 +106,7 @@ class  BROYDN3DLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -180,11 +181,9 @@ class  BROYDN3DLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TEMP1 = -self.elpar[iel_][0]*EV_[0]
+        TEMP1 = -self.elpar[iel_][0]*EV_[0,0]
         TEMP2 = 3.0+TEMP1
-        f_   = TEMP2*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = TEMP2*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)

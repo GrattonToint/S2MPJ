@@ -21,7 +21,7 @@ class  HS99(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS99'
@@ -293,37 +293,35 @@ class  HS99(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        R2 = self.efpar[0]*self.efpar[7]*np.cos(EV_[0])
-        R3 = self.efpar[1]*self.efpar[8]*np.cos(EV_[1])+R2
-        R4 = self.efpar[2]*self.efpar[9]*np.cos(EV_[2])+R3
-        R5 = self.efpar[3]*self.efpar[10]*np.cos(EV_[3])+R4
-        R6 = self.efpar[4]*self.efpar[11]*np.cos(EV_[4])+R5
-        R7 = self.efpar[5]*self.efpar[12]*np.cos(EV_[5])+R6
-        f_   = self.efpar[6]*self.efpar[13]*np.cos(EV_[6])+R7
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        R2 = self.efpar[0]*self.efpar[7]*np.cos(EV_[0,0])
+        R3 = self.efpar[1]*self.efpar[8]*np.cos(EV_[1,0])+R2
+        R4 = self.efpar[2]*self.efpar[9]*np.cos(EV_[2,0])+R3
+        R5 = self.efpar[3]*self.efpar[10]*np.cos(EV_[3,0])+R4
+        R6 = self.efpar[4]*self.efpar[11]*np.cos(EV_[4,0])+R5
+        R7 = self.efpar[5]*self.efpar[12]*np.cos(EV_[5,0])+R6
+        f_   = self.efpar[6]*self.efpar[13]*np.cos(EV_[6,0])+R7
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0])
-            g_[1] = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1])
-            g_[2] = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2])
-            g_[3] = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3])
-            g_[4] = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4])
-            g_[5] = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5])
-            g_[6] = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6])
+            g_[0] = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0,0])
+            g_[1] = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1,0])
+            g_[2] = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2,0])
+            g_[3] = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3,0])
+            g_[4] = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4,0])
+            g_[5] = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5,0])
+            g_[6] = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6,0])
             if nargout>2:
                 H_ = np.zeros((7,7))
-                H_[0,0] = -self.efpar[0]*self.efpar[7]*np.cos(EV_[0])
-                H_[1,1] = -self.efpar[1]*self.efpar[8]*np.cos(EV_[1])
-                H_[2,2] = -self.efpar[2]*self.efpar[9]*np.cos(EV_[2])
-                H_[3,3] = -self.efpar[3]*self.efpar[10]*np.cos(EV_[3])
-                H_[4,4] = -self.efpar[4]*self.efpar[11]*np.cos(EV_[4])
-                H_[5,5] = -self.efpar[5]*self.efpar[12]*np.cos(EV_[5])
-                H_[6,6] = -self.efpar[6]*self.efpar[13]*np.cos(EV_[6])
+                H_[0,0] = -self.efpar[0]*self.efpar[7]*np.cos(EV_[0,0])
+                H_[1,1] = -self.efpar[1]*self.efpar[8]*np.cos(EV_[1,0])
+                H_[2,2] = -self.efpar[2]*self.efpar[9]*np.cos(EV_[2,0])
+                H_[3,3] = -self.efpar[3]*self.efpar[10]*np.cos(EV_[3,0])
+                H_[4,4] = -self.efpar[4]*self.efpar[11]*np.cos(EV_[4,0])
+                H_[5,5] = -self.efpar[5]*self.efpar[12]*np.cos(EV_[5,0])
+                H_[6,6] = -self.efpar[6]*self.efpar[13]*np.cos(EV_[6,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -337,37 +335,35 @@ class  HS99(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S2 = self.efpar[7]*(self.efpar[0]*np.sin(EV_[0])-self.efpar[14])
-        S3 = self.efpar[8]*(self.efpar[1]*np.sin(EV_[1])-self.efpar[14])+S2
-        S4 = self.efpar[9]*(self.efpar[2]*np.sin(EV_[2])-self.efpar[14])+S3
-        S5 = self.efpar[10]*(self.efpar[3]*np.sin(EV_[3])-self.efpar[14])+S4
-        S6 = self.efpar[11]*(self.efpar[4]*np.sin(EV_[4])-self.efpar[14])+S5
-        S7 = self.efpar[12]*(self.efpar[5]*np.sin(EV_[5])-self.efpar[14])+S6
-        f_   = self.efpar[13]*(self.efpar[6]*np.sin(EV_[6])-self.efpar[14])+S7
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        S2 = self.efpar[7]*(self.efpar[0]*np.sin(EV_[0,0])-self.efpar[14])
+        S3 = self.efpar[8]*(self.efpar[1]*np.sin(EV_[1,0])-self.efpar[14])+S2
+        S4 = self.efpar[9]*(self.efpar[2]*np.sin(EV_[2,0])-self.efpar[14])+S3
+        S5 = self.efpar[10]*(self.efpar[3]*np.sin(EV_[3,0])-self.efpar[14])+S4
+        S6 = self.efpar[11]*(self.efpar[4]*np.sin(EV_[4,0])-self.efpar[14])+S5
+        S7 = self.efpar[12]*(self.efpar[5]*np.sin(EV_[5,0])-self.efpar[14])+S6
+        f_   = self.efpar[13]*(self.efpar[6]*np.sin(EV_[6,0])-self.efpar[14])+S7
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.efpar[0]*self.efpar[7]*np.cos(EV_[0])
-            g_[1] = self.efpar[1]*self.efpar[8]*np.cos(EV_[1])
-            g_[2] = self.efpar[2]*self.efpar[9]*np.cos(EV_[2])
-            g_[3] = self.efpar[3]*self.efpar[10]*np.cos(EV_[3])
-            g_[4] = self.efpar[4]*self.efpar[11]*np.cos(EV_[4])
-            g_[5] = self.efpar[5]*self.efpar[12]*np.cos(EV_[5])
-            g_[6] = self.efpar[6]*self.efpar[13]*np.cos(EV_[6])
+            g_[0] = self.efpar[0]*self.efpar[7]*np.cos(EV_[0,0])
+            g_[1] = self.efpar[1]*self.efpar[8]*np.cos(EV_[1,0])
+            g_[2] = self.efpar[2]*self.efpar[9]*np.cos(EV_[2,0])
+            g_[3] = self.efpar[3]*self.efpar[10]*np.cos(EV_[3,0])
+            g_[4] = self.efpar[4]*self.efpar[11]*np.cos(EV_[4,0])
+            g_[5] = self.efpar[5]*self.efpar[12]*np.cos(EV_[5,0])
+            g_[6] = self.efpar[6]*self.efpar[13]*np.cos(EV_[6,0])
             if nargout>2:
                 H_ = np.zeros((7,7))
-                H_[0,0] = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0])
-                H_[1,1] = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1])
-                H_[2,2] = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2])
-                H_[3,3] = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3])
-                H_[4,4] = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4])
-                H_[5,5] = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5])
-                H_[6,6] = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6])
+                H_[0,0] = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0,0])
+                H_[1,1] = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1,0])
+                H_[2,2] = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2,0])
+                H_[3,3] = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3,0])
+                H_[4,4] = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4,0])
+                H_[5,5] = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5,0])
+                H_[6,6] = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -381,76 +377,74 @@ class  HS99(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S2 = self.efpar[7]*(self.efpar[0]*np.sin(EV_[0])-self.efpar[14])
-        S3 = self.efpar[8]*(self.efpar[1]*np.sin(EV_[1])-self.efpar[14])+S2
-        S4 = self.efpar[9]*(self.efpar[2]*np.sin(EV_[2])-self.efpar[14])+S3
-        S5 = self.efpar[10]*(self.efpar[3]*np.sin(EV_[3])-self.efpar[14])+S4
-        S6 = self.efpar[11]*(self.efpar[4]*np.sin(EV_[4])-self.efpar[14])+S5
-        S7 = self.efpar[12]*(self.efpar[5]*np.sin(EV_[5])-self.efpar[14])+S6
-        DSD1 = self.efpar[0]*self.efpar[7]*np.cos(EV_[0])
-        DSD2 = self.efpar[1]*self.efpar[8]*np.cos(EV_[1])
-        DSD3 = self.efpar[2]*self.efpar[9]*np.cos(EV_[2])
-        DSD4 = self.efpar[3]*self.efpar[10]*np.cos(EV_[3])
-        DSD5 = self.efpar[4]*self.efpar[11]*np.cos(EV_[4])
-        DSD6 = self.efpar[5]*self.efpar[12]*np.cos(EV_[5])
-        DSD7 = self.efpar[6]*self.efpar[13]*np.cos(EV_[6])
-        D2SD1 = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0])
-        D2SD2 = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1])
-        D2SD3 = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2])
-        D2SD4 = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3])
-        D2SD5 = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4])
-        D2SD6 = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5])
-        D2SD7 = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6])
+        S2 = self.efpar[7]*(self.efpar[0]*np.sin(EV_[0,0])-self.efpar[14])
+        S3 = self.efpar[8]*(self.efpar[1]*np.sin(EV_[1,0])-self.efpar[14])+S2
+        S4 = self.efpar[9]*(self.efpar[2]*np.sin(EV_[2,0])-self.efpar[14])+S3
+        S5 = self.efpar[10]*(self.efpar[3]*np.sin(EV_[3,0])-self.efpar[14])+S4
+        S6 = self.efpar[11]*(self.efpar[4]*np.sin(EV_[4,0])-self.efpar[14])+S5
+        S7 = self.efpar[12]*(self.efpar[5]*np.sin(EV_[5,0])-self.efpar[14])+S6
+        DSD1 = self.efpar[0]*self.efpar[7]*np.cos(EV_[0,0])
+        DSD2 = self.efpar[1]*self.efpar[8]*np.cos(EV_[1,0])
+        DSD3 = self.efpar[2]*self.efpar[9]*np.cos(EV_[2,0])
+        DSD4 = self.efpar[3]*self.efpar[10]*np.cos(EV_[3,0])
+        DSD5 = self.efpar[4]*self.efpar[11]*np.cos(EV_[4,0])
+        DSD6 = self.efpar[5]*self.efpar[12]*np.cos(EV_[5,0])
+        DSD7 = self.efpar[6]*self.efpar[13]*np.cos(EV_[6,0])
+        D2SD1 = -self.efpar[0]*self.efpar[7]*np.sin(EV_[0,0])
+        D2SD2 = -self.efpar[1]*self.efpar[8]*np.sin(EV_[1,0])
+        D2SD3 = -self.efpar[2]*self.efpar[9]*np.sin(EV_[2,0])
+        D2SD4 = -self.efpar[3]*self.efpar[10]*np.sin(EV_[3,0])
+        D2SD5 = -self.efpar[4]*self.efpar[11]*np.sin(EV_[4,0])
+        D2SD6 = -self.efpar[5]*self.efpar[12]*np.sin(EV_[5,0])
+        D2SD7 = -self.efpar[6]*self.efpar[13]*np.sin(EV_[6,0])
         Q2  = (
-              0.5*self.efpar[7]*self.efpar[7]*(self.efpar[0]*np.sin(EV_[0])-self.efpar[14]))
+              0.5*self.efpar[7]*self.efpar[7]*(self.efpar[0]*np.sin(EV_[0,0])-self.efpar[14]))
         Q3  = (
-              0.5*self.efpar[8]*self.efpar[8]*(self.efpar[1]*np.sin(EV_[1])-self.efpar[14])+self.efpar[8]*S2+Q2)
+              0.5*self.efpar[8]*self.efpar[8]*(self.efpar[1]*np.sin(EV_[1,0])-self.efpar[14])+self.efpar[8]*S2+Q2)
         Q4  = (
-              0.5*self.efpar[9]*self.efpar[9]*(self.efpar[2]*np.sin(EV_[2])-self.efpar[14])+self.efpar[9]*S3+Q3)
+              0.5*self.efpar[9]*self.efpar[9]*(self.efpar[2]*np.sin(EV_[2,0])-self.efpar[14])+self.efpar[9]*S3+Q3)
         Q5  = (
-              0.5*self.efpar[10]*self.efpar[10]*(self.efpar[3]*np.sin(EV_[3])-self.efpar[14])+self.efpar[10]*S4+Q4)
+              0.5*self.efpar[10]*self.efpar[10]*(self.efpar[3]*np.sin(EV_[3,0])-self.efpar[14])+self.efpar[10]*S4+Q4)
         Q6  = (
-              0.5*self.efpar[11]*self.efpar[11]*(self.efpar[4]*np.sin(EV_[4])-self.efpar[14])+self.efpar[11]*S5+Q5)
+              0.5*self.efpar[11]*self.efpar[11]*(self.efpar[4]*np.sin(EV_[4,0])-self.efpar[14])+self.efpar[11]*S5+Q5)
         Q7  = (
-              0.5*self.efpar[12]*self.efpar[12]*(self.efpar[5]*np.sin(EV_[5])-self.efpar[14])+self.efpar[12]*S6+Q6)
+              0.5*self.efpar[12]*self.efpar[12]*(self.efpar[5]*np.sin(EV_[5,0])-self.efpar[14])+self.efpar[12]*S6+Q6)
         f_    = (
-              0.5*self.efpar[13]*self.efpar[13]*(self.efpar[6]*np.sin(EV_[6])-self.efpar[14])+self.efpar[13]*S7+Q7)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+              0.5*self.efpar[13]*self.efpar[13]*(self.efpar[6]*np.sin(EV_[6,0])-self.efpar[14])+self.efpar[13]*S7+Q7)
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = (0.5*self.efpar[7]*self.efpar[7]*self.efpar[0]*np.cos(EV_[0])+
+            g_[0] = (0.5*self.efpar[7]*self.efpar[7]*self.efpar[0]*np.cos(EV_[0,0])+
                  (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10]+self.efpar[9]+self.efpar[8])*DSD1)
-            g_[1] = (0.5*self.efpar[8]*self.efpar[8]*self.efpar[1]*np.cos(EV_[1])+
+            g_[1] = (0.5*self.efpar[8]*self.efpar[8]*self.efpar[1]*np.cos(EV_[1,0])+
                  (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10]+self.efpar[9])*DSD2)
-            g_[2] = (0.5*self.efpar[9]*self.efpar[9]*self.efpar[2]*np.cos(EV_[2])+
+            g_[2] = (0.5*self.efpar[9]*self.efpar[9]*self.efpar[2]*np.cos(EV_[2,0])+
                  (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10])*DSD3)
-            g_[3] = (0.5*self.efpar[10]*self.efpar[10]*self.efpar[3]*np.cos(EV_[3])+
+            g_[3] = (0.5*self.efpar[10]*self.efpar[10]*self.efpar[3]*np.cos(EV_[3,0])+
                  (self.efpar[13]+self.efpar[12]+self.efpar[11])*DSD4)
-            g_[4] = (0.5*self.efpar[11]*self.efpar[11]*self.efpar[4]*np.cos(EV_[4])+
+            g_[4] = (0.5*self.efpar[11]*self.efpar[11]*self.efpar[4]*np.cos(EV_[4,0])+
                  (self.efpar[13]+self.efpar[12])*DSD5)
-            g_[5] = (0.5*self.efpar[12]*self.efpar[12]*self.efpar[5]*np.cos(EV_[5])+
+            g_[5] = (0.5*self.efpar[12]*self.efpar[12]*self.efpar[5]*np.cos(EV_[5,0])+
                  self.efpar[13]*DSD6)
-            g_[6] = 0.5*self.efpar[13]*self.efpar[13]*self.efpar[6]*np.cos(EV_[6])
+            g_[6] = 0.5*self.efpar[13]*self.efpar[13]*self.efpar[6]*np.cos(EV_[6,0])
             if nargout>2:
                 H_ = np.zeros((7,7))
-                H_[0,0] = (-0.5*self.efpar[7]*self.efpar[7]*self.efpar[0]*np.sin(EV_[0])+
+                H_[0,0] = (-0.5*self.efpar[7]*self.efpar[7]*self.efpar[0]*np.sin(EV_[0,0])+
                      (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10]+self.efpar[9]+self.efpar[8])*D2SD1)
-                H_[1,1] = (-0.5*self.efpar[8]*self.efpar[8]*self.efpar[1]*np.sin(EV_[1])+
+                H_[1,1] = (-0.5*self.efpar[8]*self.efpar[8]*self.efpar[1]*np.sin(EV_[1,0])+
                      (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10]+self.efpar[9])*D2SD2)
-                H_[2,2] = (-0.5*self.efpar[9]*self.efpar[9]*self.efpar[2]*np.sin(EV_[2])+
+                H_[2,2] = (-0.5*self.efpar[9]*self.efpar[9]*self.efpar[2]*np.sin(EV_[2,0])+
                      (self.efpar[13]+self.efpar[12]+self.efpar[11]+self.efpar[10])*D2SD3)
-                H_[3,3] = (-0.5*self.efpar[10]*self.efpar[10]*self.efpar[3]*np.sin(EV_[3])+
+                H_[3,3] = (-0.5*self.efpar[10]*self.efpar[10]*self.efpar[3]*np.sin(EV_[3,0])+
                      (self.efpar[13]+self.efpar[12]+self.efpar[11])*D2SD4)
-                H_[4,4] = (-0.5*self.efpar[11]*self.efpar[11]*self.efpar[4]*np.sin(EV_[4])+
+                H_[4,4] = (-0.5*self.efpar[11]*self.efpar[11]*self.efpar[4]*np.sin(EV_[4,0])+
                      (self.efpar[13]+self.efpar[12])*D2SD5)
-                H_[5,5] = (-0.5*self.efpar[12]*self.efpar[12]*self.efpar[5]*np.sin(EV_[5])+
+                H_[5,5] = (-0.5*self.efpar[12]*self.efpar[12]*self.efpar[5]*np.sin(EV_[5,0])+
                      self.efpar[13]*D2SD6)
-                H_[6,6] = -0.5*self.efpar[13]*self.efpar[13]*self.efpar[6]*np.sin(EV_[6])
+                H_[6,6] = -0.5*self.efpar[13]*self.efpar[13]*self.efpar[6]*np.sin(EV_[6,0])
         if nargout == 1:
             return f_
         elif nargout == 2:

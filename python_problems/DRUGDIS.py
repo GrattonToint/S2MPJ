@@ -38,7 +38,7 @@ class  DRUGDIS(CUTEst_problem):
 # IE NI                  10             $-PARAMETER n=  34, m= 20 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRUGDIS'
@@ -321,17 +321,17 @@ class  DRUGDIS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = 1.0+self.efpar[2]*(EV_[1]+EV_[2])
+        D = 1.0+self.efpar[2]*(EV_[1,0]+EV_[2,0])
         DD = D*D
         DD1 = 2.0*self.efpar[2]*D
         DD2 = 2.0*self.efpar[2]*self.efpar[2]
-        A = DD+self.efpar[3]+self.efpar[0]*EV_[1]
+        A = DD+self.efpar[3]+self.efpar[0]*EV_[1,0]
         AW = DD1+self.efpar[0]
-        B = DD+self.efpar[3]+self.efpar[0]*EV_[2]
+        B = DD+self.efpar[3]+self.efpar[0]*EV_[2,0]
         BP = DD1+self.efpar[0]
-        C = A*B-self.efpar[4]*EV_[1]*EV_[2]
-        CW = AW*B+A*DD1-self.efpar[4]*EV_[2]
-        CP = DD1*B+A*BP-self.efpar[4]*EV_[1]
+        C = A*B-self.efpar[4]*EV_[1,0]*EV_[2,0]
+        CW = AW*B+A*DD1-self.efpar[4]*EV_[2,0]
+        CP = DD1*B+A*BP-self.efpar[4]*EV_[1,0]
         CWW = DD2*B+2.0*AW*DD1+A*DD2
         CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-self.efpar[4]
         CPP = DD2*B+2.0*DD1*BP+A*DD2
@@ -346,16 +346,14 @@ class  DRUGDIS(CUTEst_problem):
         FWW = (HW-FW*CW)/C
         FWP = (HP-FW*CP)/C
         FPP = (IP-FP*CP)/C
-        GU = self.efpar[0]*EV_[1]
-        G = A*(self.efpar[1]-EV_[1])+GU*(EV_[3]-2.0*EV_[2])
-        GW = AW*(self.efpar[1]-EV_[1])-A+self.efpar[0]*(EV_[3]-2.0*EV_[2])
-        GP = DD1*(self.efpar[1]-EV_[1])-2.0*GU
-        GPP = DD2*(self.efpar[1]-EV_[1])
+        GU = self.efpar[0]*EV_[1,0]
+        G = A*(self.efpar[1]-EV_[1,0])+GU*(EV_[3,0]-2.0*EV_[2,0])
+        GW = AW*(self.efpar[1]-EV_[1,0])-A+self.efpar[0]*(EV_[3,0]-2.0*EV_[2,0])
+        GP = DD1*(self.efpar[1]-EV_[1,0])-2.0*GU
+        GPP = DD2*(self.efpar[1]-EV_[1,0])
         GWW = GPP-2.0*AW
         GWP = GPP-DD1-2.0*self.efpar[0]
-        f_   = EV_[0]*F*G
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*F*G
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -363,9 +361,9 @@ class  DRUGDIS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = F*G
-            g_[1] = EV_[0]*(FW*G+F*GW)
-            g_[2] = EV_[0]*(FP*G+F*GP)
-            g_[3] = EV_[0]*F*GU
+            g_[1] = EV_[0,0]*(FW*G+F*GW)
+            g_[2] = EV_[0,0]*(FP*G+F*GP)
+            g_[3] = EV_[0,0]*F*GU
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,1] = FW*G+F*GW
@@ -374,13 +372,13 @@ class  DRUGDIS(CUTEst_problem):
                 H_[2,0] = H_[0,2]
                 H_[0,3] = F*GU
                 H_[3,0] = H_[0,3]
-                H_[1,1] = EV_[0]*(FWW*G+2.0*FW*GW+F*GWW)
-                H_[1,2] = EV_[0]*(FWP*G+FW*GP+FP*GW+F*GWP)
+                H_[1,1] = EV_[0,0]*(FWW*G+2.0*FW*GW+F*GWW)
+                H_[1,2] = EV_[0,0]*(FWP*G+FW*GP+FP*GW+F*GWP)
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*(FW*GU+F*self.efpar[0])
+                H_[1,3] = EV_[0,0]*(FW*GU+F*self.efpar[0])
                 H_[3,1] = H_[1,3]
-                H_[2,2] = EV_[0]*(FPP*G+2.0*FP*GP+F*GPP)
-                H_[2,3] = EV_[0]*FP*GU
+                H_[2,2] = EV_[0,0]*(FPP*G+2.0*FP*GP+F*GPP)
+                H_[2,3] = EV_[0,0]*FP*GU
                 H_[3,2] = H_[2,3]
         if nargout == 1:
             return f_
@@ -395,17 +393,17 @@ class  DRUGDIS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = 1.0+self.efpar[2]*(EV_[1]+EV_[2])
+        D = 1.0+self.efpar[2]*(EV_[1,0]+EV_[2,0])
         DD = D*D
         DD1 = 2.0*self.efpar[2]*D
         DD2 = 2.0*self.efpar[2]*self.efpar[2]
-        A = DD+self.efpar[3]+self.efpar[0]*EV_[1]
+        A = DD+self.efpar[3]+self.efpar[0]*EV_[1,0]
         AW = DD1+self.efpar[0]
-        B = DD+self.efpar[3]+self.efpar[0]*EV_[2]
+        B = DD+self.efpar[3]+self.efpar[0]*EV_[2,0]
         BP = DD1+self.efpar[0]
-        C = A*B-self.efpar[4]*EV_[1]*EV_[2]
-        CW = AW*B+A*DD1-self.efpar[4]*EV_[2]
-        CP = DD1*B+A*BP-self.efpar[4]*EV_[1]
+        C = A*B-self.efpar[4]*EV_[1,0]*EV_[2,0]
+        CW = AW*B+A*DD1-self.efpar[4]*EV_[2,0]
+        CP = DD1*B+A*BP-self.efpar[4]*EV_[1,0]
         CWW = DD2*B+2.0*AW*DD1+A*DD2
         CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-self.efpar[4]
         CPP = DD2*B+2.0*DD1*BP+A*DD2
@@ -420,15 +418,14 @@ class  DRUGDIS(CUTEst_problem):
         FWW = (HW-FW*CW)/C
         FWP = (HP-FW*CP)/C
         FPP = (IP-FP*CP)/C
-        G = B*(EV_[3]-2.0*EV_[2])+self.efpar[0]*EV_[2]*(self.efpar[1]-EV_[1])
-        GW = DD1*(EV_[3]-2.0*EV_[2])-self.efpar[0]*EV_[2]
-        GP = BP*(EV_[3]-2.0*EV_[2])-2.0*B+self.efpar[0]*(self.efpar[1]-EV_[1])
-        GWW = DD2*(EV_[3]-2.0*EV_[2])
+        G  = (
+              B*(EV_[3,0]-2.0*EV_[2,0])+self.efpar[0]*EV_[2,0]*(self.efpar[1]-EV_[1,0]))
+        GW = DD1*(EV_[3,0]-2.0*EV_[2,0])-self.efpar[0]*EV_[2,0]
+        GP = BP*(EV_[3,0]-2.0*EV_[2,0])-2.0*B+self.efpar[0]*(self.efpar[1]-EV_[1,0])
+        GWW = DD2*(EV_[3,0]-2.0*EV_[2,0])
         GWP = GWW-2.0*DD1-self.efpar[0]
         GPP = GWW-4.0*BP
-        f_   = EV_[0]*F*G
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*F*G
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -436,9 +433,9 @@ class  DRUGDIS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = F*G
-            g_[1] = EV_[0]*(FW*G+F*GW)
-            g_[2] = EV_[0]*(FP*G+F*GP)
-            g_[3] = EV_[0]*F*B
+            g_[1] = EV_[0,0]*(FW*G+F*GW)
+            g_[2] = EV_[0,0]*(FP*G+F*GP)
+            g_[3] = EV_[0,0]*F*B
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,1] = FW*G+F*GW
@@ -447,13 +444,13 @@ class  DRUGDIS(CUTEst_problem):
                 H_[2,0] = H_[0,2]
                 H_[0,3] = F*B
                 H_[3,0] = H_[0,3]
-                H_[1,1] = EV_[0]*(FWW*G+2.0*FW*GW+F*GWW)
-                H_[1,2] = EV_[0]*(FWP*G+FW*GP+FP*GW+F*GWP)
+                H_[1,1] = EV_[0,0]*(FWW*G+2.0*FW*GW+F*GWW)
+                H_[1,2] = EV_[0,0]*(FWP*G+FW*GP+FP*GW+F*GWP)
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*(FW*B+F*DD1)
+                H_[1,3] = EV_[0,0]*(FW*B+F*DD1)
                 H_[3,1] = H_[1,3]
-                H_[2,2] = EV_[0]*(FPP*G+2.0*FP*GP+F*GPP)
-                H_[2,3] = EV_[0]*(FP*B+F*BP)
+                H_[2,2] = EV_[0,0]*(FPP*G+2.0*FP*GP+F*GPP)
+                H_[2,3] = EV_[0,0]*(FP*B+F*BP)
                 H_[3,2] = H_[2,3]
         if nargout == 1:
             return f_

@@ -22,7 +22,7 @@ class  S365(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'S365'
@@ -105,10 +105,10 @@ class  S365(CUTEst_problem):
             self.y0  = (
                   arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X1']),float(3.0)))
         if('X2' in ix_):
-            self.x0[ix_['X2']] = float(0.0)
+            self.x0[ix_['X2']] = float(1.e-30)
         else:
             self.y0  = (
-                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X2']),float(0.0)))
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X2']),float(1.e-30)))
         if('X3' in ix_):
             self.x0[ix_['X3']] = float(2.0)
         else:
@@ -130,10 +130,10 @@ class  S365(CUTEst_problem):
             self.y0  = (
                   arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X6']),float(5.0)))
         if('X7' in ix_):
-            self.x0[ix_['X7']] = float(0.0)
+            self.x0[ix_['X7']] = float(1.e-30)
         else:
             self.y0  = (
-                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X7']),float(0.0)))
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['X7']),float(1.e-30)))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -402,17 +402,15 @@ class  S365(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0
@@ -434,10 +432,8 @@ class  S365(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         f_   = IV_[0]*IV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -463,22 +459,20 @@ class  S365(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        X2 = EV_[0]*EV_[0]
+        X2 = EV_[0,0]*EV_[0,0]
         ROOT = np.sqrt(X2)
-        f_   = ROOT+EV_[1]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = ROOT+EV_[1,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]/ROOT
-            g_[1] = EV_[1]+EV_[1]
+            g_[0] = EV_[0,0]/ROOT
+            g_[1] = EV_[1,0]+EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = (1.0-EV_[0]*EV_[0]/X2)/ROOT
+                H_[0,0] = (1.0-EV_[0,0]*EV_[0,0]/X2)/ROOT
                 H_[1,1] = 2.0
         if nargout == 1:
             return f_
@@ -498,13 +492,11 @@ class  S365(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         X2 = IV_[0]*IV_[0]
         ROOT = np.sqrt(X2)
         f_   = ROOT+IV_[1]*IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

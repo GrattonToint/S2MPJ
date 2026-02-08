@@ -16,6 +16,7 @@ function varargout = LIN(action,varargin)
 %    Computers & Chemical Engineering, (submitted), 1994.
 % 
 %    SIF input: Marcel Mongeau, 9 February 1994.
+%               slightly modified to avoid division by zero at the strating point
 % 
 %    classification = 'C-COLR2-AY-4-2'
 % 
@@ -25,7 +26,7 @@ function varargout = LIN(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 31 X 2025
+%   Translated to Matlab by S2MPJ version 3 II 2026
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -143,9 +144,9 @@ switch(action)
         pb.x0(ix_(['X',int2str(round(v_('1'))),',',int2str(round(v_('1')))]),1) =...
               0.5;
         pb.x0(ix_(['X',int2str(round(v_('1'))),',',int2str(round(v_('2')))]),1) =...
-              0.0;
+              1.e-30;
         pb.x0(ix_(['X',int2str(round(v_('2'))),',',int2str(round(v_('1')))]),1) =...
-              0.0;
+              1.e-30;
         pb.x0(ix_(['X',int2str(round(v_('2'))),',',int2str(round(v_('2')))]),1) =...
               0.5;
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%

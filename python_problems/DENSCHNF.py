@@ -19,7 +19,7 @@ class  DENSCHNF(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DENSCHNF'
@@ -60,6 +60,7 @@ class  DENSCHNF(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['A'],float(8.0))
@@ -182,10 +183,8 @@ class  DENSCHNF(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SV = EV_[0]-self.elpar[iel_][0]
+        SV = EV_[0,0]-self.elpar[iel_][0]
         f_   = SV*SV
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -213,10 +212,8 @@ class  DENSCHNF(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         f_   = IV_[0]*IV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -246,10 +243,8 @@ class  DENSCHNF(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         f_   = IV_[0]*IV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

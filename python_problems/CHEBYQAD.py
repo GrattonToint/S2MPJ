@@ -37,7 +37,7 @@ class  CHEBYQAD(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEBYQAD'
@@ -88,6 +88,7 @@ class  CHEBYQAD(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['2']),int(v_['M'])+1,int(v_['2'])):
@@ -180,15 +181,13 @@ class  CHEBYQAD(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        DIF = 2.0e+0*EV_[0]-1.0e+0
+        DIF = 2.0e+0*EV_[0,0]-1.0e+0
         Y = 1.0e+0-DIF*DIF
         SQRTY = np.sqrt(Y)
         ACOSX = self.elpar[iel_][0]*np.arccos(DIF)
         COSAC = np.cos(ACOSX)
         SINAC = np.sin(ACOSX)
         f_   = COSAC
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

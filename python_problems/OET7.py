@@ -40,7 +40,7 @@ class  OET7(CUTEst_problem):
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OET7'
@@ -281,10 +281,8 @@ class  OET7(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EYW = np.exp(EV_[1]*self.elpar[iel_][0])
-        f_   = EV_[0]*EYW
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        EYW = np.exp(EV_[1,0]*self.elpar[iel_][0])
+        f_   = EV_[0,0]*EYW
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -292,12 +290,12 @@ class  OET7(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = EYW
-            g_[1] = EV_[0]*self.elpar[iel_][0]*EYW
+            g_[1] = EV_[0,0]*self.elpar[iel_][0]*EYW
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = self.elpar[iel_][0]*EYW
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]*self.elpar[iel_][0]*self.elpar[iel_][0]*EYW
+                H_[1,1] = EV_[0,0]*self.elpar[iel_][0]*self.elpar[iel_][0]*EYW
         if nargout == 1:
             return f_
         elif nargout == 2:

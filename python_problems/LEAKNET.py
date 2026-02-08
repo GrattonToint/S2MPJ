@@ -29,7 +29,7 @@ class  LEAKNET(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEAKNET'
@@ -5348,16 +5348,14 @@ class  LEAKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = (self.efpar[0]*EV_[0]+self.efpar[1])**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = (self.efpar[0]*EV_[0,0]+self.efpar[1])**2
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0e+0*self.efpar[0]*(self.efpar[0]*EV_[0]+self.efpar[1])
+            g_[0] = 2.0e+0*self.efpar[0]*(self.efpar[0]*EV_[0,0]+self.efpar[1])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0e+0*self.efpar[0]*self.efpar[0]
@@ -5374,15 +5372,15 @@ class  LEAKNET(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        QGE = EV_[0]>=self.efpar[5]
-        QLE = EV_[0]<=-self.efpar[5]
+        QGE = EV_[0,0]>=self.efpar[5]
+        QLE = EV_[0,0]<=-self.efpar[5]
         QELSE = not(QGE or QLE)
         if QELSE!=0:
-            QRATIO = EV_[0]/self.efpar[5]
+            QRATIO = EV_[0,0]/self.efpar[5]
         if QGE!=0:
-            H = EV_[0]
+            H = EV_[0,0]
         if QLE!=0:
-            H = -EV_[0]
+            H = -EV_[0,0]
         if QELSE!=0:
             H = self.efpar[5]*(3.75e-1+7.5e-1*QRATIO**2-1.25e-1*QRATIO**4)
         if QGE!=0:
@@ -5406,19 +5404,18 @@ class  LEAKNET(CUTEst_problem):
         F = FROOT*FROOT
         F1 = -2.0*DERIV*X1*FROOT**3
         F2 = -2.0*FROOT**3*(DERIV*X2+2.0*self.efpar[2]*X1**2-0.75*F1**2/FROOT**5)
-        f_   = self.elpar[iel_][0]*F*EV_[0]*H
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = self.elpar[iel_][0]*F*EV_[0,0]*H
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*(F*H+EV_[0]*(F1*H+F*H1))
+            g_[0] = self.elpar[iel_][0]*(F*H+EV_[0,0]*(F1*H+F*H1))
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = self.elpar[iel_][0]*(2.0*(F1*H+F*H1)+EV_[0]*(F2*H+2.0*F1*H1+F*H2))
+                H_[0,0]  = (
+                      self.elpar[iel_][0]*(2.0*(F1*H+F*H1)+EV_[0,0]*(F2*H+2.0*F1*H1+F*H2)))
         if nargout == 1:
             return f_
         elif nargout == 2:

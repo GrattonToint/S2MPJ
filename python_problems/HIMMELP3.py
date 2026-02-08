@@ -25,7 +25,7 @@ class  HIMMELP3(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELP3'
@@ -233,44 +233,44 @@ class  HIMMELP3(CUTEst_problem):
         B19 = -0.16638e-5
         B20 = -2.86731123
         B20 = B20-0.92e-8
-        A = B7*EV_[0]+B8*EV_[0]**2+B9*EV_[0]**3+B10*EV_[0]**4
-        DADX = B7+2.0*B8*EV_[0]+3.0*B9*EV_[0]**2+4.0*B10*EV_[0]**3
-        D2ADXX = 2.0*B8+6.0*B9*EV_[0]+12.0*B10*EV_[0]**2
-        B = B18*EV_[0]+B15*EV_[0]**2+B16*EV_[0]**3
-        DBDX = B18+2.0*B15*EV_[0]+3.0*B16*EV_[0]**2
-        D2BDXX = 2.0*B15+6.0*B16*EV_[0]
-        C = B3*EV_[0]**2+B4*EV_[0]**3+B5*EV_[0]**4
-        DCDX = 2.0*B3*EV_[0]+3.0*B4*EV_[0]**2+4.0*B5*EV_[0]**3
-        D2CDXX = 2.0*B3+6.0*B4*EV_[0]+12.0*B5*EV_[0]**2
-        F = B11*EV_[1]**2+B12*EV_[1]**3+B13*EV_[1]**4
-        DFDY = 2.0*B11*EV_[1]+3.0*B12*EV_[1]**2+4.0*B13*EV_[1]**3
-        D2FDYY = 2.0*B11+6.0*B12*EV_[1]+12.0*B13*EV_[1]**2
-        G = B17*EV_[0]**3+B19*EV_[0]
-        DGDX = B19+3.0*B17*EV_[0]**2
-        D2GDXX = 6.0*B17*EV_[0]
-        E = np.exp(0.0005*EV_[0]*EV_[1])
-        DEDX = 0.0005*EV_[1]*E
-        DEDY = 0.0005*EV_[0]*E
-        D2EDXX = 0.0005*EV_[1]*DEDX
-        D2EDXY = 0.0005*(EV_[1]*DEDY+E)
-        D2EDYY = 0.0005*EV_[0]*DEDY
-        f_   = C+EV_[1]*A+F+B14/(1.0+EV_[1])+B*EV_[1]**2+G*EV_[1]**3+B20*E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        A = B7*EV_[0,0]+B8*EV_[0,0]**2+B9*EV_[0,0]**3+B10*EV_[0,0]**4
+        DADX = B7+2.0*B8*EV_[0,0]+3.0*B9*EV_[0,0]**2+4.0*B10*EV_[0,0]**3
+        D2ADXX = 2.0*B8+6.0*B9*EV_[0,0]+12.0*B10*EV_[0,0]**2
+        B = B18*EV_[0,0]+B15*EV_[0,0]**2+B16*EV_[0,0]**3
+        DBDX = B18+2.0*B15*EV_[0,0]+3.0*B16*EV_[0,0]**2
+        D2BDXX = 2.0*B15+6.0*B16*EV_[0,0]
+        C = B3*EV_[0,0]**2+B4*EV_[0,0]**3+B5*EV_[0,0]**4
+        DCDX = 2.0*B3*EV_[0,0]+3.0*B4*EV_[0,0]**2+4.0*B5*EV_[0,0]**3
+        D2CDXX = 2.0*B3+6.0*B4*EV_[0,0]+12.0*B5*EV_[0,0]**2
+        F = B11*EV_[1,0]**2+B12*EV_[1,0]**3+B13*EV_[1,0]**4
+        DFDY = 2.0*B11*EV_[1,0]+3.0*B12*EV_[1,0]**2+4.0*B13*EV_[1,0]**3
+        D2FDYY = 2.0*B11+6.0*B12*EV_[1,0]+12.0*B13*EV_[1,0]**2
+        G = B17*EV_[0,0]**3+B19*EV_[0,0]
+        DGDX = B19+3.0*B17*EV_[0,0]**2
+        D2GDXX = 6.0*B17*EV_[0,0]
+        E = np.exp(0.0005*EV_[0,0]*EV_[1,0])
+        DEDX = 0.0005*EV_[1,0]*E
+        DEDY = 0.0005*EV_[0,0]*E
+        D2EDXX = 0.0005*EV_[1,0]*DEDX
+        D2EDXY = 0.0005*(EV_[1,0]*DEDY+E)
+        D2EDYY = 0.0005*EV_[0,0]*DEDY
+        f_   = C+EV_[1,0]*A+F+B14/(1.0+EV_[1,0])+B*EV_[1,0]**2+G*EV_[1,0]**3+B20*E
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = DCDX+EV_[1]*DADX+DBDX*EV_[1]**2+DGDX*EV_[1]**3+B20*DEDX
-            g_[1] = A+DFDY-B14/(1.0+EV_[1])**2+2.0*B*EV_[1]+3.0*G*EV_[1]**2+B20*DEDY
+            g_[0] = DCDX+EV_[1,0]*DADX+DBDX*EV_[1,0]**2+DGDX*EV_[1,0]**3+B20*DEDX
+            g_[1] = (A+DFDY-B14/(1.0+EV_[1,0])**2+2.0*B*EV_[1,0]+3.0*G*EV_[1,0]**2+
+                 B20*DEDY)
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = D2CDXX+EV_[1]*D2ADXX+D2BDXX*EV_[1]**2+D2GDXX*EV_[1]**3+B20*D2EDXX
-                H_[0,1] = DADX+2.0*EV_[1]*DBDX+3.0*DGDX*EV_[1]**2+B20*D2EDXY
+                H_[0,0] = (D2CDXX+EV_[1,0]*D2ADXX+D2BDXX*EV_[1,0]**2+D2GDXX*EV_[1,0]**3+
+                     B20*D2EDXX)
+                H_[0,1] = DADX+2.0*EV_[1,0]*DBDX+3.0*DGDX*EV_[1,0]**2+B20*D2EDXY
                 H_[1,0] = H_[0,1]
-                H_[1,1] = D2FDYY+2.0*B14/(1.0+EV_[1])**3+2.0*B+6.0*G*EV_[1]+B20*D2EDYY
+                H_[1,1] = D2FDYY+2.0*B14/(1.0+EV_[1,0])**3+2.0*B+6.0*G*EV_[1,0]+B20*D2EDYY
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -284,17 +284,15 @@ class  HIMMELP3(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0
@@ -312,16 +310,14 @@ class  HIMMELP3(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0

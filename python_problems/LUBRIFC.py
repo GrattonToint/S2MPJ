@@ -35,7 +35,7 @@ class  LUBRIFC(CUTEst_problem):
 # IE NN                  250            $-PARAMETER n = 3751
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUBRIFC'
@@ -391,17 +391,15 @@ class  LUBRIFC(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0
@@ -420,16 +418,14 @@ class  LUBRIFC(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         HA = -0.5*self.elpar[iel_][0]
-        EARG = HA*(EV_[0]+EV_[1])
+        EARG = HA*(EV_[0,0]+EV_[1,0])
         E = np.exp(EARG)
-        PAMPB = EV_[0]-EV_[1]
+        PAMPB = EV_[0,0]-EV_[1,0]
         T1 = PAMPB*HA+1.0
         T2 = PAMPB*HA-1.0
-        HSQ = EV_[2]*EV_[2]
-        HCB = HSQ*EV_[2]
+        HSQ = EV_[2,0]*EV_[2,0]
+        HCB = HSQ*EV_[2,0]
         f_   = PAMPB*HCB*E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -449,7 +445,7 @@ class  LUBRIFC(CUTEst_problem):
                 H_[1,1] = HCB*E*HA*(T2-1.0)
                 H_[1,2] = 3.0*T2*HSQ*E
                 H_[2,1] = H_[1,2]
-                H_[2,2] = 6.0*EV_[2]*PAMPB*E
+                H_[2,2] = 6.0*EV_[2,0]*PAMPB*E
         if nargout == 1:
             return f_
         elif nargout == 2:

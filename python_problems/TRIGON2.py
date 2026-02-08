@@ -25,7 +25,7 @@ class  TRIGON2(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRIGON2'
@@ -86,6 +86,7 @@ class  TRIGON2(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['FA'],float(1.0))
@@ -179,15 +180,13 @@ class  TRIGON2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = EV_[0]-0.9
+        D = EV_[0,0]-0.9
         Y = D*D
         YX = D+D
         YXX = 2.0
         S = np.sin(self.elpar[iel_][0]*Y)
         C = np.cos(self.elpar[iel_][0]*Y)
         f_   = S
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

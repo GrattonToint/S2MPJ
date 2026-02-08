@@ -26,7 +26,7 @@ class  SPANHYD(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPANHYD'
@@ -1701,24 +1701,24 @@ class  SPANHYD(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        Z1 = self.efpar[18]+self.efpar[27]*EV_[0]+self.efpar[36]*EV_[0]*EV_[0]
-        Z2 = self.efpar[19]+self.efpar[28]*EV_[1]+self.efpar[37]*EV_[1]*EV_[1]
-        Z3 = self.efpar[20]+self.efpar[29]*EV_[2]+self.efpar[38]*EV_[2]*EV_[2]
-        Z4 = self.efpar[21]+self.efpar[30]*EV_[3]+self.efpar[39]*EV_[3]*EV_[3]
-        Z6 = self.efpar[22]+self.efpar[31]*EV_[4]+self.efpar[40]*EV_[4]*EV_[4]
-        Z7 = self.efpar[23]+self.efpar[32]*EV_[6]+self.efpar[41]*EV_[6]*EV_[6]
-        Z8 = self.efpar[24]+self.efpar[33]*EV_[7]+self.efpar[42]*EV_[7]*EV_[7]
-        Z9 = self.efpar[25]+self.efpar[34]*EV_[8]+self.efpar[43]*EV_[8]*EV_[8]
-        ZT = self.efpar[26]+self.efpar[35]*EV_[9]+self.efpar[44]*EV_[9]*EV_[9]
-        DZ1 = self.efpar[27]+2.0*self.efpar[36]*EV_[0]
-        DZ2 = self.efpar[28]+2.0*self.efpar[37]*EV_[1]
-        DZ3 = self.efpar[29]+2.0*self.efpar[38]*EV_[2]
-        DZ4 = self.efpar[30]+2.0*self.efpar[39]*EV_[3]
-        DZ6 = self.efpar[31]+2.0*self.efpar[40]*EV_[4]
-        DZ7 = self.efpar[32]+2.0*self.efpar[41]*EV_[6]
-        DZ8 = self.efpar[33]+2.0*self.efpar[42]*EV_[7]
-        DZ9 = self.efpar[34]+2.0*self.efpar[43]*EV_[8]
-        DZT = self.efpar[35]+2.0*self.efpar[44]*EV_[9]
+        Z1 = self.efpar[18]+self.efpar[27]*EV_[0,0]+self.efpar[36]*EV_[0,0]*EV_[0,0]
+        Z2 = self.efpar[19]+self.efpar[28]*EV_[1,0]+self.efpar[37]*EV_[1,0]*EV_[1,0]
+        Z3 = self.efpar[20]+self.efpar[29]*EV_[2,0]+self.efpar[38]*EV_[2,0]*EV_[2,0]
+        Z4 = self.efpar[21]+self.efpar[30]*EV_[3,0]+self.efpar[39]*EV_[3,0]*EV_[3,0]
+        Z6 = self.efpar[22]+self.efpar[31]*EV_[4,0]+self.efpar[40]*EV_[4,0]*EV_[4,0]
+        Z7 = self.efpar[23]+self.efpar[32]*EV_[6,0]+self.efpar[41]*EV_[6,0]*EV_[6,0]
+        Z8 = self.efpar[24]+self.efpar[33]*EV_[7,0]+self.efpar[42]*EV_[7,0]*EV_[7,0]
+        Z9 = self.efpar[25]+self.efpar[34]*EV_[8,0]+self.efpar[43]*EV_[8,0]*EV_[8,0]
+        ZT = self.efpar[26]+self.efpar[35]*EV_[9,0]+self.efpar[44]*EV_[9,0]*EV_[9,0]
+        DZ1 = self.efpar[27]+2.0*self.efpar[36]*EV_[0,0]
+        DZ2 = self.efpar[28]+2.0*self.efpar[37]*EV_[1,0]
+        DZ3 = self.efpar[29]+2.0*self.efpar[38]*EV_[2,0]
+        DZ4 = self.efpar[30]+2.0*self.efpar[39]*EV_[3,0]
+        DZ6 = self.efpar[31]+2.0*self.efpar[40]*EV_[4,0]
+        DZ7 = self.efpar[32]+2.0*self.efpar[41]*EV_[6,0]
+        DZ8 = self.efpar[33]+2.0*self.efpar[42]*EV_[7,0]
+        DZ9 = self.efpar[34]+2.0*self.efpar[43]*EV_[8,0]
+        DZT = self.efpar[35]+2.0*self.efpar[44]*EV_[9,0]
         E1 = self.efpar[0]+self.efpar[9]*Z1
         E2 = self.efpar[1]+self.efpar[10]*(Z2-Z3)
         E3 = self.efpar[2]+self.efpar[11]*(Z3-Z9)
@@ -1756,31 +1756,29 @@ class  SPANHYD(CUTEst_problem):
         HE888 = 2.0*self.efpar[15]*self.efpar[42]
         HE999 = 2.0*self.efpar[16]*self.efpar[43]
         HETTT = 2.0*self.efpar[17]*self.efpar[44]
-        PS = (EV_[10]*E1+EV_[11]*E2+EV_[12]*E3+EV_[13]*E4+EV_[5]*E6+EV_[14]*E7+
-             EV_[15]*E8+EV_[16]*E9+EV_[17]*ET)
-        DP1 = EV_[10]*DE11
-        DP2 = EV_[11]*DE22
-        DP3 = EV_[12]*DE33+EV_[11]*DE23
-        DP4 = EV_[13]*DE44
-        DP6 = EV_[5]*DE66
-        DP7 = EV_[14]*DE77+EV_[5]*DE67
-        DP8 = EV_[15]*DE88+EV_[14]*DE78
-        DP9 = EV_[16]*DE99+EV_[12]*DE39+EV_[13]*DE49
-        DPT = EV_[17]*DETT
-        HP11 = EV_[10]*HE111
-        HP22 = EV_[11]*HE222
-        HP33 = EV_[12]*HE333+EV_[11]*HE233
-        HP44 = EV_[13]*HE444
-        HP66 = EV_[5]*HE666
-        HP77 = EV_[14]*HE777+EV_[5]*HE677
-        HP88 = EV_[15]*HE888+EV_[14]*HE788
-        HP99 = EV_[16]*HE999+EV_[12]*HE399+EV_[13]*HE499
-        HPTT = EV_[17]*HETTT
+        PS = (EV_[10,0]*E1+EV_[11,0]*E2+EV_[12,0]*E3+EV_[13,0]*E4+EV_[5,0]*E6+
+             EV_[14,0]*E7+EV_[15,0]*E8+EV_[16,0]*E9+EV_[17,0]*ET)
+        DP1 = EV_[10,0]*DE11
+        DP2 = EV_[11,0]*DE22
+        DP3 = EV_[12,0]*DE33+EV_[11,0]*DE23
+        DP4 = EV_[13,0]*DE44
+        DP6 = EV_[5,0]*DE66
+        DP7 = EV_[14,0]*DE77+EV_[5,0]*DE67
+        DP8 = EV_[15,0]*DE88+EV_[14,0]*DE78
+        DP9 = EV_[16,0]*DE99+EV_[12,0]*DE39+EV_[13,0]*DE49
+        DPT = EV_[17,0]*DETT
+        HP11 = EV_[10,0]*HE111
+        HP22 = EV_[11,0]*HE222
+        HP33 = EV_[12,0]*HE333+EV_[11,0]*HE233
+        HP44 = EV_[13,0]*HE444
+        HP66 = EV_[5,0]*HE666
+        HP77 = EV_[14,0]*HE777+EV_[5,0]*HE677
+        HP88 = EV_[15,0]*HE888+EV_[14,0]*HE788
+        HP99 = EV_[16,0]*HE999+EV_[12,0]*HE399+EV_[13,0]*HE499
+        HPTT = EV_[17,0]*HETTT
         HFPS = self.elpar[iel_][2]+self.elpar[iel_][2]
         DFPS = self.elpar[iel_][1]+HFPS*PS
         f_   = self.elpar[iel_][0]+self.elpar[iel_][1]*PS+self.elpar[iel_][2]*PS*PS
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -21,7 +21,7 @@ class  SNAIL(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SNAIL'
@@ -62,6 +62,7 @@ class  SNAIL(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -134,32 +135,32 @@ class  SNAIL(CUTEst_problem):
         iel_ = args[1]
         A = 0.5*(self.elpar[iel_][1]+self.elpar[iel_][0])
         B = 0.5*(self.elpar[iel_][1]-self.elpar[iel_][0])
-        X2 = EV_[0]*EV_[0]
-        Y2 = EV_[1]*EV_[1]
+        X2 = EV_[0,0]*EV_[0,0]
+        Y2 = EV_[1,0]*EV_[1,0]
         R2 = X2+Y2
         D = 1.0+R2
         D2 = D*D
         D3 = D2*D
         U = R2/D
-        DUDX = (EV_[0]+EV_[0])/D2
-        DUDY = (EV_[1]+EV_[1])/D2
+        DUDX = (EV_[0,0]+EV_[0,0])/D2
+        DUDY = (EV_[1,0]+EV_[1,0])/D2
         D2UDX2 = 2.0*(D-4.0*X2)/D3
         D2UDY2 = 2.0*(D-4.0*Y2)/D3
-        D2UDXY = -8.0*EV_[0]*EV_[1]/D3
-        THETA = np.arctan2(EV_[1],EV_[0])
-        DTDX = -EV_[1]/R2
-        DTDY = EV_[0]/R2
+        D2UDXY = -8.0*EV_[0,0]*EV_[1,0]/D3
+        THETA = np.arctan2(EV_[1,0],EV_[0,0])
+        DTDX = -EV_[1,0]/R2
+        DTDY = EV_[0,0]/R2
         R4 = R2*R2
-        D2TDX2 = 2.0*EV_[0]*EV_[1]/R4
-        D2TDY2 = -2.0*EV_[1]*EV_[0]/R4
+        D2TDX2 = 2.0*EV_[0,0]*EV_[1,0]/R4
+        D2TDY2 = -2.0*EV_[1,0]*EV_[0,0]/R4
         D2TDXY = (Y2-X2)/R4
         R = np.sqrt(R2)
         R3 = R*R2
-        DRDX = EV_[0]/R
-        DRDY = EV_[1]/R
+        DRDX = EV_[0,0]/R
+        DRDY = EV_[1,0]/R
         D2RDX2 = Y2/R3
         D2RDY2 = X2/R3
-        D2RDXY = -EV_[0]*EV_[1]/R3
+        D2RDXY = -EV_[0,0]*EV_[1,0]/R3
         ARG = R-THETA
         S = B*np.sin(ARG)
         C = B*np.cos(ARG)
@@ -175,8 +176,6 @@ class  SNAIL(CUTEst_problem):
         D2VDY2 = A*D2RDY2-D2RDY2*C-2.0*DRDY*DCDY-R*D2CDY2
         D2VDXY = A*D2RDXY-D2RDXY*C-DRDX*DCDY-DRDY*DCDX-R*D2CDXY
         f_   = U*V
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

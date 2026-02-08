@@ -29,7 +29,7 @@ class  CORE2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CORE2'
@@ -3091,18 +3091,16 @@ class  CORE2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XGE0 = EV_[0]>=0.0e+0
+        XGE0 = EV_[0,0]>=0.0e+0
         if XGE0!=0:
-            G = 2.0e+0*EV_[0]
+            G = 2.0e+0*EV_[0,0]
         if XGE0==0:
-            G = -2.0e+0*EV_[0]
+            G = -2.0e+0*EV_[0,0]
         if XGE0!=0:
             H = 2.0e+0
         if XGE0==0:
             H = -2.0e+0
-        f_   = EV_[0]*np.absolute(EV_[0])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*np.absolute(EV_[0,0])
         if nargout>1:
             try:
                 dim = len(IV_)

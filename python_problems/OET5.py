@@ -40,7 +40,7 @@ class  OET5(CUTEst_problem):
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OET5'
@@ -228,10 +228,8 @@ class  OET5(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         W2 = self.elpar[iel_][0]*self.elpar[iel_][0]
-        TERM = W2*EV_[0]+self.elpar[iel_][0]*EV_[1]+EV_[2]
+        TERM = W2*EV_[0,0]+self.elpar[iel_][0]*EV_[1,0]+EV_[2,0]
         f_   = TERM*TERM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

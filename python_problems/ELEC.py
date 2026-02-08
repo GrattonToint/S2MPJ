@@ -28,7 +28,7 @@ class  ELEC(CUTEst_problem):
 # IE NP                  200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELEC'
@@ -277,14 +277,12 @@ class  ELEC(CUTEst_problem):
         U_[1,3] = U_[1,3]-1
         U_[2,4] = U_[2,4]+1
         U_[2,5] = U_[2,5]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
-        IV_[2] = U_[2:3,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
+        IV_[2] = to_scalar(U_[2:3,:].dot(EV_))
         SS = IV_[0]**2+IV_[1]**2+IV_[2]**2
         ROOTSS = np.sqrt(SS)
         f_   = 1.0/ROOTSS
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -320,16 +318,14 @@ class  ELEC(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0

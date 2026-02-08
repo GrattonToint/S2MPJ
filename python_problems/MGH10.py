@@ -30,7 +30,7 @@ class  MGH10(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH10'
@@ -218,14 +218,12 @@ class  MGH10(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V3PX = EV_[2]+self.elpar[iel_][0]
+        V3PX = EV_[2,0]+self.elpar[iel_][0]
         V3PX2 = V3PX*V3PX
         V3PX3 = V3PX*V3PX2
-        E = np.exp(EV_[1]/V3PX)
-        F = EV_[0]*E
+        E = np.exp(EV_[1,0]/V3PX)
+        F = EV_[0,0]*E
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -234,17 +232,17 @@ class  MGH10(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = E
             g_[1] = F/V3PX
-            g_[2] = -F*EV_[1]/V3PX2
+            g_[2] = -F*EV_[1,0]/V3PX2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = E/V3PX
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -EV_[1]*E/V3PX2
+                H_[0,2] = -EV_[1,0]*E/V3PX2
                 H_[2,0] = H_[0,2]
                 H_[1,1] = F/V3PX2
-                H_[1,2] = -F*(1.0/V3PX2+EV_[1]/V3PX3)
+                H_[1,2] = -F*(1.0/V3PX2+EV_[1,0]/V3PX3)
                 H_[2,1] = H_[1,2]
-                H_[2,2] = F*EV_[1]*(EV_[1]/V3PX**4+2.0/V3PX3)
+                H_[2,2] = F*EV_[1,0]*(EV_[1,0]/V3PX**4+2.0/V3PX3)
         if nargout == 1:
             return f_
         elif nargout == 2:

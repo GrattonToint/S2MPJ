@@ -21,7 +21,7 @@ class  GOTTFR(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GOTTFR'
@@ -163,11 +163,9 @@ class  GOTTFR(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        FA = EV_[0]+3.0*EV_[1]
-        FB = 1.0-EV_[0]
+        FA = EV_[0,0]+3.0*EV_[1,0]
+        FB = 1.0-EV_[0,0]
         f_   = -0.1136*FA*FB
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -194,11 +192,9 @@ class  GOTTFR(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        FA = 2.0*EV_[0]-EV_[1]
-        FB = 1.0-EV_[1]
+        FA = 2.0*EV_[0,0]-EV_[1,0]
+        FB = 1.0-EV_[1,0]
         f_   = 7.5*FA*FB
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -21,7 +21,7 @@ class  HS57(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS57'
@@ -283,16 +283,14 @@ class  HS57(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         AM8 = self.elpar[iel_][0]-8.0
-        CMV1 = 0.49-EV_[0]
-        E = np.exp(-EV_[1]*AM8)
+        CMV1 = 0.49-EV_[0,0]
+        E = np.exp(-EV_[1,0]*AM8)
         DED2 = -AM8*E
-        R = self.elpar[iel_][1]-EV_[0]-CMV1*E
+        R = self.elpar[iel_][1]-EV_[0,0]-CMV1*E
         DRD1 = E-1.0
         DRD2 = -CMV1*DED2
         D2RD22 = -CMV1*AM8*AM8*E
         f_   = R*R
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -320,17 +318,15 @@ class  HS57(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0

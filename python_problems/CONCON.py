@@ -17,7 +17,7 @@ class  CONCON(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CONCON'
@@ -280,14 +280,12 @@ class  CONCON(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*np.absolute(EV_[0])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
-        PO = EV_[0]>0.0
+        f_   = EV_[0,0]*np.absolute(EV_[0,0])
+        PO = EV_[0,0]>0.0
         if PO!=0:
-            GO = 2*EV_[0]
+            GO = 2*EV_[0,0]
         if PO==0:
-            GO = -2*EV_[0]
+            GO = -2*EV_[0,0]
         if PO!=0:
             HO = 2
         if PO==0:
@@ -315,18 +313,16 @@ class  CONCON(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*np.absolute(EV_[0])**0.8539
-        if not isinstance( f_, float ):
-            f_   = f_.item();
-        POS = EV_[0]>0.0
+        f_   = EV_[0,0]*np.absolute(EV_[0,0])**0.8539
+        POS = EV_[0,0]>0.0
         if POS!=0:
-            GG = 1.8539*EV_[0]**0.8539
+            GG = 1.8539*EV_[0,0]**0.8539
         if POS==0:
-            GG = 1.8539*np.absolute(EV_[0])**0.8539
+            GG = 1.8539*np.absolute(EV_[0,0])**0.8539
         if POS!=0:
-            HH = 1.8539*0.8539*EV_[0]**(-0.1461)
+            HH = 1.8539*0.8539*EV_[0,0]**(-0.1461)
         if POS==0:
-            HH = -1.8539*0.8539*np.absolute(EV_[0])**(-0.1461)
+            HH = -1.8539*0.8539*np.absolute(EV_[0,0])**(-0.1461)
         if nargout>1:
             try:
                 dim = len(IV_)

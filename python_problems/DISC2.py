@@ -22,7 +22,7 @@ class  DISC2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISC2'
@@ -589,11 +589,9 @@ class  DISC2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ARG1 = EV_[0]-self.elpar[iel_][0]
-        ARG2 = EV_[1]-self.elpar[iel_][1]
-        f_   = ARG1**2+ARG2**2-EV_[2]**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        ARG1 = EV_[0,0]-self.elpar[iel_][0]
+        ARG2 = EV_[1,0]-self.elpar[iel_][1]
+        f_   = ARG1**2+ARG2**2-EV_[2,0]**2
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -602,7 +600,7 @@ class  DISC2(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = 2.0*ARG1
             g_[1] = 2.0*ARG2
-            g_[2] = -2.0*EV_[2]
+            g_[2] = -2.0*EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = 2.0
@@ -626,11 +624,9 @@ class  DISC2(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
         U_[1,2] = U_[1,2]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]*IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

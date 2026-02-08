@@ -40,7 +40,7 @@ class  MANCINONE(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MANCINONE'
@@ -299,10 +299,10 @@ class  MANCINONE(CUTEst_problem):
         A2 = self.elpar[iel_][2]-2.0
         IA2 = IAL-2
         IA3 = IAL-3
-        INVIJ = EV_[0]*EV_[0]+self.elpar[iel_][0]/self.elpar[iel_][1]
+        INVIJ = EV_[0,0]*EV_[0,0]+self.elpar[iel_][0]/self.elpar[iel_][1]
         VIJ = np.sqrt(INVIJ)
         V2 = VIJ*VIJ
-        DVIJ = EV_[0]/VIJ
+        DVIJ = EV_[0,0]/VIJ
         LIJ = np.log(VIJ)
         SIJ = np.sin(LIJ)
         CIJ = np.cos(LIJ)
@@ -317,18 +317,16 @@ class  MANCINONE(CUTEst_problem):
         B = SUMAL+self.elpar[iel_][2]*SCIJ*SAL
         DBDX = DSUMAL+self.elpar[iel_][2]*(DSCIJ*SAL+SCIJ*DSAL)
         f_   = VIJ*SUMAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]*B/VIJ
+            g_[0] = EV_[0,0]*B/VIJ
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = (B+EV_[0]*DBDX)/VIJ-B*EV_[0]*DVIJ/V2
+                H_[0,0] = (B+EV_[0,0]*DBDX)/VIJ-B*EV_[0,0]*DVIJ/V2
         if nargout == 1:
             return f_
         elif nargout == 2:

@@ -32,7 +32,7 @@ class  READING5(CUTEst_problem):
 # IE N                   5000           $-PARAMETER  n = 5001, m = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING5'
@@ -220,17 +220,15 @@ class  READING5(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         F = np.cos(2.0*3.141592653589*self.elpar[iel_][0])
-        f_   = (F-EV_[0])*(EV_[0]-EV_[1])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = (F-EV_[0,0])*(EV_[0,0]-EV_[1,0])
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -2.0*EV_[0]+EV_[1]+F
-            g_[1] = -(F-EV_[0])
+            g_[0] = -2.0*EV_[0,0]+EV_[1,0]+F
+            g_[1] = -(F-EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = -2.0
@@ -250,11 +248,9 @@ class  READING5(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         F = np.cos(2.0*3.141592653589*self.elpar[iel_][0])
-        C = (EV_[0]-EV_[1])/(F-EV_[0])
-        D = (1.0+C)/(F-EV_[0])
+        C = (EV_[0,0]-EV_[1,0])/(F-EV_[0,0])
+        D = (1.0+C)/(F-EV_[0,0])
         f_   = C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -262,11 +258,11 @@ class  READING5(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = D
-            g_[1] = -1.0/(F-EV_[0])
+            g_[1] = -1.0/(F-EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 2.0*D/(F-EV_[0])
-                H_[0,1] = -1.0/(F-EV_[0])**2
+                H_[0,0] = 2.0*D/(F-EV_[0,0])
+                H_[0,1] = -1.0/(F-EV_[0,0])**2
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_

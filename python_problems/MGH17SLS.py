@@ -29,7 +29,7 @@ class  MGH17SLS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH17SLS'
@@ -140,6 +140,7 @@ class  MGH17SLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -245,10 +246,8 @@ class  MGH17SLS(CUTEst_problem):
         iel_ = args[1]
         S = 0.01
         SX = S*self.elpar[iel_][0]
-        E = np.exp(-EV_[1]*SX)
-        f_   = EV_[0]*E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        E = np.exp(-EV_[1,0]*SX)
+        f_   = EV_[0,0]*E
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -256,12 +255,12 @@ class  MGH17SLS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = E
-            g_[1] = -EV_[0]*SX*E
+            g_[1] = -EV_[0,0]*SX*E
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = -SX*E
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]*SX*SX*E
+                H_[1,1] = EV_[0,0]*SX*SX*E
         if nargout == 1:
             return f_
         elif nargout == 2:

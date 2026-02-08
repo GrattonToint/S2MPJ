@@ -104,7 +104,7 @@ class  SANTALS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SANTALS'
@@ -202,6 +202,7 @@ class  SANTALS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         v_['D/RAD'] = v_['D0,1']/v_['RADIUS']
@@ -511,19 +512,17 @@ class  SANTALS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S1 = np.sin(EV_[0])
-        S2 = np.sin(EV_[1])
-        C1 = np.cos(EV_[0])
-        C2 = np.cos(EV_[1])
-        C = np.cos(EV_[2]-EV_[3])
-        S = np.sin(EV_[2]-EV_[3])
+        S1 = np.sin(EV_[0,0])
+        S2 = np.sin(EV_[1,0])
+        C1 = np.cos(EV_[0,0])
+        C2 = np.cos(EV_[1,0])
+        C = np.cos(EV_[2,0]-EV_[3,0])
+        S = np.sin(EV_[2,0]-EV_[3,0])
         C1C2S = C1*C2*S
         C1C2C = C1*C2*C
         C1S2S = C1*S2*S
         S1C2S = S1*C2*S
         f_   = S1*S2+C1*C2*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -565,15 +564,13 @@ class  SANTALS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S1 = np.sin(EV_[0])
-        S2 = np.sin(EV_[1])
-        C1 = np.cos(EV_[0])
-        C2 = np.cos(EV_[1])
-        C = np.cos(EV_[2]-self.elpar[iel_][0])
-        S = np.sin(EV_[2]-self.elpar[iel_][0])
+        S1 = np.sin(EV_[0,0])
+        S2 = np.sin(EV_[1,0])
+        C1 = np.cos(EV_[0,0])
+        C2 = np.cos(EV_[1,0])
+        C = np.cos(EV_[2,0]-self.elpar[iel_][0])
+        S = np.sin(EV_[2,0]-self.elpar[iel_][0])
         f_   = S1*S2+C1*C2*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -607,15 +604,13 @@ class  SANTALS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S1 = np.sin(EV_[0])
+        S1 = np.sin(EV_[0,0])
         SF = np.sin(self.elpar[iel_][0])
-        C1 = np.cos(EV_[0])
+        C1 = np.cos(EV_[0,0])
         CF = np.cos(self.elpar[iel_][0])
-        C = np.cos(EV_[1]-self.elpar[iel_][1])
-        S = np.sin(EV_[1]-self.elpar[iel_][1])
+        C = np.cos(EV_[1,0]-self.elpar[iel_][1])
+        S = np.sin(EV_[1,0]-self.elpar[iel_][1])
         f_   = S1*SF+C1*CF*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -643,15 +638,13 @@ class  SANTALS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S1 = np.sin(EV_[0])
+        S1 = np.sin(EV_[0,0])
         SF = np.sin(self.elpar[iel_][0])
-        C1 = np.cos(EV_[0])
+        C1 = np.cos(EV_[0,0])
         CF = np.cos(self.elpar[iel_][0])
         C = np.cos(self.elpar[iel_][2]-self.elpar[iel_][1])
         S = np.sin(self.elpar[iel_][2]-self.elpar[iel_][1])
         f_   = S1*SF+C1*CF*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

@@ -19,7 +19,7 @@ class  HS22(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS22'
@@ -190,10 +190,8 @@ class  HS22(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V1M2 = EV_[0]-2.0
+        V1M2 = EV_[0,0]-2.0
         f_   = V1M2**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -217,10 +215,8 @@ class  HS22(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V1M1 = EV_[0]-1.0
+        V1M1 = EV_[0,0]-1.0
         f_   = V1M1**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -244,16 +240,14 @@ class  HS22(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0

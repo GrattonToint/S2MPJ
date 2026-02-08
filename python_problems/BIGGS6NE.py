@@ -27,7 +27,7 @@ class  BIGGS6NE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGS6NE'
@@ -252,11 +252,9 @@ class  BIGGS6NE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EXPA = np.exp(self.elpar[iel_][0]*EV_[1])
-        V1EXPA = EV_[0]*EXPA
+        EXPA = np.exp(self.elpar[iel_][0]*EV_[1,0])
+        V1EXPA = EV_[0,0]*EXPA
         f_   = V1EXPA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

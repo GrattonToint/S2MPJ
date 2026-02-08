@@ -25,7 +25,7 @@ class  GAUSS3LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GAUSS3LS'
@@ -567,6 +567,7 @@ class  GAUSS3LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -701,11 +702,9 @@ class  GAUSS3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E = np.exp(-EV_[1]*self.elpar[iel_][0])
-        V1E = EV_[0]*E
+        E = np.exp(-EV_[1,0]*self.elpar[iel_][0])
+        V1E = EV_[0,0]*E
         f_   = V1E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -732,22 +731,20 @@ class  GAUSS3LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V2MX = EV_[1]-self.elpar[iel_][0]
+        V2MX = EV_[1,0]-self.elpar[iel_][0]
         V2MX2 = V2MX*V2MX
         TV2MX = 2.0*V2MX
         TV2MX2 = 2.0*V2MX2
-        R = V2MX/EV_[2]
+        R = V2MX/EV_[2,0]
         A = -R*R
         E = np.exp(A)
-        V32 = EV_[2]*EV_[2]
-        V33 = EV_[2]*V32
-        V1E = EV_[0]*E
+        V32 = EV_[2,0]*EV_[2,0]
+        V33 = EV_[2,0]*V32
+        V1E = EV_[0,0]*E
         TV1E = 2.0*V1E
         TV2MXV = TV2MX/V32
         TV2MXW = TV2MX2/V32
         f_   = V1E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -766,7 +763,7 @@ class  GAUSS3LS(CUTEst_problem):
                 H_[1,1] = TV1E*(TV2MXW-1.0)/V32
                 H_[1,2] = TV1E*TV2MX*(1.0-V2MX2/V32)/V33
                 H_[2,1] = H_[1,2]
-                H_[2,2] = TV1E*V2MX2*(TV2MXW-3.0)/EV_[2]**4
+                H_[2,2] = TV1E*V2MX2*(TV2MXW-3.0)/EV_[2,0]**4
         if nargout == 1:
             return f_
         elif nargout == 2:

@@ -45,7 +45,7 @@ class  HEART6LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HEART6LS'
@@ -110,6 +110,7 @@ class  HEART6LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['G1'],float(v_['sumuA']))
@@ -657,17 +658,15 @@ class  HEART6LS(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         ZERO = 0.0
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = ZERO
@@ -688,28 +687,26 @@ class  HEART6LS(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         ZERO = 0.0
-        f_   = EV_[0]*EV_[1]*EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]*EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*EV_[2]
-            g_[1] = EV_[0]*EV_[2]
-            g_[2] = EV_[0]*EV_[1]
+            g_[0] = EV_[1,0]*EV_[2,0]
+            g_[1] = EV_[0,0]*EV_[2,0]
+            g_[2] = EV_[0,0]*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
                 H_[1,1] = ZERO
                 H_[2,2] = ZERO
-                H_[0,1] = EV_[2]
+                H_[0,1] = EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]
+                H_[0,2] = EV_[1,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]
+                H_[1,2] = EV_[0,0]
                 H_[2,1] = H_[1,2]
         if nargout == 1:
             return f_
@@ -725,10 +722,8 @@ class  HEART6LS(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         ZERO = 0.0
-        DIFF = self.elpar[iel_][0]-EV_[1]
-        f_   = EV_[0]*DIFF
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        DIFF = self.elpar[iel_][0]-EV_[1,0]
+        f_   = EV_[0,0]*DIFF
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -736,7 +731,7 @@ class  HEART6LS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = DIFF
-            g_[1] = -EV_[0]
+            g_[1] = -EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = ZERO
@@ -758,11 +753,9 @@ class  HEART6LS(CUTEst_problem):
         iel_ = args[1]
         ZERO = 0.0
         TWO = 2.0
-        DFSQ = EV_[1]**2-EV_[2]**2
-        TWOX = TWO*EV_[0]
-        f_   = EV_[0]*DFSQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        DFSQ = EV_[1,0]**2-EV_[2,0]**2
+        TWOX = TWO*EV_[0,0]
+        f_   = EV_[0,0]*DFSQ
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -770,16 +763,16 @@ class  HEART6LS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = DFSQ
-            g_[1] = TWOX*EV_[1]
-            g_[2] = -TWOX*EV_[2]
+            g_[1] = TWOX*EV_[1,0]
+            g_[2] = -TWOX*EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
                 H_[1,1] = TWOX
                 H_[2,2] = -TWOX
-                H_[0,1] = TWO*EV_[1]
+                H_[0,1] = TWO*EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -TWO*EV_[2]
+                H_[0,2] = -TWO*EV_[2,0]
                 H_[2,0] = H_[0,2]
                 H_[1,2] = ZERO
                 H_[2,1] = H_[1,2]
@@ -798,13 +791,11 @@ class  HEART6LS(CUTEst_problem):
         iel_ = args[1]
         ZERO = 0.0
         TWO = 2.0
-        DIFF = self.elpar[iel_][0]-EV_[0]
-        DFSQ = EV_[1]**2-EV_[2]**2
-        TWOX = TWO*EV_[0]
+        DIFF = self.elpar[iel_][0]-EV_[0,0]
+        DFSQ = EV_[1,0]**2-EV_[2,0]**2
+        TWOX = TWO*EV_[0,0]
         TWOD = TWO*DIFF
         f_   = DIFF*DFSQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -812,16 +803,16 @@ class  HEART6LS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = -DFSQ
-            g_[1] = TWOD*EV_[1]
-            g_[2] = -TWOD*EV_[2]
+            g_[1] = TWOD*EV_[1,0]
+            g_[2] = -TWOD*EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
                 H_[1,1] = TWOD
                 H_[2,2] = -TWOD
-                H_[0,1] = -TWO*EV_[1]
+                H_[0,1] = -TWO*EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = TWO*EV_[2]
+                H_[0,2] = TWO*EV_[2,0]
                 H_[2,0] = H_[0,2]
                 H_[1,2] = ZERO
                 H_[2,1] = H_[1,2]
@@ -840,27 +831,25 @@ class  HEART6LS(CUTEst_problem):
         iel_ = args[1]
         ZERO = 0.0
         TWO = 2.0
-        DIFF = self.elpar[iel_][0]-EV_[0]
-        f_   = DIFF*EV_[1]*EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        DIFF = self.elpar[iel_][0]-EV_[0,0]
+        f_   = DIFF*EV_[1,0]*EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -EV_[1]*EV_[2]
-            g_[1] = DIFF*EV_[2]
-            g_[2] = DIFF*EV_[1]
+            g_[0] = -EV_[1,0]*EV_[2,0]
+            g_[1] = DIFF*EV_[2,0]
+            g_[2] = DIFF*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
                 H_[1,1] = ZERO
                 H_[2,2] = ZERO
-                H_[0,1] = -EV_[2]
+                H_[0,1] = -EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -EV_[1]
+                H_[0,2] = -EV_[1,0]
                 H_[2,0] = H_[0,2]
                 H_[1,2] = DIFF
                 H_[2,1] = H_[1,2]
@@ -881,29 +870,27 @@ class  HEART6LS(CUTEst_problem):
         TWO = 2.0
         THREE = 3.0
         SIX = 6.0
-        DIFF = EV_[1]**2-THREE*EV_[2]**2
-        f_   = EV_[0]*EV_[1]*DIFF
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        DIFF = EV_[1,0]**2-THREE*EV_[2,0]**2
+        f_   = EV_[0,0]*EV_[1,0]*DIFF
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*DIFF
-            g_[1] = EV_[0]*DIFF+TWO*EV_[0]*EV_[1]**2
-            g_[2] = -SIX*EV_[0]*EV_[1]*EV_[2]
+            g_[0] = EV_[1,0]*DIFF
+            g_[1] = EV_[0,0]*DIFF+TWO*EV_[0,0]*EV_[1,0]**2
+            g_[2] = -SIX*EV_[0,0]*EV_[1,0]*EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
-                H_[1,1] = SIX*EV_[0]*EV_[1]
-                H_[2,2] = -SIX*EV_[0]*EV_[1]
-                H_[0,1] = DIFF+TWO*EV_[1]**2
+                H_[1,1] = SIX*EV_[0,0]*EV_[1,0]
+                H_[2,2] = -SIX*EV_[0,0]*EV_[1,0]
+                H_[0,1] = DIFF+TWO*EV_[1,0]**2
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -SIX*EV_[1]*EV_[2]
+                H_[0,2] = -SIX*EV_[1,0]*EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = -SIX*EV_[0]*EV_[2]
+                H_[1,2] = -SIX*EV_[0,0]*EV_[2,0]
                 H_[2,1] = H_[1,2]
         if nargout == 1:
             return f_
@@ -922,30 +909,28 @@ class  HEART6LS(CUTEst_problem):
         TWO = 2.0
         THREE = 3.0
         SIX = 6.0
-        DFSQ = EV_[1]**2-THREE*EV_[2]**2
-        DIFF = self.elpar[iel_][0]-EV_[0]
-        f_   = DIFF*EV_[1]*DFSQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        DFSQ = EV_[1,0]**2-THREE*EV_[2,0]**2
+        DIFF = self.elpar[iel_][0]-EV_[0,0]
+        f_   = DIFF*EV_[1,0]*DFSQ
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -EV_[1]*DFSQ
-            g_[1] = DIFF*(DFSQ+TWO*EV_[1]**2)
-            g_[2] = -SIX*EV_[1]*EV_[2]*DIFF
+            g_[0] = -EV_[1,0]*DFSQ
+            g_[1] = DIFF*(DFSQ+TWO*EV_[1,0]**2)
+            g_[2] = -SIX*EV_[1,0]*EV_[2,0]*DIFF
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,0] = ZERO
-                H_[1,1] = SIX*EV_[1]*DIFF
-                H_[2,2] = -SIX*EV_[1]*DIFF
-                H_[0,1] = -DFSQ-TWO*EV_[1]**2
+                H_[1,1] = SIX*EV_[1,0]*DIFF
+                H_[2,2] = -SIX*EV_[1,0]*DIFF
+                H_[0,1] = -DFSQ-TWO*EV_[1,0]**2
                 H_[1,0] = H_[0,1]
-                H_[0,2] = SIX*EV_[1]*EV_[2]
+                H_[0,2] = SIX*EV_[1,0]*EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = -SIX*DIFF*EV_[2]
+                H_[1,2] = -SIX*DIFF*EV_[2,0]
                 H_[2,1] = H_[1,2]
         if nargout == 1:
             return f_

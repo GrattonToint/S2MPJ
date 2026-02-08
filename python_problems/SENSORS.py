@@ -27,7 +27,7 @@ class  SENSORS(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SENSORS'
@@ -74,6 +74,7 @@ class  SENSORS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -141,18 +142,16 @@ class  SENSORS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TIMJ = EV_[0]-EV_[1]
-        SI = np.sin(EV_[0])
-        SJ = np.sin(EV_[1])
+        TIMJ = EV_[0,0]-EV_[1,0]
+        SI = np.sin(EV_[0,0])
+        SJ = np.sin(EV_[1,0])
         SIMJ = np.sin(TIMJ)
-        CI = np.cos(EV_[0])
-        CJ = np.cos(EV_[1])
+        CI = np.cos(EV_[0,0])
+        CJ = np.cos(EV_[1,0])
         CIMJ = np.cos(TIMJ)
         CJSIMJ = CJ*SIMJ-SJ*CIMJ
         CJCIMJ = CJ*CIMJ+SJ*SIMJ
         f_   = SI*SJ*SIMJ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

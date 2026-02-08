@@ -36,7 +36,7 @@ class  YATP1CLS(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP1CLS'
@@ -94,6 +94,7 @@ class  YATP1CLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -238,16 +239,14 @@ class  YATP1CLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -264,19 +263,17 @@ class  YATP1CLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 3.0*EV_[0]*EV_[0]
+            g_[0] = 3.0*EV_[0,0]*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 6.0*EV_[0]
+                H_[0,0] = 6.0*EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -295,13 +292,11 @@ class  YATP1CLS(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         C = np.cos(IV_[0])
         S = np.sin(IV_[0])
         f_   = IV_[1]*IV_[0]*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -335,13 +330,11 @@ class  YATP1CLS(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         C = np.cos(IV_[0])
         S = np.sin(IV_[0])
         f_   = IV_[1]*S
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -370,21 +363,19 @@ class  YATP1CLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        C = np.cos(EV_[0])
-        S = np.sin(EV_[0])
-        f_   = S/EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        C = np.cos(EV_[0,0])
+        S = np.sin(EV_[0,0])
+        f_   = S/EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = (C-S/EV_[0])/EV_[0]
+            g_[0] = (C-S/EV_[0,0])/EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = -S/EV_[0]-(C+C)/EV_[0]**2+(S+S)/EV_[0]**3
+                H_[0,0] = -S/EV_[0,0]-(C+C)/EV_[0,0]**2+(S+S)/EV_[0,0]**3
         if nargout == 1:
             return f_
         elif nargout == 2:

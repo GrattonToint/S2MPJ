@@ -19,7 +19,7 @@ class  HS9(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS9'
@@ -148,22 +148,23 @@ class  HS9(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         PI = 4.0e0*np.arctan(1.0e0)
-        f_   = np.sin(PI*EV_[0]/12.0e0)*np.cos(PI*EV_[1]/16.0e0)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = np.sin(PI*EV_[0,0]/12.0e0)*np.cos(PI*EV_[1,0]/16.0e0)
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = np.cos(PI*EV_[0]/12.0e0)*np.cos(PI*EV_[1]/16.0e0)*PI/12.0e0
-            g_[1] = -np.sin(PI*EV_[0]/12.0e0)*np.sin(PI*EV_[1]/16.0e0)*PI/16.0e0
+            g_[0] = np.cos(PI*EV_[0,0]/12.0e0)*np.cos(PI*EV_[1,0]/16.0e0)*PI/12.0e0
+            g_[1] = -np.sin(PI*EV_[0,0]/12.0e0)*np.sin(PI*EV_[1,0]/16.0e0)*PI/16.0e0
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = -np.sin(PI*EV_[0]/12.0e0)*np.cos(PI*EV_[1]/16.0e0)*PI*PI/144.0e0
-                H_[1,1] = -np.sin(PI*EV_[0]/12.0e0)*np.cos(PI*EV_[1]/16.0e0)*PI*PI/256.0e0
-                H_[0,1] = -np.cos(PI*EV_[0]/12.0e0)*np.sin(PI*EV_[1]/16.0e0)*PI*PI/192.0e0
+                H_[0,0] = (-np.sin(PI*EV_[0,0]/12.0e0)*np.cos(PI*EV_[1,0]/16.0e0)*PI*PI/
+                     144.0e0)
+                H_[1,1] = (-np.sin(PI*EV_[0,0]/12.0e0)*np.cos(PI*EV_[1,0]/16.0e0)*PI*PI/
+                     256.0e0)
+                H_[0,1] = (-np.cos(PI*EV_[0,0]/12.0e0)*np.sin(PI*EV_[1,0]/16.0e0)*PI*PI/
+                     192.0e0)
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_

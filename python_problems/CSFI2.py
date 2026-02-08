@@ -21,7 +21,7 @@ class  CSFI2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CSFI2'
@@ -254,12 +254,10 @@ class  CSFI2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMP0 = EV_[1]*EV_[2]
-        TMP1 = 117.3708920187793427e0*EV_[0]/TMP0
+        TMP0 = EV_[1,0]*EV_[2,0]
+        TMP1 = 117.3708920187793427e0*EV_[0,0]/TMP0
         TMP2 = 117.3708920187793427e0/TMP0
         f_   = TMP1
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -267,18 +265,18 @@ class  CSFI2(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = TMP2
-            g_[1] = -TMP1/EV_[1]
-            g_[2] = -TMP1/EV_[2]
+            g_[1] = -TMP1/EV_[1,0]
+            g_[2] = -TMP1/EV_[2,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = -TMP2/EV_[1]
+                H_[0,1] = -TMP2/EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -TMP2/EV_[2]
+                H_[0,2] = -TMP2/EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,1] = 2.0e0*TMP1/(EV_[1]*EV_[1])
+                H_[1,1] = 2.0e0*TMP1/(EV_[1,0]*EV_[1,0])
                 H_[1,2] = TMP1/TMP0
                 H_[2,1] = H_[1,2]
-                H_[2,2] = 2.0e0*TMP1/(EV_[2]*EV_[2])
+                H_[2,2] = 2.0e0*TMP1/(EV_[2,0]*EV_[2,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -292,10 +290,8 @@ class  CSFI2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMP = EV_[0]*EV_[1]/48.0e0
-        f_   = EV_[0]*TMP
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        TMP = EV_[0,0]*EV_[1,0]/48.0e0
+        f_   = EV_[0,0]*TMP
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -303,11 +299,11 @@ class  CSFI2(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = 2.0e0*TMP
-            g_[1] = EV_[0]*EV_[0]/48.0e0
+            g_[1] = EV_[0,0]*EV_[0,0]/48.0e0
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = EV_[1]/24.0e0
-                H_[0,1] = EV_[0]/24.0e0
+                H_[0,0] = EV_[1,0]/24.0e0
+                H_[0,1] = EV_[0,0]/24.0e0
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_
@@ -322,23 +318,21 @@ class  CSFI2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMP = EV_[0]/EV_[1]
+        TMP = EV_[0,0]/EV_[1,0]
         f_   = TMP
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.0e0/EV_[1]
-            g_[1] = -TMP/EV_[1]
+            g_[0] = 1.0e0/EV_[1,0]
+            g_[1] = -TMP/EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = -1.0e0/(EV_[1]*EV_[1])
+                H_[0,1] = -1.0e0/(EV_[1,0]*EV_[1,0])
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 2.0e0*TMP/(EV_[1]*EV_[1])
+                H_[1,1] = 2.0e0*TMP/(EV_[1,0]*EV_[1,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -352,17 +346,15 @@ class  CSFI2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0e0

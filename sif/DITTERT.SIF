@@ -12,6 +12,7 @@ NAME          DITTERT
 
 *   SIF input: N. Gould, March 1992.
 *              minor correction by Ph. Shott, Jan 1995.
+*              starting point set to 1.e-30 to avoid division by zero (5 Feb 2026)
 
 *   classification OQR2-AN-V-V
 
@@ -141,6 +142,8 @@ BOUNDS
  ND
 
 START POINT
+
+ V  DIITERT   'DEFAULT' 1.0D-30
 
 ELEMENT TYPE
 

@@ -45,7 +45,7 @@ class  SEMICN2U(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SEMICN2U'
@@ -258,10 +258,8 @@ class  SEMICN2U(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         FVAL  = (
-              self.elpar[iel_][0]*np.exp(self.elpar[iel_][1]*(EV_[0]-self.elpar[iel_][2])))
+              self.elpar[iel_][0]*np.exp(self.elpar[iel_][1]*(EV_[0,0]-self.elpar[iel_][2])))
         f_   = FVAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

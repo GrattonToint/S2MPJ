@@ -26,7 +26,7 @@ class  LAUNCH(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LAUNCH'
@@ -1230,36 +1230,34 @@ class  LAUNCH(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        LG = np.log(EV_[3])
-        f_   = (EV_[0]*EV_[1]*LG)/EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        LG = np.log(EV_[3,0])
+        f_   = (EV_[0,0]*EV_[1,0]*LG)/EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[3] = (EV_[0]*EV_[1])/(EV_[3]*EV_[2])
-            g_[0] = (EV_[1]*LG)/EV_[2]
-            g_[1] = (EV_[0]*LG)/EV_[2]
-            g_[2] = -(EV_[0]*EV_[1]*LG)/(EV_[2]**2)
+            g_[3] = (EV_[0,0]*EV_[1,0])/(EV_[3,0]*EV_[2,0])
+            g_[0] = (EV_[1,0]*LG)/EV_[2,0]
+            g_[1] = (EV_[0,0]*LG)/EV_[2,0]
+            g_[2] = -(EV_[0,0]*EV_[1,0]*LG)/(EV_[2,0]**2)
             if nargout>2:
                 H_ = np.zeros((4,4))
-                H_[3,3] = -(EV_[0]*EV_[1])/(EV_[2]*EV_[3]**2)
-                H_[3,0] = EV_[1]/(EV_[3]*EV_[2])
+                H_[3,3] = -(EV_[0,0]*EV_[1,0])/(EV_[2,0]*EV_[3,0]**2)
+                H_[3,0] = EV_[1,0]/(EV_[3,0]*EV_[2,0])
                 H_[0,3] = H_[3,0]
-                H_[3,1] = EV_[0]/(EV_[3]*EV_[2])
+                H_[3,1] = EV_[0,0]/(EV_[3,0]*EV_[2,0])
                 H_[1,3] = H_[3,1]
-                H_[3,2] = -(EV_[0]*EV_[1])/(EV_[2]**2*EV_[3])
+                H_[3,2] = -(EV_[0,0]*EV_[1,0])/(EV_[2,0]**2*EV_[3,0])
                 H_[2,3] = H_[3,2]
-                H_[0,1] = LG/EV_[2]
+                H_[0,1] = LG/EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -EV_[1]*LG/EV_[2]**2
+                H_[0,2] = -EV_[1,0]*LG/EV_[2,0]**2
                 H_[2,0] = H_[0,2]
-                H_[1,2] = -EV_[0]*LG/EV_[2]**2
+                H_[1,2] = -EV_[0,0]*LG/EV_[2,0]**2
                 H_[2,1] = H_[1,2]
-                H_[2,2] = 2.0*(EV_[0]*EV_[1]*LG)/(EV_[2]**3.0)
+                H_[2,2] = 2.0*(EV_[0,0]*EV_[1,0]*LG)/(EV_[2,0]**3.0)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1274,28 +1272,26 @@ class  LAUNCH(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         EA = 1.2781
-        VA0 = EV_[0]**EA
-        VA1 = EA*EV_[0]**(EA-1.0)
-        VA2 = EA*(EA-1.0)*EV_[0]**(EA-2.0)
+        VA0 = EV_[0,0]**EA
+        VA1 = EA*EV_[0,0]**(EA-1.0)
+        VA2 = EA*(EA-1.0)*EV_[0,0]**(EA-2.0)
         EB = -0.1959
-        VB0 = EV_[1]**EB
-        VB1 = EB*EV_[1]**(EB-1.0)
-        VB2 = EB*(EB-1.0)*EV_[1]**(EB-2.0)
+        VB0 = EV_[1,0]**EB
+        VB1 = EB*EV_[1,0]**(EB-1.0)
+        VB2 = EB*(EB-1.0)*EV_[1,0]**(EB-2.0)
         EC = 2.4242
-        VC0 = EV_[2]**EC
-        VC1 = EC*EV_[2]**(EC-1.0)
-        VC2 = EC*(EC-1.0)*EV_[2]**(EC-2.0)
+        VC0 = EV_[2,0]**EC
+        VC1 = EC*EV_[2,0]**(EC-1.0)
+        VC2 = EC*(EC-1.0)*EV_[2,0]**(EC-2.0)
         ED = 0.38745
-        VD0 = EV_[3]**ED
-        VD1 = ED*EV_[3]**(ED-1.0)
-        VD2 = ED*(ED-1.0)*EV_[3]**(ED-2.0)
+        VD0 = EV_[3,0]**ED
+        VD1 = ED*EV_[3,0]**(ED-1.0)
+        VD2 = ED*(ED-1.0)*EV_[3,0]**(ED-2.0)
         EE = 0.9904
-        VE0 = EV_[4]**EE
-        VE1 = EE*EV_[4]**(EE-1.0)
-        VE2 = EE*(EE-1.0)*EV_[4]**(EE-2.0)
+        VE0 = EV_[4,0]**EE
+        VE1 = EE*EV_[4,0]**(EE-1.0)
+        VE2 = EE*(EE-1.0)*EV_[4,0]**(EE-2.0)
         f_   = VA0*VB0*VC0*VD0*VE0
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1348,24 +1344,22 @@ class  LAUNCH(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         EA = 0.3322
-        VA0 = EV_[0]**EA
-        VA1 = EA*EV_[0]**(EA-1.0)
-        VA2 = EA*(EA-1.0)*EV_[0]**(EA-2.0)
+        VA0 = EV_[0,0]**EA
+        VA1 = EA*EV_[0,0]**(EA-1.0)
+        VA2 = EA*(EA-1.0)*EV_[0,0]**(EA-2.0)
         EB = -1.5935
-        VB0 = EV_[1]**EB
-        VB1 = EB*EV_[1]**(EB-1.0)
-        VB2 = EB*(EB-1.0)*EV_[1]**(EB-2.0)
+        VB0 = EV_[1,0]**EB
+        VB1 = EB*EV_[1,0]**(EB-1.0)
+        VB2 = EB*(EB-1.0)*EV_[1,0]**(EB-2.0)
         EC = 0.2363
-        VC0 = EV_[2]**EC
-        VC1 = EC*EV_[2]**(EC-1.0)
-        VC2 = EC*(EC-1.0)*EV_[2]**(EC-2.0)
+        VC0 = EV_[2,0]**EC
+        VC1 = EC*EV_[2,0]**(EC-1.0)
+        VC2 = EC*(EC-1.0)*EV_[2,0]**(EC-2.0)
         ED = 0.1079
-        VD0 = EV_[3]**ED
-        VD1 = ED*EV_[3]**(ED-1.0)
-        VD2 = ED*(ED-1.0)*EV_[3]**(ED-2.0)
+        VD0 = EV_[3,0]**ED
+        VD1 = ED*EV_[3,0]**(ED-1.0)
+        VD2 = ED*(ED-1.0)*EV_[3,0]**(ED-2.0)
         f_   = VA0*VB0*VC0*VD0
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1408,19 +1402,18 @@ class  LAUNCH(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         SCPWR = self.elpar[iel_][0]/(self.elpar[iel_][1]**self.elpar[iel_][0])
-        f_   = (EV_[0]/self.elpar[iel_][1])**self.elpar[iel_][0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = (EV_[0,0]/self.elpar[iel_][1])**self.elpar[iel_][0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = SCPWR*EV_[0]**(self.elpar[iel_][0]-1.0)
+            g_[0] = SCPWR*EV_[0,0]**(self.elpar[iel_][0]-1.0)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = SCPWR*(self.elpar[iel_][0]-1.0)*EV_[0]**(self.elpar[iel_][0]-2.0)
+                H_[0,0]  = (
+                      SCPWR*(self.elpar[iel_][0]-1.0)*EV_[0,0]**(self.elpar[iel_][0]-2.0))
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1444,11 +1437,9 @@ class  LAUNCH(CUTEst_problem):
         U_[1,5] = U_[1,5]+1
         U_[1,6] = U_[1,6]+1
         U_[1,7] = U_[1,7]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]*IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1484,11 +1475,9 @@ class  LAUNCH(CUTEst_problem):
         U_[1,3] = U_[1,3]+1
         U_[1,4] = U_[1,4]+1
         U_[1,5] = U_[1,5]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]*IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1522,11 +1511,9 @@ class  LAUNCH(CUTEst_problem):
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
         U_[1,3] = U_[1,3]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]*IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1554,17 +1541,15 @@ class  LAUNCH(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0

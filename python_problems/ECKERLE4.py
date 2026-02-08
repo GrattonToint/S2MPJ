@@ -26,7 +26,7 @@ class  ECKERLE4(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ECKERLE4'
@@ -252,28 +252,26 @@ class  ECKERLE4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V3MX = EV_[2]-self.elpar[iel_][0]
+        V3MX = EV_[2,0]-self.elpar[iel_][0]
         TV3MX = 2.0*V3MX
         V3MX2 = V3MX**2
-        V22 = EV_[1]**2
-        V23 = EV_[1]*V22
+        V22 = EV_[1,0]**2
+        V23 = EV_[1,0]*V22
         V24 = V22*V22
         V25 = V22*V23
         V26 = V23*V23
         V27 = V23*V24
         E = np.exp(-0.5*V3MX2/V22)
-        V1E = EV_[0]*E
+        V1E = EV_[0,0]*E
         DIFF = V3MX2/V24-1.0/V22
-        f_   = EV_[0]*E/EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*E/EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = E/EV_[1]
+            g_[0] = E/EV_[1,0]
             g_[1] = V1E*DIFF
             g_[2] = -V1E*V3MX/V23
             if nargout>2:

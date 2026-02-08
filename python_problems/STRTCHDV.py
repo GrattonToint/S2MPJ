@@ -25,7 +25,7 @@ class  STRTCHDV(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'STRTCHDV'
@@ -73,6 +73,7 @@ class  STRTCHDV(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -149,9 +150,9 @@ class  STRTCHDV(CUTEst_problem):
         P = 0.125
         Q = 0.1
         T = 50.0
-        Y = EV_[0]**2+EV_[1]**2
-        YX1 = EV_[0]+EV_[0]
-        YX2 = EV_[1]+EV_[1]
+        Y = EV_[0,0]**2+EV_[1,0]**2
+        YX1 = EV_[0,0]+EV_[0,0]
+        YX2 = EV_[1,0]+EV_[1,0]
         YX1X1 = 2.0
         YX2X2 = 2.0
         YPM1 = P*Y**(P-1.0)
@@ -180,8 +181,6 @@ class  STRTCHDV(CUTEst_problem):
         SX2X2 = SZZ*ZX2*ZX2+SZ*ZX2X2
         B = S+1.0
         f_   = A*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

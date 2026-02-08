@@ -16,7 +16,7 @@ class  NET1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NET1'
@@ -1215,26 +1215,24 @@ class  NET1(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         A0FLEX = 1.8539e0
-        A0FGT0 = EV_[2]>=0.0e0
+        A0FGT0 = EV_[2,0]>=0.0e0
         if A0FGT0!=0:
             A0HFLO  = (
-              -self.elpar[iel_][0]*A0FLEX*(A0FLEX-1.0e0)*EV_[2]**(A0FLEX-2.0e0))
+              -self.elpar[iel_][0]*A0FLEX*(A0FLEX-1.0e0)*EV_[2,0]**(A0FLEX-2.0e0))
         if A0FGT0==0:
             A0HFLO  = (
-              A0FLEX*(A0FLEX-1.0e0)*self.elpar[iel_][0]*np.absolute(EV_[2])**(A0FLEX-2.0e0))
+              A0FLEX*(A0FLEX-1.0e0)*self.elpar[iel_][0]*np.absolute(EV_[2,0])**(A0FLEX-2.0e0))
         f_    = (
-              EV_[0]*EV_[0]-EV_[1]*EV_[1]-self.elpar[iel_][0]*EV_[2]*np.absolute(EV_[2])**(A0FLEX-1.0e0))
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+              EV_[0,0]*EV_[0,0]-EV_[1,0]*EV_[1,0]-self.elpar[iel_][0]*EV_[2,0]*np.absolute(EV_[2,0])**(A0FLEX-1.0e0))
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[1] = -2.0e0*EV_[1]
-            g_[0] = 2.0e0*EV_[0]
-            g_[2] = -self.elpar[iel_][0]*A0FLEX*np.absolute(EV_[2])**(A0FLEX-1.0e0)
+            g_[1] = -2.0e0*EV_[1,0]
+            g_[0] = 2.0e0*EV_[0,0]
+            g_[2] = -self.elpar[iel_][0]*A0FLEX*np.absolute(EV_[2,0])**(A0FLEX-1.0e0)
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[1,1] = -2.0e0
@@ -1255,10 +1253,10 @@ class  NET1(CUTEst_problem):
         iel_ = args[1]
         A1BETA = 0.23077e0
         A1HFAC = 203.712e0
-        A1PSUC = EV_[0]-self.elpar[iel_][0]*EV_[3]
-        A1PDIS = EV_[1]+self.elpar[iel_][1]*EV_[3]
+        A1PSUC = EV_[0,0]-self.elpar[iel_][0]*EV_[3,0]
+        A1PDIS = EV_[1,0]+self.elpar[iel_][1]*EV_[3,0]
         A1CRB = (A1PDIS/A1PSUC)**A1BETA
-        A1PROD = A1BETA*A1HFAC*A1CRB*EV_[2]
+        A1PROD = A1BETA*A1HFAC*A1CRB*EV_[2,0]
         A1GPIN = -A1PROD/A1PSUC
         A1GPOU = A1PROD/A1PDIS
         A1GFLO = A1HFAC*(A1CRB-1.0e0)
@@ -1268,9 +1266,7 @@ class  NET1(CUTEst_problem):
         A1HOO = A1PROD*(A1BETA-1.0e0)/(A1PDIS**2)
         A1HIC = -self.elpar[iel_][0]*A1HII+self.elpar[iel_][1]*A1HIO
         A1HOC = -self.elpar[iel_][0]*A1HIO+self.elpar[iel_][1]*A1HOO
-        f_   = EV_[2]*A1GFLO
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[2,0]*A1GFLO
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1287,15 +1283,15 @@ class  NET1(CUTEst_problem):
                 H_[0,1] = A1HIO
                 H_[1,0] = H_[0,1]
                 H_[1,1] = A1HOO
-                H_[0,2] = A1GPIN/EV_[2]
+                H_[0,2] = A1GPIN/EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = A1GPOU/EV_[2]
+                H_[1,2] = A1GPOU/EV_[2,0]
                 H_[2,1] = H_[1,2]
                 H_[0,3] = A1HIC
                 H_[3,0] = H_[0,3]
                 H_[1,3] = A1HOC
                 H_[3,1] = H_[1,3]
-                H_[2,3] = A1GCBV/EV_[2]
+                H_[2,3] = A1GCBV/EV_[2,0]
                 H_[3,2] = H_[2,3]
                 H_[3,3] = -self.elpar[iel_][0]*A1HIC+self.elpar[iel_][1]*A1HOC
         if nargout == 1:
@@ -1313,10 +1309,10 @@ class  NET1(CUTEst_problem):
         iel_ = args[1]
         A2BETA = 0.23077e0
         A2HFAC = 203.712e0
-        A2PSUC = EV_[0]-self.elpar[iel_][0]*EV_[3]
-        A2PDIS = EV_[1]+self.elpar[iel_][1]*EV_[3]
+        A2PSUC = EV_[0,0]-self.elpar[iel_][0]*EV_[3,0]
+        A2PDIS = EV_[1,0]+self.elpar[iel_][1]*EV_[3,0]
         A2CRB = (A2PDIS/A2PSUC)**A2BETA
-        A2PROD = A2BETA*A2HFAC*A2CRB*EV_[2]
+        A2PROD = A2BETA*A2HFAC*A2CRB*EV_[2,0]
         A2GPIN = -A2PROD/A2PSUC
         A2GPOU = A2PROD/A2PDIS
         A2GFLO = A2HFAC*(A2CRB-1.0e0)
@@ -1326,9 +1322,7 @@ class  NET1(CUTEst_problem):
         A2HOO = A2PROD*(A2BETA-1.0e0)/(A2PDIS**2)
         A2HIC = -self.elpar[iel_][0]*A2HII+self.elpar[iel_][1]*A2HIO
         A2HOC = -self.elpar[iel_][0]*A2HIO+self.elpar[iel_][1]*A2HOO
-        f_   = EV_[2]*A2GFLO
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[2,0]*A2GFLO
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1345,15 +1339,15 @@ class  NET1(CUTEst_problem):
                 H_[0,1] = A2HIO
                 H_[1,0] = H_[0,1]
                 H_[1,1] = A2HOO
-                H_[0,2] = A2GPIN/EV_[2]
+                H_[0,2] = A2GPIN/EV_[2,0]
                 H_[2,0] = H_[0,2]
-                H_[1,2] = A2GPOU/EV_[2]
+                H_[1,2] = A2GPOU/EV_[2,0]
                 H_[2,1] = H_[1,2]
                 H_[0,3] = A2HIC
                 H_[3,0] = H_[0,3]
                 H_[1,3] = A2HOC
                 H_[3,1] = H_[1,3]
-                H_[2,3] = A2GCBV/EV_[2]
+                H_[2,3] = A2GCBV/EV_[2,0]
                 H_[3,2] = H_[2,3]
                 H_[3,3] = -self.elpar[iel_][0]*A2HIC+self.elpar[iel_][1]*A2HOC
         if nargout == 1:

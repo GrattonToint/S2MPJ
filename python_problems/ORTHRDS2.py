@@ -44,7 +44,7 @@ class  ORTHRDS2(CUTEst_problem):
 # IE NPTS                2500           $-PARAMETER n = 5003
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHRDS2'
@@ -308,12 +308,10 @@ class  ORTHRDS2(CUTEst_problem):
         U_[0,2] = U_[0,2]-1
         U_[1,1] = U_[1,1]+1
         U_[1,3] = U_[1,3]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         T = IV_[0]*IV_[0]+IV_[1]*IV_[1]
         f_   = T*T
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -350,16 +348,14 @@ class  ORTHRDS2(CUTEst_problem):
         U_[1,1] = U_[1,1]+1
         U_[1,3] = U_[1,3]-1
         U_[2,4] = U_[2,4]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
-        IV_[2] = U_[2:3,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
+        IV_[2] = to_scalar(U_[2:3,:].dot(EV_))
         T = IV_[0]*IV_[0]+IV_[1]*IV_[1]
         ZZSQ = IV_[2]*IV_[2]
         T1 = 1.0+ZZSQ
         T1SQ = T1*T1
         f_   = T*T1SQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

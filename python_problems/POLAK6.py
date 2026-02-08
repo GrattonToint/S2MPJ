@@ -21,7 +21,7 @@ class  POLAK6(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POLAK6'
@@ -371,11 +371,9 @@ class  POLAK6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[1]+1.0
-        A = EV_[0]-B**4
+        B = EV_[1,0]+1.0
+        A = EV_[0,0]-B**4
         f_   = A*A
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -403,19 +401,17 @@ class  POLAK6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[2]+1.0
-        C = EV_[1]-B**4
+        B = EV_[2,0]+1.0
+        C = EV_[1,0]-B**4
         DCDZ = -4.0*B**3
         D2CDZZ = -12.0*B**2
-        A = EV_[0]-C**4
+        A = EV_[0,0]-C**4
         DADY = -4.0*C**3
         DADZ = DADY*DCDZ
         D2ADYY = -12.0*C**2
         D2ADYZ = D2ADYY*DCDZ
         D2ADZZ = D2ADYZ*DCDZ+DADY*D2CDZZ
         f_   = A*A
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -449,10 +445,8 @@ class  POLAK6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[0]+1.0
+        B = EV_[0,0]+1.0
         f_   = B**4
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -476,11 +470,9 @@ class  POLAK6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[1]+1.0
-        A = EV_[0]-B**4
+        B = EV_[1,0]+1.0
+        A = EV_[0,0]-B**4
         f_   = A**4
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -508,16 +500,14 @@ class  POLAK6(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0

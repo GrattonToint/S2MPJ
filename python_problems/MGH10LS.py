@@ -29,7 +29,7 @@ class  MGH10LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH10LS'
@@ -103,6 +103,7 @@ class  MGH10LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -190,13 +191,11 @@ class  MGH10LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V3PX = EV_[2]+self.elpar[iel_][0]
+        V3PX = EV_[2,0]+self.elpar[iel_][0]
         V3PX2 = V3PX*V3PX
         V3PX3 = V3PX*V3PX2
-        E = np.exp(EV_[1]/V3PX)
-        f_   = EV_[0]*E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        E = np.exp(EV_[1,0]/V3PX)
+        f_   = EV_[0,0]*E
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -204,18 +203,18 @@ class  MGH10LS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = E
-            g_[1] = EV_[0]*E/V3PX
-            g_[2] = -EV_[0]*EV_[1]*E/V3PX2
+            g_[1] = EV_[0,0]*E/V3PX
+            g_[2] = -EV_[0,0]*EV_[1,0]*E/V3PX2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = E/V3PX
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -EV_[1]*E/V3PX2
+                H_[0,2] = -EV_[1,0]*E/V3PX2
                 H_[2,0] = H_[0,2]
-                H_[1,1] = EV_[0]*E/V3PX2
-                H_[1,2] = -EV_[0]*E/V3PX2-EV_[0]*EV_[1]*E/V3PX3
+                H_[1,1] = EV_[0,0]*E/V3PX2
+                H_[1,2] = -EV_[0,0]*E/V3PX2-EV_[0,0]*EV_[1,0]*E/V3PX3
                 H_[2,1] = H_[1,2]
-                H_[2,2] = EV_[0]*EV_[1]**2.0*E/V3PX**4+2.0*EV_[0]*EV_[1]*E/V3PX3
+                H_[2,2] = EV_[0,0]*EV_[1,0]**2.0*E/V3PX**4+2.0*EV_[0,0]*EV_[1,0]*E/V3PX3
         if nargout == 1:
             return f_
         elif nargout == 2:

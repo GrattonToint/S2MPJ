@@ -20,7 +20,7 @@ class  POLAK1(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POLAK1'
@@ -190,14 +190,12 @@ class  POLAK1(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TX1 = 0.001*EV_[0]*EV_[0]
-        DTX1 = 0.002*EV_[0]
-        TX2 = (EV_[1]+self.elpar[iel_][0])**2
-        DTX2 = 2.0*(EV_[1]+self.elpar[iel_][0])
+        TX1 = 0.001*EV_[0,0]*EV_[0,0]
+        DTX1 = 0.002*EV_[0,0]
+        TX2 = (EV_[1,0]+self.elpar[iel_][0])**2
+        DTX2 = 2.0*(EV_[1,0]+self.elpar[iel_][0])
         EARG = np.exp(TX1+TX2)
         f_   = EARG
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

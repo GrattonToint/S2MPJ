@@ -34,7 +34,7 @@ class  CORKSCRW(CUTEst_problem):
 # IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CORKSCRW'
@@ -371,12 +371,10 @@ class  CORKSCRW(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SINX = np.sin(EV_[0])
-        COSX = np.cos(EV_[0])
-        ERR = EV_[1]-SINX
+        SINX = np.sin(EV_[0,0])
+        COSX = np.cos(EV_[0,0])
+        ERR = EV_[1,0]-SINX
         f_   = ERR*ERR
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -404,12 +402,10 @@ class  CORKSCRW(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SINX = np.sin(EV_[0])
-        COSX = np.cos(EV_[0])
-        ERR = EV_[1]-COSX
+        SINX = np.sin(EV_[0,0])
+        COSX = np.cos(EV_[0,0])
+        ERR = EV_[1,0]-COSX
         f_   = ERR*ERR
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

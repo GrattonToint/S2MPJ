@@ -22,7 +22,7 @@ class  HS24(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS24'
@@ -184,13 +184,11 @@ class  HS24(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         RT3X27 = 1.0e0/(27.0e0*np.sqrt(3.0e0))
-        V2SQ = EV_[1]*EV_[1]
-        V2CB = V2SQ*EV_[1]
-        X1M3 = EV_[0]-3.0
+        V2SQ = EV_[1,0]*EV_[1,0]
+        V2CB = V2SQ*EV_[1,0]
+        X1M3 = EV_[0,0]-3.0
         X1M3M9 = X1M3*X1M3-9.0
         f_   = RT3X27*X1M3M9*V2CB
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -204,7 +202,7 @@ class  HS24(CUTEst_problem):
                 H_[0,0] = 2.0*RT3X27*V2CB
                 H_[0,1] = 6.0*X1M3*RT3X27*V2SQ
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 6.0*X1M3M9*RT3X27*EV_[1]
+                H_[1,1] = 6.0*X1M3M9*RT3X27*EV_[1,0]
         if nargout == 1:
             return f_
         elif nargout == 2:

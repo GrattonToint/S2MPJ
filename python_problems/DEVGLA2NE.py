@@ -25,7 +25,7 @@ class  DEVGLA2NE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEVGLA2NE'
@@ -222,13 +222,13 @@ class  DEVGLA2NE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        X2T = EV_[1]**self.elpar[iel_][0]
+        X2T = EV_[1,0]**self.elpar[iel_][0]
         F2 = X2T
-        F2X2 = self.elpar[iel_][0]*EV_[1]**(self.elpar[iel_][0]-1.0e0)
+        F2X2 = self.elpar[iel_][0]*EV_[1,0]**(self.elpar[iel_][0]-1.0e0)
         F2X2X2  = (
-              self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0e0)*EV_[1]**(self.elpar[iel_][0]-2.0e0))
-        X3T = EV_[2]*self.elpar[iel_][0]
-        X4T = EV_[3]*self.elpar[iel_][0]
+              self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0e0)*EV_[1,0]**(self.elpar[iel_][0]-2.0e0))
+        X3T = EV_[2,0]*self.elpar[iel_][0]
+        X4T = EV_[3,0]*self.elpar[iel_][0]
         SINX4T = np.sin(X4T)
         COSX4T = np.cos(X4T)
         A = X3T+SINX4T
@@ -244,16 +244,14 @@ class  DEVGLA2NE(CUTEst_problem):
         F3X3X3 = FAA*AX3*AX3
         F3X3X4 = FAA*AX3*AX4
         F3X4X4 = FA*AX4X4+FAA*AX4*AX4
-        EX5 = np.exp(EV_[4])
+        EX5 = np.exp(EV_[4,0])
         TEX5 = self.elpar[iel_][0]*EX5
         STEX5 = np.sin(TEX5)
         CTEX5 = np.cos(TEX5)
         F4 = CTEX5
         F4X5 = -STEX5*TEX5
         F4X5X5 = -STEX5*TEX5-CTEX5*TEX5*TEX5
-        f_   = EV_[0]*F2*F3*F4
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*F2*F3*F4
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -261,10 +259,10 @@ class  DEVGLA2NE(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = F2*F3*F4
-            g_[1] = EV_[0]*F2X2*F3*F4
-            g_[2] = EV_[0]*F2*F3X3*F4
-            g_[3] = EV_[0]*F2*F3X4*F4
-            g_[4] = EV_[0]*F2*F3*F4X5
+            g_[1] = EV_[0,0]*F2X2*F3*F4
+            g_[2] = EV_[0,0]*F2*F3X3*F4
+            g_[3] = EV_[0,0]*F2*F3X4*F4
+            g_[4] = EV_[0,0]*F2*F3*F4X5
             if nargout>2:
                 H_ = np.zeros((5,5))
                 H_[0,1] = F2X2*F3*F4
@@ -275,22 +273,22 @@ class  DEVGLA2NE(CUTEst_problem):
                 H_[3,0] = H_[0,3]
                 H_[0,4] = F2*F3*F4X5
                 H_[4,0] = H_[0,4]
-                H_[1,1] = EV_[0]*F2X2X2*F3*F4
-                H_[1,2] = EV_[0]*F2X2*F3X3*F4
+                H_[1,1] = EV_[0,0]*F2X2X2*F3*F4
+                H_[1,2] = EV_[0,0]*F2X2*F3X3*F4
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*F2X2*F3X4*F4
+                H_[1,3] = EV_[0,0]*F2X2*F3X4*F4
                 H_[3,1] = H_[1,3]
-                H_[1,4] = EV_[0]*F2X2*F3*F4X5
+                H_[1,4] = EV_[0,0]*F2X2*F3*F4X5
                 H_[4,1] = H_[1,4]
-                H_[2,2] = EV_[0]*F2*F3X3X3*F4
-                H_[2,3] = EV_[0]*F2*F3X3X4*F4
+                H_[2,2] = EV_[0,0]*F2*F3X3X3*F4
+                H_[2,3] = EV_[0,0]*F2*F3X3X4*F4
                 H_[3,2] = H_[2,3]
-                H_[2,4] = EV_[0]*F2*F3X3*F4X5
+                H_[2,4] = EV_[0,0]*F2*F3X3*F4X5
                 H_[4,2] = H_[2,4]
-                H_[3,3] = EV_[0]*F2*F3X4X4*F4
-                H_[3,4] = EV_[0]*F2*F3X4*F4X5
+                H_[3,3] = EV_[0,0]*F2*F3X4X4*F4
+                H_[3,4] = EV_[0,0]*F2*F3X4*F4X5
                 H_[4,3] = H_[3,4]
-                H_[4,4] = EV_[0]*F2*F3*F4X5X5
+                H_[4,4] = EV_[0,0]*F2*F3*F4X5X5
         if nargout == 1:
             return f_
         elif nargout == 2:

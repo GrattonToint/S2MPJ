@@ -17,6 +17,7 @@ class  LIN(CUTEst_problem):
 #    Computers & Chemical Engineering, (submitted), 1994.
 # 
 #    SIF input: Marcel Mongeau, 9 February 1994.
+#               slightly modified to avoid division by zero at the strating point
 # 
 #    classification = "C-COLR2-AY-4-2"
 # 
@@ -26,7 +27,7 @@ class  LIN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LIN'
@@ -123,8 +124,8 @@ class  LIN(CUTEst_problem):
         self.x0 = np.zeros((self.n,1))
         self.y0 = np.zeros((self.m,1))
         self.x0[ix_['X'+str(int(v_['1']))+','+str(int(v_['1']))]] = float(0.5)
-        self.x0[ix_['X'+str(int(v_['1']))+','+str(int(v_['2']))]] = float(0.0)
-        self.x0[ix_['X'+str(int(v_['2']))+','+str(int(v_['1']))]] = float(0.0)
+        self.x0[ix_['X'+str(int(v_['1']))+','+str(int(v_['2']))]] = float(1.e-30)
+        self.x0[ix_['X'+str(int(v_['2']))+','+str(int(v_['1']))]] = float(1.e-30)
         self.x0[ix_['X'+str(int(v_['2']))+','+str(int(v_['2']))]] = float(0.5)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
@@ -379,12 +380,12 @@ class  LIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        INSUM1 = EV_[0]*self.elpar[iel_][0]+EV_[1]*self.elpar[iel_][2]
-        INSUM2 = EV_[0]*self.elpar[iel_][1]+EV_[1]*self.elpar[iel_][3]
+        INSUM1 = EV_[0,0]*self.elpar[iel_][0]+EV_[1,0]*self.elpar[iel_][2]
+        INSUM2 = EV_[0,0]*self.elpar[iel_][1]+EV_[1,0]*self.elpar[iel_][3]
         RATIO1 = self.elpar[iel_][4]/INSUM1
         RATIO2 = self.elpar[iel_][5]/INSUM2
-        TERM1 = EV_[0]*RATIO1
-        TERM2 = EV_[1]*RATIO2
+        TERM1 = EV_[0,0]*RATIO1
+        TERM2 = EV_[1,0]*RATIO2
         SUM = TERM1+TERM2
         SQ1 = TERM1/INSUM1
         SQ2 = TERM2/INSUM2
@@ -407,23 +408,21 @@ class  LIN(CUTEst_problem):
         H3 = SQ1*self.elpar[iel_][2]**2/INSUM1
         H4 = self.elpar[iel_][5]*self.elpar[iel_][3]/INSUM2**2
         H5 = SQ2*self.elpar[iel_][3]**2/INSUM2
-        f_   = EV_[0]*SUM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*SUM
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = SUM+EV_[0]*TRI1
-            g_[1] = EV_[0]*TRI2
+            g_[0] = SUM+EV_[0,0]*TRI1
+            g_[1] = EV_[0,0]*TRI2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 2*(TRI1+EV_[0]*(-SQ11+CUB11+CUB12))
-                H_[0,1] = H1+EV_[0]*(-H2+2*(CUBM21+CUBM22))
+                H_[0,0] = 2*(TRI1+EV_[0,0]*(-SQ11+CUB11+CUB12))
+                H_[0,1] = H1+EV_[0,0]*(-H2+2*(CUBM21+CUBM22))
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 2*EV_[0]*(H3-H4+H5)
+                H_[1,1] = 2*EV_[0,0]*(H3-H4+H5)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -437,12 +436,12 @@ class  LIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        INSUM1 = EV_[0]*self.elpar[iel_][0]+EV_[1]*self.elpar[iel_][2]
-        INSUM2 = EV_[0]*self.elpar[iel_][1]+EV_[1]*self.elpar[iel_][3]
+        INSUM1 = EV_[0,0]*self.elpar[iel_][0]+EV_[1,0]*self.elpar[iel_][2]
+        INSUM2 = EV_[0,0]*self.elpar[iel_][1]+EV_[1,0]*self.elpar[iel_][3]
         RATIO1 = self.elpar[iel_][6]/INSUM1
         RATIO2 = self.elpar[iel_][7]/INSUM2
-        TERM1 = EV_[0]*RATIO1
-        TERM2 = EV_[1]*RATIO2
+        TERM1 = EV_[0,0]*RATIO1
+        TERM2 = EV_[1,0]*RATIO2
         SUM = TERM1+TERM2
         SQ1 = TERM1/INSUM1
         SQ2 = TERM2/INSUM2
@@ -465,23 +464,21 @@ class  LIN(CUTEst_problem):
         H3 = SQ1*self.elpar[iel_][0]**2/INSUM1
         H4 = self.elpar[iel_][6]*self.elpar[iel_][0]/INSUM1**2
         H5 = SQ2*self.elpar[iel_][1]**2/INSUM2
-        f_   = EV_[1]*SUM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[1,0]*SUM
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*TRI1
-            g_[1] = SUM+EV_[1]*TRI2
+            g_[0] = EV_[1,0]*TRI1
+            g_[1] = SUM+EV_[1,0]*TRI2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 2*EV_[1]*(H3-H4+H5)
-                H_[0,1] = H1+EV_[1]*(-H2+2*(CUBM21+CUBM22))
+                H_[0,0] = 2*EV_[1,0]*(H3-H4+H5)
+                H_[0,1] = H1+EV_[1,0]*(-H2+2*(CUBM21+CUBM22))
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 2*(TRI2+EV_[1]*(-SQ22+CUB21+CUB22))
+                H_[1,1] = 2*(TRI2+EV_[1,0]*(-SQ22+CUB21+CUB22))
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -495,10 +492,8 @@ class  LIN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        LOGX = np.log(EV_[0])
-        f_   = EV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        LOGX = np.log(EV_[0,0])
+        f_   = EV_[0,0]*LOGX
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -508,7 +503,7 @@ class  LIN(CUTEst_problem):
             g_[0] = LOGX+1.0
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 1.0/EV_[0]
+                H_[0,0] = 1.0/EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -527,12 +522,10 @@ class  LIN(CUTEst_problem):
         U_[1,1] = U_[1,1]+1
         U_[1,2] = U_[1,2]+1
         U_[0,0] = U_[0,0]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGX = np.log(IV_[1])
         f_   = IV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

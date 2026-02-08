@@ -10,6 +10,7 @@ ALJAZZAF.py
 ALLINITA.py
 ALLINITC.py
 ALLINIT.py
+ALLINIT.py~
 ALLINITU.py
 ALSOTAME.py
 ANTWERP.py
@@ -480,6 +481,9 @@ HS63.py
 HS64.py
 HS65.py
 HS66.py
+HS67.py
+HS68.py
+HS69.py
 HS6.py
 HS70.py
 HS71.py
@@ -497,9 +501,15 @@ HS80.py
 HS81.py
 HS83.py
 HS84.py
+HS85.py
 HS86.py
 HS87.py
+HS88.py
+HS89.py
 HS8.py
+HS90.py
+HS91.py
+HS92.py
 HS93.py
 HS95.py
 HS96.py
@@ -928,6 +938,7 @@ S308.py
 S316m322.py
 S365MOD.py
 S365.py
+S365.py~
 S368.py
 SANTALS.py
 SANTA.py

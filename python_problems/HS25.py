@@ -23,7 +23,7 @@ class  HS25(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS25'
@@ -69,6 +69,7 @@ class  HS25(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['99'])+1):
@@ -170,16 +171,14 @@ class  HS25(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XI = 1.0/EV_[0]
+        XI = 1.0/EV_[0,0]
         X2I = XI*XI
         X3I = X2I*XI
-        WMY = self.elpar[iel_][0]-EV_[1]
-        WMYEZ = WMY**EV_[2]
+        WMY = self.elpar[iel_][0]-EV_[1,0]
+        WMYEZ = WMY**EV_[2,0]
         LWMY = np.log(WMY)
         EXPO = np.exp(-XI*WMYEZ)
         f_   = EXPO
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -187,17 +186,18 @@ class  HS25(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = X2I*WMYEZ*EXPO
-            g_[1] = XI*EV_[2]*WMY**(EV_[2]-1.0)*EXPO
+            g_[1] = XI*EV_[2,0]*WMY**(EV_[2,0]-1.0)*EXPO
             g_[2] = -XI*LWMY*WMYEZ*EXPO
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = EXPO*WMYEZ*X3I*(-2.0+XI*WMY**EV_[2])
-                H_[0,1] = EXPO*EV_[2]*X2I*WMY**(EV_[2]-1.0)*(-1.0+XI*WMYEZ)
+                H_[0,0] = EXPO*WMYEZ*X3I*(-2.0+XI*WMY**EV_[2,0])
+                H_[0,1] = EXPO*EV_[2,0]*X2I*WMY**(EV_[2,0]-1.0)*(-1.0+XI*WMYEZ)
                 H_[1,0] = H_[0,1]
                 H_[0,2] = EXPO*X2I*WMYEZ*LWMY*(1.0-XI*WMYEZ)
                 H_[2,0] = H_[0,2]
-                H_[1,1] = EXPO*XI*WMY**(EV_[2]-2.0)*EV_[2]*(-EV_[2]+1.0+XI*EV_[2]*WMYEZ)
-                H_[1,2] = EXPO*XI*WMY**(EV_[2]-1.0)*(1.0+EV_[2]*LWMY*(1.0-XI*WMYEZ))
+                H_[1,1]  = (
+                      EXPO*XI*WMY**(EV_[2,0]-2.0)*EV_[2,0]*(-EV_[2,0]+1.0+XI*EV_[2,0]*WMYEZ))
+                H_[1,2] = EXPO*XI*WMY**(EV_[2,0]-1.0)*(1.0+EV_[2,0]*LWMY*(1.0-XI*WMYEZ))
                 H_[2,1] = H_[1,2]
                 H_[2,2] = EXPO*WMYEZ*XI*LWMY**2*(-1.0+XI*WMYEZ)
         if nargout == 1:

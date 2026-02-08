@@ -28,7 +28,7 @@ class  TAX13322(CUTEst_problem):
 # IE NA                  1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TAX13322'
@@ -12996,7 +12996,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 1.0e0/2.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13016,8 +13016,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13045,7 +13043,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 2.0e0/3.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13065,8 +13063,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13094,7 +13090,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 1.0e0/2.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13114,8 +13110,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13143,7 +13137,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 2.0e0/3.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13163,8 +13157,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13192,7 +13184,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 1.0e0/2.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13212,8 +13204,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13241,7 +13231,7 @@ class  TAX13322(CUTEst_problem):
         OMEGA = 2.0e0/3.0e0
         OM1 = OMEGA-1.0e0
         OM2 = OMEGA-2.0e0
-        CMA = EV_[0]-ALPHA
+        CMA = EV_[0,0]-ALPHA
         BIG = CMA>=self.efpar[0]
         if BIG!=0:
             F = CMA**OMEGA
@@ -13261,8 +13251,6 @@ class  TAX13322(CUTEst_problem):
         if BIG==0:
             H = C2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -13287,19 +13275,17 @@ class  TAX13322(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         THETA = 1.0e0/3.0e0
-        f_   = EV_[0]**THETA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**THETA
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = THETA*EV_[0]**(THETA-1.0e0)
+            g_[0] = THETA*EV_[0,0]**(THETA-1.0e0)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0]**(THETA-2.0e0)
+                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0,0]**(THETA-2.0e0)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -13314,19 +13300,17 @@ class  TAX13322(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         THETA = 1.0e0/2.0e0
-        f_   = EV_[0]**THETA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**THETA
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = THETA*EV_[0]**(THETA-1.0e0)
+            g_[0] = THETA*EV_[0,0]**(THETA-1.0e0)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0]**(THETA-2.0e0)
+                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0,0]**(THETA-2.0e0)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -13341,19 +13325,17 @@ class  TAX13322(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         THETA = 2.0e0/3.0e0
-        f_   = EV_[0]**THETA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**THETA
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = THETA*EV_[0]**(THETA-1.0e0)
+            g_[0] = THETA*EV_[0,0]**(THETA-1.0e0)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0]**(THETA-2.0e0)
+                H_[0,0] = THETA*(THETA-1.0e0)*EV_[0,0]**(THETA-2.0e0)
         if nargout == 1:
             return f_
         elif nargout == 2:

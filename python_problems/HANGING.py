@@ -35,7 +35,7 @@ class  HANGING(CUTEst_problem):
 # IE NX                  40             $-PARAMETER n = 3600
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HANGING'
@@ -335,10 +335,8 @@ class  HANGING(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         f_   = IV_[0]*IV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

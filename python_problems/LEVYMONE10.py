@@ -28,7 +28,7 @@ class  LEVYMONE10(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEVYMONE10'
@@ -227,12 +227,10 @@ class  LEVYMONE10(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         PIL = self.efpar[0]*self.elpar[iel_][0]
-        V = PIL*EV_[0]+self.efpar[0]*self.elpar[iel_][1]
+        V = PIL*EV_[0,0]+self.efpar[0]*self.elpar[iel_][1]
         SINV = np.sin(V)
         COSV = np.cos(V)
         f_   = SINV
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -257,13 +255,11 @@ class  LEVYMONE10(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         PIL = self.efpar[0]*self.elpar[iel_][0]
-        U = self.elpar[iel_][0]*EV_[1]+self.elpar[iel_][1]-self.elpar[iel_][2]
-        V = PIL*EV_[0]+self.efpar[0]*self.elpar[iel_][1]
+        U = self.elpar[iel_][0]*EV_[1,0]+self.elpar[iel_][1]-self.elpar[iel_][2]
+        V = PIL*EV_[0,0]+self.efpar[0]*self.elpar[iel_][1]
         SINV = np.sin(V)
         COSV = np.cos(V)
         f_   = U*SINV
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

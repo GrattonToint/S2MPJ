@@ -31,7 +31,7 @@ class  TOINTGSS(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TOINTGSS'
@@ -79,6 +79,7 @@ class  TOINTGSS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -159,8 +160,8 @@ class  TOINTGSS(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
         U_[1,2] = U_[1,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         ALPHA = 0.1
         U1SQ = IV_[0]*IV_[0]
         U2SQ = IV_[1]*IV_[1]
@@ -175,8 +176,6 @@ class  TOINTGSS(CUTEst_problem):
         EXPA22 = 2.0*U1SQ*(IV_[1]*EXPA2+EXPA*(1.0-4.0*U2SQ/T))/T2
         TMEXPA = 2.0-EXPA
         f_   = AU2SQ*TMEXPA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

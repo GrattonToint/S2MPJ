@@ -29,7 +29,7 @@ class  KOWOSBNE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'KOWOSBNE'
@@ -250,17 +250,15 @@ class  KOWOSBNE(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         USQ = self.elpar[iel_][0]*self.elpar[iel_][0]
-        B1 = USQ+self.elpar[iel_][0]*EV_[1]
-        B2 = USQ+self.elpar[iel_][0]*EV_[2]+EV_[3]
+        B1 = USQ+self.elpar[iel_][0]*EV_[1,0]
+        B2 = USQ+self.elpar[iel_][0]*EV_[2,0]+EV_[3,0]
         B2SQ = B2*B2
         B2CB = B2*B2SQ
-        UV1 = self.elpar[iel_][0]*EV_[0]
+        UV1 = self.elpar[iel_][0]*EV_[0,0]
         UB1 = self.elpar[iel_][0]*B1
         T1 = B1/B2SQ
         T2 = 2.0/B2CB
-        f_   = EV_[0]*B1/B2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*B1/B2
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -270,7 +268,7 @@ class  KOWOSBNE(CUTEst_problem):
             g_[0] = B1/B2
             g_[1] = UV1/B2
             g_[2] = -UV1*T1
-            g_[3] = -EV_[0]*T1
+            g_[3] = -EV_[0,0]*T1
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,1] = self.elpar[iel_][0]/B2
@@ -286,7 +284,7 @@ class  KOWOSBNE(CUTEst_problem):
                 H_[2,2] = T2*UV1*UB1
                 H_[2,3] = T2*UV1*B1
                 H_[3,2] = H_[2,3]
-                H_[3,3] = T2*EV_[0]*B1
+                H_[3,3] = T2*EV_[0,0]*B1
         if nargout == 1:
             return f_
         elif nargout == 2:

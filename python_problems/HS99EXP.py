@@ -21,7 +21,7 @@ class  HS99EXP(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS99EXP'
@@ -259,17 +259,15 @@ class  HS99EXP(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SNX = np.sin(EV_[0])
+        SNX = np.sin(EV_[0,0])
         f_   = SNX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = np.cos(EV_[0])
+            g_[0] = np.cos(EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = -SNX
@@ -286,17 +284,15 @@ class  HS99EXP(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        CSX = np.cos(EV_[0])
+        CSX = np.cos(EV_[0,0])
         f_   = CSX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -np.sin(EV_[0])
+            g_[0] = -np.sin(EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = -CSX

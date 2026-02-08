@@ -25,7 +25,7 @@ class  DEVGLA1NE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEVGLA1NE'
@@ -205,17 +205,15 @@ class  DEVGLA1NE(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A = self.elpar[iel_][0]*EV_[2]+EV_[3]
+        A = self.elpar[iel_][0]*EV_[2,0]+EV_[3,0]
         SINA = np.sin(A)
         COSA = np.cos(A)
-        X2T = EV_[1]**self.elpar[iel_][0]
-        DX2T = self.elpar[iel_][0]*EV_[1]**(self.elpar[iel_][0]-1.0e0)
+        X2T = EV_[1,0]**self.elpar[iel_][0]
+        DX2T = self.elpar[iel_][0]*EV_[1,0]**(self.elpar[iel_][0]-1.0e0)
         D2X2T  = (
-              self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0e0)*EV_[1]**(self.elpar[iel_][0]-2.0e0))
-        X1X2T = EV_[0]*X2T
+              self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0e0)*EV_[1,0]**(self.elpar[iel_][0]-2.0e0))
+        X1X2T = EV_[0,0]*X2T
         f_   = X1X2T*SINA
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -223,7 +221,7 @@ class  DEVGLA1NE(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = X2T*SINA
-            g_[1] = EV_[0]*DX2T*SINA
+            g_[1] = EV_[0,0]*DX2T*SINA
             g_[2] = X1X2T*COSA*self.elpar[iel_][0]
             g_[3] = X1X2T*COSA
             if nargout>2:
@@ -234,10 +232,10 @@ class  DEVGLA1NE(CUTEst_problem):
                 H_[2,0] = H_[0,2]
                 H_[0,3] = X2T*COSA
                 H_[3,0] = H_[0,3]
-                H_[1,1] = EV_[0]*D2X2T*SINA
-                H_[1,2] = EV_[0]*DX2T*COSA*self.elpar[iel_][0]
+                H_[1,1] = EV_[0,0]*D2X2T*SINA
+                H_[1,2] = EV_[0,0]*DX2T*COSA*self.elpar[iel_][0]
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*DX2T*COSA
+                H_[1,3] = EV_[0,0]*DX2T*COSA
                 H_[3,1] = H_[1,3]
                 H_[2,2] = -X1X2T*SINA*self.elpar[iel_][0]*self.elpar[iel_][0]
                 H_[2,3] = -X1X2T*SINA*self.elpar[iel_][0]

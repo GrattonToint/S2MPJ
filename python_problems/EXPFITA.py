@@ -24,7 +24,7 @@ class  EXPFITA(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPFITA'
@@ -252,11 +252,11 @@ class  EXPFITA(CUTEst_problem):
         TM5SQ = TM5*TM5
         T2 = self.elpar[iel_][0]*self.elpar[iel_][0]
         ET = np.exp(self.elpar[iel_][0])
-        QT = 1.0+EV_[3]*TM5+EV_[4]*TM5SQ
+        QT = 1.0+EV_[3,0]*TM5+EV_[4,0]*TM5SQ
         ETQT = ET*QT
         ETQT2 = ETQT*QT
         ETQT3 = ETQT2*QT
-        PT = EV_[0]+EV_[1]*self.elpar[iel_][0]+EV_[2]*T2
+        PT = EV_[0,0]+EV_[1,0]*self.elpar[iel_][0]+EV_[2,0]*T2
         F = PT/ETQT-1.0
         TWOF = F+F
         DFDP0 = 1.0/ETQT
@@ -274,8 +274,6 @@ class  EXPFITA(CUTEst_problem):
         D2Q1Q2 = 2.0*PT*TM5SQ*TM5/ETQT3
         D2Q2Q2 = 2.0*PT*TM5SQ*TM5SQ/ETQT3
         f_   = F*F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

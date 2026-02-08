@@ -44,5 +44,15 @@ Release notes for S2MPJ
 8 X 2025    : correction to ranges of inequality constraints
 
 31 X 2025   : again a correction to infinite ranges of inequality constraints
-              forcing pb.clower and pb.cupper tto be column vectors (in Matlab)
+              forcing pb.clower and pb.cupper to be column vectors (in Matlab)
+              
+3 II 2026   : update s2mpjlib.py to avoid converting 1-dimensional arrays to scalars,
+              which is no longer accepted in Numpy 2.4.2 (thanks to Cunxin Huang)
+
+6 II 2026   : minor modifications to the starting point in problems DITTERT, LIN,
+              S365 and S365MOD to avoid dividion by zero at the starting point
+
+
+6 II 2026   : added problems HS67, HS68, HS69, HS85, HS88, HS89, HS90, HS91 and HS92,
+              hand_coded by Cunxin Hunag in Matlab, Python and Julia (thanks Cunxin!)
               

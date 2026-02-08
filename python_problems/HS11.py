@@ -19,7 +19,7 @@ class  HS11(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS11'
@@ -189,10 +189,8 @@ class  HS11(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        X = EV_[0]-self.elpar[iel_][0]
+        X = EV_[0,0]-self.elpar[iel_][0]
         f_   = X*X
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

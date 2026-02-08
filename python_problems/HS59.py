@@ -19,7 +19,7 @@ class  HS59(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS59'
@@ -489,20 +489,18 @@ class  HS59(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]**self.elpar[iel_][0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**self.elpar[iel_][0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*EV_[0]**(self.elpar[iel_][0]-1.0)
+            g_[0] = self.elpar[iel_][0]*EV_[0,0]**(self.elpar[iel_][0]-1.0)
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0]  = (
-                      self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0)*EV_[0]**(self.elpar[iel_][0]-2.0))
+                      self.elpar[iel_][0]*(self.elpar[iel_][0]-1.0)*EV_[0,0]**(self.elpar[iel_][0]-2.0))
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -516,29 +514,28 @@ class  HS59(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V1P1 = EV_[0]**self.elpar[iel_][0]
-        V2P2 = EV_[1]**self.elpar[iel_][1]
+        V1P1 = EV_[0,0]**self.elpar[iel_][0]
+        V2P2 = EV_[1,0]**self.elpar[iel_][1]
         P1M1 = self.elpar[iel_][0]-1.0
         P2M1 = self.elpar[iel_][1]-1.0
         EH1 = max(0.0e0,self.elpar[iel_][0]-2.0)
         EH2 = max(0.0e0,self.elpar[iel_][1]-2.0)
         f_   = V1P1*V2P2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*EV_[0]**P1M1*V2P2
-            g_[1] = V1P1*self.elpar[iel_][1]*EV_[1]**P2M1
+            g_[0] = self.elpar[iel_][0]*EV_[0,0]**P1M1*V2P2
+            g_[1] = V1P1*self.elpar[iel_][1]*EV_[1,0]**P2M1
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = self.elpar[iel_][0]*P1M1*EV_[0]**EH1*V2P2
-                H_[0,1] = self.elpar[iel_][0]*EV_[0]**P1M1*self.elpar[iel_][1]*EV_[1]**P2M1
+                H_[0,0] = self.elpar[iel_][0]*P1M1*EV_[0,0]**EH1*V2P2
+                H_[0,1]  = (
+                      self.elpar[iel_][0]*EV_[0,0]**P1M1*self.elpar[iel_][1]*EV_[1,0]**P2M1)
                 H_[1,0] = H_[0,1]
-                H_[1,1] = V1P1*self.elpar[iel_][1]*P2M1*EV_[1]**EH2
+                H_[1,1] = V1P1*self.elpar[iel_][1]*P2M1*EV_[1,0]**EH2
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -552,24 +549,22 @@ class  HS59(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E = np.exp(0.0005*EV_[0]*EV_[1])
+        E = np.exp(0.0005*EV_[0,0]*EV_[1,0])
         f_   = E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 0.0005*EV_[1]*E
-            g_[1] = 0.0005*EV_[0]*E
+            g_[0] = 0.0005*EV_[1,0]*E
+            g_[1] = 0.0005*EV_[0,0]*E
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 2.5e-7*EV_[1]*EV_[1]*E
-                H_[0,1] = 2.5e-7*EV_[0]*EV_[1]*E+0.0005*E
+                H_[0,0] = 2.5e-7*EV_[1,0]*EV_[1,0]*E
+                H_[0,1] = 2.5e-7*EV_[0,0]*EV_[1,0]*E+0.0005*E
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 2.5e-7*EV_[0]*EV_[0]*E
+                H_[1,1] = 2.5e-7*EV_[0,0]*EV_[0,0]*E
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -583,10 +578,8 @@ class  HS59(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        VMS = EV_[0]-self.elpar[iel_][1]
+        VMS = EV_[0,0]-self.elpar[iel_][1]
         f_   = VMS**self.elpar[iel_][0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

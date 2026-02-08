@@ -162,6 +162,7 @@ case { 'fx', 'fgx', 'fgHx', 'cx', 'cJx', 'cJHx', 'cIx', 'cIJx', 'cIJHx', 'fHxv',
 
    switch ( action )
    case { 'fx', 'fgx', 'fgHx' }                      % varargin = { pbm, x }
+
       if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ...
            ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
          [varargout{1:nargout}] = evalgrsum( 1, pbm.objgrps, varargin{2}, pbm );

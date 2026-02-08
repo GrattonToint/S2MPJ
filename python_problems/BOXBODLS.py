@@ -26,7 +26,7 @@ class  BOXBODLS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BOXBODLS'
@@ -83,6 +83,7 @@ class  BOXBODLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -166,10 +167,8 @@ class  BOXBODLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E = np.exp(-EV_[1]*self.elpar[iel_][0])
-        f_   = EV_[0]*E
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        E = np.exp(-EV_[1,0]*self.elpar[iel_][0])
+        f_   = EV_[0,0]*E
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -177,12 +176,12 @@ class  BOXBODLS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = E
-            g_[1] = -EV_[0]*self.elpar[iel_][0]*E
+            g_[1] = -EV_[0,0]*self.elpar[iel_][0]*E
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = -self.elpar[iel_][0]*E
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]*self.elpar[iel_][0]*self.elpar[iel_][0]*E
+                H_[1,1] = EV_[0,0]*self.elpar[iel_][0]*self.elpar[iel_][0]*E
         if nargout == 1:
             return f_
         elif nargout == 2:

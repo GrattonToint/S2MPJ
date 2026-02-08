@@ -17,7 +17,7 @@ class  AVION2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AVION2'
@@ -1045,17 +1045,15 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0e0
@@ -1073,13 +1071,11 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        QD = EV_[0]-EV_[1]-EV_[2]*EV_[3]
-        SQ = EV_[3]**2
+        QD = EV_[0,0]-EV_[1,0]-EV_[2,0]*EV_[3,0]
+        SQ = EV_[3,0]**2
         RSQ = 1.0e0/SQ
         QDOSQ = QD/SQ
         f_   = QDOSQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1088,17 +1084,17 @@ class  AVION2(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = RSQ
             g_[1] = -RSQ
-            g_[2] = -1.0e0/EV_[3]
-            g_[3] = -EV_[2]/SQ-2.0e0*QDOSQ/EV_[3]
+            g_[2] = -1.0e0/EV_[3,0]
+            g_[3] = -EV_[2,0]/SQ-2.0e0*QDOSQ/EV_[3,0]
             if nargout>2:
                 H_ = np.zeros((4,4))
-                H_[0,3] = -2.0e0/(SQ*EV_[3])
+                H_[0,3] = -2.0e0/(SQ*EV_[3,0])
                 H_[3,0] = H_[0,3]
-                H_[1,3] = 2.0e0/(SQ*EV_[3])
+                H_[1,3] = 2.0e0/(SQ*EV_[3,0])
                 H_[3,1] = H_[1,3]
                 H_[2,3] = RSQ
                 H_[3,2] = H_[2,3]
-                H_[3,3] = (4.0e0*EV_[2])/(SQ*EV_[3])+6.0e0*QDOSQ/SQ
+                H_[3,3] = (4.0e0*EV_[2,0])/(SQ*EV_[3,0])+6.0e0*QDOSQ/SQ
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1112,22 +1108,20 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]/EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]/EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.0/EV_[1]
-            g_[1] = -EV_[0]/EV_[1]**2
+            g_[0] = 1.0/EV_[1,0]
+            g_[1] = -EV_[0,0]/EV_[1,0]**2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = -1.0e0/EV_[1]**2
+                H_[0,1] = -1.0e0/EV_[1,0]**2
                 H_[1,0] = H_[0,1]
-                H_[1,1] = (2.0e0*EV_[0])/EV_[1]**3
+                H_[1,1] = (2.0e0*EV_[0,0])/EV_[1,0]**3
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1141,30 +1135,28 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ZSQ = EV_[2]**2
-        YSQ = EV_[1]**2
-        f_   = (EV_[0]*YSQ)/EV_[2]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        ZSQ = EV_[2,0]**2
+        YSQ = EV_[1,0]**2
+        f_   = (EV_[0,0]*YSQ)/EV_[2,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = YSQ/EV_[2]
-            g_[1] = (2.0e0*EV_[0]*EV_[1])/EV_[2]
-            g_[2] = -(EV_[0]*YSQ)/ZSQ
+            g_[0] = YSQ/EV_[2,0]
+            g_[1] = (2.0e0*EV_[0,0]*EV_[1,0])/EV_[2,0]
+            g_[2] = -(EV_[0,0]*YSQ)/ZSQ
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = (2.0e0*EV_[1])/EV_[2]
+                H_[0,1] = (2.0e0*EV_[1,0])/EV_[2,0]
                 H_[1,0] = H_[0,1]
                 H_[0,2] = -YSQ/ZSQ
                 H_[2,0] = H_[0,2]
-                H_[1,1] = (2.0e0*EV_[0])/EV_[2]
-                H_[1,2] = -(2.0e0*EV_[0]*EV_[1])/ZSQ
+                H_[1,1] = (2.0e0*EV_[0,0])/EV_[2,0]
+                H_[1,2] = -(2.0e0*EV_[0,0]*EV_[1,0])/ZSQ
                 H_[2,1] = H_[1,2]
-                H_[2,2] = (2.0e0*EV_[0]*YSQ)/(ZSQ*EV_[2])
+                H_[2,2] = (2.0e0*EV_[0,0]*YSQ)/(ZSQ*EV_[2,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1178,16 +1170,14 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0e0*EV_[0]
+            g_[0] = 2.0e0*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0e0
@@ -1204,22 +1194,20 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]/EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]/EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.0/EV_[1]
-            g_[1] = -EV_[0]/EV_[1]**2
+            g_[0] = 1.0/EV_[1,0]
+            g_[1] = -EV_[0,0]/EV_[1,0]**2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = -1.0e0/EV_[1]**2
+                H_[0,1] = -1.0e0/EV_[1,0]**2
                 H_[1,0] = H_[0,1]
-                H_[1,1] = (2.0e0*EV_[0])/EV_[1]**3
+                H_[1,1] = (2.0e0*EV_[0,0])/EV_[1,0]**3
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1233,10 +1221,8 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        LIN = EV_[1]+20.0e0
-        f_   = EV_[0]/LIN
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        LIN = EV_[1,0]+20.0e0
+        f_   = EV_[0,0]/LIN
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1244,12 +1230,12 @@ class  AVION2(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = 1.0/LIN
-            g_[1] = -EV_[0]/LIN**2
+            g_[1] = -EV_[0,0]/LIN**2
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = -1.0e0/LIN**2
                 H_[1,0] = H_[0,1]
-                H_[1,1] = (2.0e0*EV_[0])/LIN**3
+                H_[1,1] = (2.0e0*EV_[0,0])/LIN**3
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1263,10 +1249,8 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        RTZ = np.sqrt(EV_[0])
+        RTZ = np.sqrt(EV_[0,0])
         f_   = RTZ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1276,7 +1260,7 @@ class  AVION2(CUTEst_problem):
             g_[0] = 0.5e0/RTZ
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = -0.25e0/(EV_[0]*RTZ)
+                H_[0,0] = -0.25e0/(EV_[0,0]*RTZ)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1290,32 +1274,30 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        RTX = np.sqrt(EV_[0])
-        RTZ = np.sqrt(EV_[2])
-        XRTX = EV_[0]*np.sqrt(EV_[0])
-        ZRTZ = EV_[2]*np.sqrt(EV_[2])
-        f_   = XRTX*EV_[1]/RTZ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        RTX = np.sqrt(EV_[0,0])
+        RTZ = np.sqrt(EV_[2,0])
+        XRTX = EV_[0,0]*np.sqrt(EV_[0,0])
+        ZRTZ = EV_[2,0]*np.sqrt(EV_[2,0])
+        f_   = XRTX*EV_[1,0]/RTZ
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.5e0*RTX*EV_[1]/RTZ
+            g_[0] = 1.5e0*RTX*EV_[1,0]/RTZ
             g_[1] = XRTX/RTZ
-            g_[2] = -(0.5e0*XRTX*EV_[1])/ZRTZ
+            g_[2] = -(0.5e0*XRTX*EV_[1,0])/ZRTZ
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = 0.75e0*EV_[1]/(RTZ*RTX)
+                H_[0,0] = 0.75e0*EV_[1,0]/(RTZ*RTX)
                 H_[0,1] = 1.5e0*RTX/RTZ
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -(0.75e0*RTX*EV_[1])/ZRTZ
+                H_[0,2] = -(0.75e0*RTX*EV_[1,0])/ZRTZ
                 H_[2,0] = H_[0,2]
                 H_[1,2] = -(0.5e0*XRTX)/ZRTZ
                 H_[2,1] = H_[1,2]
-                H_[2,2] = (0.75e0*XRTX*EV_[1])/(ZRTZ*EV_[2])
+                H_[2,2] = (0.75e0*XRTX*EV_[1,0])/(ZRTZ*EV_[2,0])
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1329,21 +1311,19 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]**2*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]**2*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0e0*EV_[0]*EV_[1]
-            g_[1] = EV_[0]**2
+            g_[0] = 2.0e0*EV_[0,0]*EV_[1,0]
+            g_[1] = EV_[0,0]**2
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = 2.0e0*EV_[1]
-                H_[0,1] = 2.0e0*EV_[0]
+                H_[0,0] = 2.0e0*EV_[1,0]
+                H_[0,1] = 2.0e0*EV_[0,0]
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_
@@ -1358,14 +1338,12 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YCB = EV_[2]**3
-        CB = EV_[0]-EV_[1]*YCB
-        TMZY = 3.0e0-EV_[3]*EV_[2]
-        SQQD = EV_[2]**2*TMZY
-        DYSQQD = 3.0e0*EV_[2]*(2.0e0-EV_[3]*EV_[2])
+        YCB = EV_[2,0]**3
+        CB = EV_[0,0]-EV_[1,0]*YCB
+        TMZY = 3.0e0-EV_[3,0]*EV_[2,0]
+        SQQD = EV_[2,0]**2*TMZY
+        DYSQQD = 3.0e0*EV_[2,0]*(2.0e0-EV_[3,0]*EV_[2,0])
         f_   = CB/SQQD
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1374,7 +1352,7 @@ class  AVION2(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = 1.0e0/SQQD
             g_[1] = -YCB/SQQD
-            g_[2] = -3.0e0*EV_[1]*EV_[2]**2/SQQD-(CB*DYSQQD)/(SQQD*SQQD)
+            g_[2] = -3.0e0*EV_[1,0]*EV_[2,0]**2/SQQD-(CB*DYSQQD)/(SQQD*SQQD)
             g_[3] = (YCB*CB)/SQQD**2
             if nargout>2:
                 H_ = np.zeros((4,4))
@@ -1386,10 +1364,10 @@ class  AVION2(CUTEst_problem):
                 H_[2,1] = H_[1,2]
                 H_[1,3] = -(YCB**2*CB)/SQQD**2
                 H_[3,1] = H_[1,3]
-                H_[2,2] = (-6.0e0*EV_[1]*EV_[2]/SQQD+(3.0e0*EV_[1]*EV_[2]**2*DYSQQD)/
-                     SQQD**2+(2.0e0*CB*DYSQQD**2)/SQQD**3-(6.0e0*CB*(1.0-EV_[3]*EV_[2]))/SQQD**2)
-                H_[2,3] = (-(3.0e0*EV_[1]*EV_[2])/TMZY**2-(6.0e0*EV_[2]**4*(TMZY-1.0e0)*CB)/
-                     SQQD**3+3.0e0*CB*EV_[2]**2/SQQD**2)
+                H_[2,2] = (-6.0e0*EV_[1,0]*EV_[2,0]/SQQD+(3.0e0*EV_[1,0]*EV_[2,0]**2*DYSQQD)/
+                     SQQD**2+(2.0e0*CB*DYSQQD**2)/SQQD**3-(6.0e0*CB*(1.0-EV_[3,0]*EV_[2,0]))/SQQD**2)
+                H_[2,3]  = (
+                      -(3.0e0*EV_[1,0]*EV_[2,0])/TMZY**2-(6.0e0*EV_[2,0]**4*(TMZY-1.0e0)*CB)/SQQD**3+3.0e0*CB*EV_[2,0]**2/SQQD**2)
                 H_[3,2] = H_[2,3]
                 H_[3,3] = 2.0e0*(YCB**2*CB)/SQQD**3
         if nargout == 1:
@@ -1405,16 +1383,14 @@ class  AVION2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SRLIN = 15.0e0+0.15e0*EV_[0]
-        SRPD = EV_[1]*EV_[2]
-        SRQD = 50.0e0*EV_[3]*EV_[4]
+        SRLIN = 15.0e0+0.15e0*EV_[0,0]
+        SRPD = EV_[1,0]*EV_[2,0]
+        SRQD = 50.0e0*EV_[3,0]*EV_[4,0]
         SRQT = SRPD/SRQD
         SRRT = np.sqrt(SRQT)
-        SRSUM = 15.0e0+0.3e0*EV_[0]
-        SRVLN = EV_[0]*SRLIN
-        f_   = EV_[0]*SRLIN*(SRQT*SRRT+8.0e0)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        SRSUM = 15.0e0+0.3e0*EV_[0,0]
+        SRVLN = EV_[0,0]*SRLIN
+        f_   = EV_[0,0]*SRLIN*(SRQT*SRRT+8.0e0)
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -1422,37 +1398,37 @@ class  AVION2(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = SRSUM*(SRQT*SRRT+8.0e0)
-            g_[1] = 1.5e0*(SRVLN*SRRT*EV_[2]/SRQD)
-            g_[2] = 1.5e0*(SRVLN*SRRT*EV_[1]/SRQD)
-            g_[3] = -1.5e0*SRVLN*SRRT*SRQT/EV_[3]
-            g_[4] = -1.5e0*SRVLN*SRRT*SRQT/EV_[4]
+            g_[1] = 1.5e0*(SRVLN*SRRT*EV_[2,0]/SRQD)
+            g_[2] = 1.5e0*(SRVLN*SRRT*EV_[1,0]/SRQD)
+            g_[3] = -1.5e0*SRVLN*SRRT*SRQT/EV_[3,0]
+            g_[4] = -1.5e0*SRVLN*SRRT*SRQT/EV_[4,0]
             if nargout>2:
                 H_ = np.zeros((5,5))
                 H_[0,0] = 0.3e0*(SRQT*SRRT+8.0)
-                H_[0,1] = 1.5e0*(SRSUM*SRRT*EV_[2]/SRQD)
+                H_[0,1] = 1.5e0*(SRSUM*SRRT*EV_[2,0]/SRQD)
                 H_[1,0] = H_[0,1]
-                H_[0,2] = 1.5e0*(SRSUM*SRRT*EV_[1]/SRQD)
+                H_[0,2] = 1.5e0*(SRSUM*SRRT*EV_[1,0]/SRQD)
                 H_[2,0] = H_[0,2]
-                H_[0,3] = -1.5e0*SRSUM*SRRT*SRQT/EV_[3]
+                H_[0,3] = -1.5e0*SRSUM*SRRT*SRQT/EV_[3,0]
                 H_[3,0] = H_[0,3]
-                H_[0,4] = -1.5e0*SRSUM*SRRT*SRQT/EV_[4]
+                H_[0,4] = -1.5e0*SRSUM*SRRT*SRQT/EV_[4,0]
                 H_[4,0] = H_[0,4]
-                H_[1,1] = (0.75e0*SRVLN*EV_[2]**2)/(SRQD**2*SRRT)
+                H_[1,1] = (0.75e0*SRVLN*EV_[2,0]**2)/(SRQD**2*SRRT)
                 H_[1,2] = SRVLN*((0.75e0*SRPD)/(SRQD**2*SRRT)+(1.5e0*SRRT)/SRQD)
                 H_[2,1] = H_[1,2]
-                H_[1,3] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[1]*EV_[3])
+                H_[1,3] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[1,0]*EV_[3,0])
                 H_[3,1] = H_[1,3]
-                H_[1,4] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[1]*EV_[4])
+                H_[1,4] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[1,0]*EV_[4,0])
                 H_[4,1] = H_[1,4]
-                H_[2,2] = (SRVLN*0.75e0*EV_[1]*EV_[1])/(SRRT*SRQD**2)
-                H_[2,3] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[2]*EV_[3])
+                H_[2,2] = (SRVLN*0.75e0*EV_[1,0]*EV_[1,0])/(SRRT*SRQD**2)
+                H_[2,3] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[2,0]*EV_[3,0])
                 H_[3,2] = H_[2,3]
-                H_[2,4] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[2]*EV_[4])
+                H_[2,4] = -(SRVLN*2.25e0*SRRT*SRQT)/(EV_[2,0]*EV_[4,0])
                 H_[4,2] = H_[2,4]
-                H_[3,3] = (SRVLN*3.75e0*SRRT*SRQT)/EV_[3]**2
-                H_[3,4] = (SRVLN*2.25e0*SRRT*SRQT)/(EV_[3]*EV_[4])
+                H_[3,3] = (SRVLN*3.75e0*SRRT*SRQT)/EV_[3,0]**2
+                H_[3,4] = (SRVLN*2.25e0*SRRT*SRQT)/(EV_[3,0]*EV_[4,0])
                 H_[4,3] = H_[3,4]
-                H_[4,4] = (SRVLN*3.75e0*SRRT*SRQT)/EV_[4]**2
+                H_[4,4] = (SRVLN*3.75e0*SRRT*SRQT)/EV_[4,0]**2
         if nargout == 1:
             return f_
         elif nargout == 2:

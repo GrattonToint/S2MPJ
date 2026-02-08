@@ -33,7 +33,7 @@ class  HS87(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS87'
@@ -392,19 +392,17 @@ class  HS87(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        I1 = EV_[0]<300.0
-        I2 = EV_[0]>=300.0
+        I1 = EV_[0,0]<300.0
+        I2 = EV_[0,0]>=300.0
         if I1!=0:
-            F = 30.0*EV_[0]
+            F = 30.0*EV_[0,0]
         if I2!=0:
-            F = 31.0*EV_[0]
+            F = 31.0*EV_[0,0]
         if I1!=0:
             G = 30.0
         if I2!=0:
             G = 31.0
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -428,15 +426,15 @@ class  HS87(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        I1 = EV_[0]<100.0
-        I2 = EV_[0]>=100.0 and EV_[0]<200.0
-        I3 = EV_[0]>=200.0
+        I1 = EV_[0,0]<100.0
+        I2 = EV_[0,0]>=100.0 and EV_[0,0]<200.0
+        I3 = EV_[0,0]>=200.0
         if I1!=0:
-            F = 28.0*EV_[0]
+            F = 28.0*EV_[0,0]
         if I2!=0:
-            F = 29.0*EV_[0]
+            F = 29.0*EV_[0,0]
         if I3!=0:
-            F = 30.0*EV_[0]
+            F = 30.0*EV_[0,0]
         if I1!=0:
             G = 28.0
         if I2!=0:
@@ -444,8 +442,6 @@ class  HS87(CUTEst_problem):
         if I3!=0:
             G = 30.0
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -469,29 +465,27 @@ class  HS87(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SN = np.sin(EV_[2]+self.elpar[iel_][0])
-        CS = np.cos(EV_[2]+self.elpar[iel_][0])
-        f_   = EV_[0]*EV_[1]*CS
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        SN = np.sin(EV_[2,0]+self.elpar[iel_][0])
+        CS = np.cos(EV_[2,0]+self.elpar[iel_][0])
+        f_   = EV_[0,0]*EV_[1,0]*CS
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*CS
-            g_[1] = EV_[0]*CS
-            g_[2] = -EV_[0]*EV_[1]*SN
+            g_[0] = EV_[1,0]*CS
+            g_[1] = EV_[0,0]*CS
+            g_[2] = -EV_[0,0]*EV_[1,0]*SN
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = CS
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -EV_[1]*SN
+                H_[0,2] = -EV_[1,0]*SN
                 H_[2,0] = H_[0,2]
-                H_[1,2] = -EV_[0]*SN
+                H_[1,2] = -EV_[0,0]*SN
                 H_[2,1] = H_[1,2]
-                H_[2,2] = -EV_[0]*EV_[1]*CS
+                H_[2,2] = -EV_[0,0]*EV_[1,0]*CS
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -505,29 +499,27 @@ class  HS87(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SN = np.sin(EV_[2]+self.elpar[iel_][0])
-        CS = np.cos(EV_[2]+self.elpar[iel_][0])
-        f_   = EV_[0]*EV_[1]*SN
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        SN = np.sin(EV_[2,0]+self.elpar[iel_][0])
+        CS = np.cos(EV_[2,0]+self.elpar[iel_][0])
+        f_   = EV_[0,0]*EV_[1,0]*SN
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*SN
-            g_[1] = EV_[0]*SN
-            g_[2] = EV_[0]*EV_[1]*CS
+            g_[0] = EV_[1,0]*SN
+            g_[1] = EV_[0,0]*SN
+            g_[2] = EV_[0,0]*EV_[1,0]*CS
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = SN
                 H_[1,0] = H_[0,1]
-                H_[0,2] = EV_[1]*CS
+                H_[0,2] = EV_[1,0]*CS
                 H_[2,0] = H_[0,2]
-                H_[1,2] = EV_[0]*CS
+                H_[1,2] = EV_[0,0]*CS
                 H_[2,1] = H_[1,2]
-                H_[2,2] = -EV_[0]*EV_[1]*SN
+                H_[2,2] = -EV_[0,0]*EV_[1,0]*SN
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -541,16 +533,14 @@ class  HS87(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0e+0

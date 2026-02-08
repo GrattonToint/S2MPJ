@@ -23,7 +23,7 @@ class  HS70(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS70'
@@ -304,47 +304,47 @@ class  HS70(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[1]+EV_[2]*(1.0e+0-EV_[1])
+        B = EV_[1,0]+EV_[2,0]*(1.0e+0-EV_[1,0])
         CI = self.elpar[iel_][0]/7.658e+0
-        P0 = 1.0e+0+1.0e+0/(1.2e+1*EV_[0])
-        P0V1 = -1.0e+0/(1.2e+1*EV_[0]**2)
-        P0V1V1 = 2.0e+0/(1.2e+1*EV_[0]**3)
+        P0 = 1.0e+0+1.0e+0/(1.2e+1*EV_[0,0])
+        P0V1 = -1.0e+0/(1.2e+1*EV_[0,0]**2)
+        P0V1V1 = 2.0e+0/(1.2e+1*EV_[0,0]**3)
         P1 = 1.0e+0/P0
         P1V1 = -P0V1/(P0**2)
         P1V1V1 = (2.0e+0*P0V1**2/P0-P0V1V1)/(P0**2)
-        P2 = EV_[1]
-        P3 = B**EV_[0]
+        P2 = EV_[1,0]
+        P3 = B**EV_[0,0]
         LOGB = np.log(B)
         P3V1 = P3*LOGB
-        P3V2 = EV_[0]*(1.0e+0-EV_[2])*B**(EV_[0]-1.0e+0)
-        P3V3 = EV_[0]*(1.0e+0-EV_[1])*B**(EV_[0]-1.0e+0)
+        P3V2 = EV_[0,0]*(1.0e+0-EV_[2,0])*B**(EV_[0,0]-1.0e+0)
+        P3V3 = EV_[0,0]*(1.0e+0-EV_[1,0])*B**(EV_[0,0]-1.0e+0)
         P3V1V1 = P3V1*LOGB
-        P3V1V2 = P3V2*LOGB+P3*(1.0e+0-EV_[2])/B
-        P3V1V3 = P3V3*LOGB+P3*(1.0e+0-EV_[1])/B
-        P3V2V2 = EV_[0]*(EV_[0]-1.0e+0)*(1.0e+0-EV_[2])**2*B**(EV_[0]-1.0e+0)
+        P3V1V2 = P3V2*LOGB+P3*(1.0e+0-EV_[2,0])/B
+        P3V1V3 = P3V3*LOGB+P3*(1.0e+0-EV_[1,0])/B
+        P3V2V2  = (
+              EV_[0,0]*(EV_[0,0]-1.0e+0)*(1.0e+0-EV_[2,0])**2*B**(EV_[0,0]-1.0e+0))
         P3V2V3  = (
-              -EV_[0]*B**(EV_[0]-1.0e+0)+EV_[0]*(EV_[0]-1.0e+0)*(1.0e+0-EV_[1])*(1.0e+0-EV_[2])*B**(EV_[0]-2.0e+0))
-        P3V3V3 = EV_[0]*(EV_[0]-1.0e+0)*(1.0e+0-EV_[1])**2*B**(EV_[0]-2.0e+0)
-        P4 = self.efpar[0]*np.sqrt(EV_[0])
-        P4V1 = 5.0e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0])
-        P4V1V1 = -2.5e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0]**3)
+              -EV_[0,0]*B**(EV_[0,0]-1.0e+0)+EV_[0,0]*(EV_[0,0]-1.0e+0)*(1.0e+0-EV_[1,0])*(1.0e+0-EV_[2,0])*B**(EV_[0,0]-2.0e+0))
+        P3V3V3  = (
+              EV_[0,0]*(EV_[0,0]-1.0e+0)*(1.0e+0-EV_[1,0])**2*B**(EV_[0,0]-2.0e+0))
+        P4 = self.efpar[0]*np.sqrt(EV_[0,0])
+        P4V1 = 5.0e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0,0])
+        P4V1V1 = -2.5e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0,0]**3)
         C5 = CI**(-1.0e+0)
-        P5 = C5*CI**EV_[0]
+        P5 = C5*CI**EV_[0,0]
         P5V1 = P5*np.log(CI)
         P5V1V1 = P5V1*np.log(CI)
-        P6 = np.exp(EV_[0]*(1.0e+0-CI*B))
+        P6 = np.exp(EV_[0,0]*(1.0e+0-CI*B))
         P6V1 = P6*(1.0e+0-CI*B)
-        P6V2 = -P6*EV_[0]*CI*(1.0e+0-EV_[2])
-        P6V3 = -P6*EV_[0]*CI*(1.0e+0-EV_[1])
+        P6V2 = -P6*EV_[0,0]*CI*(1.0e+0-EV_[2,0])
+        P6V3 = -P6*EV_[0,0]*CI*(1.0e+0-EV_[1,0])
         P6V1V1 = P6*(1.0e+0-CI*B)**2
-        P6V1V2 = P6V2*(1.0e+0-CI*B)-P6*CI*(1.0e+0-EV_[2])
-        P6V1V3 = P6V3*(1.0e+0-CI*B)-P6*CI*(1.0e+0-EV_[1])
-        P6V2V2 = -P6V2*EV_[0]*CI*(1.0e+0-EV_[2])
-        P6V2V3 = -P6V3*EV_[0]*CI*(1.0e+0-EV_[2])+P6*EV_[0]*CI
-        P6V3V3 = -P6V3*EV_[0]*CI*(1.0e+0-EV_[1])
+        P6V1V2 = P6V2*(1.0e+0-CI*B)-P6*CI*(1.0e+0-EV_[2,0])
+        P6V1V3 = P6V3*(1.0e+0-CI*B)-P6*CI*(1.0e+0-EV_[1,0])
+        P6V2V2 = -P6V2*EV_[0,0]*CI*(1.0e+0-EV_[2,0])
+        P6V2V3 = -P6V3*EV_[0,0]*CI*(1.0e+0-EV_[2,0])+P6*EV_[0,0]*CI
+        P6V3V3 = -P6V3*EV_[0,0]*CI*(1.0e+0-EV_[1,0])
         f_   = P1*P2*P3*P4*P5*P6
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -384,50 +384,49 @@ class  HS70(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        B = EV_[1]+EV_[2]*(1.0e+0-EV_[1])
+        B = EV_[1,0]+EV_[2,0]*(1.0e+0-EV_[1,0])
         CI = self.elpar[iel_][0]/7.658e+0
-        P0 = 1.0e+0+1.0e+0/(1.2e+1*EV_[0])
-        P0V1 = -1.0e+0/(1.2e+1*EV_[0]**2)
-        P0V1V1 = 2.0e+0/(1.2e+1*EV_[0]**3)
+        P0 = 1.0e+0+1.0e+0/(1.2e+1*EV_[0,0])
+        P0V1 = -1.0e+0/(1.2e+1*EV_[0,0]**2)
+        P0V1V1 = 2.0e+0/(1.2e+1*EV_[0,0]**3)
         P1 = 1.0e+0/P0
         P1V1 = -P0V1/(P0**2)
         P1V1V1 = (2.0e+0*P0V1**2/P0-P0V1V1)/(P0**2)
-        P2 = 1.0e+0-EV_[1]
-        P3 = (B/EV_[2])**EV_[0]
-        LOGB = np.log(B/EV_[2])
+        P2 = 1.0e+0-EV_[1,0]
+        P3 = (B/EV_[2,0])**EV_[0,0]
+        LOGB = np.log(B/EV_[2,0])
         P3V1 = P3*LOGB
-        P3V2 = EV_[0]*(-1.0e+0+1.0e+0/EV_[2])*(B/EV_[2])**(EV_[0]-1.0e+0)
-        P3V3 = -EV_[0]*(EV_[1]/EV_[2]**2)*(B/EV_[2])**(EV_[0]-1.0e+0)
+        P3V2 = EV_[0,0]*(-1.0e+0+1.0e+0/EV_[2,0])*(B/EV_[2,0])**(EV_[0,0]-1.0e+0)
+        P3V3 = -EV_[0,0]*(EV_[1,0]/EV_[2,0]**2)*(B/EV_[2,0])**(EV_[0,0]-1.0e+0)
         P3V1V1 = P3V1*LOGB
-        P3V1V2 = P3V2*LOGB+P3*EV_[2]*(-1.0e+0+1.0e+0/EV_[2])/B
-        P3V1V3 = P3V3*LOGB-P3*EV_[1]/(B*EV_[2])
+        P3V1V2 = P3V2*LOGB+P3*EV_[2,0]*(-1.0e+0+1.0e+0/EV_[2,0])/B
+        P3V1V3 = P3V3*LOGB-P3*EV_[1,0]/(B*EV_[2,0])
         P3V2V2  = (
-              EV_[0]*(EV_[0]-1.0e+0)*(-1.0e+0+1.0e+0/EV_[2])**2*(B/EV_[2])**(EV_[0]-2.0e+0))
-        P3V2V3  = (
-              EV_[0]*(-1.0e+0/EV_[2]**2)*(B/EV_[2])**(EV_[0]-1.0e+0)+EV_[0]*(EV_[0]-1.0e+0)*(-1.0e+0+1.0e+0/EV_[2])*(-EV_[1]/EV_[2]**2)*(B/EV_[2])**(EV_[0]-2.0e+0))
-        P3V3V3 = (2.0e+0*EV_[0]*(EV_[1]/EV_[2]**3)*(B/EV_[2])**(EV_[0]-1.0e+0)+
-             EV_[0]*(EV_[0]-1.0e+0)*(EV_[1]/EV_[2]**2)**2*(B/EV_[2])**(EV_[0]-2.0e+0))
-        P4 = self.efpar[0]*np.sqrt(EV_[0])
-        P4V1 = 5.0e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0])
-        P4V1V1 = -2.5e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0]**3)
+              EV_[0,0]*(EV_[0,0]-1.0e+0)*(-1.0e+0+1.0e+0/EV_[2,0])**2*(B/EV_[2,0])**(EV_[0,0]-2.0e+0))
+        P3V2V3 = (EV_[0,0]*(-1.0e+0/EV_[2,0]**2)*(B/EV_[2,0])**(EV_[0,0]-1.0e+0)+
+             EV_[0,0]*(EV_[0,0]-1.0e+0)*(-1.0e+0+1.0e+0/EV_[2,0])*(-EV_[1,0]/EV_[2,0]**2)*(B/EV_[2,0])**(EV_[0,0]-2.0e+0))
+        P3V3V3  = (
+              2.0e+0*EV_[0,0]*(EV_[1,0]/EV_[2,0]**3)*(B/EV_[2,0])**(EV_[0,0]-1.0e+0)+EV_[0,0]*(EV_[0,0]-1.0e+0)*(EV_[1,0]/EV_[2,0]**2)**2*(B/EV_[2,0])**(EV_[0,0]-2.0e+0))
+        P4 = self.efpar[0]*np.sqrt(EV_[0,0])
+        P4V1 = 5.0e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0,0])
+        P4V1V1 = -2.5e-1*self.efpar[0]*np.sqrt(1.0e+0/EV_[0,0]**3)
         C5 = CI**(-1.0e+0)
-        P5 = C5*CI**EV_[0]
+        P5 = C5*CI**EV_[0,0]
         P5V1 = P5*np.log(CI)
         P5V1V1 = P5V1*np.log(CI)
-        P6 = np.exp(EV_[0]*(1.0e+0-CI*B/EV_[2]))
-        P6V1 = P6*(1.0e+0-CI*B/EV_[2])
-        P6V2 = -P6*EV_[0]*CI*(1.0e+0-EV_[2])/EV_[2]
-        P6V3 = P6*EV_[0]*CI*EV_[1]/EV_[2]**2
-        P6V1V1 = P6*(1.0e+0-CI*B/EV_[2])**2
-        P6V1V2 = P6V2*(1.0e+0-CI*B/EV_[2])-P6*CI*(-1.0e+0+1.0e+0/EV_[2])
-        P6V1V3 = P6V3*(1.0e+0-CI*B/EV_[2])+P6*CI*EV_[1]/EV_[2]**2
-        P6V2V2 = -P6V2*EV_[0]*CI*(1.0e+0-EV_[2])/EV_[2]
-        P6V2V3 = -P6V3*EV_[0]*CI*(1.0e+0-EV_[2])/EV_[2]+P6*EV_[0]*CI/EV_[2]**2
-        P6V3V3 = (P6V3*EV_[0]*CI*EV_[1]/EV_[2]**2-2.0e+0*P6*EV_[0]*CI*EV_[1]/
-             EV_[2]**3)
+        P6 = np.exp(EV_[0,0]*(1.0e+0-CI*B/EV_[2,0]))
+        P6V1 = P6*(1.0e+0-CI*B/EV_[2,0])
+        P6V2 = -P6*EV_[0,0]*CI*(1.0e+0-EV_[2,0])/EV_[2,0]
+        P6V3 = P6*EV_[0,0]*CI*EV_[1,0]/EV_[2,0]**2
+        P6V1V1 = P6*(1.0e+0-CI*B/EV_[2,0])**2
+        P6V1V2 = P6V2*(1.0e+0-CI*B/EV_[2,0])-P6*CI*(-1.0e+0+1.0e+0/EV_[2,0])
+        P6V1V3 = P6V3*(1.0e+0-CI*B/EV_[2,0])+P6*CI*EV_[1,0]/EV_[2,0]**2
+        P6V2V2 = -P6V2*EV_[0,0]*CI*(1.0e+0-EV_[2,0])/EV_[2,0]
+        P6V2V3 = (-P6V3*EV_[0,0]*CI*(1.0e+0-EV_[2,0])/EV_[2,0]+P6*EV_[0,0]*CI/
+             EV_[2,0]**2)
+        P6V3V3 = (P6V3*EV_[0,0]*CI*EV_[1,0]/EV_[2,0]**2-2.0e+0*P6*EV_[0,0]*CI*EV_[1,0]/
+             EV_[2,0]**3)
         f_   = P1*P2*P3*P4*P5*P6
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -467,17 +466,15 @@ class  HS70(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0e+0

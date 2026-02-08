@@ -20,7 +20,7 @@ class  SPIRAL(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPIRAL'
@@ -211,16 +211,14 @@ class  SPIRAL(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -237,15 +235,15 @@ class  SPIRAL(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XX = EV_[0]*EV_[0]
-        YY = EV_[1]*EV_[1]
+        XX = EV_[0,0]*EV_[0,0]
+        YY = EV_[1,0]*EV_[1,0]
         R = np.sqrt(XX+YY)
-        DRDX = EV_[0]/R
-        DRDY = EV_[1]/R
+        DRDX = EV_[0,0]/R
+        DRDY = EV_[1,0]/R
         R3 = R**3
         D2RDXX = 1.0/R-XX/R3
         D2RDYY = 1.0/R-YY/R3
-        D2RDXY = -EV_[0]*EV_[1]/R3
+        D2RDXY = -EV_[0,0]*EV_[1,0]/R3
         C = np.cos(R)
         S = np.sin(R)
         DCDX = -S*DRDX
@@ -258,15 +256,13 @@ class  SPIRAL(CUTEst_problem):
         D2SDXX = -S*DRDX*DRDX+C*D2RDXX
         D2SDYY = -S*DRDY*DRDY+C*D2RDYY
         D2SDXY = -S*DRDX*DRDY+C*D2RDXY
-        Z = EV_[0]-R*C
+        Z = EV_[0,0]-R*C
         DZDX = 1.0-DRDX*C-R*DCDX
         DZDY = -DRDY*C-R*DCDY
         D2ZDXX = -D2RDXX*C-2.0*DRDX*DCDX-R*D2CDXX
         D2ZDYY = -D2RDYY*C-2.0*DRDY*DCDY-R*D2CDYY
         D2ZDXY = -D2RDXY*C-DRDX*DCDY-DRDY*DCDX-R*D2CDXY
         f_   = Z*Z
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -294,15 +290,15 @@ class  SPIRAL(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XX = EV_[0]*EV_[0]
-        YY = EV_[1]*EV_[1]
+        XX = EV_[0,0]*EV_[0,0]
+        YY = EV_[1,0]*EV_[1,0]
         R = np.sqrt(XX+YY)
-        DRDX = EV_[0]/R
-        DRDY = EV_[1]/R
+        DRDX = EV_[0,0]/R
+        DRDY = EV_[1,0]/R
         R3 = R**3
         D2RDXX = 1.0/R-XX/R3
         D2RDYY = 1.0/R-YY/R3
-        D2RDXY = -EV_[0]*EV_[1]/R3
+        D2RDXY = -EV_[0,0]*EV_[1,0]/R3
         C = np.cos(R)
         S = np.sin(R)
         DCDX = -S*DRDX
@@ -315,15 +311,13 @@ class  SPIRAL(CUTEst_problem):
         D2SDXX = -S*DRDX*DRDX+C*D2RDXX
         D2SDYY = -S*DRDY*DRDY+C*D2RDYY
         D2SDXY = -S*DRDX*DRDY+C*D2RDXY
-        Z = EV_[1]-R*S
+        Z = EV_[1,0]-R*S
         DZDX = -DRDX*S-R*DSDX
         DZDY = 1.0-DRDY*S-R*DSDY
         D2ZDXX = -D2RDXX*S-2.0*DRDX*DSDX-R*D2SDXX
         D2ZDYY = -D2RDYY*S-2.0*DRDY*DSDY-R*D2SDYY
         D2ZDXY = -D2RDXY*S-DRDX*DSDY-DRDY*DSDX-R*D2SDXY
         f_   = Z*Z
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

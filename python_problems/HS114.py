@@ -23,7 +23,7 @@ class  HS114(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS114'
@@ -517,16 +517,14 @@ class  HS114(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = self.elpar[iel_][0]*EV_[0]**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = self.elpar[iel_][0]*EV_[0,0]**2
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*self.elpar[iel_][0]*EV_[0]
+            g_[0] = 2.0*self.elpar[iel_][0]*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0*self.elpar[iel_][0]
@@ -543,17 +541,15 @@ class  HS114(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = self.elpar[iel_][0]*EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = self.elpar[iel_][0]*EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*EV_[1]
-            g_[1] = self.elpar[iel_][0]*EV_[0]
+            g_[0] = self.elpar[iel_][0]*EV_[1,0]
+            g_[1] = self.elpar[iel_][0]*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = self.elpar[iel_][0]
@@ -571,22 +567,20 @@ class  HS114(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = self.elpar[iel_][0]*EV_[0]*EV_[1]**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = self.elpar[iel_][0]*EV_[0,0]*EV_[1,0]**2
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = self.elpar[iel_][0]*EV_[1]**2
-            g_[1] = 2.0*self.elpar[iel_][0]*EV_[0]*EV_[1]
+            g_[0] = self.elpar[iel_][0]*EV_[1,0]**2
+            g_[1] = 2.0*self.elpar[iel_][0]*EV_[0,0]*EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = 2.0*self.elpar[iel_][0]*EV_[1]
+                H_[0,1] = 2.0*self.elpar[iel_][0]*EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[1,1] = 2.0*self.elpar[iel_][0]*EV_[0]
+                H_[1,1] = 2.0*self.elpar[iel_][0]*EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -600,11 +594,9 @@ class  HS114(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        WX = self.elpar[iel_][0]*EV_[0]
-        DENOM = EV_[1]*EV_[2]+1000.0*EV_[3]
+        WX = self.elpar[iel_][0]*EV_[0,0]
+        DENOM = EV_[1,0]*EV_[2,0]+1000.0*EV_[3,0]
         f_   = WX/DENOM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -612,24 +604,24 @@ class  HS114(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = self.elpar[iel_][0]/DENOM
-            g_[1] = -WX*EV_[2]/DENOM**2
-            g_[2] = -WX*EV_[1]/DENOM**2
+            g_[1] = -WX*EV_[2,0]/DENOM**2
+            g_[2] = -WX*EV_[1,0]/DENOM**2
             g_[3] = -1000.0*WX/DENOM**2
             if nargout>2:
                 H_ = np.zeros((4,4))
-                H_[0,1] = -self.elpar[iel_][0]*EV_[2]/DENOM**2
+                H_[0,1] = -self.elpar[iel_][0]*EV_[2,0]/DENOM**2
                 H_[1,0] = H_[0,1]
-                H_[0,2] = -self.elpar[iel_][0]*EV_[1]/DENOM**2
+                H_[0,2] = -self.elpar[iel_][0]*EV_[1,0]/DENOM**2
                 H_[2,0] = H_[0,2]
                 H_[0,3] = -1000.0*self.elpar[iel_][0]/DENOM**2
                 H_[3,0] = H_[0,3]
-                H_[1,1] = 2.0*WX*EV_[2]*EV_[2]/DENOM**3
-                H_[1,2] = 2.0*WX*EV_[1]*EV_[2]/DENOM**3-WX/DENOM**2
+                H_[1,1] = 2.0*WX*EV_[2,0]*EV_[2,0]/DENOM**3
+                H_[1,2] = 2.0*WX*EV_[1,0]*EV_[2,0]/DENOM**3-WX/DENOM**2
                 H_[2,1] = H_[1,2]
-                H_[1,3] = 2000.0*WX*EV_[2]/DENOM**3
+                H_[1,3] = 2000.0*WX*EV_[2,0]/DENOM**3
                 H_[3,1] = H_[1,3]
-                H_[2,2] = 2.0*WX*EV_[1]*EV_[1]/DENOM**3
-                H_[2,3] = 2000.0*WX*EV_[1]/DENOM**3
+                H_[2,2] = 2.0*WX*EV_[1,0]*EV_[1,0]/DENOM**3
+                H_[2,3] = 2000.0*WX*EV_[1,0]/DENOM**3
                 H_[3,2] = H_[2,3]
                 H_[3,3] = 2000000.0*WX/DENOM**3
         if nargout == 1:
@@ -650,11 +642,9 @@ class  HS114(CUTEst_problem):
         U_[1,2] = U_[1,2]+1
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         f_   = IV_[0]/IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

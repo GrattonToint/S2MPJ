@@ -21,7 +21,7 @@ class  HS62(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS62'
@@ -272,11 +272,9 @@ class  HS62(CUTEst_problem):
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]+1
         U_[0,2] = U_[0,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         NUM = IV_[0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -307,11 +305,9 @@ class  HS62(CUTEst_problem):
         U_[0,0] = U_[0,0]+9.000000e-02
         U_[0,1] = U_[0,1]+1
         U_[0,2] = U_[0,2]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         NUM = IV_[0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -341,11 +337,9 @@ class  HS62(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         NUM = IV_[0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -375,11 +369,9 @@ class  HS62(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+7.000000e-02
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         NUM = IV_[0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -405,10 +397,8 @@ class  HS62(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        NUM = EV_[0]+0.03
+        NUM = EV_[0,0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -432,10 +422,8 @@ class  HS62(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        NUM = 0.13*EV_[0]+0.03
+        NUM = 0.13*EV_[0,0]+0.03
         f_   = np.log(NUM)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

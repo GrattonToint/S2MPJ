@@ -47,7 +47,7 @@ class  CRESC4(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRESC4'
@@ -351,28 +351,26 @@ class  CRESC4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        Q = EV_[0]*EV_[2]+EV_[1]
+        Q = EV_[0,0]*EV_[2,0]+EV_[1,0]
         f_   = Q*Q
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*Q*EV_[2]
-            g_[2] = 2.0*Q*EV_[0]
+            g_[0] = 2.0*Q*EV_[2,0]
+            g_[2] = 2.0*Q*EV_[0,0]
             g_[1] = 2.0*Q
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = 2.0*EV_[2]*EV_[2]
-                H_[0,2] = 2.0*(EV_[0]*EV_[2]+Q)
+                H_[0,0] = 2.0*EV_[2,0]*EV_[2,0]
+                H_[0,2] = 2.0*(EV_[0,0]*EV_[2,0]+Q)
                 H_[2,0] = H_[0,2]
-                H_[0,1] = 2.0*EV_[2]
+                H_[0,1] = 2.0*EV_[2,0]
                 H_[1,0] = H_[0,1]
-                H_[2,2] = 2.0*EV_[0]*EV_[0]
-                H_[2,1] = 2.0*EV_[0]
+                H_[2,2] = 2.0*EV_[0,0]*EV_[0,0]
+                H_[2,1] = 2.0*EV_[0,0]
                 H_[1,2] = H_[2,1]
                 H_[1,1] = 2.0
         if nargout == 1:
@@ -392,10 +390,8 @@ class  CRESC4(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         f_   = IV_[0]*IV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -421,17 +417,17 @@ class  CRESC4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        A = EV_[2]+EV_[1]
+        A = EV_[2,0]+EV_[1,0]
         AB = 1.0
         AD = 1.0
-        B = EV_[0]*EV_[2]+EV_[1]
-        BA = EV_[2]
+        B = EV_[0,0]*EV_[2,0]+EV_[1,0]
+        BA = EV_[2,0]
         BB = 1.0
-        BD = EV_[0]
+        BD = EV_[0,0]
         BAD = 1.0
-        D = EV_[0]*EV_[2]
-        DA = EV_[2]
-        DD = EV_[0]
+        D = EV_[0,0]*EV_[2,0]
+        DA = EV_[2,0]
+        DD = EV_[0,0]
         DAD = 1.0
         E = 2.0*A*D
         EA = 2.0*A*DA
@@ -575,8 +571,6 @@ class  CRESC4(CUTEst_problem):
         VBD = SBD-RBD+WBD
         VDD = SDD-RDD+WDD
         f_   = V
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -610,16 +604,14 @@ class  CRESC4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = (EV_[0]-self.elpar[iel_][0])**2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = (EV_[0,0]-self.elpar[iel_][0])**2
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*(EV_[0]-self.elpar[iel_][0])
+            g_[0] = 2.0*(EV_[0,0]-self.elpar[iel_][0])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -636,15 +628,13 @@ class  CRESC4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ST = np.sin(EV_[1])
-        CT = np.cos(EV_[1])
-        B = EV_[0]+EV_[2]*EV_[3]*ST-self.elpar[iel_][0]
-        BA = EV_[3]*ST
-        BD = EV_[2]*ST
-        BT = EV_[2]*EV_[3]*CT
+        ST = np.sin(EV_[1,0])
+        CT = np.cos(EV_[1,0])
+        B = EV_[0,0]+EV_[2,0]*EV_[3,0]*ST-self.elpar[iel_][0]
+        BA = EV_[3,0]*ST
+        BD = EV_[2,0]*ST
+        BT = EV_[2,0]*EV_[3,0]*CT
         f_   = B*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -667,12 +657,12 @@ class  CRESC4(CUTEst_problem):
                 H_[2,2] = 2.0*BA*BA
                 H_[2,3] = 2.0*(BD*BA+B*ST)
                 H_[3,2] = H_[2,3]
-                H_[2,1] = 2.0*(BT*BA+B*EV_[3]*CT)
+                H_[2,1] = 2.0*(BT*BA+B*EV_[3,0]*CT)
                 H_[1,2] = H_[2,1]
                 H_[3,3] = 2.0*BD*BD
-                H_[3,1] = 2.0*(BT*BD+B*EV_[2]*CT)
+                H_[3,1] = 2.0*(BT*BD+B*EV_[2,0]*CT)
                 H_[1,3] = H_[3,1]
-                H_[1,1] = 2.0*(BT*BT-B*EV_[2]*EV_[3]*ST)
+                H_[1,1] = 2.0*(BT*BT-B*EV_[2,0]*EV_[3,0]*ST)
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -686,15 +676,13 @@ class  CRESC4(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ST = np.sin(EV_[1])
-        CT = np.cos(EV_[1])
-        B = EV_[0]+EV_[2]*EV_[3]*CT-self.elpar[iel_][0]
-        BA = EV_[3]*CT
-        BD = EV_[2]*CT
-        BT = -EV_[2]*EV_[3]*ST
+        ST = np.sin(EV_[1,0])
+        CT = np.cos(EV_[1,0])
+        B = EV_[0,0]+EV_[2,0]*EV_[3,0]*CT-self.elpar[iel_][0]
+        BA = EV_[3,0]*CT
+        BD = EV_[2,0]*CT
+        BT = -EV_[2,0]*EV_[3,0]*ST
         f_   = B*B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -717,12 +705,12 @@ class  CRESC4(CUTEst_problem):
                 H_[2,2] = 2.0*BA*BA
                 H_[2,3] = 2.0*(BD*BA+B*CT)
                 H_[3,2] = H_[2,3]
-                H_[2,1] = 2.0*(BT*BA-B*EV_[3]*ST)
+                H_[2,1] = 2.0*(BT*BA-B*EV_[3,0]*ST)
                 H_[1,2] = H_[2,1]
                 H_[3,3] = 2.0*BD*BD
-                H_[3,1] = 2.0*(BT*BD-B*EV_[2]*ST)
+                H_[3,1] = 2.0*(BT*BD-B*EV_[2,0]*ST)
                 H_[1,3] = H_[3,1]
-                H_[1,1] = 2.0*(BT*BT-B*EV_[2]*EV_[3]*CT)
+                H_[1,1] = 2.0*(BT*BT-B*EV_[2,0]*EV_[3,0]*CT)
         if nargout == 1:
             return f_
         elif nargout == 2:

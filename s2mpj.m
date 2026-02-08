@@ -744,16 +744,18 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '31 X 2025';
+                 this_version = '7 II 2026';
 %                Apologies in advance for the bugs!
-%                
+%
+%   CHANGELOG  : 7 II 2026: function initIV() modified to avoid conversion of 1 dimensional arrays to scalars in Python.
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %  Set the default S2MPJ options.
 
 pbs.fidma      = 0;  %  No Matlab file output for now
 pbs.fidpy      = 0;  %  No Python file output for now
-pbs.fidjl      = 0;  %  No Julia file output for now
+pbs.fidjl      = 0;  %  No Julia  file output for now
 getxnames      = 1;  %  Store the variables' names in pb.xnames      
 getcnames      = 1;  %  Store the constraints' names in pb.cnames    
 getenames      = 0;  %  Do not store the elements names in pbm.elnames      
@@ -761,10 +763,9 @@ getgnames      = 0;  %  Do not store the group names in pbm.grnames
 keepcorder     = 0;  %  Do not reorder the constraints as <=, ==, >=, but keep the order in which they appear in the
                      %  SIF file 
 keepcformat    = 0;  %  Do not keep the SIF format for constraint specification (ie specifying constants and ranges)
-                     %  instead of producing lower and upper bounds on the constraints values (clowerand cupper). 
-writealtsets   = 0;  %  Do not write (as comments) active (i.e. not commented off)
-                     %  alternate sets of constants, ranges, bounds, starting points or objective function bounds in the
-                     %  output file
+                     %  instead of producing lower and upper bounds on the constraints values (clower and cupper). 
+writealtsets   = 0;  %  Do not write (as comments) active (i.e. not commented off) alternate sets of constants,
+                     %  ranges, bounds, starting points or objective function bounds in the output file
 showsiflines   = 0;  %  Do not show the SIF data lines in the output file
 sifcomments    = 0;  %  Do not include SIF comments in the output file
 dispwarning    = 1;  %  Display a warning when a problem is renamed for Matlab/Python/julia compatibility, that is when
@@ -1344,6 +1345,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          else
             printmline( 'pbm.objgrps = [1:ngrp];',                                            indlvl, bindent, pbs.fidma );
             printmline( 'pb.m        = 0;',                                                   indlvl, bindent, pbs.fidma );
+            printmline( 'pb.nob      = ngrp;',                                                indlvl, bindent, pbs.fidma );
           end
       case 'python'
          printpline( '#%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
@@ -1374,6 +1376,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          else
             printpline( 'self.objgrps = np.arange(ngrp)',                                     indlvl, bindent, pbs.fidpy );
             printpline( 'self.m       = 0',                                                   indlvl, bindent, pbs.fidpy );
+            printpline( 'selfnob      = ngrp',                                                indlvl, bindent, pbs.fidpy );
          end
       case 'julia'
          printjline( '#%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
@@ -1399,6 +1402,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( 'pbm.objgrps = findall(x->x=="<>",gtype)',                            indlvl, bindent, pbs.fidjl );
          else
             printjline( 'pbm.objgrps = collect(1:ngrp)',                                      indlvl, bindent, pbs.fidjl );
+            printjline( 'pb.nob      = ngrp',                                                 indlvl, bindent, pbs.fidjl );
             printjline( 'pb.m        = 0',                                                    indlvl, bindent, pbs.fidjl );
          end
       
@@ -1438,6 +1442,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printpline( 'self.x0 = np.zeros((self.n,1))',                                     indlvl, bindent, pbs.fidpy );
             printjline( 'pb.x0 = zeros(Float64,pb.n)',                                        indlvl, bindent, pbs.fidjl );
             has_x0def = 1;
+            has_start = 1;
          end
          if ( has_constraints && ~has_y0def )
             printmline( 'pb.y0 = zeros(pb.m,1);',                                             indlvl, bindent, pbs.fidma );
@@ -4369,7 +4374,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                case 'matlab'
                   locdict( elftype{post}.elvar{i} ) = [ 'EV_(', int2str(i), ')' ];
                case 'python'
-                  locdict( elftype{post}.elvar{i} ) = [ 'EV_[', int2str(i-1), ']' ];
+                  locdict( elftype{post}.elvar{i} ) = [ 'EV_[', int2str(i-1), ',0]' ];
                case 'julia'
                   locdict( elftype{post}.elvar{i} ) = [ 'EV_[', int2str(i), ']' ];
                end
@@ -4548,8 +4553,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                pending{1} = sprintf( 'varargout{1} = %s;', evalstrf );
             case 'python'
                pending{1} = sprintf( 'f_   = %s', evalstrf );
-               pending{2} = 'if not isinstance( f_, float ):';
-               pending{3} = sprintf( '    f_   = f_.item();');  % force f_ to be a scalar
+%               pending{2} = 'if not isinstance( f_, float ):';
+%               pending{3} = sprintf( '    f_   = f_.item();');  % force f_ to be a scalar
             case 'julia'
                pending{1} = sprintf( 'f_   = %s', evalstrf );
             end
@@ -6698,7 +6703,8 @@ function todefine = initIV( todefine, pbs, indlvl, bindent )
 for indiv = 1:length( todefine )
    if ( todefine( indiv ) )
       printmline( sprintf('IV_(%d) = U_(%d,:)*EV_;', indiv, indiv ),                          indlvl, bindent, pbs.fidma );
-      printpline( sprintf('IV_[%d] = U_[%d:%d,:].dot(EV_)', indiv-1, indiv-1, indiv ),        indlvl, bindent, pbs.fidpy );
+      printpline( sprintf('IV_[%d] = to_scalar(U_[%d:%d,:].dot(EV_))', indiv-1, indiv-1, indiv ),                       ...
+                                                                                              indlvl, bindent, pbs.fidpy );
       printjline( sprintf('IV_[%d] = dot(U_[%d,:],EV_)', indiv, indiv ),                      indlvl, bindent, pbs.fidjl );
       todefine( indiv ) = 0;
    end

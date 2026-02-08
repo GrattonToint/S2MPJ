@@ -24,7 +24,7 @@ class  VESUVIA(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'VESUVIA'
@@ -3318,12 +3318,12 @@ class  VESUVIA(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XMC = self.elpar[iel_][0]-EV_[1]
-        R = XMC*EV_[2]
+        XMC = self.elpar[iel_][0]-EV_[1,0]
+        R = XMC*EV_[2,0]
         A = -0.5*R*R
         E = np.exp(A)
-        F = EV_[0]*E
-        DRDC = -EV_[2]
+        F = EV_[0,0]*E
+        DRDC = -EV_[2,0]
         DRDS = XMC
         DADC = -R*DRDC
         DADS = -R*DRDS
@@ -3334,8 +3334,6 @@ class  VESUVIA(CUTEst_problem):
         D2ADCS = -(DRDC*DRDS+R*D2RDCS)
         D2ADS2 = -DRDS**2
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -3351,10 +3349,10 @@ class  VESUVIA(CUTEst_problem):
                 H_[1,0] = H_[0,1]
                 H_[0,2] = E*DADS
                 H_[2,0] = H_[0,2]
-                H_[1,1] = EV_[0]*(DEDC*DADC+E*D2ADC2)
-                H_[1,2] = EV_[0]*(DEDS*DADC+E*D2ADCS)
+                H_[1,1] = EV_[0,0]*(DEDC*DADC+E*D2ADC2)
+                H_[1,2] = EV_[0,0]*(DEDS*DADC+E*D2ADCS)
                 H_[2,1] = H_[1,2]
-                H_[2,2] = EV_[0]*(DEDS*DADS+E*D2ADS2)
+                H_[2,2] = EV_[0,0]*(DEDS*DADS+E*D2ADS2)
         if nargout == 1:
             return f_
         elif nargout == 2:

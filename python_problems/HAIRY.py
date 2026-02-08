@@ -23,7 +23,7 @@ class  HAIRY(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HAIRY'
@@ -64,6 +64,7 @@ class  HAIRY(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -168,8 +169,8 @@ class  HAIRY(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        DV1 = self.elpar[iel_][0]*EV_[0]
-        DV2 = self.elpar[iel_][0]*EV_[1]
+        DV1 = self.elpar[iel_][0]*EV_[0,0]
+        DV2 = self.elpar[iel_][0]*EV_[1,0]
         TDV1 = DV1+DV1
         TDV2 = DV2+DV2
         TDL2 = 2.0*self.elpar[iel_][0]*self.elpar[iel_][0]
@@ -178,8 +179,6 @@ class  HAIRY(CUTEst_problem):
         STDV1 = np.sin(TDV1)
         STDV2 = np.sin(TDV2)
         f_   = S1SQ*C2SQ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -211,14 +210,12 @@ class  HAIRY(CUTEst_problem):
         IV_ = np.zeros(1)
         U_[0,0] = U_[0,0]+1
         U_[0,1] = U_[0,1]-1
-        IV_[0] = U_[0:1,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
         VSQ = IV_[0]*IV_[0]
         ARG = self.elpar[iel_][0]+VSQ
         SQARG = np.sqrt(ARG)
         DEN = 1.0/SQARG
         f_   = SQARG
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -244,20 +241,18 @@ class  HAIRY(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        VSQ = EV_[0]*EV_[0]
+        VSQ = EV_[0,0]*EV_[0,0]
         ARG = self.elpar[iel_][0]+VSQ
         SQARG = np.sqrt(ARG)
         DEN = 1.0/SQARG
         f_   = SQARG
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]*DEN
+            g_[0] = EV_[0,0]*DEN
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = (1.0-VSQ/ARG)*DEN

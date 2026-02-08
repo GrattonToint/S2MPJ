@@ -18,14 +18,15 @@ function varargout = S365MOD(action,varargin)
 %    Springer Verlag, Berlin, 1987.
 % 
 %    SIF input: Ph. Toint, March 1991.
-% 
+%               slight modification of the starting point to avoid
+%               division by zero
 %    classification = 'C-CQOR2-AY-7-5'
 % 
 %    Problem parameter
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 31 X 2025
+%   Translated to Matlab by S2MPJ version 3 II 2026
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -114,9 +115,9 @@ switch(action)
             pb.y0(find(pbm.congrps==ig_('X1')),1) = 3.0;
         end
         if(isKey(ix_,'X2'))
-            pb.x0(ix_('X2'),1) = 0.0;
+            pb.x0(ix_('X2'),1) = 1.e-30;
         else
-            pb.y0(find(pbm.congrps==ig_('X2')),1) = 0.0;
+            pb.y0(find(pbm.congrps==ig_('X2')),1) = 1.e-30;
         end
         if(isKey(ix_,'X3'))
             pb.x0(ix_('X3'),1) = 2.0;
@@ -139,9 +140,9 @@ switch(action)
             pb.y0(find(pbm.congrps==ig_('X6')),1) = 5.0;
         end
         if(isKey(ix_,'X7'))
-            pb.x0(ix_('X7'),1) = 0.0;
+            pb.x0(ix_('X7'),1) = 1.e-30;
         else
-            pb.y0(find(pbm.congrps==ig_('X7')),1) = 0.0;
+            pb.y0(find(pbm.congrps==ig_('X7')),1) = 1.e-30;
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = containers.Map('KeyType', 'char', 'ValueType','double');

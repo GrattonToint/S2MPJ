@@ -22,7 +22,7 @@ class  HIMMELBG(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBG'
@@ -61,6 +61,7 @@ class  HIMMELBG(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
@@ -122,13 +123,11 @@ class  HIMMELBG(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EX = np.exp(-EV_[0]-EV_[1])
-        FC = 2.0*EV_[0]*EV_[0]+3.0*EV_[1]*EV_[1]
-        DFCDX = 4.0*EV_[0]
-        DFCDY = 6.0*EV_[1]
+        EX = np.exp(-EV_[0,0]-EV_[1,0])
+        FC = 2.0*EV_[0,0]*EV_[0,0]+3.0*EV_[1,0]*EV_[1,0]
+        DFCDX = 4.0*EV_[0,0]
+        DFCDY = 6.0*EV_[1,0]
         f_   = EX*FC
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

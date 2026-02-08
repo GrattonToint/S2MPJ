@@ -28,7 +28,7 @@ class  ENSOLS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ENSOLS'
@@ -422,6 +422,7 @@ class  ENSOLS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -575,29 +576,27 @@ class  ENSOLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V12 = EV_[0]*EV_[0]
-        V13 = EV_[0]*V12
+        V12 = EV_[0,0]*EV_[0,0]
+        V13 = EV_[0,0]*V12
         V14 = V12*V12
         TPIX = self.efpar[0]*self.elpar[iel_][0]
-        TPIXV1 = TPIX/EV_[0]
+        TPIXV1 = TPIX/EV_[0,0]
         C = np.cos(TPIXV1)
         S = np.sin(TPIXV1)
         TPIXS = TPIX*S
-        f_   = EV_[1]*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[1,0]*C
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = TPIXS*EV_[1]/V12
+            g_[0] = TPIXS*EV_[1,0]/V12
             g_[1] = C
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = (-self.efpar[0]*self.efpar[0]*EV_[1]*C*self.elpar[iel_][0]**2/
-                     V14-2.0*TPIX*EV_[1]*S/V13)
+                H_[0,0] = (-self.efpar[0]*self.efpar[0]*EV_[1,0]*C*self.elpar[iel_][0]**2/
+                     V14-2.0*TPIX*EV_[1,0]*S/V13)
                 H_[0,1] = TPIXS/V12
                 H_[1,0] = H_[0,1]
         if nargout == 1:
@@ -613,29 +612,27 @@ class  ENSOLS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V12 = EV_[0]*EV_[0]
-        V13 = EV_[0]*V12
+        V12 = EV_[0,0]*EV_[0,0]
+        V13 = EV_[0,0]*V12
         V14 = V12*V12
         TPIX = self.efpar[0]*self.elpar[iel_][0]
-        TPIXV1 = TPIX/EV_[0]
+        TPIXV1 = TPIX/EV_[0,0]
         C = np.cos(TPIXV1)
         S = np.sin(TPIXV1)
         TPIXC = TPIX*C
-        f_   = EV_[1]*S
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[1,0]*S
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -TPIXC*EV_[1]/V12
+            g_[0] = -TPIXC*EV_[1,0]/V12
             g_[1] = S
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0]  = (
-                      2.0*TPIX*EV_[1]*C/V13-self.efpar[0]*self.efpar[0]*EV_[1]*S*self.elpar[iel_][0]**2/V14)
+                      2.0*TPIX*EV_[1,0]*C/V13-self.efpar[0]*self.efpar[0]*EV_[1,0]*S*self.elpar[iel_][0]**2/V14)
                 H_[0,1] = -TPIXC/V12
                 H_[1,0] = H_[0,1]
         if nargout == 1:

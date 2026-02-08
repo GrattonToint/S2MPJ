@@ -32,7 +32,7 @@ class  SCW2(CUTEst_problem):
 # IE K                   1000           $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCW2'
@@ -274,22 +274,20 @@ class  SCW2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S = np.sin(EV_[0])
-        C = np.cos(EV_[0])
-        f_   = EV_[1]*S
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        S = np.sin(EV_[0,0])
+        C = np.cos(EV_[0,0])
+        f_   = EV_[1,0]*S
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]*C
+            g_[0] = EV_[1,0]*C
             g_[1] = S
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = -EV_[1]*S
+                H_[0,0] = -EV_[1,0]*S
                 H_[0,1] = C
                 H_[1,0] = H_[0,1]
         if nargout == 1:
@@ -305,22 +303,20 @@ class  SCW2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        S = np.sin(EV_[0])
-        C = np.cos(EV_[0])
-        f_   = EV_[1]*C
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        S = np.sin(EV_[0,0])
+        C = np.cos(EV_[0,0])
+        f_   = EV_[1,0]*C
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -EV_[1]*S
+            g_[0] = -EV_[1,0]*S
             g_[1] = C
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = -EV_[1]*C
+                H_[0,0] = -EV_[1,0]*C
                 H_[0,1] = -S
                 H_[1,0] = H_[0,1]
         if nargout == 1:

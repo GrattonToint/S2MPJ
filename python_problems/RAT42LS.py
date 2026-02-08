@@ -26,7 +26,7 @@ class  RAT42LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RAT42LS'
@@ -86,6 +86,7 @@ class  RAT42LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -173,16 +174,14 @@ class  RAT42LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E = np.exp(EV_[1]-EV_[2]*self.elpar[iel_][0])
+        E = np.exp(EV_[1,0]-EV_[2,0]*self.elpar[iel_][0])
         E2 = E*E
         EP1 = E+1.0
         EP12 = EP1*EP1
         EP13 = EP1*EP12
-        V1E = EV_[0]*E
-        V1E2 = EV_[0]*E2
-        f_   = EV_[0]/EP1
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        V1E = EV_[0,0]*E
+        V1E2 = EV_[0,0]*E2
+        f_   = EV_[0,0]/EP1
         if nargout>1:
             try:
                 dim = len(IV_)

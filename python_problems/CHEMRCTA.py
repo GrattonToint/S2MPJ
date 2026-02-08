@@ -36,7 +36,7 @@ class  CHEMRCTA(CUTEst_problem):
 # IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEMRCTA'
@@ -327,13 +327,11 @@ class  CHEMRCTA(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        DADT = self.elpar[iel_][0]/(EV_[1]*EV_[1])
-        D2ADT2 = -2.0*DADT/EV_[1]
-        EX = np.exp(self.elpar[iel_][0]-self.elpar[iel_][0]/EV_[1])
-        UEX = EX*EV_[0]
+        DADT = self.elpar[iel_][0]/(EV_[1,0]*EV_[1,0])
+        D2ADT2 = -2.0*DADT/EV_[1,0]
+        EX = np.exp(self.elpar[iel_][0]-self.elpar[iel_][0]/EV_[1,0])
+        UEX = EX*EV_[0,0]
         f_   = UEX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

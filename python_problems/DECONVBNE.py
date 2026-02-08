@@ -21,7 +21,7 @@ class  DECONVBNE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DECONVBNE'
@@ -266,17 +266,15 @@ class  DECONVBNE(CUTEst_problem):
             SCAL = 0.0
         if NEGIDX==0:
             SCAL = 1.0
-        f_   = SCAL*EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = SCAL*EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = SCAL*EV_[1]
-            g_[1] = SCAL*EV_[0]
+            g_[0] = SCAL*EV_[1,0]
+            g_[1] = SCAL*EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = SCAL

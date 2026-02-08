@@ -26,7 +26,7 @@ class  GAUSSIAN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GAUSSIAN'
@@ -71,6 +71,7 @@ class  GAUSSIAN(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         self.gconst = arrset(self.gconst,ig_['G1'],float(0.0009))
@@ -166,14 +167,12 @@ class  GAUSSIAN(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMV3 = self.elpar[iel_][0]-EV_[2]
+        TMV3 = self.elpar[iel_][0]-EV_[2,0]
         TMV3SQ = -0.5e0*TMV3*TMV3
-        EXPA = np.exp(EV_[1]*TMV3SQ)
-        FVAL = EV_[0]*EXPA
-        V2TMV3 = EV_[1]*TMV3
+        EXPA = np.exp(EV_[1,0]*TMV3SQ)
+        FVAL = EV_[0,0]*EXPA
+        V2TMV3 = EV_[1,0]*TMV3
         f_   = FVAL
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -192,7 +191,7 @@ class  GAUSSIAN(CUTEst_problem):
                 H_[1,1] = TMV3SQ*TMV3SQ*FVAL
                 H_[1,2] = (TMV3SQ*V2TMV3+TMV3)*FVAL
                 H_[2,1] = H_[1,2]
-                H_[2,2] = (V2TMV3*V2TMV3-EV_[1])*FVAL
+                H_[2,2] = (V2TMV3*V2TMV3-EV_[1,0])*FVAL
         if nargout == 1:
             return f_
         elif nargout == 2:

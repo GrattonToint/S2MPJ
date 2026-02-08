@@ -19,7 +19,7 @@ class  CLUSTER(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLUSTER'
@@ -160,15 +160,13 @@ class  CLUSTER(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SY = np.sin(EV_[1])
-        CY = np.cos(EV_[1])
-        F1 = EV_[0]-EV_[1]*EV_[1]
-        F2 = EV_[0]-SY
-        DF1DY = -2.0*EV_[1]
+        SY = np.sin(EV_[1,0])
+        CY = np.cos(EV_[1,0])
+        F1 = EV_[0,0]-EV_[1,0]*EV_[1,0]
+        F2 = EV_[0,0]-SY
+        DF1DY = -2.0*EV_[1,0]
         DF2DY = -CY
         f_   = F1*F2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -196,17 +194,15 @@ class  CLUSTER(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SY = np.sin(EV_[1])
-        CY = np.cos(EV_[1])
-        CX = np.cos(EV_[0])
-        SX = np.sin(EV_[0])
-        F1 = CY-EV_[0]
-        F2 = EV_[1]-CX
+        SY = np.sin(EV_[1,0])
+        CY = np.cos(EV_[1,0])
+        CX = np.cos(EV_[0,0])
+        SX = np.sin(EV_[0,0])
+        F1 = CY-EV_[0,0]
+        F2 = EV_[1,0]-CX
         DF1DY = -SY
         DF2DX = SX
         f_   = F1*F2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

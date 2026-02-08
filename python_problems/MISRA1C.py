@@ -26,7 +26,7 @@ class  MISRA1C(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MISRA1C'
@@ -205,12 +205,10 @@ class  MISRA1C(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        R = 1.0+2.0*EV_[1]*self.elpar[iel_][0]
+        R = 1.0+2.0*EV_[1,0]*self.elpar[iel_][0]
         ROOTR = np.sqrt(R)
         R3 = ROOTR**3
-        f_   = -EV_[0]/ROOTR
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = -EV_[0,0]/ROOTR
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -218,12 +216,12 @@ class  MISRA1C(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = -1.0/ROOTR
-            g_[1] = EV_[0]*self.elpar[iel_][0]/R3
+            g_[1] = EV_[0,0]*self.elpar[iel_][0]/R3
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = self.elpar[iel_][0]/R3
                 H_[1,0] = H_[0,1]
-                H_[1,1] = -3.0*EV_[0]*self.elpar[iel_][0]**2/ROOTR**5
+                H_[1,1] = -3.0*EV_[0,0]*self.elpar[iel_][0]**2/ROOTR**5
         if nargout == 1:
             return f_
         elif nargout == 2:

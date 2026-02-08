@@ -21,7 +21,7 @@ class  MAXLIKA(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MAXLIKA'
@@ -311,6 +311,7 @@ class  MAXLIKA(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.zeros((self.n,1))
         self.xupper = np.full((self.n,1),float('inf'))
@@ -456,10 +457,10 @@ class  MAXLIKA(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        YMW = self.elpar[iel_][0]-EV_[2]
+        YMW = self.elpar[iel_][0]-EV_[2,0]
         YMWSQ = YMW*YMW
-        VSQ = EV_[1]*EV_[1]
-        VCB = VSQ*EV_[1]
+        VSQ = EV_[1,0]*EV_[1,0]
+        VCB = VSQ*EV_[1,0]
         A = -YMWSQ/(2.0*VSQ)
         DADV = YMWSQ/VCB
         DADW = YMW/VSQ
@@ -469,34 +470,32 @@ class  MAXLIKA(CUTEst_problem):
         E = np.exp(A)
         DEDV = E*DADV
         DEDW = E*DADW
-        B = EV_[0]*E
+        B = EV_[0,0]*E
         DBDV = B*DADV
         DBDW = B*DADW
         D2BDV2 = DBDV*DADV+B*D2ADV2
         D2BDVW = DBDW*DADV+B*D2ADVW
         D2BDW2 = DBDW*DADW+B*D2ADW2
-        f_   = B/EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = B/EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = E/EV_[1]
-            g_[1] = (DBDV-B/EV_[1])/EV_[1]
-            g_[2] = DBDW/EV_[1]
+            g_[0] = E/EV_[1,0]
+            g_[1] = (DBDV-B/EV_[1,0])/EV_[1,0]
+            g_[2] = DBDW/EV_[1,0]
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = (DEDV-E/EV_[1])/EV_[1]
+                H_[0,1] = (DEDV-E/EV_[1,0])/EV_[1,0]
                 H_[1,0] = H_[0,1]
-                H_[0,2] = DEDW/EV_[1]
+                H_[0,2] = DEDW/EV_[1,0]
                 H_[2,0] = H_[0,2]
-                H_[1,1] = (D2BDV2-DBDV/EV_[1]+B/VSQ)/EV_[1]-(DBDV-B/EV_[1])/VSQ
-                H_[1,2] = (D2BDVW-DBDW/EV_[1])/EV_[1]
+                H_[1,1] = (D2BDV2-DBDV/EV_[1,0]+B/VSQ)/EV_[1,0]-(DBDV-B/EV_[1,0])/VSQ
+                H_[1,2] = (D2BDVW-DBDW/EV_[1,0])/EV_[1,0]
                 H_[2,1] = H_[1,2]
-                H_[2,2] = D2BDW2/EV_[1]
+                H_[2,2] = D2BDW2/EV_[1,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -516,9 +515,9 @@ class  MAXLIKA(CUTEst_problem):
         U_[0,1] = U_[0,1]+1
         U_[1,2] = U_[1,2]+1
         U_[2,3] = U_[2,3]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
-        IV_[2] = U_[2:3,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
+        IV_[2] = to_scalar(U_[2:3,:].dot(EV_))
         YMW = self.elpar[iel_][0]-IV_[2]
         YMWSQ = YMW*YMW
         VSQ = IV_[1]*IV_[1]
@@ -542,8 +541,6 @@ class  MAXLIKA(CUTEst_problem):
         D2BDVW = DBDW*DADV+B*D2ADVW
         D2BDW2 = DBDW*DADW+B*D2ADW2
         f_   = B/IV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

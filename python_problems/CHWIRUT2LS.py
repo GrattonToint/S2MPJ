@@ -25,7 +25,7 @@ class  CHWIRUT2LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHWIRUT2LS'
@@ -175,6 +175,7 @@ class  CHWIRUT2LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -262,15 +263,13 @@ class  CHWIRUT2LS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E = np.exp(-EV_[0]*self.elpar[iel_][0])
+        E = np.exp(-EV_[0,0]*self.elpar[iel_][0])
         EX = E*self.elpar[iel_][0]
         EX2 = EX*self.elpar[iel_][0]
-        V2PV3X = EV_[1]+EV_[2]*self.elpar[iel_][0]
+        V2PV3X = EV_[1,0]+EV_[2,0]*self.elpar[iel_][0]
         V2PV32 = V2PV3X*V2PV3X
         V2PV33 = V2PV3X*V2PV32
         f_   = E/V2PV3X
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

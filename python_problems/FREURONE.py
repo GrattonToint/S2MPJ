@@ -27,7 +27,7 @@ class  FREURONE(CUTEst_problem):
 # IE N                   2              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FREURONE'
@@ -227,18 +227,16 @@ class  FREURONE(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         TWOC = self.elpar[iel_][0]+self.elpar[iel_][0]
-        ELV2 = EV_[0]*EV_[0]
-        XCELV = self.elpar[iel_][1]*EV_[0]
+        ELV2 = EV_[0,0]*EV_[0,0]
+        XCELV = self.elpar[iel_][1]*EV_[0,0]
         f_   = (self.elpar[iel_][0]+XCELV)*ELV2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = TWOC*EV_[0]+3.0*self.elpar[iel_][1]*ELV2
+            g_[0] = TWOC*EV_[0,0]+3.0*self.elpar[iel_][1]*ELV2
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = TWOC+6.0*XCELV

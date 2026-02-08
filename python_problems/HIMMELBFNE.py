@@ -25,7 +25,7 @@ class  HIMMELBFNE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBFNE'
@@ -210,37 +210,35 @@ class  HIMMELBFNE(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         U  = (
-              EV_[0]*EV_[0]+self.elpar[iel_][0]*EV_[1]*EV_[1]+self.elpar[iel_][0]*self.elpar[iel_][0]*EV_[2]*EV_[2])
-        V = self.elpar[iel_][1]*(1.0+self.elpar[iel_][0]*EV_[3]*EV_[3])
+              EV_[0,0]*EV_[0,0]+self.elpar[iel_][0]*EV_[1,0]*EV_[1,0]+self.elpar[iel_][0]*self.elpar[iel_][0]*EV_[2,0]*EV_[2,0])
+        V = self.elpar[iel_][1]*(1.0+self.elpar[iel_][0]*EV_[3,0]*EV_[3,0])
         V2 = V*V
         AB = self.elpar[iel_][0]*self.elpar[iel_][1]
         A2 = self.elpar[iel_][0]*self.elpar[iel_][0]
         T = -4.0*AB/V2
         f_   = U/V
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*EV_[0]/V
-            g_[1] = 2.0*self.elpar[iel_][0]*EV_[1]/V
-            g_[2] = 2.0*A2*EV_[2]/V
-            g_[3] = -2.0*AB*EV_[3]*U/V2
+            g_[0] = 2.0*EV_[0,0]/V
+            g_[1] = 2.0*self.elpar[iel_][0]*EV_[1,0]/V
+            g_[2] = 2.0*A2*EV_[2,0]/V
+            g_[3] = -2.0*AB*EV_[3,0]*U/V2
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,0] = 2.0/V
-                H_[0,3] = T*EV_[3]*EV_[0]
+                H_[0,3] = T*EV_[3,0]*EV_[0,0]
                 H_[3,0] = H_[0,3]
                 H_[1,1] = 2.0*self.elpar[iel_][0]/V
-                H_[1,3] = T*self.elpar[iel_][0]*EV_[3]*EV_[1]
+                H_[1,3] = T*self.elpar[iel_][0]*EV_[3,0]*EV_[1,0]
                 H_[3,1] = H_[1,3]
                 H_[2,2] = 2.0*A2/V
-                H_[2,3] = T*self.elpar[iel_][0]*EV_[3]*EV_[2]
+                H_[2,3] = T*self.elpar[iel_][0]*EV_[3,0]*EV_[2,0]
                 H_[3,2] = H_[2,3]
-                H_[3,3] = -2.0*AB*U/V2+8.0*(AB*EV_[3])**2*U/(V2*V)
+                H_[3,3] = -2.0*AB*U/V2+8.0*(AB*EV_[3,0])**2*U/(V2*V)
         if nargout == 1:
             return f_
         elif nargout == 2:

@@ -21,7 +21,7 @@ class  DIAMON3D(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIAMON3D'
@@ -9958,12 +9958,10 @@ class  DIAMON3D(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        PMX = EV_[2]-self.elpar[iel_][0]
-        DENOM = PMX**2+EV_[1]**2
-        RATIO = EV_[1]/DENOM
-        f_   = self.efpar[0]*EV_[0]*RATIO
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        PMX = EV_[2,0]-self.elpar[iel_][0]
+        DENOM = PMX**2+EV_[1,0]**2
+        RATIO = EV_[1,0]/DENOM
+        f_   = self.efpar[0]*EV_[0,0]*RATIO
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -9971,21 +9969,21 @@ class  DIAMON3D(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = self.efpar[0]*RATIO
-            g_[1] = self.efpar[0]*EV_[0]/DENOM-2.0e0*self.efpar[0]*EV_[0]*RATIO**2
-            g_[2] = -2.0e0*self.efpar[0]*EV_[0]*EV_[1]*PMX/DENOM**2
+            g_[1] = self.efpar[0]*EV_[0,0]/DENOM-2.0e0*self.efpar[0]*EV_[0,0]*RATIO**2
+            g_[2] = -2.0e0*self.efpar[0]*EV_[0,0]*EV_[1,0]*PMX/DENOM**2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = self.efpar[0]/DENOM-2.0e+0*self.efpar[0]*RATIO**2
                 H_[1,0] = H_[0,1]
                 H_[1,1]  = (
-                      -6.0e+0*self.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e+0*self.efpar[0]*EV_[0]*RATIO**3)
-                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1]*PMX/DENOM**2
+                      -6.0e+0*self.efpar[0]*EV_[0,0]*EV_[1,0]/DENOM**2+8.0e+0*self.efpar[0]*EV_[0,0]*RATIO**3)
+                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1,0]*PMX/DENOM**2
                 H_[2,0] = H_[0,2]
                 H_[1,2]  = (
-                      -2.0e0*self.efpar[0]*EV_[0]*PMX/DENOM**2+8.0e0*self.efpar[0]*EV_[0]*PMX*(EV_[1]**2)/(DENOM**3))
+                      -2.0e0*self.efpar[0]*EV_[0,0]*PMX/DENOM**2+8.0e0*self.efpar[0]*EV_[0,0]*PMX*(EV_[1,0]**2)/(DENOM**3))
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      -2.0e0*self.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e0*self.efpar[0]*EV_[0]*EV_[1]*(PMX**2)/(DENOM**3))
+                      -2.0e0*self.efpar[0]*EV_[0,0]*EV_[1,0]/DENOM**2+8.0e0*self.efpar[0]*EV_[0,0]*EV_[1,0]*(PMX**2)/(DENOM**3))
         if nargout == 1:
             return f_
         elif nargout == 2:

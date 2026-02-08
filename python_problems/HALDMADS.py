@@ -20,7 +20,7 @@ class  HALDMADS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HALDMADS'
@@ -204,13 +204,11 @@ class  HALDMADS(CUTEst_problem):
         iel_ = args[1]
         YY = self.elpar[iel_][0]*self.elpar[iel_][0]
         YYY = YY*self.elpar[iel_][0]
-        N = EV_[0]+self.elpar[iel_][0]*EV_[1]
-        D = 1.0+EV_[2]*self.elpar[iel_][0]+EV_[3]*YY+EV_[4]*YYY
+        N = EV_[0,0]+self.elpar[iel_][0]*EV_[1,0]
+        D = 1.0+EV_[2,0]*self.elpar[iel_][0]+EV_[3,0]*YY+EV_[4,0]*YYY
         DD = D*D
         DDD = DD*D
         f_   = N/D
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

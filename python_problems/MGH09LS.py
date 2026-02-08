@@ -26,7 +26,7 @@ class  MGH09LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH09LS'
@@ -90,6 +90,7 @@ class  MGH09LS(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -184,17 +185,15 @@ class  MGH09LS(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         X2 = self.elpar[iel_][0]*self.elpar[iel_][0]
-        T = EV_[1]*self.elpar[iel_][0]+X2
-        B = EV_[3]+EV_[2]*self.elpar[iel_][0]+X2
+        T = EV_[1,0]*self.elpar[iel_][0]+X2
+        B = EV_[3,0]+EV_[2,0]*self.elpar[iel_][0]+X2
         B2 = B*B
         B3 = B*B2
-        V1X = EV_[0]*self.elpar[iel_][0]
-        V1X2 = EV_[0]*X2
-        V1T = EV_[0]*T
+        V1X = EV_[0,0]*self.elpar[iel_][0]
+        V1X2 = EV_[0,0]*X2
+        V1T = EV_[0,0]*T
         V1XT = V1X*T
         f_   = V1T/B
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

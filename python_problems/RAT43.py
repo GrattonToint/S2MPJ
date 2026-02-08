@@ -27,7 +27,7 @@ class  RAT43(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RAT43'
@@ -223,8 +223,8 @@ class  RAT43(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        V2MV3X = EV_[1]-EV_[2]*self.elpar[iel_][0]
-        V4INV = 1.0/EV_[3]
+        V2MV3X = EV_[1,0]-EV_[2,0]*self.elpar[iel_][0]
+        V4INV = 1.0/EV_[3,0]
         V4INVP = V4INV+1.0
         E = np.exp(V2MV3X)
         E2 = E*E
@@ -233,14 +233,12 @@ class  RAT43(CUTEst_problem):
         EP14 = EP1**V4INV
         EP14P1 = EP1**V4INVP
         EP14P2 = EP1**(V4INV+2.0)
-        VE = EV_[3]*EP14P1
-        VE2 = EV_[3]*EP14P2
-        V42EPP = EP14*EV_[3]**2
-        V42EP2 = EP14P1*EV_[3]**2
-        V42EP3 = EP14P1*EV_[3]**3
-        f_   = EV_[0]/EP14
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        VE = EV_[3,0]*EP14P1
+        VE2 = EV_[3,0]*EP14P2
+        V42EPP = EP14*EV_[3,0]**2
+        V42EP2 = EP14P1*EV_[3,0]**2
+        V42EP3 = EP14P1*EV_[3,0]**3
+        f_   = EV_[0,0]/EP14
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -248,9 +246,9 @@ class  RAT43(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = 1.0/EP14
-            g_[1] = -EV_[0]*E/VE
-            g_[2] = EV_[0]*self.elpar[iel_][0]*E/VE
-            g_[3] = EV_[0]*EP1L/V42EPP
+            g_[1] = -EV_[0,0]*E/VE
+            g_[2] = EV_[0,0]*self.elpar[iel_][0]*E/VE
+            g_[3] = EV_[0,0]*EP1L/V42EPP
             if nargout>2:
                 H_ = np.zeros((4,4))
                 H_[0,1] = -E/VE
@@ -259,15 +257,15 @@ class  RAT43(CUTEst_problem):
                 H_[2,0] = H_[0,2]
                 H_[0,3] = EP1L/V42EPP
                 H_[3,0] = H_[0,3]
-                H_[1,1] = EV_[0]*(E2*V4INVP/VE2-E/VE)
-                H_[1,2] = EV_[0]*self.elpar[iel_][0]*(E/VE-E2*V4INVP/VE2)
+                H_[1,1] = EV_[0,0]*(E2*V4INVP/VE2-E/VE)
+                H_[1,2] = EV_[0,0]*self.elpar[iel_][0]*(E/VE-E2*V4INVP/VE2)
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*E*(1.0/V42EP2-EP1L/V42EP3)
+                H_[1,3] = EV_[0,0]*E*(1.0/V42EP2-EP1L/V42EP3)
                 H_[3,1] = H_[1,3]
-                H_[2,2] = EV_[0]*self.elpar[iel_][0]**2*(E2*V4INVP/VE2-E/VE)
-                H_[2,3] = EV_[0]*self.elpar[iel_][0]*E*(EP1L/V42EP3-1.0/V42EP2)
+                H_[2,2] = EV_[0,0]*self.elpar[iel_][0]**2*(E2*V4INVP/VE2-E/VE)
+                H_[2,3] = EV_[0,0]*self.elpar[iel_][0]*E*(EP1L/V42EP3-1.0/V42EP2)
                 H_[3,2] = H_[2,3]
-                H_[3,3] = (EV_[0]/EP14)*(EP1L**2/EV_[3]**4-2.0*EP1L/EV_[3]**3)
+                H_[3,3] = (EV_[0,0]/EP14)*(EP1L**2/EV_[3,0]**4-2.0*EP1L/EV_[3,0]**3)
         if nargout == 1:
             return f_
         elif nargout == 2:

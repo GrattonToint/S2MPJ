@@ -21,7 +21,7 @@ function S365(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 31 X 2025
+#   Translated to Julia by S2MPJ version 3 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "S365"
@@ -103,9 +103,9 @@ function S365(action::String,args::Union{Any}...)
             pb.y0[findfirst(x->x==ig_["X1"],pbm.congrps)] = Float64(3.0)
         end
         if haskey(ix_,"X2")
-            pb.x0[ix_["X2"]] = Float64(0.0)
+            pb.x0[ix_["X2"]] = Float64(1.e-30)
         else
-            pb.y0[findfirst(x->x==ig_["X2"],pbm.congrps)] = Float64(0.0)
+            pb.y0[findfirst(x->x==ig_["X2"],pbm.congrps)] = Float64(1.e-30)
         end
         if haskey(ix_,"X3")
             pb.x0[ix_["X3"]] = Float64(2.0)
@@ -128,9 +128,9 @@ function S365(action::String,args::Union{Any}...)
             pb.y0[findfirst(x->x==ig_["X6"],pbm.congrps)] = Float64(5.0)
         end
         if haskey(ix_,"X7")
-            pb.x0[ix_["X7"]] = Float64(0.0)
+            pb.x0[ix_["X7"]] = Float64(1.e-30)
         else
-            pb.y0[findfirst(x->x==ig_["X7"],pbm.congrps)] = Float64(0.0)
+            pb.y0[findfirst(x->x==ig_["X7"],pbm.congrps)] = Float64(1.e-30)
         end
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()

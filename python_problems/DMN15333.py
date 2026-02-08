@@ -22,7 +22,7 @@ class  DMN15333(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DMN15333'
@@ -9959,18 +9959,16 @@ class  DMN15333(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        PMX = EV_[2]-self.elpar[iel_][0]
-        DENOM = PMX**2+EV_[1]**2
+        PMX = EV_[2,0]-self.elpar[iel_][0]
+        DENOM = PMX**2+EV_[1,0]**2
         DENOM2 = DENOM*DENOM
         DENOM3 = DENOM2*DENOM
-        RATIO = EV_[1]/DENOM
-        WOPI = self.efpar[0]*EV_[0]
+        RATIO = EV_[1,0]/DENOM
+        WOPI = self.efpar[0]*EV_[0,0]
         TWOPI = WOPI+WOPI
-        TWOPIW = TWOPI*EV_[1]
+        TWOPIW = TWOPI*EV_[1,0]
         ETP = 4.0e0*TWOPIW*PMX
         f_   = WOPI*RATIO
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -9985,9 +9983,9 @@ class  DMN15333(CUTEst_problem):
                 H_[0,1] = self.efpar[0]/DENOM-2.0e0*self.efpar[0]*RATIO**2
                 H_[1,0] = H_[0,1]
                 H_[1,1] = -3.0e0*TWOPIW/DENOM2+8.0e0*WOPI*RATIO**3
-                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1]*PMX/DENOM2
+                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1,0]*PMX/DENOM2
                 H_[2,0] = H_[0,2]
-                H_[1,2] = -TWOPI*PMX/DENOM2+ETP*EV_[1]/DENOM3
+                H_[1,2] = -TWOPI*PMX/DENOM2+ETP*EV_[1,0]/DENOM3
                 H_[2,1] = H_[1,2]
                 H_[2,2] = -TWOPIW/DENOM2+ETP*PMX/DENOM3
         if nargout == 1:

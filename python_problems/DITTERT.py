@@ -12,6 +12,7 @@ class  DITTERT(CUTEst_problem):
 # 
 #    SIF input: N. Gould, March 1992.
 #               minor correction by Ph. Shott, Jan 1995.
+#               starting point set to 1.e-30 to avoid division by zero (5 Feb 2026)
 # 
 #    classification = "C-COQR2-AN-V-V"
 # 
@@ -29,7 +30,7 @@ class  DITTERT(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DITTERT'
@@ -175,9 +176,8 @@ class  DITTERT(CUTEst_problem):
             self.xlower[ix_['C'+str(I)]] = 1.0e-6
             for J in range(int(v_['1']),int(v_['N'])+1):
                 self.xupper[ix_['A'+str(I)+','+str(J)]] = 1.0
-        #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        self.x0 = np.zeros((self.n,1))
-        self.y0 = np.zeros((self.m,1))
+        #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
+        self.x0 = np.full((self.n,1),float(1.0e-30))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -228,11 +228,11 @@ class  DITTERT(CUTEst_problem):
                     self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     vname = 'A'+str(int(v_['ID']))+','+str(int(v_['J']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='A')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'P'+str(int(v_['IPP']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='P')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 for I in range(int(v_['1']),int(v_['I2'])+1):
@@ -247,13 +247,13 @@ class  DITTERT(CUTEst_problem):
                     ename = 'E'+str(K)+','+str(int(v_['1']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['J']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='A')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['1']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['JJ']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='P')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
@@ -263,13 +263,13 @@ class  DITTERT(CUTEst_problem):
                     ename = 'E'+str(K)+','+str(int(v_['2']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['JJ']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='A')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['J']))
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
                     posev = np.where(elftv[ielftype[ie]]=='P')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 v_['RD'] = float(v_['ID'])
@@ -280,7 +280,7 @@ class  DITTERT(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eLOG')
             ielftype = arrset(ielftype,ie,iet_["eLOG"])
             vname = 'C'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'LOGR'+str(I)
@@ -288,7 +288,7 @@ class  DITTERT(CUTEst_problem):
             self.elftype = arrset(self.elftype,ie,'eLOG')
             ielftype = arrset(ielftype,ie,iet_["eLOG"])
             vname = 'R'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0e-30))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -363,7 +363,6 @@ class  DITTERT(CUTEst_problem):
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
         self.pbclass   = "C-COQR2-AN-V-V"
-        self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]
 
@@ -380,17 +379,15 @@ class  DITTERT(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[1]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[1,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[1]
-            g_[1] = EV_[0]
+            g_[0] = EV_[1,0]
+            g_[1] = EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = 1.0
@@ -408,19 +405,17 @@ class  DITTERT(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = np.log(EV_[0])
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = np.log(EV_[0,0])
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 1.0/EV_[0]
+            g_[0] = 1.0/EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = -1.0/(EV_[0]*EV_[0])
+                H_[0,0] = -1.0/(EV_[0,0]*EV_[0,0])
         if nargout == 1:
             return f_
         elif nargout == 2:

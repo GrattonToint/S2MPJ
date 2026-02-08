@@ -16,6 +16,7 @@ function LIN(action::String,args::Union{Any}...)
 #    Computers & Chemical Engineering, (submitted), 1994.
 # 
 #    SIF input: Marcel Mongeau, 9 February 1994.
+#               slightly modified to avoid division by zero at the strating point
 # 
 #    classification = "C-COLR2-AY-4-2"
 # 
@@ -25,7 +26,7 @@ function LIN(action::String,args::Union{Any}...)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 31 X 2025
+#   Translated to Julia by S2MPJ version 3 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LIN"
@@ -137,9 +138,9 @@ function LIN(action::String,args::Union{Any}...)
         pb.x0[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["1"]))]]  = (
               Float64(0.5))
         pb.x0[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["2"]))]]  = (
-              Float64(0.0))
+              Float64(1.e-30))
         pb.x0[ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["1"]))]]  = (
-              Float64(0.0))
+              Float64(1.e-30))
         pb.x0[ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))]]  = (
               Float64(0.5))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%

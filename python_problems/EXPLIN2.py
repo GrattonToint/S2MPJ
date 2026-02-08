@@ -23,7 +23,7 @@ class  EXPLIN2(CUTEst_problem):
 # IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPLIN2'
@@ -79,6 +79,7 @@ class  EXPLIN2(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -140,7 +141,6 @@ class  EXPLIN2(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.pbclass   = "C-COBR2-AN-V-V"
-        self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 
 # **********************
@@ -156,23 +156,22 @@ class  EXPLIN2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        F = np.exp(0.1*self.elpar[iel_][0]*EV_[0]*EV_[1])
+        F = np.exp(0.1*self.elpar[iel_][0]*EV_[0,0]*EV_[1,0])
         f_   = F
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 0.1*self.elpar[iel_][0]*EV_[1]*F
-            g_[1] = 0.1*self.elpar[iel_][0]*EV_[0]*F
+            g_[0] = 0.1*self.elpar[iel_][0]*EV_[1,0]*F
+            g_[1] = 0.1*self.elpar[iel_][0]*EV_[0,0]*F
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = (0.1*self.elpar[iel_][0]*EV_[1])**2*F
-                H_[1,1] = (0.1*self.elpar[iel_][0]*EV_[0])**2*F
-                H_[1,0] = (0.1+0.01*self.elpar[iel_][0]*EV_[0]*EV_[1])*F*self.elpar[iel_][0]
+                H_[0,0] = (0.1*self.elpar[iel_][0]*EV_[1,0])**2*F
+                H_[1,1] = (0.1*self.elpar[iel_][0]*EV_[0,0])**2*F
+                H_[1,0]  = (
+                      (0.1+0.01*self.elpar[iel_][0]*EV_[0,0]*EV_[1,0])*F*self.elpar[iel_][0])
                 H_[0,1] = H_[1,0]
         if nargout == 1:
             return f_

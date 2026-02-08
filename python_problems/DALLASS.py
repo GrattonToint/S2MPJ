@@ -24,7 +24,7 @@ class  DALLASS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DALLASS'
@@ -1533,18 +1533,16 @@ class  DALLASS(CUTEst_problem):
         TMP = 850559.0e0/2.85*self.elpar[iel_][0]
         TMP = TMP/(self.elpar[iel_][2]**1.85)
         TMP = TMP/(self.elpar[iel_][1]**4.87)
-        X = np.absolute(EV_[0])
+        X = np.absolute(EV_[0,0])
         XEXP = X**0.85
         f_   = TMP*X**2*XEXP
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.85*TMP*EV_[0]*XEXP
+            g_[0] = 2.85*TMP*EV_[0,0]*XEXP
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 5.2725*TMP*XEXP
@@ -1563,13 +1561,11 @@ class  DALLASS(CUTEst_problem):
         iel_ = args[1]
         EPS2 = 1.0e-14
         SQC1 = np.sqrt(self.elpar[iel_][0])
-        X = min(EV_[0],SQC1)
+        X = min(EV_[0,0],SQC1)
         TMP = self.elpar[iel_][1]*(self.elpar[iel_][0]-X*X)
         TMP = np.sqrt(max(TMP,EPS2))
         TMP2 = np.sqrt(self.elpar[iel_][1])*np.arcsin(X/SQC1)
         f_   = 0.5*(-X*TMP-self.elpar[iel_][0]*TMP2)
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

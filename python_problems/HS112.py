@@ -24,7 +24,7 @@ class  HS112(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS112'
@@ -274,10 +274,8 @@ class  HS112(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        LOGX = np.log(EV_[0])
-        f_   = EV_[0]*LOGX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        LOGX = np.log(EV_[0,0])
+        f_   = EV_[0,0]*LOGX
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -287,7 +285,7 @@ class  HS112(CUTEst_problem):
             g_[0] = LOGX+1.0
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 1.0/EV_[0]
+                H_[0,0] = 1.0/EV_[0,0]
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -314,12 +312,10 @@ class  HS112(CUTEst_problem):
         U_[1,8] = U_[1,8]+1
         U_[1,9] = U_[1,9]+1
         U_[1,10] = U_[1,10]+1
-        IV_[0] = U_[0:1,:].dot(EV_)
-        IV_[1] = U_[1:2,:].dot(EV_)
+        IV_[0] = to_scalar(U_[0:1,:].dot(EV_))
+        IV_[1] = to_scalar(U_[1:2,:].dot(EV_))
         LOGSUM = np.log(IV_[1])
         f_   = -IV_[0]*LOGSUM
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

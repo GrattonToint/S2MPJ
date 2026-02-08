@@ -33,7 +33,7 @@ class  WATSON(CUTEst_problem):
 # IE N                   12             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WATSON'
@@ -107,6 +107,7 @@ class  WATSON(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         self.gconst = np.full((ngrp,1),1.0)
         self.gconst = arrset(self.gconst,ig_['G'+str(int(v_['30']))],float(0.0))
@@ -296,16 +297,14 @@ class  WATSON(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = -EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = -EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = -EV_[0]-EV_[0]
+            g_[0] = -EV_[0,0]-EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = -2.0
@@ -323,7 +322,7 @@ class  WATSON(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         U  = (
-              self.elpar[iel_][0]*EV_[0]+self.elpar[iel_][1]*EV_[1]+self.elpar[iel_][2]*EV_[2]+self.elpar[iel_][3]*EV_[3]+self.elpar[iel_][4]*EV_[4]+self.elpar[iel_][5]*EV_[5]+self.elpar[iel_][6]*EV_[6]+self.elpar[iel_][7]*EV_[7]+self.elpar[iel_][8]*EV_[8]+self.elpar[iel_][9]*EV_[9]+self.elpar[iel_][10]*EV_[10]+self.elpar[iel_][11]*EV_[11])
+              self.elpar[iel_][0]*EV_[0,0]+self.elpar[iel_][1]*EV_[1,0]+self.elpar[iel_][2]*EV_[2,0]+self.elpar[iel_][3]*EV_[3,0]+self.elpar[iel_][4]*EV_[4,0]+self.elpar[iel_][5]*EV_[5,0]+self.elpar[iel_][6]*EV_[6,0]+self.elpar[iel_][7]*EV_[7,0]+self.elpar[iel_][8]*EV_[8,0]+self.elpar[iel_][9]*EV_[9,0]+self.elpar[iel_][10]*EV_[10,0]+self.elpar[iel_][11]*EV_[11,0])
         TWOT1 = self.elpar[iel_][0]+self.elpar[iel_][0]
         TWOT2 = self.elpar[iel_][1]+self.elpar[iel_][1]
         TWOT3 = self.elpar[iel_][2]+self.elpar[iel_][2]
@@ -337,8 +336,6 @@ class  WATSON(CUTEst_problem):
         TWOT11 = self.elpar[iel_][10]+self.elpar[iel_][10]
         TWOT12 = self.elpar[iel_][11]+self.elpar[iel_][11]
         f_   = -U*U
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)

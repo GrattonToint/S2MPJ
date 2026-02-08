@@ -23,7 +23,7 @@ class  YFITNE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YFITNE'
@@ -188,26 +188,24 @@ class  YFITNE(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         frac = self.elpar[iel_][0]/self.elpar[iel_][1]
-        ttan = np.tan(EV_[0]*(1.0-frac)+EV_[1]*frac)
-        tsec = 1.0/np.cos(EV_[0]*(1.0-frac)+EV_[1]*frac)
+        ttan = np.tan(EV_[0,0]*(1.0-frac)+EV_[1,0]*frac)
+        tsec = 1.0/np.cos(EV_[0,0]*(1.0-frac)+EV_[1,0]*frac)
         tsec2 = tsec*tsec
-        f_   = EV_[2]*ttan
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[2,0]*ttan
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[2]*(1.0-frac)*tsec2
-            g_[1] = EV_[2]*frac*tsec2
+            g_[0] = EV_[2,0]*(1.0-frac)*tsec2
+            g_[1] = EV_[2,0]*frac*tsec2
             g_[2] = ttan
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = 2.0*EV_[2]*((1.0-frac)**2)*tsec2*ttan
-                H_[1,1] = 2.0*EV_[2]*(frac**2)*tsec2*ttan
-                H_[0,1] = 2.0*EV_[2]*(1.0-frac)*frac*tsec2*ttan
+                H_[0,0] = 2.0*EV_[2,0]*((1.0-frac)**2)*tsec2*ttan
+                H_[1,1] = 2.0*EV_[2,0]*(frac**2)*tsec2*ttan
+                H_[0,1] = 2.0*EV_[2,0]*(1.0-frac)*frac*tsec2*ttan
                 H_[1,0] = H_[0,1]
                 H_[0,2] = (1.0-frac)*tsec2
                 H_[2,0] = H_[0,2]

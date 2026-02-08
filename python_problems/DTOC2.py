@@ -54,7 +54,7 @@ class  DTOC2(CUTEst_problem):
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC2'
@@ -319,16 +319,14 @@ class  DTOC2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = EV_[0]*EV_[0]
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = EV_[0,0]*EV_[0,0]
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = EV_[0]+EV_[0]
+            g_[0] = EV_[0,0]+EV_[0,0]
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -345,17 +343,15 @@ class  DTOC2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        SZ = np.sin(EV_[0])
+        SZ = np.sin(EV_[0,0])
         f_   = SZ
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = np.cos(EV_[0])
+            g_[0] = np.cos(EV_[0,0])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = -SZ
@@ -372,49 +368,48 @@ class  DTOC2(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        XN2 = EV_[4]*EV_[4]+EV_[5]*EV_[5]
-        YN2 = EV_[0]*EV_[0]+EV_[1]*EV_[1]+EV_[2]*EV_[2]+EV_[3]*EV_[3]
+        XN2 = EV_[4,0]*EV_[4,0]+EV_[5,0]*EV_[5,0]
+        YN2  = (
+              EV_[0,0]*EV_[0,0]+EV_[1,0]*EV_[1,0]+EV_[2,0]*EV_[2,0]+EV_[3,0]*EV_[3,0])
         SZ = np.sin(0.5*XN2)
         CZ = np.cos(0.5*XN2)
         SZ2 = SZ*SZ+1.0
         SC = SZ*CZ
         CCSS = CZ*CZ-SZ*SZ
         f_   = YN2*SZ2
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[4] = 2.0*YN2*SC*EV_[4]
-            g_[5] = 2.0*YN2*SC*EV_[5]
-            g_[0] = 2.0*EV_[0]*SZ2
-            g_[1] = 2.0*EV_[1]*SZ2
-            g_[2] = 2.0*EV_[2]*SZ2
-            g_[3] = 2.0*EV_[3]*SZ2
+            g_[4] = 2.0*YN2*SC*EV_[4,0]
+            g_[5] = 2.0*YN2*SC*EV_[5,0]
+            g_[0] = 2.0*EV_[0,0]*SZ2
+            g_[1] = 2.0*EV_[1,0]*SZ2
+            g_[2] = 2.0*EV_[2,0]*SZ2
+            g_[3] = 2.0*EV_[3,0]*SZ2
             if nargout>2:
                 H_ = np.zeros((6,6))
-                H_[4,4] = 2.0*YN2*(SC+EV_[4]*EV_[4]*CCSS)
-                H_[4,5] = 2.0*YN2*EV_[4]*EV_[5]*CCSS
+                H_[4,4] = 2.0*YN2*(SC+EV_[4,0]*EV_[4,0]*CCSS)
+                H_[4,5] = 2.0*YN2*EV_[4,0]*EV_[5,0]*CCSS
                 H_[5,4] = H_[4,5]
-                H_[4,0] = 4.0*EV_[0]*SC*EV_[4]
+                H_[4,0] = 4.0*EV_[0,0]*SC*EV_[4,0]
                 H_[0,4] = H_[4,0]
-                H_[4,1] = 4.0*EV_[1]*SC*EV_[4]
+                H_[4,1] = 4.0*EV_[1,0]*SC*EV_[4,0]
                 H_[1,4] = H_[4,1]
-                H_[4,2] = 4.0*EV_[2]*SC*EV_[4]
+                H_[4,2] = 4.0*EV_[2,0]*SC*EV_[4,0]
                 H_[2,4] = H_[4,2]
-                H_[4,3] = 4.0*EV_[3]*SC*EV_[4]
+                H_[4,3] = 4.0*EV_[3,0]*SC*EV_[4,0]
                 H_[3,4] = H_[4,3]
-                H_[5,5] = 2.0*YN2*(SC+EV_[5]*EV_[5]*CCSS)
-                H_[5,0] = 4.0*EV_[0]*SC*EV_[5]
+                H_[5,5] = 2.0*YN2*(SC+EV_[5,0]*EV_[5,0]*CCSS)
+                H_[5,0] = 4.0*EV_[0,0]*SC*EV_[5,0]
                 H_[0,5] = H_[5,0]
-                H_[5,1] = 4.0*EV_[1]*SC*EV_[5]
+                H_[5,1] = 4.0*EV_[1,0]*SC*EV_[5,0]
                 H_[1,5] = H_[5,1]
-                H_[5,2] = 4.0*EV_[2]*SC*EV_[5]
+                H_[5,2] = 4.0*EV_[2,0]*SC*EV_[5,0]
                 H_[2,5] = H_[5,2]
-                H_[5,3] = 4.0*EV_[3]*SC*EV_[5]
+                H_[5,3] = 4.0*EV_[3,0]*SC*EV_[5,0]
                 H_[3,5] = H_[5,3]
                 H_[0,0] = 2.0*SZ2
                 H_[1,1] = 2.0*SZ2

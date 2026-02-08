@@ -22,6 +22,21 @@ import re
 import os
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+#   Helper function for NumPy 2.x compatibility: safely convert to Python scalar
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def to_scalar(value):
+    """Convert numpy array (0-dim or 1-element) to Python scalar. Handles NumPy 2.x changes."""
+    if isinstance(value, (int, float)):
+        return float(value)
+    value = np.asarray(value)
+    if value.ndim == 0 or value.size == 1:
+        return float(value.item())
+    return float(value.flatten()[0])
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 class structtype():
     
@@ -374,14 +389,14 @@ class CUTEst_problem:
             
             Htimesx = self.H .dot(x)
             if nargout ==  1:
-                fx += 0.5 * x.T .dot(Htimesx)
+                fx += to_scalar(0.5 * x.T .dot(Htimesx))
             elif nargout == 2:
                 gx += Htimesx
-                fx += 0.5 * x.T .dot(Htimesx)
+                fx += to_scalar(0.5 * x.T .dot(Htimesx))
             elif nargout == 3:
                 Htimesx = self.H .dot(x);
                 gx += Htimesx
-                fx += 0.5 * x.T .dot(Htimesx)
+                fx += to_scalar(0.5 * x.T .dot(Htimesx))
                 Hx += self.H
                 
         if debug: #D
@@ -427,13 +442,13 @@ class CUTEst_problem:
             #  Evaluate the linear term, if any.
 
             if hasattr(self,"gconst") and ig < len(self.gconst) and not self.gconst[ig] is None:
-                fin = float(-self.gconst[ig])
+                fin = to_scalar(-self.gconst[ig])
             else:
                 fin = 0
             if has_A and ig < sA1:
                 gin           = np.zeros( (n, 1) )
                 gin[:sA2, :1] = self.A[ ig, :sA2 ].T.toarray()
-                fin           = float( fin + gin.T .dot(x) )
+                fin           = to_scalar( fin + gin.T .dot(x) )
             elif nargout >= 2:
                 gin =  np.zeros(( n, 1 ))
 
@@ -621,11 +636,11 @@ class CUTEst_problem:
                     print( "ig = ", ig, "  cx(final) = ", cx )#D
         if isobj:
             if nargout == 1:
-                return float( fx )
+                return to_scalar( fx )
             elif nargout == 2:
-                return float( fx ), gx.reshape(-1,1)
+                return to_scalar( fx ), gx.reshape(-1,1)
             elif nargout == 3:
-                return float( fx ), gx.reshape(-1,1), Hx
+                return to_scalar( fx ), gx.reshape(-1,1), Hx
         else:
             if nargout == 1:
                 return cx
@@ -750,13 +765,13 @@ class CUTEst_problem:
             #  Evaluate the linear term, if any.
 
             if hasattr( self, "gconst" ) and ig < len( self.gconst ) and not self.gconst[ ig ] is None:
-                fin = float(-self.gconst[ ig ] )
+                fin = to_scalar(-self.gconst[ ig ] )
             else:
                 fin = 0.0
             gin = np.zeros((n,1))
             if has_A and ig < sA1:
                 gin[:sA2, :1] = self.A[ ig, :sA2 ].T.toarray()
-                fin           = float(fin + gin.T .dot(x))
+                fin           = to_scalar(fin + gin.T .dot(x))
 
             if debug:
                 print( "ig = ", ig, "  fin(linear)", fin ) #D
@@ -831,33 +846,35 @@ class CUTEst_problem:
                 else:
                     fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )' )
                     sgin = lil_matrix(gin);
-                    HJv  += ( ( Hessa * sgin) * (sgin.transpose().dot(v)) + grada * Hinv) / gsc
+                    HJv  += ( ( Hessa * sgin) * to_scalar(sgin.transpose().dot(v)) + grada * Hinv) / gsc
             elif mode == "HIv":
                 if egname == "TRIVIAL":
                     ic  += 1
-                    HJv += y[ic] * Hinv / gsc
+                    HJv += to_scalar(y[ic]) * Hinv / gsc
                 else:
                     fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )' )
                     sgin = lil_matrix(gin);
                     ic  += 1
-                    HJv += y[ic] * ( ( Hessa * sgin) * (sgin.transpose().dot(v)) + grada * Hinv) / gsc
+                    HJv += to_scalar(y[ic]) * ( ( Hessa * sgin) * to_scalar(sgin.transpose().dot(v)) + grada * Hinv) / gsc
             elif  mode == "Jv":
                 ic += 1
                 if derlvl >= 1:
                     if egname == "TRIVIAL":
-                        HJv[ic] = gin.transpose().dot( v ) / gsc
+                        HJv[ic] = to_scalar(gin.transpose().dot( v )) / gsc
                     else:
-                        fa, grada = feval( self.name, egname, fin, ig )
-                        HJv[ic] = grada * gin.transpose().dot( v ) / gsc
+#                        fa, grada = feval( self.name, egname, fin, ig )
+                        fa, grada = eval('self.'+egname+'( self, 2, fin, ig )' )
+                        HJv[ic] = to_scalar(grada * gin.transpose().dot( v )) / gsc
                 else:
                     HJv[ic] = np.nan
             elif mode == "Jtv":
                 if derlvl >= 1:
                     if egname == "TRIVIAL":
-                        HJv += gin * v[ic] / gsc
+                        HJv += gin * to_scalar(v[ic]) / gsc
                     else:
-                        fa, grada = feval( self.name, egname, fin, ig )
-                        HJv += grada * gin * v[ic] / gsc
+#                        fa, grada = feval( self.name, egname, fin, ig )
+                        fa, grada = eval('self.'+egname+'( self, 2, fin, ig )' )
+                        HJv += grada * gin * to_scalar(v[ic]) / gsc
                 else:
                     HJv[ic] = np.nan
                     
@@ -883,7 +900,7 @@ class CUTEst_problem:
             if len( gconlist ):
                 c   = self.evalgrsum( False, gconlist, x, 1 )
                 Lxy = Lxy + y.T.dot(c)
-            return float(Lxy)
+            return to_scalar(Lxy)
         elif nargout == 2:
             if len( gobjlist ) or hasattr( self, "H" ):
                 Lxy, Lgxy = self.evalgrsum( True, gobjlist, x, 2 )
@@ -894,7 +911,7 @@ class CUTEst_problem:
                 c, J = self.evalgrsum( False, gconlist, x, 2 )
                 Lxy  = Lxy + y.T.dot(c)
                 Lgxy = Lgxy  + J.T.dot(y)
-            return float(Lxy), Lgxy
+            return to_scalar(Lxy), Lgxy
         elif nargout == 3:
             if len( gobjlist ) or hasattr( self, "H" ):
                 Lxy, Lgxy, LgHxy = self.evalgrsum( True, gobjlist, x, 3 )
@@ -908,8 +925,8 @@ class CUTEst_problem:
                 Lxy  = Lxy + y.T.dot(c)
                 Lgxy = Lgxy  + J.T.dot(y)
                 for ig in range( len( gconlist ) ):
-                    LgHxy = LgHxy + y[ig,0] * cHi[ig]
-            return float(Lxy), Lgxy.reshape(-1,1), LgHxy
+                    LgHxy = LgHxy + to_scalar(y[ig,0]) * cHi[ig]
+            return to_scalar(Lxy), Lgxy.reshape(-1,1), LgHxy
         
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     #
@@ -1011,6 +1028,9 @@ def arrset( arr, index, value ):
         maxind = index
     if len(arr) <= maxind:
         arr= np.append( arr, np.full( maxind - len( arr ) + 1, None ) )
+    # Handle 0-dim arrays for NumPy 2.x compatibility
+    if isinstance(value, np.ndarray) and value.ndim == 0:
+        value = value.item()
     arr[index] = value
     return arr
 
@@ -1209,4 +1229,3 @@ def s2mpjlib_select( classif, *args ):
 ######################################################################################################
 ######################################################################################################
 ######################################################################################################
-

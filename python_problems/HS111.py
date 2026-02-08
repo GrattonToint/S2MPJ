@@ -24,7 +24,7 @@ class  HS111(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS111'
@@ -322,10 +322,8 @@ class  HS111(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EX = np.exp(EV_[0])
+        EX = np.exp(EV_[0,0])
         f_   = EX
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -349,27 +347,25 @@ class  HS111(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        E1 = np.exp(EV_[0])
-        E2 = np.exp(EV_[1])
-        E3 = np.exp(EV_[2])
-        E4 = np.exp(EV_[3])
-        E5 = np.exp(EV_[4])
-        E6 = np.exp(EV_[5])
-        E7 = np.exp(EV_[6])
-        E8 = np.exp(EV_[7])
-        E9 = np.exp(EV_[8])
-        E10 = np.exp(EV_[9])
+        E1 = np.exp(EV_[0,0])
+        E2 = np.exp(EV_[1,0])
+        E3 = np.exp(EV_[2,0])
+        E4 = np.exp(EV_[3,0])
+        E5 = np.exp(EV_[4,0])
+        E6 = np.exp(EV_[5,0])
+        E7 = np.exp(EV_[6,0])
+        E8 = np.exp(EV_[7,0])
+        E9 = np.exp(EV_[8,0])
+        E10 = np.exp(EV_[9,0])
         SUM = E1+E2+E3+E4+E5+E6+E7+E8+E9+E10
-        f_   = E1*(self.elpar[iel_][0]+EV_[0]-np.log(SUM))
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        f_   = E1*(self.elpar[iel_][0]+EV_[0,0]-np.log(SUM))
         if nargout>1:
             try:
                 dim = len(IV_)
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = E1*(self.elpar[iel_][0]+EV_[0]-np.log(SUM))+E1*(1.0e+0-E1/SUM)
+            g_[0] = E1*(self.elpar[iel_][0]+EV_[0,0]-np.log(SUM))+E1*(1.0e+0-E1/SUM)
             g_[1] = -E1*E2/SUM
             g_[2] = -E1*E3/SUM
             g_[3] = -E1*E4/SUM
@@ -381,7 +377,7 @@ class  HS111(CUTEst_problem):
             g_[9] = -E1*E10/SUM
             if nargout>2:
                 H_ = np.zeros((10,10))
-                H_[0,0] = (E1*(self.elpar[iel_][0]+EV_[0]-np.log(SUM))+E1*(1.0e+0-E1/SUM)+
+                H_[0,0] = (E1*(self.elpar[iel_][0]+EV_[0,0]-np.log(SUM))+E1*(1.0e+0-E1/SUM)+
                      E1*(1.0e+0-E1/SUM)+E1*(-E1/SUM)+E1*(E1**2/SUM**2))
                 H_[0,1] = (-1.0e+0+E1/SUM)*E1*E2/SUM
                 H_[1,0] = H_[0,1]

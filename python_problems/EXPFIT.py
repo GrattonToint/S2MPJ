@@ -21,7 +21,7 @@ class  EXPFIT(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPFIT'
@@ -64,6 +64,7 @@ class  EXPFIT(CUTEst_problem):
         ngrp   = len(ig_)
         self.objgrps = np.arange(ngrp)
         self.m       = 0
+        selfnob      = ngrp
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         self.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['1']),int(v_['P'])+1):
@@ -137,10 +138,8 @@ class  EXPFIT(CUTEst_problem):
         EV_  = args[0]
         iel_ = args[1]
         IH = 0.25*self.elpar[iel_][0]
-        EXPWIH = np.exp(EV_[1]*IH)
-        f_   = EV_[0]*EXPWIH
-        if not isinstance( f_, float ):
-            f_   = f_.item();
+        EXPWIH = np.exp(EV_[1,0]*IH)
+        f_   = EV_[0,0]*EXPWIH
         if nargout>1:
             try:
                 dim = len(IV_)
@@ -148,12 +147,12 @@ class  EXPFIT(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = EXPWIH
-            g_[1] = EV_[0]*IH*EXPWIH
+            g_[1] = EV_[0,0]*IH*EXPWIH
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,1] = IH*EXPWIH
                 H_[1,0] = H_[0,1]
-                H_[1,1] = EV_[0]*IH*IH*EXPWIH
+                H_[1,1] = EV_[0,0]*IH*IH*EXPWIH
         if nargout == 1:
             return f_
         elif nargout == 2:

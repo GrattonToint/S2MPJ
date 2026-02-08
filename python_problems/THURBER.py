@@ -27,7 +27,7 @@ class  THURBER(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 31 X 2025
+#   Translated to Python by S2MPJ version 7 II 2026
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'THURBER'
@@ -302,13 +302,11 @@ class  THURBER(CUTEst_problem):
         X4 = X3*self.elpar[iel_][0]
         X5 = X4*self.elpar[iel_][0]
         X6 = X5*self.elpar[iel_][0]
-        T = EV_[0]+EV_[1]*self.elpar[iel_][0]+EV_[2]*X2+EV_[3]*X3
-        D = 1.0e0+EV_[4]*self.elpar[iel_][0]+EV_[5]*X2+EV_[6]*X3
+        T = EV_[0,0]+EV_[1,0]*self.elpar[iel_][0]+EV_[2,0]*X2+EV_[3,0]*X3
+        D = 1.0e0+EV_[4,0]*self.elpar[iel_][0]+EV_[5,0]*X2+EV_[6,0]*X3
         D2 = D*D
         TD3 = 0.5e0*D2*D
         f_   = T/D
-        if not isinstance( f_, float ):
-            f_   = f_.item();
         if nargout>1:
             try:
                 dim = len(IV_)
